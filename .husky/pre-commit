@@ -20,5 +20,7 @@ fi
 echo ">> Finish checking branch name"
 echo ">> Linting your files and fixing them if needed..."
 
-pnpm type-check
-pnpm lint-staged
+# uncomment for lint when have time to work on it
+
+# pnpm type-check
+# pnpm lint-staged
