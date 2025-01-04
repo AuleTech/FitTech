@@ -1,9 +1,12 @@
 using FitTech.Trainers.WebApp.Components;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder.Services
+    .AddRadzenComponents()
+    .AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
