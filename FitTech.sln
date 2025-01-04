@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.AppHost", "src\FitTech.AppHost\FitTech.AppHost.csproj", "{D51533A6-1B90-4ACA-BD3F-6512CA2AD85D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FFCC4974-95BF-4ABC-B908-B44B46ABC1E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65CCA9A2-1341-4F17-9895-19B2BF4E2E91}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+		nuget.config = nuget.config
+		README.md = README.md
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D51533A6-1B90-4ACA-BD3F-6512CA2AD85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51533A6-1B90-4ACA-BD3F-6512CA2AD85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51533A6-1B90-4ACA-BD3F-6512CA2AD85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51533A6-1B90-4ACA-BD3F-6512CA2AD85D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D51533A6-1B90-4ACA-BD3F-6512CA2AD85D} = {FFCC4974-95BF-4ABC-B908-B44B46ABC1E9}
+	EndGlobalSection
+EndGlobal
