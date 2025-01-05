@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.Trainers.WebApp", "FitTech.Trainers.WebApp\FitTech.Trainers.WebApp.csproj", "{70051EBA-2F9C-41C0-BFB3-554D900E8954}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.Identity.API", "src\FitTech.Identity.API\FitTech.Identity.API.csproj", "{1DF6D9E3-3505-4C52-BDA9-AE2705324617}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.ServiceDefaults", "src\FitTech.ServiceDefaults\FitTech.ServiceDefaults.csproj", "{960457F2-6B80-4ECA-84D3-4A4B5B911460}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,19 @@ Global
 		{70051EBA-2F9C-41C0-BFB3-554D900E8954}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70051EBA-2F9C-41C0-BFB3-554D900E8954}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70051EBA-2F9C-41C0-BFB3-554D900E8954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF6D9E3-3505-4C52-BDA9-AE2705324617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF6D9E3-3505-4C52-BDA9-AE2705324617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF6D9E3-3505-4C52-BDA9-AE2705324617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF6D9E3-3505-4C52-BDA9-AE2705324617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{960457F2-6B80-4ECA-84D3-4A4B5B911460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960457F2-6B80-4ECA-84D3-4A4B5B911460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960457F2-6B80-4ECA-84D3-4A4B5B911460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960457F2-6B80-4ECA-84D3-4A4B5B911460}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D51533A6-1B90-4ACA-BD3F-6512CA2AD85D} = {FFCC4974-95BF-4ABC-B908-B44B46ABC1E9}
 		{70051EBA-2F9C-41C0-BFB3-554D900E8954} = {FFCC4974-95BF-4ABC-B908-B44B46ABC1E9}
+		{1DF6D9E3-3505-4C52-BDA9-AE2705324617} = {FFCC4974-95BF-4ABC-B908-B44B46ABC1E9}
+		{960457F2-6B80-4ECA-84D3-4A4B5B911460} = {FFCC4974-95BF-4ABC-B908-B44B46ABC1E9}
 	EndGlobalSection
 EndGlobal
