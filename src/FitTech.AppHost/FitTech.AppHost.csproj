@@ -16,9 +16,4 @@
       <PackageReference Include="Aspire.Hosting.PostgreSQL" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\FitTech.Trainers.WebApp\FitTech.Trainers.WebApp.csproj" />
-      <ProjectReference Include="..\FitTech.Identity.API\FitTech.Identity.API.csproj" />
-    </ItemGroup>
-
 </Project>
