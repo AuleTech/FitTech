@@ -14,5 +14,10 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web"/>
     </ItemGroup>
-
+  
+    <!--Just for now, I don't like it as it's not auto-contained-->
+    <Target Name="Tailwind" BeforeTargets="Compile">
+      <Exec Command="npx tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/styles.css" />
+    </Target>
+  
 </Project>
