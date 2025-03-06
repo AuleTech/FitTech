@@ -1,0 +1,12 @@
+﻿{
+  "solution": {
+    "path": "FitTech.slnx",
+    "projects": [
+      "src\\FitTech.API\\FitTech.API.csproj",
+      "src\\FitTech.AppHost\\FitTech.AppHost.csproj",
+      "src\\FitTech.Application\\FitTech.Application.csproj",
+      "src\\FitTech.Domain\\FitTech.Domain.csproj",
+      "src\\FitTech.Persistence\\FitTech.Persistence.csproj"
+    ]
+  }
+}
