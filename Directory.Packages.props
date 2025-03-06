@@ -20,6 +20,8 @@
     <PackageVersion Include="Aspire.RabbitMQ.Client" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.StackExchange.Redis" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Azure.AI.OpenAI" Version="$(AspireUnstablePackagesVersion)" />
+    <PackageVersion Include="FastEndpoints" Version="5.35.0" />
+    <PackageVersion Include="FastEndpoints.Swagger" Version="5.35.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Identity" Version="2.3.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.2" />
@@ -44,5 +46,6 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.0.24" />
   </ItemGroup>
 </Project>

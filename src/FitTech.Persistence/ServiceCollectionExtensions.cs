@@ -15,4 +15,13 @@ public static class ServiceCollectionExtensions
 
         return serviceCollection;
     }
+
+    public static async Task ApplyMigrationsAsync(this IServiceProvider serviceProvider)
+    {
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        using var serviceScope = serviceProvider.CreateScope();
+        var context = serviceScope.ServiceProvider.GetRequiredService<FitTechDbContext>();
+
+        await context.Database.EnsureCreatedAsync(cts.Token);
+    }
 }

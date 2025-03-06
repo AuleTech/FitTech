@@ -1,14 +1,23 @@
+using FastEndpoints;
+using FastEndpoints.Swagger;
 using FitTech.API;
 using FitTech.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 var connectionString = builder.Configuration.GetConnectionString("fittechdb");
 
 builder.AddFitTechAuth();
 builder.Services
+    .AddFastEndpoints()
+    .SwaggerDocument(x =>
+    {
+        x.DocumentSettings = d =>
+        {
+            d.Title = "FitTech.API";
+            d.Version = "v1";
+        };
+    })
     .AddOpenApi()
     .AddPersistence(connectionString);
 
@@ -19,10 +28,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwaggerGen();
 }
 
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
+app
+    .UseHttpsRedirection()
+    .UseAuthorization()
+    .UseAuthentication()
+    .UseFastEndpoints();
+
+//TODO: Create a migration service triggered by Aspire
+await app.Services.ApplyMigrationsAsync();
 
 app.Run();
