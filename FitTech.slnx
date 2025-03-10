@@ -11,6 +11,9 @@
     <Project Path="src\FitTech.Domain\FitTech.Domain.csproj" Type="Classic C#" />
     <Project Path="src\FitTech.Persistence\FitTech.Persistence.csproj" Type="Classic C#" />
   </Folder>
+  <Folder Name="/src/Tests/">
+    <Project Path="src\FitTech.Api.Tests\FitTech.Api.Tests.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="IaC">
     <Project Path="src\FitTech.AppHost\FitTech.AppHost.csproj" Type="Classic C#" />
   </Folder>

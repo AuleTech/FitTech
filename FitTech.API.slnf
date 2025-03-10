@@ -2,6 +2,7 @@
   "solution": {
     "path": "FitTech.slnx",
     "projects": [
+      "src\\FitTech.Api.Tests\\FitTech.Api.Tests.csproj",
       "src\\FitTech.API\\FitTech.API.csproj",
       "src\\FitTech.AppHost\\FitTech.AppHost.csproj",
       "src\\FitTech.Application\\FitTech.Application.csproj",

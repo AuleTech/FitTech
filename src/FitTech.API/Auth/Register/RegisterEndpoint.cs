@@ -1,42 +1,38 @@
 ﻿using FastEndpoints;
+using FitTech.Application.Auth.Dtos;
+using FitTech.Application.Auth.Services;
 using FitTech.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.API.Auth.Register;
 
 public class RegisterEndpoint : Endpoint<RegisterRequest, RegisterResponse>
 {
-    private readonly UserManager<FitTechUser> _userManager;
+    private readonly IFitTechAuthenticationService _authenticationService;
 
-    public RegisterEndpoint(UserManager<FitTechUser> userManager)
+    public RegisterEndpoint(IFitTechAuthenticationService authenticationService)
     {
-        _userManager = userManager;
+        _authenticationService = authenticationService;
     }
 
     public override void Configure()
     {
         Post("/auth/register");
         AllowAnonymous();
-        Summary(s =>
-        {
-            s.Summary = "Registers a new user";
-        });
     }
 
     public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
     {
-        var user = new FitTechUser { Email = req.Email, UserName = req.Email};
+        var user = new FitTechUser { Email = req.Email, UserName = req.Email };
 
-        var registrationResult = await _userManager.CreateAsync(user, req.Password).WaitAsync(ct);
+        var registrationResult =
+            await _authenticationService.RegisterAsync(new RegisterUserDto(req.Email, req.Password), ct);
 
-        if (!registrationResult.Succeeded)
-        {
-            var response = new RegisterResponse(false,
-                registrationResult.Errors.Select(x => new RegisterErrors(x.Code, x.Description)));
-            await SendAsync(response, StatusCodes.Status500InternalServerError, ct);
-            return;
-        }
-
-        await SendOkAsync(new RegisterResponse(true, []), ct);
+        var response = new RegisterResponse(registrationResult.Succeeded,
+            registrationResult.Errors.Select(x => new RegisterErrors(x.Code, x.Description)));
+        
+        await SendAsync(response,
+            registrationResult.Succeeded ? StatusCodes.Status200OK :
+            registrationResult.Errors.Any() ? StatusCodes.Status500InternalServerError :
+            StatusCodes.Status400BadRequest, ct);
     }
 }

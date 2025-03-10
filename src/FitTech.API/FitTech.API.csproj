@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FitTech.Application\FitTech.Application.csproj" />
       <ProjectReference Include="..\FitTech.Domain\FitTech.Domain.csproj" />
       <ProjectReference Include="..\FitTech.Persistence\FitTech.Persistence.csproj" />
     </ItemGroup>
