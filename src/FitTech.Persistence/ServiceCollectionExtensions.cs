@@ -16,6 +16,16 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
+    public static IServiceCollection AddInMemorydb(this IServiceCollection serviceCollection, string dbName)
+    {
+        serviceCollection.AddDbContext<FitTechDbContext>(options =>
+        {
+            options.UseInMemoryDatabase(dbName);
+        });
+
+        return serviceCollection;
+    }
+    
     public static async Task ApplyMigrationsAsync(this IServiceProvider serviceProvider)
     {
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));

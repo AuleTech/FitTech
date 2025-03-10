@@ -18,6 +18,7 @@ builder.Services
             d.Version = "v1";
         };
     })
+    .AddLogging()
     .AddOpenApi()
     .AddPersistence(connectionString);
 
