@@ -42,6 +42,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.Components.Web" Version="$(AspnetVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(AspnetVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(AspnetVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Identity.Stores" Version="9.0.2" />
     <!-- Version together with runtime -->
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(MicrosoftExtensionsVersion)" />
@@ -49,6 +50,7 @@
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.0.1" />
     <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.0.1" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageVersion Include="Scalar.AspNetCore" Version="2.0.24" />
     <!-- Third Party libs-->

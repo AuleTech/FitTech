@@ -1,9 +1,12 @@
+using FitTech.API.Client;
 using FitTech.Trainer.WebApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder.Services
+    .AddFitTechApiClient()
+    .AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();

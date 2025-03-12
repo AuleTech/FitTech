@@ -1,7 +1,9 @@
 @page "/login"
+@using FitTech.API.Client.Contracts
 @using Microsoft.Extensions.Logging
 @using Microsoft.AspNetCore.Components.Forms
 @inject ILogger<Login> Logger
+@inject IFitTechApiClient FitTechApiClient 
 
 <div class="w-full max-w-md px-4">
     <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
@@ -41,5 +43,13 @@
 
     protected override void OnInitialized() => LoginModel ??= new();
 
-    private void Submit() => Logger.LogInformation("Email: {Email}", LoginModel?.Email);
+    private async Task Submit()
+    {
+        Logger.LogInformation("Email: {Email}", LoginModel?.Email);
+        var response = await FitTechApiClient.FitTechAPIAuthRegisterRegisterEndpointAsync(new FitTechAPIAuthRegisterRegisterRequest
+        {
+            Email = LoginModel!.Email,
+            Password = LoginModel.Password
+        });
+    } 
 }
