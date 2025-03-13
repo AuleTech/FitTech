@@ -12,11 +12,19 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web"/>
+        <PackageReference Include="Blazored.LocalStorage" />
+        <PackageReference Include="Microsoft.AspNetCore" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\FitTech.API.Client\FitTech.API.Client.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Components.Authorization">
+        <HintPath>..\..\..\..\..\.dotnet\shared\Microsoft.AspNetCore.App\9.0.0\Microsoft.AspNetCore.Components.Authorization.dll</HintPath>
+      </Reference>
     </ItemGroup>
   
     <!--Just for now, this may cause a lot of merge conflicts. styles.css should be generated on deploy-->

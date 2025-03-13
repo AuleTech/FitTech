@@ -1,11 +1,13 @@
 using FitTech.API.Client;
 using FitTech.Trainer.WebApp.Components;
+using FitTech.WebComponents;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddFitTechApiClient(builder.Configuration)
+    .AddFitTechComponents(builder.Configuration)
     .AddRazorComponents()
     .AddInteractiveServerComponents();
 
