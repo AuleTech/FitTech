@@ -46,10 +46,12 @@
     private async Task Submit()
     {
         Logger.LogInformation("Email: {Email}", LoginModel?.Email);
-        var response = await FitTechApiClient.FitTechAPIAuthRegisterRegisterEndpointAsync(new FitTechAPIAuthRegisterRegisterRequest
+        var response = await FitTechApiClient.FitTechAPIAuthLoginLoginEndpointAsync(new FitTechAPIAuthLoginLoginRequest()
         {
             Email = LoginModel!.Email,
             Password = LoginModel.Password
         });
+        
+        Logger.LogInformation("Token: {Token}", response.AccessToken);
     } 
 }
