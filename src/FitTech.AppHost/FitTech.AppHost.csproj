@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FitTech.API\FitTech.API.csproj" />
+      <ProjectReference Include="..\FitTech.Trainer.WebApp\FitTech.Trainer.WebApp.csproj" />
     </ItemGroup>
 
 </Project>
