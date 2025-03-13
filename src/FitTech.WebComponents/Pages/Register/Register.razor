@@ -18,7 +18,7 @@
                     Nombre
                     <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.FirstName) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="text" @bind-Value="RegisterModel!.FirstName" id="email" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <InputText type="text" @bind-Value="RegisterModel!.FirstName" id="firstName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
                 <ValidationMessage For="@(() => RegisterModel.FirstName)" class="text-red-600 text-sm" />
             </div>
 
@@ -27,7 +27,7 @@
                     Apellidos
                     <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.LastName) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="text" @bind-Value="RegisterModel!.LastName" id="email" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <InputText type="text" @bind-Value="RegisterModel!.LastName" id="lastName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
                 <ValidationMessage For="@(() => RegisterModel.LastName)" class="text-red-600 text-sm" />
             </div>
 
@@ -49,11 +49,11 @@
             </div>
 
             <div class="mb-4">
-                <label for="password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">
+                <label for="confirmpassword" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Repetir Contraseña
                     <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.ConfirmPassword) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="confirmPassword" @bind-Value="RegisterModel!.ConfirmPassword" id="password" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <InputText type="confirmPassword" @bind-Value="RegisterModel!.ConfirmPassword" id="confirmPassword" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
             </div>
 
             <button type="submit" class="w-full rounded bg-green-600 py-2 text-white transition-colors hover:bg-green-700">Registrarme</button>
@@ -91,6 +91,7 @@
 
             var emailRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
 
+
             var email = RegisterModel.Email;
 
             if (RegisterModel == null)
@@ -110,7 +111,6 @@
                     Message = null; 
                 }
 
-                
                 if (string.IsNullOrEmpty(RegisterModel.FirstName) ||
                     string.IsNullOrEmpty(RegisterModel.LastName) ||
                     string.IsNullOrEmpty(RegisterModel.Email) ||
@@ -136,6 +136,8 @@
             }
 
         }
+
+
 
     }
 }
