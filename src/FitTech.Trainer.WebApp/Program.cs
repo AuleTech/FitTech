@@ -1,6 +1,7 @@
-using FitTech.API.Client;
+﻿using FitTech.API.Client;
 using FitTech.Trainer.WebApp.Components;
 using FitTech.WebComponents;
+using FitTech.WebComponents.Pages.Login;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,7 @@ app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
+    .AddAdditionalAssemblies(typeof(Login).Assembly)
     .AddInteractiveServerRenderMode();
 
 app.Run();
