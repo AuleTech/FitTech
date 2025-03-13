@@ -12,6 +12,13 @@
   </ItemGroup>
 
     <ItemGroup>
+<<<<<<< HEAD
+=======
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+>>>>>>> 866903430813f0a9b96797caf49b96faa9743586
         <PackageReference Include="Blazored.LocalStorage" />
         <PackageReference Include="Microsoft.AspNetCore" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
