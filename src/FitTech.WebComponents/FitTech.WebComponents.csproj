@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
 
 
-    <ItemGroup>
-        <SupportedPlatform Include="browser"/>
-    </ItemGroup>
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web"/>
-    </ItemGroup>
-  
-    <!--Just for now, this may cause a lot of merge conflicts. styles.css should be generated on deploy-->
-    <Target Name="Tailwind" BeforeTargets="Compile">
-      <Exec Command="npx tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/styles.css" />
-    </Target>
-  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+  </ItemGroup>
+
+  <!--Just for now, this may cause a lot of merge conflicts. styles.css should be generated on deploy-->
+  <Target Name="Tailwind" BeforeTargets="Compile">
+    <Exec Command="npx tailwindcss -i ./Styles/tailwind.css -o ./wwwroot/styles.css" />
+  </Target>
+
 </Project>
