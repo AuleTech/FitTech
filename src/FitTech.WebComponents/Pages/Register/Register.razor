@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 
 
+
 <div class="w-full max-w-md px-4">
     <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
         <div class="mb-6 text-center">
@@ -35,7 +36,7 @@
                     Email
                     <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.Email) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="text" @bind-Value="RegisterModel!.Email" id="email" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <InputText type="text" @bind-Value="RegisterModel!.Email" id="email" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
                 <ValidationMessage For="@(() => RegisterModel.Email)" class="text-red-600 text-sm" />
             </div>
 
@@ -76,7 +77,9 @@
 
     private bool showValidationErrors { get; set; } = false;
 
+
     protected override void OnInitialized() => RegisterModel ??= new();
+
 
     private void RegisterFuncion() 
     {
@@ -85,37 +88,57 @@
         if (RegisterModel != null)
         {
             showValidationErrors = true;
-           
-            if (string.IsNullOrEmpty(RegisterModel.FirstName) || string.IsNullOrEmpty(RegisterModel.LastName) || string.IsNullOrEmpty(RegisterModel.Email) || string.IsNullOrEmpty(RegisterModel.Password))
+
+            var emailRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+
+            var email = RegisterModel.Email;
+
+            if (RegisterModel == null)
             {
-                Message = "Por favor, completa todos los campos.";
-            }
-            else if (RegisterModel.Password != RegisterModel.ConfirmPassword)
-            {
-                Message = "Las contraseñas no coinciden.";
+                Console.WriteLine("RegisterModel es null.");
             }
             else
             {
-                Message = "¡Registro exitoso! Bienvenido a FitTech.";
-                // Aquí puedes agregar la lógica para guardar los datos en una base de datos o hacer otras acciones.
+                
+                if (!emailRegex.IsMatch(RegisterModel.Email))
+                {
+                    Message = "Email no válido.";
+                    return;
+                }
+                else
+                {
+                    Message = null; 
+                }
+
+                
+                if (string.IsNullOrEmpty(RegisterModel.FirstName) ||
+                    string.IsNullOrEmpty(RegisterModel.LastName) ||
+                    string.IsNullOrEmpty(RegisterModel.Email) ||
+                    string.IsNullOrEmpty(RegisterModel.Password))
+                {
+                    Message = "Por favor, completa todos los campos (*).";
+                }
+                
+                else if (RegisterModel.Password != RegisterModel.ConfirmPassword)
+                {
+                    Message = "Las contraseñas no coinciden.";
+                }
+                else
+                {
+                    Message = "¡Registro exitoso! Bienvenido a FitTech.";
+                }
+
+                
+                if (RegisterModel.Password != RegisterModel.ConfirmPassword)
+                {
+                    Console.WriteLine("Las contraseñas no coinciden, inténtelo de nuevo.");
+                }
             }
 
-            if (RegisterModel.Password != RegisterModel.ConfirmPassword)
-            {
-
-                Console.WriteLine("Las contraseñas no coinciden, intentelo de nuevo");
-
-            }
-
-
-
-        }
-        else
-        {
-            Console.WriteLine("RegisterModel es null.");
         }
 
     }
-
-    
 }
+
+   
+ 
