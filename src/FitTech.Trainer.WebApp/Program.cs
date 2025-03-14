@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddFitTechComponents(builder.Configuration)
     .AddRazorComponents()
+    
     .AddInteractiveServerComponents();
 
 var app = builder.Build();

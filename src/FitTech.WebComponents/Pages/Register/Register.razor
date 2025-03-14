@@ -1,145 +1,90 @@
 ﻿@page "/register"
 @using Microsoft.AspNetCore.Components.Forms
-
+@using Microsoft.Extensions.Logging
+@inject ILogger<Register> Logger
 
 
 <div class="w-full max-w-md px-4">
-    <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
+    <div
+        class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
         <div class="mb-6 text-center">
-            <h2 class="mt-4 text-2xl font-bold text-black dark:text-white">Registrate en  FitTech</h2>
+            <h2 class="mt-4 text-2xl font-bold text-black dark:text-white">Registrate en FitTech</h2>
         </div>
-        <EditForm Model="RegisterModel" OnSubmit="RegisterFuncion" FormName="RegisterForm">
+        <EditForm Model="RegisterModel" OnValidSubmit="RegisterFuncion" FormName="RegisterForm">
 
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+            <DataAnnotationsValidator/>
 
             <div class="mb-4">
                 <label for="nombre" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Nombre
-                    <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.FirstName) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="text" @bind-Value="RegisterModel!.FirstName" id="firstName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                <ValidationMessage For="@(() => RegisterModel.FirstName)" class="text-red-600 text-sm" />
+                <InputText type="text" @bind-Value="RegisterModel!.FirstName" id="firstName"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => RegisterModel.FirstName)" class="text-red-600 text-sm"/>
             </div>
 
             <div class="mb-4">
                 <label for="apellidos" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Apellidos
-                    <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.LastName) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="text" @bind-Value="RegisterModel!.LastName" id="lastName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                <ValidationMessage For="@(() => RegisterModel.LastName)" class="text-red-600 text-sm" />
+                <InputText type="text" @bind-Value="RegisterModel!.LastName" id="lastName"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => RegisterModel.LastName)" class="text-red-600 text-sm"/>
             </div>
 
             <div class="mb-4">
                 <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Email
-                    <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.Email) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="text" @bind-Value="RegisterModel!.Email" id="email" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
-                <ValidationMessage For="@(() => RegisterModel.Email)" class="text-red-600 text-sm" />
+                <InputText type="text" @bind-Value="RegisterModel!.Email" id="email"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => RegisterModel.Email)" class="text-red-600 text-sm"/>
             </div>
 
             <div class="mb-4">
                 <label for="password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Contraseña
-                    <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.Password) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="password" @bind-Value="RegisterModel!.Password" id="password" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <InputText type="password" @bind-Value="RegisterModel!.Password" id="password"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => RegisterModel.Password)" class="text-red-600 text-sm"/>
             </div>
 
             <div class="mb-4">
                 <label for="confirmpassword" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">
                     Repetir Contraseña
-                    <span class="text-red-600" style="display: @(showValidationErrors && string.IsNullOrEmpty(RegisterModel?.ConfirmPassword) ? "inline" : "none")">*</span>
                 </label>
-                <InputText type="confirmPassword" @bind-Value="RegisterModel!.ConfirmPassword" id="confirmPassword" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <InputText type="confirmPassword" @bind-Value="RegisterModel!.ConfirmPassword" id="confirmPassword"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" class="text-red-600 text-sm"/>
             </div>
 
-            <button type="submit" class="w-full rounded bg-green-600 py-2 text-white transition-colors hover:bg-green-700">Registrarme</button>
+            <button type="submit"
+                    class="w-full rounded bg-green-600 py-2 text-white transition-colors hover:bg-green-700">Registrarme
+            </button>
         </EditForm>
-        @if (!string.IsNullOrEmpty(Message))
-        {
-            <div class="mt-4 text-center text-green-600 dark:text-green-400">
-                <p>@Message</p>
-            </div>
-        }
     </div>
 </div>
 
 @code
 {
-    [SupplyParameterFromForm]
+    [SupplyParameterFromForm] private RegisterModel? RegisterModel { get; set; }
 
-    private RegisterModel? RegisterModel { get; set; }
-
-    private string? Message { get; set; }
-
-    private bool showValidationErrors { get; set; } = false;
-
-
-    protected override void OnInitialized() => RegisterModel ??= new();
-
-
-    private void RegisterFuncion() 
+    protected override void OnInitialized()
     {
-
-
-        if (RegisterModel != null)
-        {
-            showValidationErrors = true;
-
-            var emailRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
-
-
-            var email = RegisterModel.Email;
-
-            if (RegisterModel == null)
-            {
-                Console.WriteLine("RegisterModel es null.");
-            }
-            else
-            {
-                
-                if (!emailRegex.IsMatch(RegisterModel.Email))
-                {
-                    Message = "Email no válido.";
-                    return;
-                }
-                else
-                {
-                    Message = null; 
-                }
-
-                if (string.IsNullOrEmpty(RegisterModel.FirstName) ||
-                    string.IsNullOrEmpty(RegisterModel.LastName) ||
-                    string.IsNullOrEmpty(RegisterModel.Email) ||
-                    string.IsNullOrEmpty(RegisterModel.Password))
-                {
-                    Message = "Por favor, completa todos los campos (*).";
-                }
-                
-                else if (RegisterModel.Password != RegisterModel.ConfirmPassword)
-                {
-                    Message = "Las contraseñas no coinciden.";
-                }
-                else
-                {
-                    Message = "¡Registro exitoso! Bienvenido a FitTech.";
-                }
-
-                
-                if (RegisterModel.Password != RegisterModel.ConfirmPassword)
-                {
-                    Console.WriteLine("Las contraseñas no coinciden, inténtelo de nuevo.");
-                }
-            }
-
-        }
-
-
-
+        RegisterModel ??= new RegisterModel();
     }
+
+
+    private void RegisterFuncion()
+    {
+        Logger.LogInformation("Form submited");
+        
+        //TODO: Use IUserService for Registration
+    }
+
+}
+
 }
 
    
