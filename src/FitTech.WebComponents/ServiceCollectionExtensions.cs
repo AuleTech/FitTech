@@ -19,7 +19,6 @@ public static class ServiceCollectionExtensions
             .AddTransient<IUserService, UserService>()
             .AddScoped<AuthenticationStateProvider, FitTechAuthStateProvider>()
             .AddScoped<FitTechAuthStateProvider>()
-            .AddAuthorizationCore()
-            .AddAuthenticationCore();
+            .AddAuthorizationCore();
     }
 }

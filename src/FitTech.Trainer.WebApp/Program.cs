@@ -1,14 +1,16 @@
 using FitTech.Trainer.WebApp.Components;
 using FitTech.WebComponents;
 using FitTech.WebComponents.Pages.Login;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services
     .AddFitTechComponents(builder.Configuration)
     .AddRazorComponents()
     .AddInteractiveServerComponents();
+
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -25,7 +27,7 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>()
+app.MapRazorComponents<App>().AllowAnonymous()
     .AddAdditionalAssemblies(typeof(Login).Assembly)
     .AddInteractiveServerRenderMode();
 
