@@ -3,4 +3,19 @@
 
 <PageTitle>Home</PageTitle>
 
-<Login></Login>
+
+<h2>Claims</h2>
+<AuthorizeView>
+    <ul>
+        @foreach (var claim in context.User.Claims)
+        {
+            <li><b>@claim.Type</b>: @claim.Value</li>
+        }
+    </ul>
+</AuthorizeView>
+
+<AuthorizeView Roles="Trainer">
+    <Authorized>
+        <p class="text-red-700"> I'm a trainer!!!</p>
+    </Authorized>
+</AuthorizeView>
