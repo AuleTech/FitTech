@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FitTech.WebComponents.Pages.Recovery_Password
+namespace FitTech.WebComponents.Pages.ForgotPassword
 {
     public class ForgotPasswordModel
     {

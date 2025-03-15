@@ -61,14 +61,15 @@ internal sealed class UserService : IUserService
             : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
     }
 
-    public async Task<Result> ForgotAsync(string email, CancellationToken cancellationToken)
+    public Task<Result> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        var result = await _fitTechApiClient.FitTechAPIAuthRecoveryRecoveryEndpointAsync(
-            new FitTechAPIAuthRecoveryRecoveryRequest { Email = email }, cancellationToken);
-
-        return result.Succeeded
-            ? Result.Success
-            : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
+        throw new NotImplementedException();
+        // ArgumentException.ThrowIfNullOrWhiteSpace(email);
+        // var result = await _fitTechApiClient.FitTechAPIAuthRecoveryRecoveryEndpointAsync(
+        //     new FitTechAPIAuthRecoveryRecoveryRequest { Email = email }, cancellationToken);
+        //
+        // return result.Succeeded
+        //     ? Result.Success
+        //     : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
     }
 }
