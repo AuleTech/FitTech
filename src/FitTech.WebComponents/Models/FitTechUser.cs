@@ -17,7 +17,8 @@ public class FitTechUser
         }
         
         var tokenHandler = new JwtSecurityTokenHandler();
-        var claims = new ClaimsIdentity();
+        tokenHandler.InboundClaimTypeMap.Clear();
+        var claims = new ClaimsIdentity("FitTechAuth");
 
         if (tokenHandler.CanReadToken(AccessToken))
         {

@@ -1,0 +1,10 @@
+@* Maybe this should be in the main page *@
+@page "/dashboard"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Trainer")]
+
+<h3>Dashboard</h3>
+
+@code {
+    
+}

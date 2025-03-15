@@ -1,8 +1,6 @@
-using FitTech.API.Client;
 using FitTech.Trainer.WebApp.Components;
 using FitTech.WebComponents;
 using FitTech.WebComponents.Pages.Login;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddFitTechComponents(builder.Configuration)
     .AddRazorComponents()
-    
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

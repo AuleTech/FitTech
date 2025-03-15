@@ -17,7 +17,9 @@ public static class ServiceCollectionExtensions
             .AddFitTechApiClient(configuration)
             .AddBlazoredLocalStorage()
             .AddTransient<IUserService, UserService>()
+            .AddScoped<AuthenticationStateProvider, FitTechAuthStateProvider>()
             .AddScoped<FitTechAuthStateProvider>()
+            .AddAuthorizationCore()
             .AddAuthenticationCore();
     }
 }

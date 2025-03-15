@@ -28,7 +28,8 @@ internal sealed class TokenProvider : ITokenProvider
             Subject =
                 new ClaimsIdentity([
                     new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString())
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, "Trainer")
                 ]),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = credentials,
@@ -36,6 +37,7 @@ internal sealed class TokenProvider : ITokenProvider
             Audience = _authenticationSettings.Audience
         };
 
+        JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
         var handler = new JwtSecurityTokenHandler();
         
         var result =  handler.CreateToken(tokenDescriptor);
