@@ -71,4 +71,15 @@ internal sealed class UserService : IUserService
             ? Result.Success
             : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
     }
+
+    public async Task<Result> ResetAsync(string newPassword, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(newPassword);
+        var result = await _fitTechApiClient.FitTechAPIAuthResetResetEndpointAsync(
+            new FitTechAPIAuthResetResetRequest { NewPassword = newPassword }, cancellationToken);
+        return result.Succeeded
+            ? Result.Success
+            : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
+    }
+
 }
