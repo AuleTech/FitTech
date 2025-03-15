@@ -6,6 +6,8 @@
 @using Microsoft.AspNetCore.Components.Forms
 @inject ILogger<Login> Logger
 @inject IUserService UserService;
+@inject NavigationManager NavigationManager
+
 
 <div class="w-full max-w-md px-4">
     <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
@@ -20,8 +22,8 @@
 
             <div class="mb-4">
                 <div class="flex items-center justify-between">
-                    <label for="password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Password</label>
-                    <a href="#" class="text-sm text-blue-600 hover:underline dark:text-blue-400">¿Olvidaste tu contraseña?</a>
+                    <label for="password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Contraseña</label>
+                    <a href="/ForgotPassword" class="text-sm text-blue-600 hover:underline dark:text-blue-400">¿Olvidaste tu contraseña?</a>
                 </div>
                 <InputText type="password" @bind-Value="LoginModel!.Password" id="password" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
             </div>
@@ -52,10 +54,9 @@
 
         if (!response!.Succeeded)
         {
-            //TODO: Display Error
             return;
-        }
-        
-        //TODO: Navigate to dashboard
+        } 
     } 
+
+   
 } 

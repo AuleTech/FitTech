@@ -1,4 +1,4 @@
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using FitTech.API.Client.Contracts;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
@@ -55,6 +55,17 @@ internal sealed class UserService : IUserService
 
         var result = await _fitTechApiClient.FitTechAPIAuthRegisterRegisterEndpointAsync(
             new FitTechAPIAuthRegisterRegisterRequest { Email = email, Password = password }, cancellationToken);
+
+        return result.Succeeded
+            ? Result.Success
+            : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
+    }
+
+    public async Task<Result> ForgotAsync(string email, CancellationToken cancellationToken)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(email);
+        var result = await _fitTechApiClient.FitTechAPIAuthRecoveryRecoveryEndpointAsync(
+            new FitTechAPIAuthRecoveryRecoveryRequest { Email = email }, cancellationToken);
 
         return result.Succeeded
             ? Result.Success
