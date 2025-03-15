@@ -1,7 +1,6 @@
 ﻿@page "/register"
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.Extensions.Logging
-@inject ILogger<Register> Logger
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 @inherits FitTech.WebComponents.Components.CancellableComponent;
 @using FitTech.WebComponents.Services
@@ -92,18 +91,13 @@
 
     private async Task RegisterFuncion()
     {
-        Logger.LogInformation("Form submited");
-
         var response = await UserService.RegisterAsync(RegisterModel!.Email, RegisterModel.Password, _cts.Token);
 
         if (!response!.Succeeded)
         {
-            Logger.LogError("Error en el registro: {Error}", response.Errors);
             _message = "Hubo un error en el registro. Intentalo de  nuevo."; 
             return;
         }
-
-        Logger.LogInformation("Registro realizado con éxito.Bienvenido a FitTech, {Email}", RegisterModel.Email);
         _message = "Te has registrado con éxito. ¡Bienvenido a FitTech!"; 
         StateHasChanged();
         await Task.Delay(2000); 

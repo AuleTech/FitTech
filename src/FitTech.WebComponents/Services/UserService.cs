@@ -61,7 +61,7 @@ internal sealed class UserService : IUserService
             : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
     }
 
-    public async Task<Result> RecoveryAsync(string email, CancellationToken cancellationToken)
+    public async Task<Result> ForgotAsync(string email, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
         var result = await _fitTechApiClient.FitTechAPIAuthRecoveryRecoveryEndpointAsync(
