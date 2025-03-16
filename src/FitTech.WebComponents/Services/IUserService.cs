@@ -6,6 +6,6 @@ public interface IUserService
 {
     Task<Result<FitTechUser>> LoginAsync(string email, string password, CancellationToken cancellationToken);
     Task<Result> RegisterAsync(string email, string password, CancellationToken cancellationToken);
-    Task<Result> ForgotAsync(string email, CancellationToken cancellationToken);
-    Task<Result> ResetAsync(string email, CancellationToken cancellationToken);
+    Task<Result> ForgotPasswordAsync(string email, CancellationToken cancellationToken);
+    Task<Result> ResetAsync(string password, CancellationToken cancellationToken);
 }
