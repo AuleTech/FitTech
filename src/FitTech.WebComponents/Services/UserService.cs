@@ -72,4 +72,17 @@ internal sealed class UserService : IUserService
         //     ? Result.Success
         //     : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
     }
+
+    public Task<Result> ResetAsync(string newPassword, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+        // ArgumentException.ThrowIfNullOrWhiteSpace(email);
+        // var result = await _fitTechApiClient.FitTechAPIAuthRecoveryRecoveryEndpointAsync(
+        //     new FitTechAPIAuthRecoveryRecoveryRequest { Email = email }, cancellationToken);
+        //
+        // return result.Succeeded
+        //     ? Result.Success
+        //     : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
+    }
+
 }
