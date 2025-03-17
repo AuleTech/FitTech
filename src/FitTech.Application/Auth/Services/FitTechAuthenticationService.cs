@@ -1,6 +1,7 @@
 ﻿using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Providers;
 using FitTech.Domain.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
@@ -48,7 +49,7 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
 
         var token = _tokenProvider.Create(user);
         //TODO: Return RefreshToken
-
+            
         return new LoginResultDto(true, token);
     }
 }
