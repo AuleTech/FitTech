@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
-using FitTech.API.Client.Contracts;
+using FitTech.API.Client;
+using FitTech.API.Contracts;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using Microsoft.Extensions.Logging;
@@ -9,11 +10,11 @@ namespace FitTech.WebComponents.Services;
 internal sealed class UserService : IUserService
 {
     private readonly FitTechAuthStateProvider _authStateProvider;
-    private readonly IFitTechApiClient _fitTechApiClient;
+    private readonly FitTechAPIClient _fitTechApiClient;
     private readonly ILocalStorageService _localStorageService;
     private readonly ILogger<UserService> _logger;
 
-    public UserService(IFitTechApiClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
+    public UserService(FitTechAPIClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
         ILogger<UserService> logger, ILocalStorageService localStorageService)
     {
         _fitTechApiClient = fitTechApiClient;
@@ -33,7 +34,7 @@ internal sealed class UserService : IUserService
             var result = await _fitTechApiClient.FitTechAPIAuthLoginLoginEndpointAsync(
                 new FitTechAPIAuthLoginLoginRequest { Email = email, Password = password }, cancellationToken);
 
-            var user = new FitTechUser { Email = email, AccessToken = result.AccessToken };
+            var user = new FitTechUser { Email = email, AccessToken = result.Value.AccessToken };
 
             await _localStorageService.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
             
@@ -58,7 +59,7 @@ internal sealed class UserService : IUserService
 
         return result.Succeeded
             ? Result.Success
-            : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
+            : Result.Failure(result.Errors.Select(x => x).ToArray());
     }
 
     public Task<Result> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
