@@ -73,7 +73,7 @@ internal sealed class UserService : IUserService
         //     : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
     }
 
-    public Task<Result> ResetAsync(string password, CancellationToken cancellationToken)
+    public Task<Result> ResetAsync(string newPassword, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
         // ArgumentException.ThrowIfNullOrWhiteSpace(email);
