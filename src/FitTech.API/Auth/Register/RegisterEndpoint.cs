@@ -1,11 +1,11 @@
 ﻿using FastEndpoints;
+using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
-using FitTech.Domain.Entities;
 
 namespace FitTech.API.Auth.Register;
 
-public class RegisterEndpoint : Endpoint<RegisterRequest, RegisterResponse>
+public class RegisterEndpoint : Endpoint<RegisterRequest, Result>
 {
     private readonly IFitTechAuthenticationService _authenticationService;
 
@@ -22,17 +22,13 @@ public class RegisterEndpoint : Endpoint<RegisterRequest, RegisterResponse>
 
     public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
     {
-        var user = new FitTechUser { Email = req.Email, UserName = req.Email };
-
         var registrationResult =
             await _authenticationService.RegisterAsync(new RegisterUserDto(req.Email, req.Password), ct);
-
-        var response = new RegisterResponse(registrationResult.Succeeded,
-            registrationResult.Errors.Select(x => new RegisterErrors(x.Code, x.Description)));
         
-        await SendAsync(response,
+        
+        await SendAsync(registrationResult,
             registrationResult.Succeeded ? StatusCodes.Status200OK :
-            registrationResult.Errors.Any() ? StatusCodes.Status500InternalServerError :
-            StatusCodes.Status400BadRequest, ct);
+            registrationResult.Errors.Any() ? StatusCodes.Status400BadRequest :
+            StatusCodes.Status500InternalServerError, ct);
     }
 }

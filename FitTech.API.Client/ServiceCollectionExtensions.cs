@@ -1,5 +1,4 @@
 using FitTech.API.Client.Configuration;
-using FitTech.API.Client.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,12 +18,12 @@ public static class ServiceCollectionExtensions
 
         serviceCollection
             .AddHttpClient()
-            .AddTransient<IFitTechApiClient>(c =>
+            .AddTransient<FitTechAPIClient>(c =>
             {
                 var httpClientFactory = c.GetRequiredService<IHttpClientFactory>();
 
                 var fitTechApiClient =
-                    new FitTechApiFitTechApiClient(httpClientFactory.CreateClient(nameof(FitTechApiFitTechApiClient)))
+                    new FitTechAPIClient(httpClientFactory.CreateClient(nameof(FitTechAPIClient)))
                     {
                         BaseUrl = fitTechConfig.Url
                     };
