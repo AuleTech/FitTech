@@ -1,10 +1,11 @@
 ﻿using FastEndpoints;
+using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 
 namespace FitTech.API.Auth.Login;
 
-public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
+public sealed class LoginEndpoint : Endpoint<LoginRequest, Result<LoginResponse>>
 {
     private readonly IFitTechAuthenticationService _authenticationService;
 
@@ -29,6 +30,6 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
             return;
         }
 
-        await SendAsync(new LoginResponse(result.AccessToken!), cancellation: ct);
+        await SendAsync(new LoginResponse(result.Value!.AccessToken!), cancellation: ct);
     }
 }

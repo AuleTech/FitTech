@@ -1,10 +1,11 @@
 ﻿using FitTech.Application.Auth.Dtos;
-using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.Application.Auth.Services;
 
 public interface IFitTechAuthenticationService
 {
-    Task<IdentityResult> RegisterAsync(RegisterUserDto registerUserDto, CancellationToken cancellationToken);
-    Task<LoginResultDto> LoginAsync(LoginDto loginDto, CancellationToken cancellationToken);
+    Task<Result> RegisterAsync(RegisterUserDto registerUserDto, CancellationToken cancellationToken);
+    Task<Result<LoginResultDto>> LoginAsync(LoginDto loginDto, CancellationToken cancellationToken);
+    Task<Result<string>> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto, CancellationToken cancellationToken);
+    Task<Result> ResetPasswordAsync(ResetPasswordDto resetPasswordDto, CancellationToken cancellationToken);
 }

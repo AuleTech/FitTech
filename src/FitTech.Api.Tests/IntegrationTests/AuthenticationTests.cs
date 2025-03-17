@@ -14,6 +14,7 @@ namespace FitTech.Api.Tests.IntegrationTests;
 public class AuthenticationTests
 {
     private static IFitTechAuthenticationService? _sut;
+    private static IServiceProvider? _serviceProvider;
     private readonly Faker _faker = new ();
     
     [Before(Class)]
@@ -38,8 +39,8 @@ public class AuthenticationTests
         
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
+        _serviceProvider = serviceProvider;
         _sut = serviceProvider.GetRequiredService<IFitTechAuthenticationService>();
-
         return Task.CompletedTask;
     }
 
@@ -79,6 +80,23 @@ public class AuthenticationTests
         var loginResult = await _sut!.LoginAsync(new LoginDto(userInfo!.Email, userInfo.Password), cancellationToken);
 
         await Assert.That(loginResult.Succeeded).IsTrue();
-        await Assert.That(loginResult.AccessToken).IsNotNullOrWhitespace();
+        await Assert.That(loginResult.Value!.AccessToken).IsNotNullOrWhitespace();
     }
+
+    // [Test]
+    // [Timeout(30_000)]
+    // [DependsOn(nameof(RegisterAsync_WhenEmailAndPasswordAreOk_ReturnsSucceeded))]
+    // public async Task ForgotPasswordAsync_WhenEmailIsOk_GeneratesResetPasswordToken(
+    //     CancellationToken cancellationToken)
+    // {
+    //     var registerTestContext = TestContext.Current!.GetTests(nameof(RegisterAsync_WhenEmailAndPasswordAreOk_ReturnsSucceeded))
+    //         .First();
+    //
+    //     var userInfo = registerTestContext.ObjectBag[TestUserInfo.SharedKey] as TestUserInfo;
+    //
+    //     var result =
+    //         await _sut!.ForgotPasswordAsync(new ForgotPasswordDto(userInfo!.Email, "nevermindurl"), cancellationToken);
+    //     var db = _serviceProvider!.GetRequiredService<FitTechDbContext>();
+    //     var token = db.Set<>()
+    // }
 }
