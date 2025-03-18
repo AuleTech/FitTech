@@ -62,28 +62,36 @@ internal sealed class UserService : IUserService
             : Result.Failure(result.Errors.Select(x => x).ToArray());
     }
 
-    public Task<Result> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
+    public async Task<Result<string>> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-        // ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        // var result = await _fitTechApiClient.FitTechAPIAuthRecoveryRecoveryEndpointAsync(
-        //     new FitTechAPIAuthRecoveryRecoveryRequest { Email = email }, cancellationToken);
-        //
-        // return result.Succeeded
-        //     ? Result.Success
-        //     : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
+        ArgumentException.ThrowIfNullOrWhiteSpace(email);
+        var result = await _fitTechApiClient.FitTechAPIAuthForgotPasswordForgotPasswordEndpointAsync(
+            new FitTechAPIAuthForgotPasswordForgotPasswordRequest
+            {
+                Email = email, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
+            }, cancellationToken);
+
+        return new Result<string>()
+        {
+            Errors = result.Errors.ToArray(),
+            Succeeded = result.Succeeded,
+            Value = result.Value
+        };
     }
 
-    public Task<Result> ResetAsync(string newPassword, CancellationToken cancellationToken)
+    public async Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-        // ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        // var result = await _fitTechApiClient.FitTechAPIAuthRecoveryRecoveryEndpointAsync(
-        //     new FitTechAPIAuthRecoveryRecoveryRequest { Email = email }, cancellationToken);
-        //
-        // return result.Succeeded
-        //     ? Result.Success
-        //     : Result.Failure(result.Errors.Select(x => x.Description).ToArray());
+        ArgumentException.ThrowIfNullOrWhiteSpace(email);
+        ArgumentException.ThrowIfNullOrWhiteSpace(token);
+        ArgumentException.ThrowIfNullOrWhiteSpace(newPassword);
+
+        var result = await _fitTechApiClient.FitTechAPIAuthResetPasswordResetPasswordEndpointAsync(
+            new FitTechAPIAuthResetPasswordResetPasswordRequest
+            {
+                Email = email, Token = token, NewPassword = newPassword
+            }, cancellationToken);
+
+        return new Result() { Errors = result.Errors.ToArray(), Succeeded = result.Succeeded };
     }
 
 }

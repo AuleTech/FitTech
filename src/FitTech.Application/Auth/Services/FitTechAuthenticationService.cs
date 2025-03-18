@@ -69,7 +69,8 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
             return Result<string>.Success(string.Empty);
         }
 
-        var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user).WaitAsync(cancellationToken);
+        var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user).WaitAsync(cancellationToken); //TODO: We need to normalized for http.
+        
         
         //TODO: Remove this log when we send the email
         //CallbackUrl url/resetpassword
