@@ -1,4 +1,5 @@
-﻿using FitTech.Application.Auth.Dtos;
+﻿using System.Web;
+using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Providers;
 using FitTech.Application.Extensions;
 using FitTech.Domain.Entities;
@@ -76,7 +77,7 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         //CallbackUrl url/resetpassword
         _logger.LogInformation("ResetPasswordUrl: {Url}",$"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={resetPasswordToken}");
 
-        return Result<string>.Success(resetPasswordToken);
+        return Result<string>.Success(HttpUtility.UrlEncode(resetPasswordToken));
     }
 
     public async Task<Result> ResetPasswordAsync(ResetPasswordDto resetPasswordDto, CancellationToken cancellationToken)
@@ -90,7 +91,7 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
             return Result.Failure(["Something went wrong"]);
         }
         
-        var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+        var result = await _userManager.ResetPasswordAsync(user, HttpUtility.HtmlDecode(resetPasswordDto.Token), resetPasswordDto.Password);
 
         return result.ToResult();
     }
