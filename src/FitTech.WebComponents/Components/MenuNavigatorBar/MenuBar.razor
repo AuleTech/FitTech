@@ -2,6 +2,7 @@
 @inherits FitTech.WebComponents.Components.CancellableComponent;
 @using Microsoft.AspNetCore.Components
 @using System.Collections.Generic
+@using FitTech.WebComponents.Components.IconsSVG
 
 <aside class="fixed left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 shadow-md transition-all duration-300 ease-in-out @(isExpanded ? "w-64" : "w-20")">
     <div class="mb-6 text-center p-4">
@@ -15,10 +16,8 @@
                 <li class="mt-2 text-gray-700 dark:text-gray-300">
                     <a href="@menuItem.Link" class="flex items-center block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
                         <!-- Icono -->
-                        @if (menuItem.Icon != null)
-                        {
-                            <img src="@menuItem.Icon" alt="@menuItem.Text" class="inline-block mr-2 w-6 h-6" />
-                        }
+                        <IconsSVG Icon="@menuItem.Icon" />
+
                         <!-- Texto, que solo se muestra cuando el menú está expandido -->
                         <span class="text-sm @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
                     </a>
@@ -53,17 +52,17 @@
 
     private List<MenuItem> menuItems = new List<MenuItem>
     {
-        new MenuItem { Text = "Inicio", Link = "/home", Icon = "FitTech.WebComponents/styles/icons/HomeIcon.png" },
-        new MenuItem { Text = "Mi Perfil", Link = "/profile", Icon = "/profile" },
-        new MenuItem { Text = "Rutinas de Ejercicio", Link = "/workouts" },
-        new MenuItem { Text = "Seguimiento de Progreso", Link = "/progress" },
-        new MenuItem { Text = "Planes de Alimentación", Link = "/nutrition" },
-        new MenuItem { Text = "Clases en Vivo", Link = "/live-classes" },
-        new MenuItem { Text = "Comunidad", Link = "/community" },
-        new MenuItem { Text = "Desafíos", Link = "/challenges" },
-        new MenuItem { Text = "Notificaciones", Link = "/notifications" },
-        new MenuItem { Text = "Configuración", Link = "/settings" },
-        new MenuItem { Text = "Soporte", Link = "/support" },
-        new MenuItem { Text = "Cerrar Sesión", Link = "/logout" }
+        new MenuItem { Text = "Inicio", Link = "/home", Icon = "HomeIcon" },
+        new MenuItem { Text = "Mi Perfil", Link = "/profile", Icon = "ProfileIcon" },
+        new MenuItem { Text = "Rutinas de Ejercicio", Link = "/workouts", Icon = "WorkoutsIcon" },
+        new MenuItem { Text = "Seguimiento de Progreso", Link = "/progress", Icon = "ProgressIcon" },
+        new MenuItem { Text = "Planes de Alimentación", Link = "/nutrition", Icon = "NutritionIcon" },
+        new MenuItem { Text = "Clases en Vivo", Link = "/live-classes", Icon = "LiveClassesIcon" },
+        new MenuItem { Text = "Comunidad", Link = "/community", Icon = "CommunityIcon" },
+        new MenuItem { Text = "Desafíos", Link = "/challenges", Icon = "ChallengesIcon" },
+        new MenuItem { Text = "Notificaciones", Link = "/notifications", Icon = "NotificationsIcon" },
+        new MenuItem { Text = "Configuración", Link = "/settings", Icon = "SettingsIcon" },
+        new MenuItem { Text = "Soporte", Link = "/support", Icon = "SupportIcon" },
+        new MenuItem { Text = "Cerrar Sesión", Link = "/logout", Icon = "LogoutIcon" }
     };
 }

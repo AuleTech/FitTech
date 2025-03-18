@@ -10,11 +10,6 @@
     <RazorComponentClassLibrary>true</RazorComponentClassLibrary>
     <RazorGenerateComponentRenderingCode>true</RazorGenerateComponentRenderingCode>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <None Include="wwwroot\Icons\HomeIcon.png" />
-    <None Include="wwwroot\Icons\perfil.png" />
-  </ItemGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
