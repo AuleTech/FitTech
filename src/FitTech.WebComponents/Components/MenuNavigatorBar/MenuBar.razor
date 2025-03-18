@@ -15,10 +15,7 @@
             {
                 <li class="mt-2 text-gray-700 dark:text-gray-300">
                     <a href="@menuItem.Link" class="flex items-center block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-                        <!-- Icono -->
                         <IconsSVG Icon="@menuItem.Icon" />
-
-                        <!-- Texto, que solo se muestra cuando el menú está expandido -->
                         <span class="text-sm @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
                     </a>
                 </li>
@@ -64,5 +61,6 @@
         new MenuItem { Text = "Configuración", Link = "/settings", Icon = "SettingsIcon" },
         new MenuItem { Text = "Soporte", Link = "/support", Icon = "SupportIcon" },
         new MenuItem { Text = "Cerrar Sesión", Link = "/logout", Icon = "LogoutIcon" }
+        
     };
 }
