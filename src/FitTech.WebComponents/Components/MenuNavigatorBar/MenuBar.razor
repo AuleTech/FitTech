@@ -13,15 +13,14 @@
             @foreach (var menuItem in menuItems)
             {
                 <li class="mt-2 text-gray-700 dark:text-gray-300">
-                    <div class="flex items-center">
+                    <a href="@menuItem.Link" class="flex items-center block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <!-- Icono -->
                         @if (menuItem.Icon != null)
                         {
-                            <img src="@menuItem.Icon" alt="@menuItem.Text" class="inline-block mr-2" />
+                            <img src="@menuItem.Icon" alt="@menuItem.Text" class="inline-block mr-2 w-6 h-6" />
                         }
+                        <!-- Texto, que solo se muestra cuando el menú está expandido -->
                         <span class="text-sm @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
-                    </div>
-                    <a href="@menuItem.Link" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-                        <span class="sr-only">@menuItem.Text</span> <!-- Ocultar texto solo para accesibilidad -->
                     </a>
                 </li>
             }
@@ -49,13 +48,13 @@
     {
         public string? Text { get; set; }
         public string? Link { get; set; }
-        public string? Icon { get; set; } 
+        public string? Icon { get; set; }
     }
 
     private List<MenuItem> menuItems = new List<MenuItem>
     {
         new MenuItem { Text = "Inicio", Link = "/home", Icon = "FitTech.WebComponents/styles/icons/HomeIcon.png" },
-        new MenuItem { Text = "Mi Perfil", Link = "/profile" , Icon= "perfil.png"},
+        new MenuItem { Text = "Mi Perfil", Link = "/profile", Icon = "/profile" },
         new MenuItem { Text = "Rutinas de Ejercicio", Link = "/workouts" },
         new MenuItem { Text = "Seguimiento de Progreso", Link = "/progress" },
         new MenuItem { Text = "Planes de Alimentación", Link = "/nutrition" },
