@@ -16,7 +16,7 @@ internal sealed class FitTechAuthStateProvider : AuthenticationStateProvider
     {
         var user = await _localStorageService.GetItemAsync<FitTechUser>(FitTechUser.StorageKey);
 
-        return new AuthenticationState(user is not null ? user.GetClaimsPrincipal() : new ClaimsPrincipal());
+        return new AuthenticationState(user is not null ? user.GetClaimsPrincipal() : new ClaimsPrincipal(Array.Empty<ClaimsIdentity>()));
     }
 
     public void RaiseLoginEvent(FitTechUser user)

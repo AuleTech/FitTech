@@ -92,7 +92,8 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         }
         
         var result = await _userManager.ResetPasswordAsync(user, HttpUtility.HtmlDecode(resetPasswordDto.Token), resetPasswordDto.Password);
-
+        
         return result.ToResult();
     }
+    
 }

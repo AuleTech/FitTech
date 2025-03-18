@@ -1,18 +1,24 @@
 ﻿@using FitTech.Trainer.WebApp.Components.Layout
+@using FitTech.WebComponents.Layouts
 @using FitTech.WebComponents.Pages.Login
-@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+
 <CascadingAuthenticationState>
     <Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new []{typeof(Login).Assembly}">
         <Found Context="routeData">
-            <AuthorizeView>
-                <Authorized>
-                    <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(AppLayout)"/>
-                </Authorized>
+            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(AppLayout)">
                 <NotAuthorized>
-                    <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)"/>
+                    @{
+                        NavigationManager.NavigateTo("/login");
+                    }
                 </NotAuthorized>
-            </AuthorizeView>
+            </AuthorizeRouteView>
             <FocusOnNavigate RouteData="routeData" Selector="h1"/>
         </Found>
+        <NotFound>
+            <LayoutView Layout="typeof(EmptyLayout)">
+                <p>Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
     </Router>
 </CascadingAuthenticationState>

@@ -1,10 +1,20 @@
 @* Maybe this should be in the main page *@
 @page "/dashboard"
-@using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles = "Trainer")]
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@inherits FitTech.WebComponents.Components.CancellableComponent
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
 
 <h3>Dashboard</h3>
+<button class="w-full rounded bg-green-600 py-2 text-white transition-colors hover:bg-green-700" @onclick="LogoutAsync">Logout</button>
 
 @code {
-    
+
+    private async Task LogoutAsync()
+    {
+        await UserService.LogoutAsync(_cts.Token);
+        NavigationManager.NavigateTo("/");
+    }
+
 }

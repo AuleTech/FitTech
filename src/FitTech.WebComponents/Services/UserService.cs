@@ -23,6 +23,8 @@ internal sealed class UserService : IUserService
         _localStorageService = localStorageService;
     }
 
+    public async Task<bool> IsLoggedAsync() => await _localStorageService.ContainKeyAsync(FitTechUser.StorageKey); //Let's keep it simple for now
+
     public async Task<Result<FitTechUser>> LoginAsync(string email, string password,
         CancellationToken cancellationToken)
     {
@@ -94,4 +96,9 @@ internal sealed class UserService : IUserService
         return new Result() { Errors = result.Errors.ToArray(), Succeeded = result.Succeeded };
     }
 
+    public async Task<Result> LogoutAsync(CancellationToken cancellationToken)
+    {
+        await _localStorageService.RemoveItemAsync(FitTechUser.StorageKey, cancellationToken);
+        return Result.Success;
+    }
 }

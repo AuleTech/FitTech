@@ -1,11 +1,9 @@
 @page "/login"
+@layout EmptyLayout
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
-@inherits FitTech.WebComponents.Components.CancellableComponent;
-@using FitTech.WebComponents.Services
-@using Microsoft.Extensions.Logging
-@using Microsoft.AspNetCore.Components.Forms
+@inherits FitTech.WebComponents.Components.CancellableComponent
 @inject ILogger<Login> Logger
-@inject IUserService UserService;
+@inject IUserService UserService
 @inject NavigationManager NavigationManager
 
 
@@ -54,9 +52,10 @@
 
         if (!response!.Succeeded)
         {
+            //TODO: Show error
             return;
         } 
+        
+        NavigationManager.NavigateTo("/dashboard");
     } 
-
-   
 } 

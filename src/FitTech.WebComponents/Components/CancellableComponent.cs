@@ -4,7 +4,7 @@ namespace FitTech.WebComponents.Components;
 
 public class CancellableComponent : ComponentBase, IDisposable
 {
-    internal CancellationTokenSource _cts = new CancellationTokenSource();
+    public CancellationTokenSource _cts = new CancellationTokenSource();
     
     public void Dispose()
     {

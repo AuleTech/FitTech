@@ -1,1 +1,18 @@
 ﻿@page "/"
+@using FitTech.WebComponents.Services
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+@attribute [AllowAnonymous]
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        if (await UserService.IsLoggedAsync())
+        {
+            NavigationManager.NavigateTo("/dashboard");
+            return;
+        }
+        
+        NavigationManager.NavigateTo("/login");
+    }
+}
