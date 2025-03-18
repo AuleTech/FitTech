@@ -1,58 +1,70 @@
-﻿
+﻿@page "/MenuNavigatorBar"
+@inherits FitTech.WebComponents.Components.CancellableComponent;
+@using Microsoft.AspNetCore.Components
+@using System.Collections.Generic
 
-<aside class="SideBar fixed left-0 top-0 w-64 h-full bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 shadow-md">
-    <div class="SideBar-Header mb-6 text-center p-4">
-        <h3 class="text-2xl font-bold text-black dark:text-white">FitTech</h3>
+<aside class="fixed left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 shadow-md transition-all duration-300 ease-in-out @(isExpanded ? "w-64" : "w-20")">
+    <div class="mb-6 text-center p-4">
+        <h3 class="text-2xl font-bold text-black dark:text-white transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">FitTech</h3>
     </div>
 
     <div class="p-6">
         <ul>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/home" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Inicio</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/profile" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Mi Perfil</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/workouts" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Rutinas de Ejercicio</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/progress" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Seguimiento de Progreso</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/nutrition" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Planes de Alimentación</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/live-classes" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Clases en Vivo</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/community" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Comunidad</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/challenges" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Desafíos</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/notifications" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Notificaciones</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/settings" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Configuración</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/support" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Soporte</a>
-            </li>
-            <li class="mt-2 text-gray-700 dark:text-gray-300">
-                <a href="/logout" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">Cerrar Sesión</a>
-            </li>
+            @foreach (var menuItem in menuItems)
+            {
+                <li class="mt-2 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center">
+                        @if (menuItem.Icon != null)
+                        {
+                            <img src="@menuItem.Icon" alt="@menuItem.Text" class="inline-block mr-2" />
+                        }
+                        <span class="text-sm @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
+                    </div>
+                    <a href="@menuItem.Link" class="block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <span class="sr-only">@menuItem.Text</span> <!-- Ocultar texto solo para accesibilidad -->
+                    </a>
+                </li>
+            }
         </ul>
     </div>
 
-    <div class="SideBar-Footer mt-4 p-4 text-center">
+    <div class="mt-4 p-4 text-center">
         <p class="text-gray-700 dark:text-gray-300">© 2025 FitTech</p>
     </div>
+
+    <button @onclick="ToggleSidebar" class="absolute bottom-4 left-0 transform translate-x-full bg-gray-800 text-white p-2 rounded-tl-md focus:outline-none transition-all duration-300 ease-in-out">
+        <i class="fas fa-chevron-right"></i>
+    </button>
 </aside>
 
-
-
 @code {
+    private bool isExpanded = true;
 
+    private void ToggleSidebar()
+    {
+        isExpanded = !isExpanded;
+    }
+
+    private class MenuItem
+    {
+        public string? Text { get; set; }
+        public string? Link { get; set; }
+        public string? Icon { get; set; } 
+    }
+
+    private List<MenuItem> menuItems = new List<MenuItem>
+    {
+        new MenuItem { Text = "Inicio", Link = "/home", Icon = "FitTech.WebComponents/styles/icons/HomeIcon.png" },
+        new MenuItem { Text = "Mi Perfil", Link = "/profile" , Icon= "perfil.png"},
+        new MenuItem { Text = "Rutinas de Ejercicio", Link = "/workouts" },
+        new MenuItem { Text = "Seguimiento de Progreso", Link = "/progress" },
+        new MenuItem { Text = "Planes de Alimentación", Link = "/nutrition" },
+        new MenuItem { Text = "Clases en Vivo", Link = "/live-classes" },
+        new MenuItem { Text = "Comunidad", Link = "/community" },
+        new MenuItem { Text = "Desafíos", Link = "/challenges" },
+        new MenuItem { Text = "Notificaciones", Link = "/notifications" },
+        new MenuItem { Text = "Configuración", Link = "/settings" },
+        new MenuItem { Text = "Soporte", Link = "/support" },
+        new MenuItem { Text = "Cerrar Sesión", Link = "/logout" }
+    };
 }
