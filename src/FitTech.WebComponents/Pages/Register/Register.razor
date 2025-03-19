@@ -1,10 +1,8 @@
 ﻿@page "/register"
-@using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.Extensions.Logging
+@layout EmptyLayout
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
-@inherits FitTech.WebComponents.Components.CancellableComponent;
-@using FitTech.WebComponents.Services
-@inject IUserService UserService;
+@inherits FitTech.WebComponents.Components.CancellableComponent
+@inject IUserService UserService
 @inject NavigationManager Navigation
 
 
