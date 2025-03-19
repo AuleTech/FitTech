@@ -14,15 +14,17 @@
             @foreach (var menuItem in menuItems)
             {
                 <li class="mt-2 text-gray-700 dark:text-gray-300">
-                    <a href="@menuItem.Link" class="flex items-center block p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-                        <IconsSVG Icon="@menuItem.Icon" />
+                    <a href="@menuItem.Link" class="flex items-center block p-2 rounded hover:bg-gradient-to-r hover:from-[#ADC539] hover:to-[#A5D153] dark:hover:bg-gradient-to-r dark:hover:from-[#ADC539] dark:hover:to-[#A5D153] transition-colors duration-300">
+                        <span class="mr-2">
+                            <IconsSVG Icon="@menuItem.Icon" />
+                        </span>
                         <span class="text-sm @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
                     </a>
                 </li>
             }
         </ul>
     </div>
-
+    
     <div class="mt-4 p-4 text-center">
         <p class="text-gray-700 dark:text-gray-300">© 2025 FitTech</p>
     </div>
@@ -31,7 +33,6 @@
         <i class="fas fa-chevron-right"></i>
     </button>
 </aside>
-
 @code {
     private bool isExpanded = true;
 
