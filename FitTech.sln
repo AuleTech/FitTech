@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.Domain", "src\FitTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FitTech", "FitTech", "{2BAE76B1-236F-410B-A134-5BB23E8BC484}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.API.Client", "FitTech.API.Client\FitTech.API.Client.csproj", "{911859C7-118F-441F-8A00-8F6112FE0686}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.API.Client", "src\FitTech.API.Client\FitTech.API.Client.csproj", "{911859C7-118F-441F-8A00-8F6112FE0686}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.Api.Tests", "src\FitTech.Api.Tests\FitTech.Api.Tests.csproj", "{1AB7650C-AC4C-4ECE-87E9-BD68F9901995}"
 EndProject
