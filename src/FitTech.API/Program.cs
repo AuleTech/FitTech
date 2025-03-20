@@ -4,6 +4,11 @@ using FitTech.API;
 using FitTech.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseDefaultServiceProvider((_, options) =>
+{
+    options.ValidateScopes = true;
+    options.ValidateOnBuild = true;
+});
 
 var connectionString = builder.Configuration.GetConnectionString("fittechdb");
 
