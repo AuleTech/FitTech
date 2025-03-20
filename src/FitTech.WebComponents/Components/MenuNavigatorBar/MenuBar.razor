@@ -9,12 +9,36 @@
         <h3 class="text-2xl font-bold text-black dark:text-white transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">FitTech</h3>
     </div>
 
+    <!-- Avatar and Name Section -->
+    <div class="flex items-center p-4 rounded-lg transition-all duration-300 ease-in-out relative">
+        <!-- Avatar siempre visible -->
+        <div class="w-12 h-12 rounded-full overflow-hidden mr-4 cursor-pointer" @onclick="ToggleAvatarModal">
+            <img src="@imagePreview" alt="Avatar Preview" class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Nombre y Apellido (solo se muestra cuando la sidebar está expandida) -->
+        <div class="text-left transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">
+            <p class="text-lg font-semibold text-black dark:text-white">Yeray</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Blanco Aldao</p>
+        </div>
+
+        <!-- Cuadro para cambiar el avatar (a la derecha del avatar) -->
+        @if (isAvatarModalOpen)
+        {
+            <div class="absolute top-0 left-full ml-4 bg-white p-6 rounded-lg shadow-lg max-w-sm w-full z-10">
+                <h3 class="text-xl font-semibold text-center">Cambiar Avatar</h3>
+                <AvatarUpload/>
+                <button class="mt-4 bg-red-500 text-white p-2 rounded-full w-full" @onclick="CloseAvatarModal">Cerrar</button>
+            </div>
+        }
+    </div>
+
     <div class="p-6">
         <ul>
             @foreach (var menuItem in menuItems)
             {
-                <li class="mt-2 text-gray-700 dark:text-gray-300">
-                    <a href="@menuItem.Link" class="flex items-center block p-2 rounded hover:bg-gradient-to-r hover:from-[#ADC539] hover:to-[#A5D153] dark:hover:bg-gradient-to-r dark:hover:from-[#ADC539] dark:hover:to-[#A5D153] transition-colors duration-300">
+                <li class="mt-4 text-gray-700 dark:text-gray-300">
+                    <a href="@menuItem.Link" class="flex items-center block p-2 rounded-lg hover:bg-gradient-to-r hover:from-[#ADC539] hover:to-[#A5D153] dark:hover:bg-gradient-to-r dark:hover:from-[#ADC539] dark:hover:to-[#A5D153] transition-colors duration-300">
                         <span class="mr-2">
                             <IconsSVG Icon="@menuItem.Icon" />
                         </span>
@@ -24,15 +48,20 @@
             }
         </ul>
     </div>
-    
+
     <div class="mt-4 p-4 text-center">
         <p class="text-gray-700 dark:text-gray-300">© 2025 FitTech</p>
     </div>
 
-    <button @onclick="ToggleSidebar" class="absolute bottom-4 left-0 transform translate-x-full bg-gray-800 text-white p-2 rounded-tl-md focus:outline-none transition-all duration-300 ease-in-out">
-        <i class="fas fa-chevron-right"></i>
+    <!-- Botón ToggleSidebar (dentro de la barra lateral, alineado a la derecha) -->
+    <button @onclick="ToggleSidebar" class="absolute bottom-4 right-4 transform bg-gray-800 text-white p-2 rounded-full focus:outline-none transition-all duration-300 ease-in-out">
+        <i class="fas fa-chevron-left"></i> <!-- Cambié el ícono para que apunte hacia la izquierda -->
     </button>
+
 </aside>
+
+
+
 @code {
     private bool isExpanded = true;
 
@@ -64,4 +93,31 @@
         new MenuItem { Text = "Cerrar Sesión", Link = "/logout", Icon = "LogoutIcon" }
         
     };
+
+    private string imagePreview = "/images/default-avatar.png"; // Imagen por defecto
+    private bool isAvatarModalOpen = false;
+
+    // Abrir el modal para cambiar avatar
+    private void ToggleAvatarModal()
+    {
+        isAvatarModalOpen = !isAvatarModalOpen;
+    }
+
+    // Cerrar el modal sin cambios
+    private void CloseAvatarModal()
+    {
+        isAvatarModalOpen = false;
+    }
+
+    // Método para guardar el avatar y actualizar la imagen en la sidebar
+    private void SaveAvatar()
+    {
+        // Lógica para guardar el avatar (aquí solo actualizamos la imagen del avatar)
+        if (imagePreview != null)
+        {
+            // Se refleja el cambio en el avatar de la Sidebar
+            Console.WriteLine("Avatar actualizado.");
+        }
+        CloseAvatarModal();
+    }
 }

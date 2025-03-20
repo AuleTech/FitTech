@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+@if (imagePreview != null)
+{
+    <div class="my-4 flex justify-center items-center">
+        <img src="@imagePreview" alt="Avatar Preview" class="w-24 h-24 rounded-full object-cover" />
+    </div>
+}
+else
+{
+    <div class="my-4 flex justify-center items-center">
+        <!-- Imagen de interrogación indicando que no hay avatar seleccionado -->
+        <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg" alt="No Avatar" class="w-24 h-24 rounded-full object-cover" />
+    </div>
+}
+
+
+<buttonclass class="mt-4 bg-green-500 text-white p-2 rounded mx-auto"><InputFile OnChange="HandleFileSelected" /></buttonclass>
+<button @onclick="SaveAvatar" class="mt-4 bg-green-500 text-white p-2 rounded mx-auto">Guardar Avatar</button>
+
+@code {
+    private string? imagePreview { get; set; }
+    private IBrowserFile? avatarFile;
+
+    // Método para manejar el cambio de archivo
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            // Previsualizar la imagen cargada
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+            imagePreview = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+            avatarFile = file;
+        }
+    }
+
+    // Método para actualizar el avatar en el Sidebar
+    private void SaveAvatar()
+    {
+        if (imagePreview != null)
+        {
+            // Enviar la imagen al Sidebar (por ejemplo, almacenarla en un campo del componente principal o global)
+            // Aquí solo actualizamos el valor de imagePreview para que se refleje en la Sidebar
+            // Por ejemplo, si el componente Sidebar tiene una propiedad, podrías hacer algo así:
+            // sidebarAvatarImage = imagePreview;
+
+            Console.WriteLine("Avatar guardado en Sidebar.");
+            // Aquí podrías enviar la imagen a tu Sidebar o componente que la gestionará.
+        }
+        else
+        {
+            Console.WriteLine("Por favor, selecciona un archivo de imagen primero.");
+        }
+    }
+}
