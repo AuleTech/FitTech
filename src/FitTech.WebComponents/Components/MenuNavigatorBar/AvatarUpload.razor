@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
 
 @if (imagePreview != null)
 {
@@ -9,20 +10,22 @@
 else
 {
     <div class="my-4 flex justify-center items-center">
-        <!-- Imagen de interrogación indicando que no hay avatar seleccionado -->
         <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg" alt="No Avatar" class="w-24 h-24 rounded-full object-cover" />
     </div>
 }
 
-
-<buttonclass class="mt-4 bg-green-500 text-white p-2 rounded mx-auto"><InputFile OnChange="HandleFileSelected" /></buttonclass>
-<button @onclick="SaveAvatar" class="mt-4 bg-green-500 text-white p-2 rounded mx-auto">Guardar Avatar</button>
+<div class="flex items-center justify-center block p-2 rounded-lg bg-gradient-to-r from-[#ADC539] to-[#A5D153] dark:bg-gradient-to-r dark:from-[#ADC539] dark:to-[#A5D153] transition-colors duration-300">
+    <InputFile OnChange="HandleFileSelected" class="cursor-pointer hidden" id="avatar-upload" />
+    <label for="avatar-upload" class="cursor-pointer text-center">Seleccionar Avatar</label>
+</div>
 
 @code {
-    private string? imagePreview { get; set; }
-    private IBrowserFile? avatarFile;
 
-    // Método para manejar el cambio de archivo
+    public string? imagePreview;
+    private IBrowserFile? avatarFile;
+    [Parameter] public EventCallback<string?> OnImageSelected { get; set; }
+    [CascadingParameter] public MenuBar? MenuBarComponent { get; set; }
+
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
@@ -33,25 +36,20 @@ else
             await file.OpenReadStream().ReadAsync(buffer);
             imagePreview = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
             avatarFile = file;
+            MenuBarComponent?.ActualizarAvatar(imagePreview);
         }
+
+       
     }
 
-    // Método para actualizar el avatar en el Sidebar
-    private void SaveAvatar()
+    private void GuardarAvatar()
     {
-        if (imagePreview != null)
-        {
-            // Enviar la imagen al Sidebar (por ejemplo, almacenarla en un campo del componente principal o global)
-            // Aquí solo actualizamos el valor de imagePreview para que se refleje en la Sidebar
-            // Por ejemplo, si el componente Sidebar tiene una propiedad, podrías hacer algo así:
-            // sidebarAvatarImage = imagePreview;
+        // Notificar al componente padre con el nuevo valor de imagePreview
+        OnImageSelected.InvokeAsync(imagePreview);
 
-            Console.WriteLine("Avatar guardado en Sidebar.");
-            // Aquí podrías enviar la imagen a tu Sidebar o componente que la gestionará.
-        }
-        else
-        {
-            Console.WriteLine("Por favor, selecciona un archivo de imagen primero.");
-        }
+        // Forzar la actualización de la UI
+        StateHasChanged(); // Esto fuerza una nueva renderización del componente
     }
+
 }
+

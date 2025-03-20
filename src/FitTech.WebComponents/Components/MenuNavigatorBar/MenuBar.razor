@@ -4,6 +4,11 @@
 @using System.Collections.Generic
 @using FitTech.WebComponents.Components.IconsSVG
 
+<CascadingValue Value=this>
+    <AvatarUpload/>
+</CascadingValue>
+
+
 <aside class="fixed left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 shadow-md transition-all duration-300 ease-in-out @(isExpanded ? "w-64" : "w-20")">
     <div class="mb-6 text-center p-4">
         <h3 class="text-2xl font-bold text-black dark:text-white transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">FitTech</h3>
@@ -11,10 +16,19 @@
 
     <!-- Avatar and Name Section -->
     <div class="flex items-center p-4 rounded-lg transition-all duration-300 ease-in-out relative">
-        <!-- Avatar siempre visible -->
-        <div class="w-12 h-12 rounded-full overflow-hidden mr-4 cursor-pointer" @onclick="ToggleAvatarModal">
-            <img src="@imagePreview" alt="Avatar Preview" class="w-full h-full object-cover" />
-        </div>
+
+        @if (string.IsNullOrEmpty(imagePreviewFromChild))
+        {
+            <div class="my-4 flex justify-center items-center" @onclick="ToggleAvatarModal">
+                <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg" alt="No Avatar" class="w-24 h-24 rounded-full object-cover" />
+            </div>
+        }
+        else
+        {
+            <div class="my-4 flex justify-center items-center" @onclick="ToggleAvatarModal">
+                <img src="@imagePreviewFromChild" alt="Avatar Preview" class="w-full h-full object-cover" />
+            </div>
+        }
 
         <!-- Nombre y Apellido (solo se muestra cuando la sidebar está expandida) -->
         <div class="text-left transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">
@@ -91,10 +105,9 @@
         new MenuItem { Text = "Configuración", Link = "/settings", Icon = "SettingsIcon" },
         new MenuItem { Text = "Soporte", Link = "/support", Icon = "SupportIcon" },
         new MenuItem { Text = "Cerrar Sesión", Link = "/logout", Icon = "LogoutIcon" }
-        
+
     };
 
-    private string imagePreview = "/images/default-avatar.png"; // Imagen por defecto
     private bool isAvatarModalOpen = false;
 
     // Abrir el modal para cambiar avatar
@@ -109,15 +122,13 @@
         isAvatarModalOpen = false;
     }
 
-    // Método para guardar el avatar y actualizar la imagen en la sidebar
-    private void SaveAvatar()
+
+    private string? imagePreviewFromChild;
+
+    // Manejar el evento de selección de imagen
+    public void ActualizarAvatar(string? newImagePreview)
     {
-        // Lógica para guardar el avatar (aquí solo actualizamos la imagen del avatar)
-        if (imagePreview != null)
-        {
-            // Se refleja el cambio en el avatar de la Sidebar
-            Console.WriteLine("Avatar actualizado.");
-        }
-        CloseAvatarModal();
+        imagePreviewFromChild = newImagePreview;
+        StateHasChanged(); // Forzamos la actualización del componente MenuBar
     }
 }
