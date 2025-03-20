@@ -55,7 +55,9 @@
             //TODO: Show error
             return;
         } 
-        
-        NavigationManager.NavigateTo("/dashboard");
+        NavigationManager.NavigateTo("/", new NavigationOptions
+        {
+            ForceLoad = true
+        });
     } 
 } 
