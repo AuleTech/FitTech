@@ -5,70 +5,75 @@
 @using FitTech.WebComponents.Components.IconsSVG
 
 
-
-<aside class="fixed left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 shadow-md transition-all duration-300 ease-in-out @(isExpanded ? "w-64" : "w-20")">
+<aside class="fixed left-0 top-0 h-full bg-white bg-gradient-to-t from-gray-800 to-zinc-300  dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 shadow-md transition-all duration-300 ease-in-out @(isExpanded ? "w-64" : "w-20")">
     <div class="mb-6 text-center p-4">
+        <!-- La idea es que cuando el usuario contraiga la barra cambie el nombre por el simbolo de la marca de alex o el que pongamos -->
+        <!-- Actualmente solo desparece el texto al hacer el collapse -->
         <h3 class="text-2xl font-bold text-black dark:text-white transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">FitTech</h3>
     </div>
 
-    <!-- Avatar and Name Section -->
-    <div class="flex items-center p-4 rounded-lg transition-all duration-300 ease-in-out relative">
-
+    <div class="flex items-center justify-center p-4 rounded-lg transition-all duration-300 ease-in-out relative">
         @if (string.IsNullOrEmpty(imagePreviewFromChild))
         {
-            <div class="my-4 flex justify-center items-center" @onclick="ToggleAvatarModal">
-                <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg" alt="No Avatar" class="w-24 h-24 rounded-full object-cover" />
+            <div class="my-4 flex flex-col justify-center items-center opacity-100" @onclick="ToggleAvatarModal">
+                <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg" alt="No Avatar" class="w-18 h-18 rounded-full object-cover" />
+                <div class="mt-2 text-center">
+                    <span class="block text-sm font-semibold @(isExpanded ? "opacity-100" : "opacity-0")">Yeray Blanco</span>
+                </div>
             </div>
         }
         else
         {
-            <div class="my-4 flex justify-center items-center" @onclick="ToggleAvatarModal">
-                <img src="@imagePreviewFromChild" alt="Avatar Preview" class="w-full h-full object-cover" />
+            <div class="my-7 flex flex-col justify-center items-center">
+                <img src="@imagePreviewFromChild" alt="Avatar Preview" class="w-18 h-18 rounded-full object-cover" />
+                <div class="mt-2 text-center">
+                    <!-- La idea es que se haga una llamada al back para traer el nombre y apellido del usuario que inicie sesion y sustituir el nombre hardcodeado por una variable -->
+                    <span class="block text-sm font-semibold @(isExpanded ? "opacity-100" : "opacity-0")">Yeray Blanco</span> 
+                </div>
             </div>
         }
+    </div>
 
-        <!-- Nombre y Apellido (solo se muestra cuando la sidebar está expandida) -->
-        <div class="text-left transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">
-            <p class="text-lg font-semibold text-black dark:text-white">Yeray</p>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Blanco Aldao</p>
-        </div>
-
-        <!-- Cuadro para cambiar el avatar (a la derecha del avatar) -->
         @if (isAvatarModalOpen)
         {
-            <div class="absolute top-0 left-full ml-4 bg-white p-6 rounded-lg shadow-lg max-w-sm w-full z-10">
-                <h3 class="text-xl font-semibold text-center">Cambiar Avatar</h3>
-                <CascadingValue Value=this>
-                    <AvatarUpload/>
-                  </CascadingValue>
-                <button class="mt-4 bg-red-500 text-white p-2 rounded-full w-full" @onclick="CloseAvatarModal">Cerrar</button>
-            </div>
+
+        <div class="absolute top-0 left-full ml-4 bg-white p-6 rounded-lg shadow-lg max-w-sm w-full z-10">
+            <h3 class="text-xl font-semibold text-center transition-colors duration-300 ease-in-out">Cambiar Avatar</h3>
+            <!-- Componente creado para cambiar el Avatar, puede hacerse mediante la etiqueta inputfile que trae Blazor, pero lo veía muy frío y creo que lo mejor es hacer interactiva la experiencia -->
+            <CascadingValue Value=this>
+                <AvatarUpload />
+            </CascadingValue>
+            <button class="mt-4 bg-white text-red-500 p-2 rounded-full w-full hover:bg-red-500 hover:text-white transition-colors duration-300" @onclick="CloseAvatarModal">Cerrar</button>
+        </div>
+
+
         }
-    </div>
+    <!-- Estos separados dan espacio y distinción a las distintas partes, actualmente están puestos sin color que destaque -->
+    <div class="my-4 mx-6 border-t border-gray-300 dark:border-gray-700 opacity-30"></div>
+    <div class="my-4 mx-6 border-t border-gray-300 dark:border-gray-700 opacity-30"></div>
 
-    <div class="p-6">
-        <ul>
-            @foreach (var menuItem in menuItems)
-            {
-                <li class="mt-4 text-gray-700 dark:text-gray-300">
-                    <a href="@menuItem.Link" class="flex items-center block p-2 rounded-lg hover:bg-gradient-to-r hover:from-[#ADC539] hover:to-[#A5D153] dark:hover:bg-gradient-to-r dark:hover:from-[#ADC539] dark:hover:to-[#A5D153] transition-colors duration-300">
-                        <span class="mr-2">
-                            <IconsSVG Icon="@menuItem.Icon" />
-                        </span>
-                        <span class="text-sm @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
-                    </a>
-                </li>
-            }
-        </ul>
-    </div>
-
+  <div class="p-6">
+    <ul>
+        @foreach (var menuItem in menuItems)
+        {
+            <li class="mt-4 text-white dark:text-white">
+                <a href="@menuItem.Link" class="flex items-center block p-2 rounded-lg hover:text-[#ADC539] transition-colors duration-300">
+                    <span class="mr-2 text-white ">
+                        <IconsSVG Icon="@menuItem.Icon" />
+                    </span>
+                    <span class="text-sm text-white hover:text-[#ADC539] @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+    <!--En algunos sitios metén el copyright de esta manera o en otras partes de la página, habría que discutirlo -->
     <div class="mt-4 p-4 text-center">
         <p class="text-gray-700 dark:text-gray-300">© 2025 FitTech</p>
     </div>
-
-    <!-- Botón ToggleSidebar (dentro de la barra lateral, alineado a la derecha) -->
-    <button @onclick="ToggleSidebar" class="absolute bottom-4 right-4 transform bg-gray-800 text-white p-2 rounded-full focus:outline-none transition-all duration-300 ease-in-out">
-        <i class="fas fa-chevron-left"></i> <!-- Cambié el ícono para que apunte hacia la izquierda -->
+    <!--Botón de prueba redondo, la idea es cambiarlo por un icono con una flecha "<-" -->
+    <button @onclick="ToggleSidebar" class="absolute bottom-4 right-4 transform bg-white text-white p-2 rounded-full focus:outline-none transition-all duration-300 ease-in-out">
+        <i class="fas fa-chevron-left"></i> 
     </button>
 
 </aside>
@@ -77,6 +82,8 @@
 
 @code {
     private bool isExpanded = true;
+    private string? imagePreviewFromChild;
+    private bool isAvatarModalOpen = false;
 
     private void ToggleSidebar()
     {
@@ -107,27 +114,26 @@
 
     };
 
-    private bool isAvatarModalOpen = false;
-
-    // Abrir el modal para cambiar avatar
     private void ToggleAvatarModal()
     {
         isAvatarModalOpen = !isAvatarModalOpen;
     }
 
-    // Cerrar el modal sin cambios
+   
     private void CloseAvatarModal()
     {
         isAvatarModalOpen = false;
     }
 
-
-    private string? imagePreviewFromChild;
-
-    // Manejar el evento de selección de imagen
     public void ActualizarAvatar(string? newImagePreview)
     {
         imagePreviewFromChild = newImagePreview;
-        StateHasChanged(); // Forzamos la actualización del componente MenuBar
+        StateHasChanged(); 
     }
+
+    // private async Task session()
+    // {
+    //     //Necesito una llamada al back para traerme el nombre y los apellidos de la persona que inicia sesión y usarlos en el Avatar.
+    // }
+
 }
