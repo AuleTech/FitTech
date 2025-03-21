@@ -15,7 +15,7 @@
     <div class="flex items-center justify-center p-4 rounded-lg transition-all duration-300 ease-in-out relative">
         @if (string.IsNullOrEmpty(imagePreviewFromChild))
         {
-            <div class="my-4 flex flex-col justify-center items-center opacity-100" @onclick="ToggleAvatarModal">
+            <div class="my-4 flex flex-col justify-center items-center opacity-100 cursor-pointer" @onclick="ToggleAvatarModal">
                 <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg" alt="No Avatar" class="w-18 h-18 rounded-full object-cover" />
                 <div class="mt-2 text-center">
                     <span class="block text-sm font-semibold @(isExpanded ? "opacity-100" : "opacity-0")">Yeray Blanco</span>
@@ -24,7 +24,7 @@
         }
         else
         {
-            <div class="my-7 flex flex-col justify-center items-center">
+            <div class="my-7 flex flex-col justify-center items-center cursor-pointer" @onclick="ToggleAvatarModal">
                 <img src="@imagePreviewFromChild" alt="Avatar Preview" class="w-18 h-18 rounded-full object-cover" />
                 <div class="mt-2 text-center">
                     <!-- La idea es que se haga una llamada al back para traer el nombre y apellido del usuario que inicie sesion y sustituir el nombre hardcodeado por una variable -->
