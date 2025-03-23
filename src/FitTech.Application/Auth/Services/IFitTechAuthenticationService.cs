@@ -8,4 +8,5 @@ public interface IFitTechAuthenticationService
     Task<Result<LoginResultDto>> LoginAsync(LoginDto loginDto, CancellationToken cancellationToken);
     Task<Result<string>> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto, CancellationToken cancellationToken);
     Task<Result> ResetPasswordAsync(ResetPasswordDto resetPasswordDto, CancellationToken cancellationToken);
+    Task<Result<RefreshTokenResultDto>> RefreshTokenAsync(RefreshTokenDto refreshTokenDto, CancellationToken cancellationToken);
 }

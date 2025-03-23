@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using FitTech.Api.Tests.Models;
 using FitTech.Application;
+using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 using FitTech.Domain.Entities;
@@ -23,9 +24,9 @@ public class AuthenticationTests
         var serviceCollection = new ServiceCollection();
         var configurationBuilder = new ConfigurationBuilder()
             .AddInMemoryCollection([
-                new KeyValuePair<string, string?>("Authentication:Audience", "testAudience"),
-                new KeyValuePair<string, string?>("Authentication:Issuer", "testIssuer"),
-                new KeyValuePair<string, string?>("Authentication:SigningKey", "ThisIsALocalKey1234ThisIsALocalKey1234!")
+                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.Audience)}", "testAudience"),
+                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.Issuer)}", "testIssuer"),
+                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.SigningKey)}", "ThisIsALocalKey1234ThisIsALocalKey1234!")
             ]);
         
         serviceCollection.AddAuth(configurationBuilder.Build()).AddLogging();
@@ -69,6 +70,24 @@ public class AuthenticationTests
     [Timeout(30_000)]
     [DependsOn(nameof(RegisterAsync_WhenEmailAndPasswordAreOk_ReturnsSucceeded))]
     public async Task LoginAsync_WhenEmailAndPasswordAreOk_ReturnAccessToken(CancellationToken cancellationToken)
+    {
+        var registerAsyncTestContext = TestContext.Current!.GetTests(nameof(RegisterAsync_WhenEmailAndPasswordAreOk_ReturnsSucceeded))
+            .First();
+
+        var userInfo = registerAsyncTestContext.ObjectBag[TestUserInfo.SharedKey] as TestUserInfo;
+
+        await Assert.That(userInfo).IsNotNull();
+
+        var loginResult = await _sut!.LoginAsync(new LoginDto(userInfo!.Email, userInfo.Password), cancellationToken);
+
+        await Assert.That(loginResult.Succeeded).IsTrue();
+        await Assert.That(loginResult.Value!.AccessToken).IsNotNullOrWhitespace();
+    }
+    
+    [Test]
+    [Timeout(30_000)]
+    [DependsOn(nameof(RegisterAsync_WhenEmailAndPasswordAreOk_ReturnsSucceeded))]
+    public async Task RefreshTokenAsync_WhenRefreshTokenIsProvided_GeneratesANewAccessToken(CancellationToken cancellationToken)
     {
         var registerAsyncTestContext = TestContext.Current!.GetTests(nameof(RegisterAsync_WhenEmailAndPasswordAreOk_ReturnsSucceeded))
             .First();

@@ -8,4 +8,9 @@ internal static class ResultExtensions
     {
         Succeeded = result.Succeeded, Errors = result.Errors.Select(x => x.Description).ToArray()
     };
+    
+    public static Result<T> ToTypedResult<T>(this Result result) => new ()
+    {
+        Errors = result.Errors, Succeeded = result.Succeeded
+    };
 }
