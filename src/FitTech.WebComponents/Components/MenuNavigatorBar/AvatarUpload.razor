@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components
+@using System.Threading.Tasks
+@using System.IO
+
+@if (imagePreview != null)
+{
+    <div class="my-4 flex justify-center items-center">
+        <img src="@imagePreview" alt="Avatar Preview" class="w-18 h-18 rounded-full object-cover" />
+    </div>
+}
+else
+{
+    <div class="my-4 flex justify-center items-center">
+        <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg" alt="No Avatar" class="w-18 h-18 rounded-full object-cover" />
+    </div>
+}
+<!-- No tiene estilo predefinido, ya que no se si lo vas a querer o desechar. -->
+<div class="flex items-center justify-center block p-2 rounded-lg text-green-700 bg-white hover:bg-green-700 hover:text-white transition-colors duration-300">
+    <InputFile OnChange="HandleFileSelected" class="cursor-pointer hidden" id="avatar-upload" />
+    <label for="avatar-upload" class="cursor-pointer text-center">Seleccionar Avatar</label>
+</div>
+
+@code {
+
+    public string? imagePreview;
+    private IBrowserFile? avatarFile;
+    [CascadingParameter] public MenuBar? MenuBarComponent { get; set; }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+            imagePreview = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+            avatarFile = file;
+            MenuBarComponent?.ActualizarAvatar(imagePreview);
+        }
+
+    }
+
+}
+
