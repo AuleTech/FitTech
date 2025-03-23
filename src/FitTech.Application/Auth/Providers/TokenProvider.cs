@@ -14,7 +14,7 @@ internal sealed class TokenProvider : ITokenProvider
     private readonly AuthenticationSettings _authenticationSettings;
     private readonly ClaimsPrincipal _anonymous = new (); 
     public TokenProvider(AuthenticationSettings authenticationSettings)
-    {
+    { 
         _authenticationSettings = authenticationSettings;
     }
 
