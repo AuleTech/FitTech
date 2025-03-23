@@ -12,7 +12,7 @@ namespace FitTech.Application.Auth.Providers;
 internal sealed class TokenProvider : ITokenProvider
 {
     private readonly AuthenticationSettings _authenticationSettings;
-
+    private readonly ClaimsPrincipal _anonymous = new (); 
     public TokenProvider(AuthenticationSettings authenticationSettings)
     {
         _authenticationSettings = authenticationSettings;
@@ -28,8 +28,8 @@ internal sealed class TokenProvider : ITokenProvider
         {
             Subject =
                 new ClaimsIdentity([
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email!),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, "Trainer") //TODO: This needs to change depending on the user
                 ]),
             Expires = DateTime.UtcNow.Add(_authenticationSettings.AccessTokenExpirationTime),
@@ -40,7 +40,6 @@ internal sealed class TokenProvider : ITokenProvider
 
         JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
         var handler = new JwtSecurityTokenHandler();
-        
         var result =  handler.CreateToken(tokenDescriptor);
         return handler.WriteToken(result);
     }
@@ -55,6 +54,20 @@ internal sealed class TokenProvider : ITokenProvider
 
     public ClaimsPrincipal GetClaimsPrincipalFromAccessToken(string accessToken)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(accessToken))
+        {
+            return _anonymous;
+        }
+
+        var handler = new JwtSecurityTokenHandler();
+
+        if (!handler.CanReadToken(accessToken))
+        {
+            throw new InvalidOperationException("Invalid token");
+        }
+
+        var securityToken = handler.ReadJwtToken(accessToken);
+
+        return new ClaimsPrincipal([new ClaimsIdentity(securityToken.Claims)]);
     }
 }
