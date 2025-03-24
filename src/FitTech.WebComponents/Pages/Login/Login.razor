@@ -5,6 +5,7 @@
 @inject ILogger<Login> Logger
 @inject IUserService UserService
 @inject NavigationManager NavigationManager
+@using FitTech.WebComponents.Components.Buttons
 
 
 <div class="w-full max-w-md px-4">
@@ -25,8 +26,9 @@
                 </div>
                 <InputText type="password" @bind-Value="LoginModel!.Password" id="password" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
             </div>
-
-            <button type="submit" class="w-full rounded bg-green-600 py-2 text-white transition-colors hover:bg-green-700">Login</button>
+            <div class="flex items-center justify-center">
+                <SampleButton></SampleButton>
+            </div>
         </EditForm>
     </div>
 
@@ -45,7 +47,7 @@
 
     protected override void OnInitialized() => LoginModel ??= new();
 
-    private async Task Submit()
+    public async Task Submit()
     {
         Logger.LogInformation("Email: {Email}", LoginModel?.Email);
         var response = await UserService.LoginAsync(LoginModel!.Email, LoginModel.Password, _cts.Token);
