@@ -1,6 +1,5 @@
 ﻿using Blazored.LocalStorage;
-using FitTech.API.Client;
-using FitTech.API.Contracts;
+using FitTech.Api.Client.Generated;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using Microsoft.Extensions.Logging;
