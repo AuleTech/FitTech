@@ -1,10 +1,12 @@
 ﻿using Bogus;
 using FitTech.Api.Tests.Models;
 using FitTech.Application;
+using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 using FitTech.Domain.Entities;
 using FitTech.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TUnit.Core.Extensions;
@@ -23,9 +25,9 @@ public class AuthenticationTests
         var serviceCollection = new ServiceCollection();
         var configurationBuilder = new ConfigurationBuilder()
             .AddInMemoryCollection([
-                new KeyValuePair<string, string?>("Authentication:Audience", "testAudience"),
-                new KeyValuePair<string, string?>("Authentication:Issuer", "testIssuer"),
-                new KeyValuePair<string, string?>("Authentication:SigningKey", "ThisIsALocalKey1234ThisIsALocalKey1234!")
+                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.Audience)}", "testAudience"),
+                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.Issuer)}", "testIssuer"),
+                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.SigningKey)}", "ThisIsALocalKey1234ThisIsALocalKey1234!")
             ]);
         
         serviceCollection.AddAuth(configurationBuilder.Build()).AddLogging();
@@ -33,7 +35,7 @@ public class AuthenticationTests
         serviceCollection.AddIdentity<FitTechUser, FitTechRole>(options =>
         {
             options.Password.RequiredLength = 8;
-        }).AddEntityFrameworkStores<FitTechDbContext>();
+        }).AddEntityFrameworkStores<FitTechDbContext>().AddDefaultTokenProviders();
         
         serviceCollection.AddInMemorydb(Guid.CreateVersion7().ToString());
         
@@ -81,6 +83,34 @@ public class AuthenticationTests
 
         await Assert.That(loginResult.Succeeded).IsTrue();
         await Assert.That(loginResult.Value!.AccessToken).IsNotNullOrWhitespace();
+        await Assert.That(loginResult.Value!.RefreshToken).IsNotNullOrWhitespace();
+        
+        TestContext.Current!.ObjectBag.Add(TestUserInfo.SharedKey, new TestUserInfo
+        {
+            Email = userInfo.Email,
+            Password = userInfo.Password,
+            AccessToken = loginResult.Value!.AccessToken,
+            RefreshToken = loginResult.Value!.RefreshToken
+        });
+    }
+    
+    [Test]
+    [Timeout(30_000)]
+    [DependsOn(nameof(LoginAsync_WhenEmailAndPasswordAreOk_ReturnAccessToken))]
+    public async Task RefreshTokenAsync_WhenRefreshTokenIsProvided_GeneratesANewAccessToken(CancellationToken cancellationToken)
+    {
+        var registerAsyncTestContext = TestContext.Current!.GetTests(nameof(LoginAsync_WhenEmailAndPasswordAreOk_ReturnAccessToken))
+            .First();
+
+        var userInfo = registerAsyncTestContext.ObjectBag[TestUserInfo.SharedKey] as TestUserInfo;
+
+        await Assert.That(userInfo).IsNotNull();
+
+        var result = await _sut!.RefreshTokenAsync(new RefreshTokenDto(userInfo!.RefreshToken!, userInfo.AccessToken!), cancellationToken);
+
+        await Assert.That(result.Succeeded).IsTrue();
+        await Assert.That(result.Value!.AccessToken).IsNotNullOrWhitespace();
+        await Assert.That(result.Value!.AccessToken).IsNotEqualTo(userInfo.AccessToken);
     }
 
     // [Test]
