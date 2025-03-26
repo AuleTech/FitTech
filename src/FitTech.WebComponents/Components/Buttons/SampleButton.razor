@@ -18,17 +18,16 @@
     string buttonText = "Iniciar Sesion";
     bool isLoggingIn = false;
 
-    // Método que simula el login
+   
     private async Task Login()
     {
-        // Cambiar el estado a 'true' para mostrar el spinner
+        
         isLoggingIn = true;
         buttonText = "Iniciando Sesión...";
 
-        // Simula una llamada asíncrona (por ejemplo, a una API de login)
-        await Task.Delay(2000); // Aquí se simula que el login toma 2 segundos
+    
+        await Task.Delay(2000); 
 
-        // Después de completar la función, vuelve a cambiar el estado
         isLoggingIn = false;
         buttonText = "Iniciar Sesion";
     }
