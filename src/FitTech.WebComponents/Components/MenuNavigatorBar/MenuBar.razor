@@ -3,6 +3,8 @@
 @using Microsoft.AspNetCore.Components
 @using System.Collections.Generic
 @using FitTech.WebComponents.Components.IconsSVG
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
 
 
 <aside class="fixed left-0 top-0 h-full bg-white bg-gradient-to-t from-gray-800 to-zinc-300  dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 shadow-md transition-all duration-300 ease-in-out @(isExpanded ? "w-64" : "w-20")">
@@ -52,28 +54,43 @@
     <div class="my-4 mx-6 border-t border-gray-300 dark:border-gray-700 opacity-30"></div>
     <div class="my-4 mx-6 border-t border-gray-300 dark:border-gray-700 opacity-30"></div>
 
-  <div class="p-6">
-    <ul>
-        @foreach (var menuItem in menuItems)
-        {
-            <li class="mt-4 text-white dark:text-white">
-                <a href="@menuItem.Link" class="flex items-center block p-2 rounded-lg hover:text-[#ADC539] transition-colors duration-300">
-                    <span class="mr-2 text-white ">
-                        <IconsSVG Icon="@menuItem.Icon" />
-                    </span>
-                    <span class="text-sm text-white hover:text-[#ADC539] @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
-                </a>
-            </li>
-        }
-    </ul>
-</div>
+    <div class="p-6">
+        <ul>
+            @foreach (var menuItem in menuItems)
+            {
+                <li class="mt-4 text-white dark:text-white">
+                    @if (menuItem.Text == "Cerrar Sesión")
+                    {
+                        <a href="#" class="flex items-center block p-2 rounded-lg hover:text-[#ADC539] transition-colors duration-300" @onclick="LogoutAsync">
+                            <span class="mr-2 text-white">
+                                <IconsSVG Icon="@menuItem.Icon" />
+                            </span>
+                            <span class="text-sm text-white hover:text-[#ADC539] @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@menuItem.Link" class="flex items-center block p-2 rounded-lg hover:text-[#ADC539] transition-colors duration-300">
+                            <span class="mr-2 text-white">
+                                <IconsSVG Icon="@menuItem.Icon" />
+                            </span>
+                            <span class="text-sm text-white hover:text-[#ADC539] @(isExpanded ? "block" : "hidden")">@menuItem.Text</span>
+                        </a>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
     <!--En algunos sitios metén el copyright de esta manera o en otras partes de la página, habría que discutirlo -->
     <div class="mt-4 p-4 text-center">
         <p class="text-gray-700 dark:text-gray-300">© 2025 FitTech</p>
     </div>
+  
     <!--Botón de prueba redondo, la idea es cambiarlo por un icono con una flecha "<-" -->
-    <button @onclick="ToggleSidebar" class="absolute bottom-4 right-4 transform bg-white text-white p-2 rounded-full focus:outline-none transition-all duration-300 ease-in-out">
-        <i class="fas fa-chevron-left"></i> 
+    <button @onclick="ToggleSidebar" class="absolute  right-4 cursor-pointer duration-200 hover:scale-125 active:scale-100" title="CollapseMenu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="30px" viewBox="0 0 24 24" class="stroke-blue-300">
+            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M11 6L5 12M5 12L11 18M5 12H19"></path>
+        </svg>
     </button>
 
 </aside>
@@ -130,7 +147,11 @@
         imagePreviewFromChild = newImagePreview;
         StateHasChanged(); 
     }
-
+    private async Task LogoutAsync()
+    {
+        await UserService.LogoutAsync(_cts.Token);
+        NavigationManager.NavigateTo("/");
+    }
     // private async Task session()
     // {
     //     //Necesito una llamada al back para traerme el nombre y los apellidos de la persona que inicia sesión y usarlos en el Avatar.

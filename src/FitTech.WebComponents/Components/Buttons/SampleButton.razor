@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Components
 @using FitTech.WebComponents.Pages.Login
 
-<button class="flex items-center justify-center rounded-lg bg-green-700 px-4 py-2 text-white" @onclick="Login">
+<button class="border flex items-center justify-center rounded-lg bg-green-700  px-4 py-2 text-white hover:bg-green-500 hover:text-white" @onclick="Login">
     @if (isLoggingIn)
     {
         <svg class="mr-3 h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -23,7 +23,7 @@
     {
         // Cambiar el estado a 'true' para mostrar el spinner
         isLoggingIn = true;
-        buttonText = "Cargando...";
+        buttonText = "Iniciando Sesión...";
 
         // Simula una llamada asíncrona (por ejemplo, a una API de login)
         await Task.Delay(2000); // Aquí se simula que el login toma 2 segundos
