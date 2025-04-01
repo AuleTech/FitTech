@@ -379,7 +379,9 @@ namespace FitTech.Api.Client.Generated
                     var disposeResponse_ = true;
                     try
                     {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        var headers_ =
+                            new System.Collections.Generic.Dictionary<string,
+                                System.Collections.Generic.IEnumerable<string>>();
                         foreach (var item_ in response_.Headers)
                             headers_[item_.Key] = item_.Value;
                         if (response_.Content != null && response_.Content.Headers != null)
@@ -393,17 +395,25 @@ namespace FitTech.Api.Client.Generated
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FitTechApplicationResultOfLoginResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ =
+                                await ReadObjectResponseAsync<FitTechApplicationResultOfLoginResponse>(response_,
+                                    headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new ApiException("Response was null which was not expected.", status_,
+                                    objectResponse_.Text, headers_, null);
                             }
+
                             return objectResponse_.Object;
                         }
                         else
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            var responseData_ = response_.Content == null
+                                ? null
+                                : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException(
+                                "The HTTP status code of the response was not expected (" + status_ + ").", status_,
+                                responseData_, headers_, null);
                         }
                     }
                     finally
@@ -412,6 +422,11 @@ namespace FitTech.Api.Client.Generated
                             response_.Dispose();
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
             }
             finally
             {

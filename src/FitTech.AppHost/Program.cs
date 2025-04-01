@@ -13,7 +13,7 @@ var fitTechApi = builder.AddProject<FitTech_API>("fittech-api")
     .WithExternalHttpEndpoints();
 
 
-_ = builder.AddProject<FitTech_Trainer_WebApp>("trainer-web")
+_ = builder.AddProject<FitTech_Trainer_Wasm>("trainer-web")
     .WaitFor(fitTechApi)
     .WithEnvironment("FitTechApi__url", fitTechApi.GetEndpoint("https"));
 

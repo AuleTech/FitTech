@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.API.Client", "src\F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.Api.Tests", "src\FitTech.Api.Tests\FitTech.Api.Tests.csproj", "{1AB7650C-AC4C-4ECE-87E9-BD68F9901995}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.Trainer.Wasm", "src\FitTech.Trainer.Wasm\FitTech.Trainer.Wasm.csproj", "{0C5A8E6B-FDC5-4AAC-8C1A-8A24E9227181}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{1AB7650C-AC4C-4ECE-87E9-BD68F9901995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AB7650C-AC4C-4ECE-87E9-BD68F9901995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AB7650C-AC4C-4ECE-87E9-BD68F9901995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C5A8E6B-FDC5-4AAC-8C1A-8A24E9227181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5A8E6B-FDC5-4AAC-8C1A-8A24E9227181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5A8E6B-FDC5-4AAC-8C1A-8A24E9227181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5A8E6B-FDC5-4AAC-8C1A-8A24E9227181}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,5 +107,6 @@ Global
 		{2BAE76B1-236F-410B-A134-5BB23E8BC484} = {B518D932-AF0E-4D76-B760-C6F820A9A624}
 		{911859C7-118F-441F-8A00-8F6112FE0686} = {2BAE76B1-236F-410B-A134-5BB23E8BC484}
 		{1AB7650C-AC4C-4ECE-87E9-BD68F9901995} = {2BAE76B1-236F-410B-A134-5BB23E8BC484}
+		{0C5A8E6B-FDC5-4AAC-8C1A-8A24E9227181} = {34E3EF8D-AEE3-42EB-8AA4-78352D48CF22}
 	EndGlobalSection
 EndGlobal

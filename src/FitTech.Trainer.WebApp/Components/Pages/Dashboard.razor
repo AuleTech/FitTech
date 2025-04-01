@@ -1,7 +1,7 @@
 @* Maybe this should be in the main page *@
 @page "/dashboard"
 @attribute [Authorize(Roles = "Trainer")]
-@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
 @inherits FitTech.WebComponents.Components.CancellableComponent
 @inject IUserService UserService
 @inject NavigationManager NavigationManager

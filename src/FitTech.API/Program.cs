@@ -25,6 +25,7 @@ builder.Services
     })
     .AddLogging()
     .AddOpenApi()
+    .AddCors()
     .AddPersistence(connectionString);
 
 
@@ -41,7 +42,8 @@ app
     .UseHttpsRedirection()
     .UseAuthorization()
     .UseAuthentication()
-    .UseFastEndpoints();
+    .UseFastEndpoints()
+    .UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 //TODO: Create a migration service triggered by Aspire
 await app.Services.ApplyMigrationsAsync();
