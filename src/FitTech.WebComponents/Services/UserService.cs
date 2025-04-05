@@ -36,7 +36,7 @@ internal sealed class UserService : IUserService
             var result = await _fitTechApiClient.LoginEndpointAsync(
                 new LoginRequest() { Email = email, Password = password }, cancellationToken);
 
-            var user = new FitTechUser { Email = email, AccessToken = result.Value.AccessToken};
+            var user = new FitTechUser { Email = email, AccessToken = result.Value.AccessToken, RefreshToken =result.Value.RefreshToken};
 
             await _localStorageService.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
             

@@ -30,6 +30,6 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, Result<LoginResponse>
             return;
         }
 
-        await SendAsync(new LoginResponse(result.Value!.AccessToken!), cancellation: ct);
+        await SendAsync(new LoginResponse(result.Value!.AccessToken!, result.Value.RefreshToken), cancellation: ct);
     }
 }
