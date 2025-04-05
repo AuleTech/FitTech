@@ -8,7 +8,7 @@ namespace FitTech.API.Client;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddFitTechApiClient(this IServiceCollection serviceCollection,
-        IConfiguration configuration)
+        IConfiguration configuration, Func<IServiceProvider, DelegatingHandler>? httpClientHandlerFunc = null)
     {
         var fitTechConfig = configuration.GetSection(FitTechApiConfiguration.ConfigSectionName)
             .Get<FitTechApiConfiguration>();
@@ -17,20 +17,28 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.AddSingleton(fitTechConfig);
 
-        serviceCollection
-            .AddHttpClient()
-            .AddTransient<FitTechAPIClient>(c =>
-            {
-                var httpClientFactory = c.GetRequiredService<IHttpClientFactory>();
+        var apiHttpClientBuilder = serviceCollection
+            .AddHttpClient(nameof(FitTechAPIClient));
 
-                var fitTechApiClient =
-                    new FitTechAPIClient(httpClientFactory.CreateClient(nameof(FitTechAPIClient)))
-                    {
-                        BaseUrl = fitTechConfig.Url
-                    };
+        if (httpClientHandlerFunc is not null)
+        {
+            apiHttpClientBuilder.AddHttpMessageHandler(httpClientHandlerFunc!);
+        }
 
-                return fitTechApiClient;
-            });
+
+        serviceCollection.AddTransient<FitTechAPIClient>(c =>
+        {
+            var httpClientFactory = c.GetRequiredService<IHttpClientFactory>();
+
+            var fitTechApiClient =
+                new FitTechAPIClient(httpClientFactory.CreateClient(nameof(FitTechAPIClient)))
+                {
+                    BaseUrl = fitTechConfig.Url
+                };
+
+
+            return fitTechApiClient;
+        });
 
         return serviceCollection;
     }

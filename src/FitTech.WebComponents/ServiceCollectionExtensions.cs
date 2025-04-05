@@ -13,8 +13,10 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddFitTechComponents(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
+        serviceCollection.AddScoped<FitTechDelegationHandler>();
+        
         return serviceCollection
-            .AddFitTechApiClient(configuration)
+            .AddFitTechApiClient(configuration, provider => provider.GetRequiredService<FitTechDelegationHandler>())
             .AddBlazoredLocalStorage() //TODO: Expose an interface to be implemented by the front to manage the user
             .AddTransient<IUserService, UserService>()
             .AddScoped<AuthenticationStateProvider, FitTechAuthStateProvider>()
