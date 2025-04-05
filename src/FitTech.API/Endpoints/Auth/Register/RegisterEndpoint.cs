@@ -3,7 +3,7 @@ using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 
-namespace FitTech.API.Auth.Register;
+namespace FitTech.API.Endpoints.Auth.Register;
 
 public class RegisterEndpoint : Endpoint<RegisterRequest, Result>
 {

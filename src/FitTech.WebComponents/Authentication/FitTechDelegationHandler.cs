@@ -45,8 +45,8 @@ public class FitTechDelegationHandler : DelegatingHandler
         async Task<HttpResponseMessage> RefreshTokenAndRetryAsync()
         {
             //TODO: Critical section
-            var refreshedToken = await _apiClient.FitTechAPIAuthRefreshTokenRefreshTokenEndpointAsync(
-                new FitTechAPIAuthRefreshTokenRefreshTokenRequest
+            var refreshedToken = await _apiClient.RefreshTokenEndpointAsync(
+                new RefreshTokenRequest()
                 {
                     RefreshToken = user.RefreshToken, ExpiredAccessToken = user.AccessToken
                 }, cancellationToken);

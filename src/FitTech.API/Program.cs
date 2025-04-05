@@ -17,6 +17,7 @@ builder.Services
     .AddFastEndpoints()
     .SwaggerDocument(x =>
     {
+        x.ShortSchemaNames = true;
         x.DocumentSettings = d =>
         {
             d.Title = "FitTech.API";
@@ -42,7 +43,7 @@ app
     .UseHttpsRedirection()
     .UseAuthorization()
     .UseAuthentication()
-    .UseFastEndpoints()
+    .UseFastEndpoints(x => x.Endpoints.ShortNames = true)
     .UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 //TODO: Create a migration service triggered by Aspire

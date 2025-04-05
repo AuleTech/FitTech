@@ -1,3 +1,3 @@
-﻿namespace FitTech.API.Auth.Login;
+﻿namespace FitTech.API.Endpoints.Auth.Login;
 
 public record LoginResponse(string AccessToken);

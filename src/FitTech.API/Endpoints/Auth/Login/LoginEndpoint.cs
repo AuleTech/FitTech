@@ -3,7 +3,7 @@ using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 
-namespace FitTech.API.Auth.Login;
+namespace FitTech.API.Endpoints.Auth.Login;
 
 public sealed class LoginEndpoint : Endpoint<LoginRequest, Result<LoginResponse>>
 {

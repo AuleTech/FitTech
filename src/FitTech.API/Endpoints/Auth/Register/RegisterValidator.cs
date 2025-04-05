@@ -1,7 +1,7 @@
 ﻿using FastEndpoints;
 using FluentValidation;
 
-namespace FitTech.API.Auth.Register;
+namespace FitTech.API.Endpoints.Auth.Register;
 
 public class RegisterValidator : Validator<RegisterRequest>
 {

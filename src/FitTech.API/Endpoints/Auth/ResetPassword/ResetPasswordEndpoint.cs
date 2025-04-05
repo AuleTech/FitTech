@@ -4,7 +4,7 @@ using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace FitTech.API.Auth.ResetPassword;
+namespace FitTech.API.Endpoints.Auth.ResetPassword;
 
 [HttpPost("/auth/reset-password")]
 [AllowAnonymous]

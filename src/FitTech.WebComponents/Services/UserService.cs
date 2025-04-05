@@ -3,6 +3,7 @@ using FitTech.Api.Client.Generated;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using Microsoft.Extensions.Logging;
+using Result = FitTech.WebComponents.Models.Result;
 
 namespace FitTech.WebComponents.Services;
 
@@ -32,10 +33,10 @@ internal sealed class UserService : IUserService
 
         try
         {
-            var result = await _fitTechApiClient.FitTechAPIAuthLoginLoginEndpointAsync(
-                new FitTechAPIAuthLoginLoginRequest { Email = email, Password = password }, cancellationToken);
+            var result = await _fitTechApiClient.LoginEndpointAsync(
+                new LoginRequest() { Email = email, Password = password }, cancellationToken);
 
-            var user = new FitTechUser { Email = email, AccessToken = result.Value.AccessToken, RefreshToken = result.Value.RefreshToken};
+            var user = new FitTechUser { Email = email, AccessToken = result.Value.AccessToken};
 
             await _localStorageService.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
             
@@ -55,8 +56,8 @@ internal sealed class UserService : IUserService
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
-        var result = await _fitTechApiClient.FitTechAPIAuthRegisterRegisterEndpointAsync(
-            new FitTechAPIAuthRegisterRegisterRequest { Email = email, Password = password }, cancellationToken);
+        var result = await _fitTechApiClient.RegisterEndpointAsync(
+            new RegisterRequest() { Email = email, Password = password }, cancellationToken);
 
         return result.Succeeded
             ? Result.Success
@@ -66,8 +67,8 @@ internal sealed class UserService : IUserService
     public async Task<Result<string>> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        var result = await _fitTechApiClient.FitTechAPIAuthForgotPasswordForgotPasswordEndpointAsync(
-            new FitTechAPIAuthForgotPasswordForgotPasswordRequest
+        var result = await _fitTechApiClient.ForgotPasswordEndpointAsync(
+            new ForgotPasswordRequest()
             {
                 Email = email, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
             }, cancellationToken);
@@ -86,8 +87,8 @@ internal sealed class UserService : IUserService
         ArgumentException.ThrowIfNullOrWhiteSpace(token);
         ArgumentException.ThrowIfNullOrWhiteSpace(newPassword);
 
-        var result = await _fitTechApiClient.FitTechAPIAuthResetPasswordResetPasswordEndpointAsync(
-            new FitTechAPIAuthResetPasswordResetPasswordRequest
+        var result = await _fitTechApiClient.ResetPasswordEndpointAsync(
+            new ResetPasswordRequest()
             {
                 Email = email, Token = token, NewPassword = newPassword
             }, cancellationToken);

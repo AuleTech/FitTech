@@ -2,6 +2,7 @@
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Providers;
 using FitTech.Application.Auth.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,11 @@ public static class ServiceCollectionExtensions
             options.TokenLifespan = authSettings.RefreshTokenExpirationTime;
         });
         
-        services.AddAuthentication().AddJwtBearer(x =>
+        services.AddAuthentication(config =>
+        {
+            config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(x =>
         {
             x.TokenValidationParameters = new TokenValidationParameters
             {

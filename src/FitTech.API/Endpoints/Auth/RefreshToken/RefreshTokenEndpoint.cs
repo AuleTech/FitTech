@@ -4,7 +4,7 @@ using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace FitTech.API.Auth.RefreshToken;
+namespace FitTech.API.Endpoints.Auth.RefreshToken;
 
 [HttpPost("/auth/refresh-token")]
 [AllowAnonymous]

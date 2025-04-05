@@ -72,15 +72,99 @@ namespace FitTech.Api.Client.Generated
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FitTechApplicationResult> FitTechAPIAuthResetPasswordResetPasswordEndpointAsync(FitTechAPIAuthResetPasswordResetPasswordRequest resetPasswordRequest)
+        public virtual System.Threading.Tasks.Task<Result> GetCurrentUserEndpointAsync()
         {
-            return FitTechAPIAuthResetPasswordResetPasswordEndpointAsync(resetPasswordRequest, System.Threading.CancellationToken.None);
+            return GetCurrentUserEndpointAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FitTechApplicationResult> FitTechAPIAuthResetPasswordResetPasswordEndpointAsync(FitTechAPIAuthResetPasswordResetPasswordRequest resetPasswordRequest, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Result> GetCurrentUserEndpointAsync(System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "user/get-current"
+                    urlBuilder_.Append("user/get-current");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Result>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("Unauthorized", status_, responseText_, headers_, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<Result> ResetPasswordEndpointAsync(ResetPasswordRequest resetPasswordRequest)
+        {
+            return ResetPasswordEndpointAsync(resetPasswordRequest, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<Result> ResetPasswordEndpointAsync(ResetPasswordRequest resetPasswordRequest, System.Threading.CancellationToken cancellationToken)
         {
             if (resetPasswordRequest == null)
                 throw new System.ArgumentNullException("resetPasswordRequest");
@@ -128,7 +212,7 @@ namespace FitTech.Api.Client.Generated
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FitTechApplicationResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Result>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -157,15 +241,15 @@ namespace FitTech.Api.Client.Generated
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FitTechApplicationResult> FitTechAPIAuthRegisterRegisterEndpointAsync(FitTechAPIAuthRegisterRegisterRequest registerRequest)
+        public virtual System.Threading.Tasks.Task<Result> RegisterEndpointAsync(RegisterRequest registerRequest)
         {
-            return FitTechAPIAuthRegisterRegisterEndpointAsync(registerRequest, System.Threading.CancellationToken.None);
+            return RegisterEndpointAsync(registerRequest, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FitTechApplicationResult> FitTechAPIAuthRegisterRegisterEndpointAsync(FitTechAPIAuthRegisterRegisterRequest registerRequest, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Result> RegisterEndpointAsync(RegisterRequest registerRequest, System.Threading.CancellationToken cancellationToken)
         {
             if (registerRequest == null)
                 throw new System.ArgumentNullException("registerRequest");
@@ -213,7 +297,7 @@ namespace FitTech.Api.Client.Generated
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FitTechApplicationResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Result>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -223,12 +307,12 @@ namespace FitTech.Api.Client.Generated
                         else
                         if (status_ == 400)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FastEndpointsErrorResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<FastEndpointsErrorResponse>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new ApiException<ErrorResponse>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -252,15 +336,15 @@ namespace FitTech.Api.Client.Generated
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FitTechApplicationResultOfString> FitTechAPIAuthRefreshTokenRefreshTokenEndpointAsync(FitTechAPIAuthRefreshTokenRefreshTokenRequest refreshTokenRequest)
+        public virtual System.Threading.Tasks.Task<ResultOfString> RefreshTokenEndpointAsync(RefreshTokenRequest refreshTokenRequest)
         {
-            return FitTechAPIAuthRefreshTokenRefreshTokenEndpointAsync(refreshTokenRequest, System.Threading.CancellationToken.None);
+            return RefreshTokenEndpointAsync(refreshTokenRequest, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FitTechApplicationResultOfString> FitTechAPIAuthRefreshTokenRefreshTokenEndpointAsync(FitTechAPIAuthRefreshTokenRefreshTokenRequest refreshTokenRequest, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ResultOfString> RefreshTokenEndpointAsync(RefreshTokenRequest refreshTokenRequest, System.Threading.CancellationToken cancellationToken)
         {
             if (refreshTokenRequest == null)
                 throw new System.ArgumentNullException("refreshTokenRequest");
@@ -308,7 +392,7 @@ namespace FitTech.Api.Client.Generated
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FitTechApplicationResultOfString>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ResultOfString>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -337,15 +421,15 @@ namespace FitTech.Api.Client.Generated
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FitTechApplicationResultOfLoginResponse> FitTechAPIAuthLoginLoginEndpointAsync(FitTechAPIAuthLoginLoginRequest loginRequest)
+        public virtual System.Threading.Tasks.Task<ResultOfLoginResponse> LoginEndpointAsync(LoginRequest loginRequest)
         {
-            return FitTechAPIAuthLoginLoginEndpointAsync(loginRequest, System.Threading.CancellationToken.None);
+            return LoginEndpointAsync(loginRequest, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FitTechApplicationResultOfLoginResponse> FitTechAPIAuthLoginLoginEndpointAsync(FitTechAPIAuthLoginLoginRequest loginRequest, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ResultOfLoginResponse> LoginEndpointAsync(LoginRequest loginRequest, System.Threading.CancellationToken cancellationToken)
         {
             if (loginRequest == null)
                 throw new System.ArgumentNullException("loginRequest");
@@ -393,7 +477,7 @@ namespace FitTech.Api.Client.Generated
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FitTechApplicationResultOfLoginResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ResultOfLoginResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -422,15 +506,15 @@ namespace FitTech.Api.Client.Generated
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FitTechApplicationResultOfString> FitTechAPIAuthForgotPasswordForgotPasswordEndpointAsync(FitTechAPIAuthForgotPasswordForgotPasswordRequest forgotPasswordRequest)
+        public virtual System.Threading.Tasks.Task<ResultOfString> ForgotPasswordEndpointAsync(ForgotPasswordRequest forgotPasswordRequest)
         {
-            return FitTechAPIAuthForgotPasswordForgotPasswordEndpointAsync(forgotPasswordRequest, System.Threading.CancellationToken.None);
+            return ForgotPasswordEndpointAsync(forgotPasswordRequest, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FitTechApplicationResultOfString> FitTechAPIAuthForgotPasswordForgotPasswordEndpointAsync(FitTechAPIAuthForgotPasswordForgotPasswordRequest forgotPasswordRequest, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ResultOfString> ForgotPasswordEndpointAsync(ForgotPasswordRequest forgotPasswordRequest, System.Threading.CancellationToken cancellationToken)
         {
             if (forgotPasswordRequest == null)
                 throw new System.ArgumentNullException("forgotPasswordRequest");
@@ -478,7 +562,7 @@ namespace FitTech.Api.Client.Generated
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<FitTechApplicationResultOfString>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ResultOfString>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -618,7 +702,7 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechApplicationResult
+    public partial class Result
     {
         [Newtonsoft.Json.JsonProperty("Succeeded", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool Succeeded { get; set; }
@@ -629,7 +713,7 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechAPIAuthResetPasswordResetPasswordRequest
+    public partial class ResetPasswordRequest
     {
         [Newtonsoft.Json.JsonProperty("Email", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Email { get; set; }
@@ -643,7 +727,7 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechAPIAuthRegisterRegisterRequest
+    public partial class RegisterRequest
     {
         [Newtonsoft.Json.JsonProperty("Email", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Email { get; set; }
@@ -654,7 +738,7 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FastEndpointsErrorResponse
+    public partial class ErrorResponse
     {
         [Newtonsoft.Json.JsonProperty("StatusCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int StatusCode { get; set; } = 400;
@@ -668,7 +752,7 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechApplicationResultOfString : FitTechApplicationResult
+    public partial class ResultOfString : Result
     {
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Value { get; set; }
@@ -676,7 +760,7 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechAPIAuthRefreshTokenRefreshTokenRequest
+    public partial class RefreshTokenRequest
     {
         [Newtonsoft.Json.JsonProperty("RefreshToken", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string RefreshToken { get; set; }
@@ -687,26 +771,23 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechApplicationResultOfLoginResponse : FitTechApplicationResult
+    public partial class ResultOfLoginResponse : Result
     {
         [Newtonsoft.Json.JsonProperty("Value", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public FitTechAPIAuthLoginLoginResponse Value { get; set; }
+        public LoginResponse Value { get; set; }
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechAPIAuthLoginLoginResponse
+    public partial class LoginResponse
     {
         [Newtonsoft.Json.JsonProperty("AccessToken", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string AccessToken { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("RefreshToken", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string RefreshToken { get; set; }
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechAPIAuthLoginLoginRequest
+    public partial class LoginRequest
     {
         [Newtonsoft.Json.JsonProperty("Email", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Email { get; set; }
@@ -717,7 +798,7 @@ namespace FitTech.Api.Client.Generated
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FitTechAPIAuthForgotPasswordForgotPasswordRequest
+    public partial class ForgotPasswordRequest
     {
         [Newtonsoft.Json.JsonProperty("Email", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Email { get; set; }
