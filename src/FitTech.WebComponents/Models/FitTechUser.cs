@@ -8,6 +8,7 @@ public class FitTechUser
     public static string StorageKey => nameof(FitTechUser);
     public string Email { get; set; } = null!;
     public string? AccessToken { get; set; }
+    public string? RefreshToken { get; set; }
 
     internal ClaimsPrincipal GetClaimsPrincipal()
     {

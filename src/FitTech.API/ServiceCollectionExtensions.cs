@@ -1,10 +1,7 @@
-﻿using System.Text;
-using FitTech.Application;
-using FitTech.Application.Auth.Configuration;
+﻿using FitTech.Application;
 using FitTech.Domain.Entities;
 using FitTech.Persistence;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FitTech.API;
 
@@ -17,7 +14,8 @@ internal static class ServiceCollectionExtensions
         builder.Services.AddIdentity<FitTechUser, FitTechRole>(options =>
         {
             options.Password.RequiredLength = 8;
-        }).AddEntityFrameworkStores<FitTechDbContext>().AddDefaultTokenProviders();
+        }).AddEntityFrameworkStores<FitTechDbContext>()
+        .AddDefaultTokenProviders();
 
         return builder;
     }
