@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.User.GetCurrent;
 
-[Authorize]
+[Authorize(AuthenticationSchemes = "Bearer")]
 [HttpGet("/user/get-current")]
 public class GetCurrentUserEndpoint : EndpointWithoutRequest<Result>
 {

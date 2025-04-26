@@ -26,7 +26,10 @@ builder.Services
     })
     .AddLogging()
     .AddOpenApi()
-    .AddCors()
+    .AddCors( c => c.AddPolicy("FitTechCorsPolicy", policyBuilder =>
+    {
+        policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:7083");
+    }))
     .AddPersistence(connectionString);
 
 
@@ -41,10 +44,10 @@ if (app.Environment.IsDevelopment())
 
 app
     .UseHttpsRedirection()
+    .UseCors("FitTechCorsPolicy")
     .UseAuthorization()
     .UseAuthentication()
-    .UseFastEndpoints(x => x.Endpoints.ShortNames = true)
-    .UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+    .UseFastEndpoints(x => x.Endpoints.ShortNames = true);
 
 //TODO: Create a migration service triggered by Aspire
 await app.Services.ApplyMigrationsAsync();
