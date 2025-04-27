@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Solution Items", "{315DC914-481B-4C83-92D1-29F4DF6BAC4E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Directory.Build.props = ..\..\Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevopsCli.Console", "src\DevopsCli.Console\DevopsCli.Console.csproj", "{7C1E1CAB-A777-49C9-9057-38EF623F1C22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevopsCli.Core", "src\DevopsCli.Core\DevopsCli.Core.csproj", "{144692DD-DC15-4483-819E-DF103D26CA62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Libraries", "1. Libraries", "{0BDAC06B-DF05-4E47-81B0-168AB9395EEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuleTech.Core", "..\..\Libraries\AuleTech.Core\src\AuleTech.Core\AuleTech.Core.csproj", "{5FC17327-EE1F-4370-98D2-D75BEA1F1A72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C1E1CAB-A777-49C9-9057-38EF623F1C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1E1CAB-A777-49C9-9057-38EF623F1C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1E1CAB-A777-49C9-9057-38EF623F1C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1E1CAB-A777-49C9-9057-38EF623F1C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144692DD-DC15-4483-819E-DF103D26CA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144692DD-DC15-4483-819E-DF103D26CA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144692DD-DC15-4483-819E-DF103D26CA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144692DD-DC15-4483-819E-DF103D26CA62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC17327-EE1F-4370-98D2-D75BEA1F1A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC17327-EE1F-4370-98D2-D75BEA1F1A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC17327-EE1F-4370-98D2-D75BEA1F1A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC17327-EE1F-4370-98D2-D75BEA1F1A72}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5FC17327-EE1F-4370-98D2-D75BEA1F1A72} = {0BDAC06B-DF05-4E47-81B0-168AB9395EEE}
+	EndGlobalSection
+EndGlobal

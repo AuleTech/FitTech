@@ -2,14 +2,16 @@
 
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
     <DebugType>embedded</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <!-- Temporarily disable security warnings for transitive packages. -->
-    <NoWarn>NU1901;NU1902;NU1903;NU1904</NoWarn>
+    <NoWarn>NU1901;NU1902;NU1903;NU1904;CA1416</NoWarn>
   </PropertyGroup>
 
 </Project>

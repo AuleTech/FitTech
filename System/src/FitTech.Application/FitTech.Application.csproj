@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FitTech.Domain\FitTech.Domain.csproj" />
+      <ProjectReference Include="..\FitTech.Persistence\FitTech.Persistence.csproj" />
+    </ItemGroup>
+
+</Project>
