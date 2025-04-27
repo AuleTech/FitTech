@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuleTech.Core", "AuleTech.Core\AuleTech.Core.csproj", "{E3F82BA3-D078-4B28-97F1-F6A34E7D6FB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuleTech.Core", "src\AuleTech.Core\AuleTech.Core.csproj", "{E3F82BA3-D078-4B28-97F1-F6A34E7D6FB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution items", "0. Solution items", "{E7DFF477-311A-40E2-A8C7-39C9538650FA}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
