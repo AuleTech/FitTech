@@ -2,6 +2,7 @@ using FastEndpoints;
 using FastEndpoints.Swagger;
 using FitTech.API;
 using FitTech.Persistence;
+using Resend;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseDefaultServiceProvider((_, options) =>
@@ -11,6 +12,14 @@ builder.Host.UseDefaultServiceProvider((_, options) =>
 });
 
 var connectionString = builder.Configuration.GetConnectionString("fittechdb");
+
+builder.Services.AddOptions();
+builder.Services.AddHttpClient<ResendClient>();
+builder.Services.Configure<ResendClientOptions>(
+    builder.Configuration.GetSection("Resend")
+);
+
+builder.Services.AddTransient<IResend, ResendClient>();
 
 builder.AddFitTechAuth();
 builder.Services
