@@ -2,7 +2,7 @@
 
 namespace FitTech.Application.Auth.Services;
 
-public class EmailService
+public class EmailService : IEmailService
 {
     private readonly IResend _resend;
     
@@ -11,15 +11,16 @@ public class EmailService
         _resend = resend;
     }
 
-    public async Task SendEmailAsync()
+    public async Task SendEmailAsync(string to, string subject, string htmlBody)
     {
-        
-        var message = new EmailMessage();
-        message.From = "you@example.com";
-        message.To.Add( "user@gmail.com" );
-        message.Subject = "hello world";
-        message.HtmlBody = "<strong>it works!</strong>";
 
+        var message = new EmailMessage
+        {
+            From = "delivered@resend.dev",
+            To =  {  to },
+            Subject = subject,
+            HtmlBody = htmlBody,
+        };
         await _resend.EmailSendAsync( message );
     }
 }

@@ -4,6 +4,8 @@ using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using Microsoft.Extensions.Logging;
 using Result = FitTech.WebComponents.Models.Result;
+using FitTech.Application.Auth.Services;
+
 
 namespace FitTech.WebComponents.Services;
 
@@ -13,14 +15,16 @@ internal sealed class UserService : IUserService
     private readonly FitTechAPIClient _fitTechApiClient;
     private readonly ILocalStorageService _localStorageService;
     private readonly ILogger<UserService> _logger;
+    private readonly IEmailService _emailService;
 
     public UserService(FitTechAPIClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
-        ILogger<UserService> logger, ILocalStorageService localStorageService)
+        ILogger<UserService> logger, ILocalStorageService localStorageService, IEmailService emailService )
     {
         _fitTechApiClient = fitTechApiClient;
         _authStateProvider = authStateProvider;
         _logger = logger;
         _localStorageService = localStorageService;
+        _emailService = emailService;
     }
 
     public async Task<bool> IsLoggedAsync() => await _localStorageService.ContainKeyAsync(FitTechUser.StorageKey); //Let's keep it simple for now
@@ -64,15 +68,22 @@ internal sealed class UserService : IUserService
             : Result.Failure(result.Errors.Select(x => x).ToArray());
     }
 
-    public async Task<Result<string>> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
+    public async Task<Result<string>> ForgotPasswordAsync(string to, CancellationToken cancellationToken)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(email);
+        ArgumentException.ThrowIfNullOrWhiteSpace(to);
         var result = await _fitTechApiClient.ForgotPasswordEndpointAsync(
             new ForgotPasswordRequest()
             {
-                Email = email, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
+                Email = to, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
             }, cancellationToken);
+        
+        if (result.Succeeded)
+        {
+            var htmlbody = $"https://yourfrontend.com/reset-password?token={result.Value}";
+            var subject = "Reset Password FitTech";
 
+            await _emailService.SendEmailAsync(to, subject, htmlbody);
+        }
         return new Result<string>()
         {
             Errors = result.Errors.ToArray(),
