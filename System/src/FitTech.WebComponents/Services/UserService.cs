@@ -4,7 +4,7 @@ using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using Microsoft.Extensions.Logging;
 using Result = FitTech.WebComponents.Models.Result;
-using FitTech.Application.Auth.Services;
+
 
 
 namespace FitTech.WebComponents.Services;
@@ -15,16 +15,15 @@ internal sealed class UserService : IUserService
     private readonly FitTechAPIClient _fitTechApiClient;
     private readonly ILocalStorageService _localStorageService;
     private readonly ILogger<UserService> _logger;
-    private readonly IEmailService _emailService;
+    
 
     public UserService(FitTechAPIClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
-        ILogger<UserService> logger, ILocalStorageService localStorageService, IEmailService emailService )
+        ILogger<UserService> logger, ILocalStorageService localStorageService )
     {
         _fitTechApiClient = fitTechApiClient;
         _authStateProvider = authStateProvider;
         _logger = logger;
         _localStorageService = localStorageService;
-        _emailService = emailService;
     }
 
     public async Task<bool> IsLoggedAsync() => await _localStorageService.ContainKeyAsync(FitTechUser.StorageKey); //Let's keep it simple for now
@@ -77,13 +76,6 @@ internal sealed class UserService : IUserService
                 Email = to, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
             }, cancellationToken);
         
-        if (result.Succeeded)
-        {
-            var htmlbody = $"https://yourfrontend.com/reset-password?token={result.Value}";
-            var subject = "Reset Password FitTech";
-
-            await _emailService.SendEmailAsync(to, subject, htmlbody);
-        }
         return new Result<string>()
         {
             Errors = result.Errors.ToArray(),

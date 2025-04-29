@@ -18,7 +18,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FitTech.API.Client\FitTech.API.Client.csproj" />
-      <ProjectReference Include="..\FitTech.Application\FitTech.Application.csproj" />
     </ItemGroup>
 
     <!--Just for now, this may cause a lot of merge conflicts. styles.css should be generated on deploy-->
