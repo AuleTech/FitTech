@@ -14,13 +14,15 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
     private readonly ILogger<FitTechAuthenticationService> _logger;
     private readonly ITokenProvider _tokenProvider;
     private readonly UserManager<FitTechUser> _userManager;
+    private readonly IEmailService _emailService;
 
     public FitTechAuthenticationService(UserManager<FitTechUser> userManager,
-        ILogger<FitTechAuthenticationService> logger, ITokenProvider tokenProvider)
+        ILogger<FitTechAuthenticationService> logger, ITokenProvider tokenProvider, IEmailService emailService)
     {
         _userManager = userManager;
         _logger = logger;
         _tokenProvider = tokenProvider;
+        _emailService = emailService;
     }
 
     public async Task<Result> RegisterAsync(RegisterUserDto registerUserDto, CancellationToken cancellationToken)
@@ -108,7 +110,21 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         var resetPasswordToken =
             await _userManager.GeneratePasswordResetTokenAsync(user)
                 .WaitAsync(cancellationToken); //TODO: We need to normalized for http.
-        // Meter aqui Servicio de Email
+        
+        //Creamos Url con token.
+        var encodedToken = HttpUtility.UrlEncode(resetPasswordToken);
+        var callbackUrl = $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={encodedToken}";
+        
+        // TODO: Hacer una platilla real.
+        var emailBody = $"<p>Click <a href='{callbackUrl}'>here</a> to reset your password.</p>";
+        
+        //Llamamos a la funcion Enviar email
+        await _emailService.SendEmailAsync(
+            forgotPasswordDto.Email,
+            "Reset your FitTech password",
+            emailBody
+        );
+        
         //TODO: Remove this log when we send the email
         //CallbackUrl url/resetpassword
         _logger.LogInformation("ResetPasswordUrl: {Url}",

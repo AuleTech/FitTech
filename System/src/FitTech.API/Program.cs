@@ -3,6 +3,7 @@ using FastEndpoints.Swagger;
 using FitTech.API;
 using FitTech.Persistence;
 using Resend;
+using FitTech.Application.Auth.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseDefaultServiceProvider((_, options) =>
@@ -20,6 +21,7 @@ builder.Services.Configure<ResendClientOptions>(
 );
 
 builder.Services.AddTransient<IResend, ResendClient>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.AddFitTechAuth();
 builder.Services
@@ -40,7 +42,6 @@ builder.Services
         policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:7083");
     }))
     .AddPersistence(connectionString);
-
 
 var app = builder.Build();
 
