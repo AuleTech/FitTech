@@ -14,14 +14,6 @@ builder.Host.UseDefaultServiceProvider((_, options) =>
 
 var connectionString = builder.Configuration.GetConnectionString("fittechdb");
 
-builder.Services.AddOptions();
-builder.Services.AddHttpClient<ResendClient>();
-builder.Services.Configure<ResendClientOptions>(
-    builder.Configuration.GetSection("Resend")
-);
-
-builder.Services.AddTransient<IResend, ResendClient>();
-builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.AddFitTechAuth();
 builder.Services

@@ -1,14 +1,16 @@
-﻿using Resend;
+﻿using Microsoft.Extensions.Logging;
+using Resend;
 
 namespace FitTech.Application.Auth.Services;
 
-public class EmailService : IEmailService
+internal sealed class EmailService : IEmailService
 {
     private readonly IResend _resend;
-    
-    public EmailService( IResend resend)
+    private readonly ILogger<EmailService> _logger;
+    public EmailService( IResend resend, ILogger<EmailService> logger)
     {
         _resend = resend;
+        _logger = logger;
     }
 
     public async Task SendEmailAsync(string to, string subject, string htmlBody)
@@ -21,7 +23,13 @@ public class EmailService : IEmailService
             Subject = subject,
             HtmlBody = htmlBody,
         };
-        await _resend.EmailSendAsync( message );
+        var response = await _resend.EmailSendAsync( message );
+
+        //TODO: Do we really need to throw?
+        if (!response.Success)
+        {
+            _logger.LogError("Couldn't send email: {ExceptionMessage}",response.Exception!.Message);
+        }
     }
 }
 
