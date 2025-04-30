@@ -16,7 +16,7 @@ public class EmailService : IEmailService
 
         var message = new EmailMessage
         {
-            From = "delivered@resend.dev",
+            From = "admin@fittech.es",
             To =  {  to },
             Subject = subject,
             HtmlBody = htmlBody,
