@@ -1,4 +1,5 @@
 ﻿using FitTech.Domain.Entities;
+using FitTech.Domain.Interfaces;
 
 
 namespace FitTech.Persistence.Repositories;
