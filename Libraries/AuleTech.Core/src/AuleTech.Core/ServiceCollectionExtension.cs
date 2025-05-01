@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AuleTech.Core;
 
-public static class ServicecollectionExtension
+public static class ServiceCollectionExtension
 {
     public static IServiceCollection AddPlatformCore(this IServiceCollection container) => container.AddIo().AddProcessing();
     
