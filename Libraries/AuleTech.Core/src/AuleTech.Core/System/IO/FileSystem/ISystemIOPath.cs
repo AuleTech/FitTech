@@ -1,95 +1,95 @@
-﻿namespace AuleTech.Core.System.IO.FileSystem
+﻿namespace AuleTech.Core.System.IO.FileSystem;
+
+public interface ISystemIoPath
 {
-	public interface ISystemIoPath
-	{
-		string ConvertToLinuxPath(string path);
-		string GetTempPath();
+    string ConvertToLinuxPath(string path);
+    string GetTempPath();
 
-		string GetTempPath(string relativeDirectoryPath);
+    string GetTempPath(string relativeDirectoryPath);
 
-		string GetTempPath(string relativeDirectoryPath
-		                   , bool createIfNotExists);
-		string GetTempPath(bool createIfNotExists,params string[] relativeDirectoryPathParts);
-		string GetTempPath(string subDirectory
-		                   , bool createDirectoryIfNotExists
-		                   , bool deleteContentIfExists);
-		string GetPlatformTempPath(string subDirectory, bool createIfNotExists=true, bool deleteContentIfExists=false);
-		string GetUserPath();
+    string GetTempPath(string relativeDirectoryPath
+        , bool createIfNotExists);
 
-		string GetUserPath(string relativeDirectoryPath);
+    string GetTempPath(bool createIfNotExists, params string[] relativeDirectoryPathParts);
 
-		string GetUserPath(string relativeDirectoryPath
-		                   , bool createIfNotExists);
+    string GetTempPath(string subDirectory
+        , bool createDirectoryIfNotExists
+        , bool deleteContentIfExists);
 
-		string Combine(string path1
-		               , string path2
-		               , bool createIfNotExists = false);
-		string Combine(string[] parts
-		               , bool createIfNotExists = false);
+    string GetPlatformTempPath(string subDirectory, bool createIfNotExists = true, bool deleteContentIfExists = false);
+    string GetUserPath();
 
-		string Combine(string path1
-		               , string path2
-		               , string path3
-		               , bool createIfNotExists = false);
+    string GetUserPath(string relativeDirectoryPath);
 
-		string GetExtension(string fileName);
+    string GetUserPath(string relativeDirectoryPath
+        , bool createIfNotExists);
 
-		string GetExtension(string fileName
-		                    , bool includePeriod);
+    string Combine(string path1
+        , string path2
+        , bool createIfNotExists = false);
 
-		string GetFileName(string fullFileName);
+    string Combine(string[] parts
+        , bool createIfNotExists = false);
 
-		string GetDirectoryName(string fullFileName);
-		string GetFileNameWithoutExtension(string fullFileName);
-		char[] GetInvalidFileNameChars();
+    string Combine(string path1
+        , string path2
+        , string path3
+        , bool createIfNotExists = false);
 
-		
+    string GetExtension(string fileName);
 
-		string GetRelativePath(string relativeTo
-		                       , string path);
+    string GetExtension(string fileName
+        , bool includePeriod);
 
-		string GetFullPath(string path);
+    string GetFileName(string fullFileName);
 
-		string GetFullPath(string relativePath
-		                   , string fullBasePath);
+    string GetDirectoryName(string fullFileName);
+    string GetFileNameWithoutExtension(string fullFileName);
+    char[] GetInvalidFileNameChars();
 
-		string GetFullDirectoryPath(string path);
-		string NormalizePath(string path);
 
-		string ResolveRelativePath(string sourcePath
-		                           , string offsetTarget);
+    string GetRelativePath(string relativeTo
+        , string path);
 
-		string ResolveRelativePath(string sourceFileFullPath
-		                           , string sourceRootFolderPath
-		                           , string destinationRootFolderPath);
+    string GetFullPath(string path);
 
-		string GetParentDirPath(string path);
+    string GetFullPath(string relativePath
+        , string fullBasePath);
 
-		string GetParentDirPath(string path
-		                        , string parentDirectoryName);
+    string GetFullDirectoryPath(string path);
+    string NormalizePath(string path);
 
-		string GetParentDirPathCommonToAll(string[] paths);
+    string ResolveRelativePath(string sourcePath
+        , string offsetTarget);
 
-		bool IsFileOfType(string fullPath
-		                  , params string[] fileExtensions);
+    string ResolveRelativePath(string sourceFileFullPath
+        , string sourceRootFolderPath
+        , string destinationRootFolderPath);
 
-		bool IsPathRooted(string path);
+    string GetParentDirPath(string path);
 
-		bool HasExtension(string fileName
-		                  , string extension);
+    string GetParentDirPath(string path
+        , string parentDirectoryName);
 
-		string ReplaceDirectorySeparatorChar(string path
-		                                     , string newValue);
+    string GetParentDirPathCommonToAll(string[] paths);
 
-		char GetPathSeparator();
-		char GetDirectorySeparator();
-		char GetAltDirectorySeparator();
-		string GetRandomFileName();
+    bool IsFileOfType(string fullPath
+        , params string[] fileExtensions);
 
-		string GetSpecialFolderPath(Environment.SpecialFolder specialFolder
-			                            , string subDirectory
-			                            , bool createIfNotExists);
+    bool IsPathRooted(string path);
 
-		
-	}
+    bool HasExtension(string fileName
+        , string extension);
+
+    string ReplaceDirectorySeparatorChar(string path
+        , string newValue);
+
+    char GetPathSeparator();
+    char GetDirectorySeparator();
+    char GetAltDirectorySeparator();
+    string GetRandomFileName();
+
+    string GetSpecialFolderPath(Environment.SpecialFolder specialFolder
+        , string subDirectory
+        , bool createIfNotExists);
 }

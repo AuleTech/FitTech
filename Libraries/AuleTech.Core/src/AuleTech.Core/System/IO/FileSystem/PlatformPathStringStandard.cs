@@ -2,71 +2,89 @@
 
 internal class PlatformPathStringStandard
 {
-	private readonly string _path;
+    private readonly string _path;
 
-	// File I/O functions in the Windows API convert "/" to "\" as part of converting the name to an NT-style name, except when using the "\\?\" prefix
-	// https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=powershell
-	public PlatformPathStringStandard(string inputPath)
-	{
-		_path = OperatingSystem.IsLinux() 
-			? inputPath 
-			: ResolveStandardPath();
+    // File I/O functions in the Windows API convert "/" to "\" as part of converting the name to an NT-style name, except when using the "\\?\" prefix
+    // https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=powershell
+    public PlatformPathStringStandard(string inputPath)
+    {
+        _path = OperatingSystem.IsLinux()
+            ? inputPath
+            : ResolveStandardPath();
 
-		return;
+        return;
 
-		string ResolveStandardPath()
-		{
-			var prefix = GetPrefix();
-			var part = inputPath.TrimStart(prefix.ToCharArray());
-			part = part
-				.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-			if (inputPath.StartsWith(prefix))
-			{
-				part = $"{prefix}{part}";
-			}
+        string ResolveStandardPath()
+        {
+            var prefix = GetPrefix();
+            var part = inputPath.TrimStart(prefix.ToCharArray());
+            part = part
+                .Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            if (inputPath.StartsWith(prefix))
+            {
+                part = $"{prefix}{part}";
+            }
 
-			return part;
-		}
+            return part;
+        }
 
-		string GetPrefix()
-		{
-			var pathSplit = inputPath.Split(Path.VolumeSeparatorChar);
+        string GetPrefix()
+        {
+            var pathSplit = inputPath.Split(Path.VolumeSeparatorChar);
 
-			switch (pathSplit.Length)
-			{
-				case 1:
-					return string.Empty;
-				case 2:
-				{
-					var s = pathSplit[0];
-					return $"{s.Substring(0, s.Length - 1)}:";
-				}
-				default:
-					throw new ArgumentException($"Value is not valid: '{inputPath}'.", nameof(inputPath));
-			}
-		}
-	}
+            switch (pathSplit.Length)
+            {
+                case 1:
+                    return string.Empty;
+                case 2:
+                {
+                    var s = pathSplit[0];
+                    return $"{s.Substring(0, s.Length - 1)}:";
+                }
+                default:
+                    throw new ArgumentException($"Value is not valid: '{inputPath}'.", nameof(inputPath));
+            }
+        }
+    }
 
 
-	public static implicit operator string(PlatformPathStringStandard standard) => standard._path;
-	public static implicit operator PlatformPathStringStandard(string part) => new(part);
-	public override string ToString() => _path;
-	public override bool Equals(object? obj)
-	{
-		if (ReferenceEquals(null, obj))
-		{
-			return false;
-		}
+    public static implicit operator string(PlatformPathStringStandard standard)
+    {
+        return standard._path;
+    }
 
-		if (ReferenceEquals(this, obj))
-		{
-			return true;
-		}
+    public static implicit operator PlatformPathStringStandard(string part)
+    {
+        return new PlatformPathStringStandard(part);
+    }
 
-		return obj is PlatformPathStringStandard standard && Equals(standard);
-	}
+    public override string ToString()
+    {
+        return _path;
+    }
 
-	protected bool Equals(PlatformPathStringStandard other) => _path == other._path;
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj))
+        {
+            return false;
+        }
 
-	public override int GetHashCode() => _path.GetHashCode();
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        return obj is PlatformPathStringStandard standard && Equals(standard);
+    }
+
+    protected bool Equals(PlatformPathStringStandard other)
+    {
+        return _path == other._path;
+    }
+
+    public override int GetHashCode()
+    {
+        return _path.GetHashCode();
+    }
 }

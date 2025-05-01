@@ -1,4 +1,5 @@
-﻿namespace AuleTech.Core.System.IO.FileSystem.Files
+﻿namespace AuleTech.Core.System.IO.FileSystem.Files;
+
+public interface ISystemIoFileDirect : ISystemIoFile
 {
-	public interface ISystemIoFileDirect : ISystemIoFile { }
 }

@@ -1,7 +1,6 @@
-﻿namespace AuleTech.Core.System.IO.Configuration
+﻿namespace AuleTech.Core.System.IO.Configuration;
+
+public interface ISystemIOSettings
 {
-	public interface ISystemIOSettings
-	{
-		public string StorageLocation { get; }
-	}
+    public string StorageLocation { get; }
 }

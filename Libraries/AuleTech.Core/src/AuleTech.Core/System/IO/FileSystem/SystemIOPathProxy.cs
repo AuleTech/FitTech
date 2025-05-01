@@ -1,310 +1,390 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AuleTech.Core.System.IO.FileSystem
+namespace AuleTech.Core.System.IO.FileSystem;
+
+internal class SystemIoPathProxy : ISystemIoPath
 {
-	internal class SystemIoPathProxy : ISystemIoPath
-	{
-		public string ConvertToLinuxPath(string windowsPath)
-		{
-			if (string.IsNullOrWhiteSpace(windowsPath))
-				return windowsPath;
-
-			var linuxPath = windowsPath.Replace('\\', '/');
-
-			var driveRegex = new Regex(@"^[a-zA-Z]:");
-			if (driveRegex.IsMatch(linuxPath))
-			{
-				linuxPath = driveRegex.Replace(linuxPath, m => $"/{m.Value[0].ToString().ToLower()}");
-			}
-
-			return linuxPath;
-		}
-
-		public string GetTempPath() => Path.GetTempPath();
-		
-		public string GetTempPath(string relativeDirectoryPath) => GetTempPath(relativeDirectoryPath, false);
-
-		public string GetTempPath(string relativeDirectoryPath
-		                          , bool createIfNotExists) =>
-			Combine(GetTempPath(), relativeDirectoryPath, createIfNotExists);
-
-		public string GetTempPath(bool createIfNotExists
-		                          , params string[] relativeDirectoryPathParts)
+    public string ConvertToLinuxPath(string windowsPath)
+    {
+        if (string.IsNullOrWhiteSpace(windowsPath))
         {
-            var parts = relativeDirectoryPathParts.Append(GetTempPath()).ToArray();
-			return Combine(parts, createIfNotExists);
-		}
+            return windowsPath;
+        }
 
-		public string GetTempPath(string subDirectory
-		                          , bool createDirectoryIfNotExists
-		                          , bool deleteContentIfExists)
-		{
-			var path = Combine(GetTempPath(), subDirectory);
-			if (deleteContentIfExists && Directory.Exists(path))
-			{
-				Directory.Delete(path, true);
-			}
+        var linuxPath = windowsPath.Replace('\\', '/');
 
-			return GetTempPath(subDirectory, createDirectoryIfNotExists);
-		}
+        var driveRegex = new Regex(@"^[a-zA-Z]:");
+        if (driveRegex.IsMatch(linuxPath))
+        {
+            linuxPath = driveRegex.Replace(linuxPath, m => $"/{m.Value[0].ToString().ToLower()}");
+        }
 
-		public string GetPlatformTempPath(string subDirectory
-		                                  , bool createIfNotExists=true
-			, bool deleteContentIfExists=false) =>
-			GetTempPath(Combine(".platform",subDirectory),createIfNotExists,deleteContentIfExists);
+        return linuxPath;
+    }
 
-		public string GetUserPath() => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+    public string GetTempPath()
+    {
+        return Path.GetTempPath();
+    }
 
-		public string GetUserPath(string relativeDirectoryPath) => GetUserPath(relativeDirectoryPath, false);
+    public string GetTempPath(string relativeDirectoryPath)
+    {
+        return GetTempPath(relativeDirectoryPath, false);
+    }
 
-		public string GetUserPath(string relativeDirectoryPath
-		                          , bool createIfNotExists) =>
-			Combine(GetUserPath(), relativeDirectoryPath, createIfNotExists);
+    public string GetTempPath(string relativeDirectoryPath
+        , bool createIfNotExists)
+    {
+        return Combine(GetTempPath(), relativeDirectoryPath, createIfNotExists);
+    }
 
-		public string Combine(string path1
-		                      , string path2
-		                      , bool createIfNotExists = false)=> Combine(new []{path1, path2}, createIfNotExists);
+    public string GetTempPath(bool createIfNotExists
+        , params string[] relativeDirectoryPathParts)
+    {
+        var parts = relativeDirectoryPathParts.Append(GetTempPath()).ToArray();
+        return Combine(parts, createIfNotExists);
+    }
 
-		public string Combine(string[] parts
-		                      , bool createIfNotExists = false)
-		{
-			var result= (string)(PlatformPathStringStandard)Path.Combine(parts!);
-			if (createIfNotExists && !Directory.Exists(result))
-			{
-				Directory.CreateDirectory(result);
-			}
-			return result;
-		}
+    public string GetTempPath(string subDirectory
+        , bool createDirectoryIfNotExists
+        , bool deleteContentIfExists)
+    {
+        var path = Combine(GetTempPath(), subDirectory);
+        if (deleteContentIfExists && Directory.Exists(path))
+        {
+            Directory.Delete(path, true);
+        }
 
-		public string Combine(string path1
-		                      , string path2
-		                      , string path3
-		                      , bool createIfNotExists = false) => Combine(new[] { path1, path2,path3 }, createIfNotExists);
+        return GetTempPath(subDirectory, createDirectoryIfNotExists);
+    }
 
-		public string GetExtension(string fileName) => GetExtension(fileName, true);
+    public string GetPlatformTempPath(string subDirectory
+        , bool createIfNotExists = true
+        , bool deleteContentIfExists = false)
+    {
+        return GetTempPath(Combine(".platform", subDirectory), createIfNotExists, deleteContentIfExists);
+    }
 
-		public string GetExtension(string fileName
-		                           , bool includePeriod)
-		{
-            ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
-            
-			var result = Path.GetExtension(fileName);
-			if (!includePeriod)
-			{
-				result = result!.TrimStart('.');
-			}
+    public string GetUserPath()
+    {
+        return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+    }
 
-			return result!;
-		}
+    public string GetUserPath(string relativeDirectoryPath)
+    {
+        return GetUserPath(relativeDirectoryPath, false);
+    }
 
-		public string GetFileName(string fullFileName) => Path.GetFileName(fullFileName);
-		public string GetDirectoryName(string fullFileName) => Path.GetDirectoryName(fullFileName)!;
+    public string GetUserPath(string relativeDirectoryPath
+        , bool createIfNotExists)
+    {
+        return Combine(GetUserPath(), relativeDirectoryPath, createIfNotExists);
+    }
 
-		public string GetFileNameWithoutExtension(string fullFileName) =>
-			Path.GetFileNameWithoutExtension(fullFileName);
+    public string Combine(string path1
+        , string path2
+        , bool createIfNotExists = false)
+    {
+        return Combine(new[] { path1, path2 }, createIfNotExists);
+    }
 
-		public char[] GetInvalidFileNameChars() => Path.GetInvalidFileNameChars();
+    public string Combine(string[] parts
+        , bool createIfNotExists = false)
+    {
+        var result = (string)(PlatformPathStringStandard)Path.Combine(parts!);
+        if (createIfNotExists && !Directory.Exists(result))
+        {
+            Directory.CreateDirectory(result);
+        }
 
-		
+        return result;
+    }
 
-		public string GetRelativePath(string relativeTo
-		                              , string? path)
-		{
-			if (string.IsNullOrEmpty(relativeTo))
-			{
-				throw new ArgumentNullException(nameof(relativeTo));
-			}
+    public string Combine(string path1
+        , string path2
+        , string path3
+        , bool createIfNotExists = false)
+    {
+        return Combine(new[] { path1, path2, path3 }, createIfNotExists);
+    }
 
-			if (string.IsNullOrEmpty(path))
-			{
-				throw new ArgumentNullException(nameof(path));
-			}
+    public string GetExtension(string fileName)
+    {
+        return GetExtension(fileName, true);
+    }
 
-			if (relativeTo.StartsWith(".") || path.StartsWith("."))
-			{
-				throw new NotSupportedException("Only absolute paths supported");
-			}
+    public string GetExtension(string fileName
+        , bool includePeriod)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileName);
 
-			if (!relativeTo.EndsWith(Path.DirectorySeparatorChar.ToString())
-			 && !relativeTo.EndsWith(Path.AltDirectorySeparatorChar.ToString()))
-			{
-				relativeTo += Path.DirectorySeparatorChar;
-			}
+        var result = Path.GetExtension(fileName);
+        if (!includePeriod)
+        {
+            result = result!.TrimStart('.');
+        }
+
+        return result!;
+    }
+
+    public string GetFileName(string fullFileName)
+    {
+        return Path.GetFileName(fullFileName);
+    }
+
+    public string GetDirectoryName(string fullFileName)
+    {
+        return Path.GetDirectoryName(fullFileName)!;
+    }
+
+    public string GetFileNameWithoutExtension(string fullFileName)
+    {
+        return Path.GetFileNameWithoutExtension(fullFileName);
+    }
+
+    public char[] GetInvalidFileNameChars()
+    {
+        return Path.GetInvalidFileNameChars();
+    }
 
 
-			var fromUri = new Uri(relativeTo);
-			var toUri = new Uri(path);
+    public string GetRelativePath(string relativeTo
+        , string? path)
+    {
+        if (string.IsNullOrEmpty(relativeTo))
+        {
+            throw new ArgumentNullException(nameof(relativeTo));
+        }
 
-			if (fromUri.Scheme != toUri.Scheme)
-			{
-				return path;
-			}
+        if (string.IsNullOrEmpty(path))
+        {
+            throw new ArgumentNullException(nameof(path));
+        }
 
-			var relativeUri = fromUri.MakeRelativeUri(toUri);
-			var relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+        if (relativeTo.StartsWith(".") || path.StartsWith("."))
+        {
+            throw new NotSupportedException("Only absolute paths supported");
+        }
 
-			if (toUri.Scheme.Equals("file", StringComparison.InvariantCultureIgnoreCase))
-			{
-				relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-			}
+        if (!relativeTo.EndsWith(Path.DirectorySeparatorChar.ToString())
+            && !relativeTo.EndsWith(Path.AltDirectorySeparatorChar.ToString()))
+        {
+            relativeTo += Path.DirectorySeparatorChar;
+        }
 
-			return relativePath;
-		}
 
-		public string GetFullPath(string path) => Path.GetFullPath(path);
+        var fromUri = new Uri(relativeTo);
+        var toUri = new Uri(path);
 
-		public string GetFullPath(string relativePath
-		                          , string fullBasePath) =>
-			GetFullPath(Combine(fullBasePath, relativePath));
+        if (fromUri.Scheme != toUri.Scheme)
+        {
+            return path;
+        }
 
-		public string GetFullDirectoryPath(string path) => Path.GetFullPath(GetDirectoryName(path));
+        var relativeUri = fromUri.MakeRelativeUri(toUri);
+        var relativePath = Uri.UnescapeDataString(relativeUri.ToString());
 
-		public string NormalizePath(string path) =>
-			(PlatformPathStringStandard)Path.GetFullPath(new Uri(GetFullPath(path)).LocalPath)
-				.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+        if (toUri.Scheme.Equals("file", StringComparison.InvariantCultureIgnoreCase))
+        {
+            relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+        }
 
-		public string ResolveRelativePath(string sourcePath
-		                                  , string offsetTarget)
-		{
-			if (!IsFile(sourcePath) && !sourcePath.EndsWith(Path.DirectorySeparatorChar.ToString()) && !sourcePath.EndsWith(Path.AltDirectorySeparatorChar.ToString()))
-			{
-				sourcePath += Path.DirectorySeparatorChar.ToString();
-			}
+        return relativePath;
+    }
 
-			var relativeUri = new Uri(offsetTarget);
-			var sourceUri = new Uri(sourcePath);
-			var relativePath = sourceUri.MakeRelativeUri(relativeUri)
-				.ToString();
-			return relativePath;
-		}
+    public string GetFullPath(string path)
+    {
+        return Path.GetFullPath(path);
+    }
 
-		public string ResolveRelativePath(string sourceFileFullPath
-		                                  , string sourceRootFolderPath
-		                                  , string destinationRootFolderPath)
-		{
-			if (string.IsNullOrWhiteSpace(sourceFileFullPath))
-			{
-				throw new ArgumentNullException(nameof(sourceFileFullPath));
-			}
+    public string GetFullPath(string relativePath
+        , string fullBasePath)
+    {
+        return GetFullPath(Combine(fullBasePath, relativePath));
+    }
 
-			if (string.IsNullOrWhiteSpace(sourceRootFolderPath))
-			{
-				throw new ArgumentNullException(nameof(sourceRootFolderPath));
-			}
+    public string GetFullDirectoryPath(string path)
+    {
+        return Path.GetFullPath(GetDirectoryName(path));
+    }
 
-			if (string.IsNullOrWhiteSpace(destinationRootFolderPath))
-			{
-				throw new ArgumentNullException(nameof(destinationRootFolderPath));
-			}
+    public string NormalizePath(string path)
+    {
+        return (PlatformPathStringStandard)Path.GetFullPath(new Uri(GetFullPath(path)).LocalPath)
+            .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+    }
 
-			sourceFileFullPath = NormalizePath(sourceFileFullPath);
-			sourceRootFolderPath = NormalizePath(sourceRootFolderPath);
-			destinationRootFolderPath = NormalizePath(destinationRootFolderPath);
+    public string ResolveRelativePath(string sourcePath
+        , string offsetTarget)
+    {
+        if (!IsFile(sourcePath) && !sourcePath.EndsWith(Path.DirectorySeparatorChar.ToString()) &&
+            !sourcePath.EndsWith(Path.AltDirectorySeparatorChar.ToString()))
+        {
+            sourcePath += Path.DirectorySeparatorChar.ToString();
+        }
 
-			if (!sourceFileFullPath.StartsWith(sourceRootFolderPath))
-			{
-				throw new InvalidOperationException($"{sourceRootFolderPath} is not root of {sourceFileFullPath}");
-			}
+        var relativeUri = new Uri(offsetTarget);
+        var sourceUri = new Uri(sourcePath);
+        var relativePath = sourceUri.MakeRelativeUri(relativeUri)
+            .ToString();
+        return relativePath;
+    }
 
-			return GetFullPath(Combine(destinationRootFolderPath
-				, ResolveRelativePath(sourceRootFolderPath, sourceFileFullPath)));
-		}
+    public string ResolveRelativePath(string sourceFileFullPath
+        , string sourceRootFolderPath
+        , string destinationRootFolderPath)
+    {
+        if (string.IsNullOrWhiteSpace(sourceFileFullPath))
+        {
+            throw new ArgumentNullException(nameof(sourceFileFullPath));
+        }
 
-		public string GetParentDirPath(string path)
-		{
-			string result;
-			try
-			{
-				var isDirectory = (File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory;
-				var directoryInfo = isDirectory
-					? new DirectoryInfo(path).Parent
-					: new FileInfo(path).Directory;
+        if (string.IsNullOrWhiteSpace(sourceRootFolderPath))
+        {
+            throw new ArgumentNullException(nameof(sourceRootFolderPath));
+        }
 
-				result = directoryInfo!.FullName;
-			}
-			catch (DirectoryNotFoundException)
-			{
-				var parts = path.Replace('\\', '/')
-					.Split('/');
-				result = string.Join("\\"
-					, parts.Take(parts.Length - 1));
-			}
+        if (string.IsNullOrWhiteSpace(destinationRootFolderPath))
+        {
+            throw new ArgumentNullException(nameof(destinationRootFolderPath));
+        }
 
-			return result;
-		}
+        sourceFileFullPath = NormalizePath(sourceFileFullPath);
+        sourceRootFolderPath = NormalizePath(sourceRootFolderPath);
+        destinationRootFolderPath = NormalizePath(destinationRootFolderPath);
 
-		public string GetParentDirPath(string path
-		                               , string parentDirectoryName)
-		{
-			while (parentDirectoryName != GetFileName(path))
-			{
-				path = GetParentDirPath(path);
-			}
+        if (!sourceFileFullPath.StartsWith(sourceRootFolderPath))
+        {
+            throw new InvalidOperationException($"{sourceRootFolderPath} is not root of {sourceFileFullPath}");
+        }
 
-			return path;
-		}
+        return GetFullPath(Combine(destinationRootFolderPath
+            , ResolveRelativePath(sourceRootFolderPath, sourceFileFullPath)));
+    }
 
-		public string GetParentDirPathCommonToAll(string[] paths)
-		{
-			var splitPaths = paths.Select(p =>
-					p.Replace('\\', '/')
-						.Split('/')
-				)
-				.ToArray();
-			var minLength = splitPaths.Min(p => p.Length);
-			var commonPath = "";
+    public string GetParentDirPath(string path)
+    {
+        string result;
+        try
+        {
+            var isDirectory = (File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory;
+            var directoryInfo = isDirectory
+                ? new DirectoryInfo(path).Parent
+                : new FileInfo(path).Directory;
 
-			for (var i = 0; i < minLength; i++)
-			{
-				var current = splitPaths[0][i];
-				if (splitPaths.All(p => p[i] == current))
-				{
-					commonPath += current + Path.DirectorySeparatorChar;
-				}
-				else
-				{
-					break;
-				}
-			}
+            result = directoryInfo!.FullName;
+        }
+        catch (DirectoryNotFoundException)
+        {
+            var parts = path.Replace('\\', '/')
+                .Split('/');
+            result = string.Join("\\"
+                , parts.Take(parts.Length - 1));
+        }
 
-			return commonPath.TrimEnd('\\', '/');
+        return result;
+    }
 
-		}
+    public string GetParentDirPath(string path
+        , string parentDirectoryName)
+    {
+        while (parentDirectoryName != GetFileName(path))
+        {
+            path = GetParentDirPath(path);
+        }
 
-		public bool IsFileOfType(string fullPath
-		                         , params string[] fileExtensions)
-		{
-			var last = fullPath.Replace('\\', '/')
-				.Split('/')
-				.Last();
+        return path;
+    }
 
-			return fileExtensions.Any(_ => last.EndsWith($".{_}", StringComparison.InvariantCultureIgnoreCase));
-		}
+    public string GetParentDirPathCommonToAll(string[] paths)
+    {
+        var splitPaths = paths.Select(p =>
+                p.Replace('\\', '/')
+                    .Split('/')
+            )
+            .ToArray();
+        var minLength = splitPaths.Min(p => p.Length);
+        var commonPath = "";
 
-		public bool IsPathRooted(string path) => Path.IsPathRooted(path);
+        for (var i = 0; i < minLength; i++)
+        {
+            var current = splitPaths[0][i];
+            if (splitPaths.All(p => p[i] == current))
+            {
+                commonPath += current + Path.DirectorySeparatorChar;
+            }
+            else
+            {
+                break;
+            }
+        }
 
-		public bool HasExtension(string fileName
-		                         , string extension) => GetExtension(fileName, false)
-			.Equals(extension, StringComparison.InvariantCultureIgnoreCase);
+        return commonPath.TrimEnd('\\', '/');
+    }
 
-		public string ReplaceDirectorySeparatorChar(string path
-		                                            , string newValue) =>
-			path.Replace(Path.DirectorySeparatorChar.ToString(), newValue);
+    public bool IsFileOfType(string fullPath
+        , params string[] fileExtensions)
+    {
+        var last = fullPath.Replace('\\', '/')
+            .Split('/')
+            .Last();
 
-		public char GetPathSeparator() => Path.PathSeparator;
+        return fileExtensions.Any(_ => last.EndsWith($".{_}", StringComparison.InvariantCultureIgnoreCase));
+    }
 
-		public char GetDirectorySeparator() => Path.DirectorySeparatorChar;
-		public char GetAltDirectorySeparator() => Path.AltDirectorySeparatorChar;
-		public string GetRandomFileName() => Path.GetRandomFileName();
+    public bool IsPathRooted(string path)
+    {
+        return Path.IsPathRooted(path);
+    }
 
-		public string GetSpecialFolderPath(Environment.SpecialFolder specialFolder
-		                                   , string subDirectory
-		                                   , bool createIfNotExists) =>
-			Combine(Environment.GetFolderPath(specialFolder), subDirectory, createIfNotExists);
+    public bool HasExtension(string fileName
+        , string extension)
+    {
+        return GetExtension(fileName, false)
+            .Equals(extension, StringComparison.InvariantCultureIgnoreCase);
+    }
 
-		public bool IsDirectory(string path) => (File.GetAttributes(path) & FileAttributes.Directory)
-                                                 == FileAttributes.Directory;
+    public string ReplaceDirectorySeparatorChar(string path
+        , string newValue)
+    {
+        return path.Replace(Path.DirectorySeparatorChar.ToString(), newValue);
+    }
 
-		public bool IsFile(string path) => !IsDirectory(path);
-	}
+    public char GetPathSeparator()
+    {
+        return Path.PathSeparator;
+    }
+
+    public char GetDirectorySeparator()
+    {
+        return Path.DirectorySeparatorChar;
+    }
+
+    public char GetAltDirectorySeparator()
+    {
+        return Path.AltDirectorySeparatorChar;
+    }
+
+    public string GetRandomFileName()
+    {
+        return Path.GetRandomFileName();
+    }
+
+    public string GetSpecialFolderPath(Environment.SpecialFolder specialFolder
+        , string subDirectory
+        , bool createIfNotExists)
+    {
+        return Combine(Environment.GetFolderPath(specialFolder), subDirectory, createIfNotExists);
+    }
+
+    public bool IsDirectory(string path)
+    {
+        return (File.GetAttributes(path) & FileAttributes.Directory)
+               == FileAttributes.Directory;
+    }
+
+    public bool IsFile(string path)
+    {
+        return !IsDirectory(path);
+    }
 }

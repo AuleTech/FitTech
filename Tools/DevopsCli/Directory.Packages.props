@@ -4,6 +4,9 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Cocona" Version="2.2.0" />
+    <PackageVersion Include="Cocona" Version="2.2.0"/>
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4"/>
+    <PackageVersion Include="NSubstitute" Version="5.3.0"/>
+    <PackageVersion Include="TUnit" Version="0.19.112"/>
   </ItemGroup>
 </Project>

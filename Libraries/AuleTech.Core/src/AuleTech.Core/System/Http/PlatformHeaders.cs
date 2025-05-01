@@ -2,6 +2,6 @@
 
 public static class PlatformHeaders
 {
-	public const string TenantId = "TenantId";
-	public const string JwtToken = "JwtToken";
+    public const string TenantId = "TenantId";
+    public const string JwtToken = "JwtToken";
 }

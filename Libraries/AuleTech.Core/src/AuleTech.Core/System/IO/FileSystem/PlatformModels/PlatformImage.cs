@@ -1,41 +1,43 @@
 ﻿using System.Drawing;
 
-namespace AuleTech.Core.System.IO.FileSystem.PlatformModels
+namespace AuleTech.Core.System.IO.FileSystem.PlatformModels;
+
+public class PlatformImage : IDisposable
 {
-	public class PlatformImage : IDisposable
-	{
-		private readonly Lazy<Image> _image;
-		private readonly Stream _stream;
+    private readonly Lazy<Image> _image;
+    private readonly Stream _stream;
 
-		public Image Image => _image.Value;
+    public PlatformImage(Stream stream)
+    {
+        _stream = stream ?? throw new ArgumentNullException(nameof(stream));
+        _image = new Lazy<Image>(() => Image.FromStream(stream));
+    }
 
-		public PlatformImage(Stream stream)
-		{
-			_stream = stream ?? throw new ArgumentNullException(nameof(stream));
-			_image = new Lazy<Image>(() => Image.FromStream(stream));
-		}
+    public Image Image => _image.Value;
 
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-		private void Dispose(bool disposing)
-		{
-			if (_image.IsValueCreated)
-			{
-				_image.Value?.Dispose();
-			}
+    private void Dispose(bool disposing)
+    {
+        if (_image.IsValueCreated)
+        {
+            _image.Value?.Dispose();
+        }
 
-			_stream?.Dispose();
-		}
+        _stream?.Dispose();
+    }
 
-		~PlatformImage()
-		{
-			Dispose(false);
-		}
+    ~PlatformImage()
+    {
+        Dispose(false);
+    }
 
-		public static implicit operator Image(PlatformImage src) => src.Image;
-	}
+    public static implicit operator Image(PlatformImage src)
+    {
+        return src.Image;
+    }
 }

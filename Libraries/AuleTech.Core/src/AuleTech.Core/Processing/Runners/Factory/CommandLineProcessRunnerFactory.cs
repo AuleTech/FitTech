@@ -1,16 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace AuleTech.Core.Processing.Runners.Factory
+namespace AuleTech.Core.Processing.Runners.Factory;
+
+internal class CommandLineProcessRunnerFactory : IProcessRunnerFactory
 {
-	internal class CommandLineProcessRunnerFactory: IProcessRunnerFactory
+    private readonly ILogger<CommandLineProcessRunner> _logger;
+
+    public CommandLineProcessRunnerFactory(ILogger<CommandLineProcessRunner> logger)
     {
-        private readonly ILogger<CommandLineProcessRunner> _logger;
+        _logger = logger;
+    }
 
-        public CommandLineProcessRunnerFactory(ILogger<CommandLineProcessRunner> logger)
-        {
-            _logger = logger;
-        }
-
-        public IProcessRunner GetOne() => new CommandLineProcessRunner(_logger);
-	}
+    public IProcessRunner GetOne()
+    {
+        return new CommandLineProcessRunner(_logger);
+    }
 }
