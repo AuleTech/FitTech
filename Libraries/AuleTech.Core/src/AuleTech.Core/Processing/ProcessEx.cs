@@ -58,9 +58,11 @@ namespace AuleTech.Core.Processing
             }
         }
 
-        public static void KillGracefully(int pid)
+        public static void KillGracefully(int? pid)
         {
-            if (TryGetProcessById(pid, out var process))
+            ArgumentNullException.ThrowIfNull(pid);
+            
+            if (TryGetProcessById(pid.Value, out var process))
             {
                 KillGracefully(process!);
             }

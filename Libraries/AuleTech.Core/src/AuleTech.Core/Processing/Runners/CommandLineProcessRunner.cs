@@ -1,19 +1,24 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
+using AuleTech.Core.Resiliency;
 using Microsoft.Extensions.Logging;
 
 namespace AuleTech.Core.Processing.Runners
 {
 	internal class CommandLineProcessRunner : IProcessRunner
     {
-
         private readonly ILogger<CommandLineProcessRunner> _logger;
+
 		private readonly object _appendSyncLock = new();
 		private readonly SemaphoreSlim _criticalSectionAsyncLock = new(1, 1);
 
 		private readonly ConcurrentQueue<string> _outputLines = new();
 		private bool _lastMessageArrived;
 		private Process? _process;
+
+        public CommandLineProcessRunner() : this(new Logger<CommandLineProcessRunner>(new LoggerFactory()))
+        {
+        }
 
         public CommandLineProcessRunner(ILogger<CommandLineProcessRunner> logger)
         {
@@ -91,7 +96,7 @@ namespace AuleTech.Core.Processing.Runners
 				try
 				{
 					_process = StartProcess(startInfo);
-					_logger.LogDebug($"pId({_process.Id}) - {scope}");
+					_logger.LogDebug( $"pId({_process.Id}) - {scope}");
 					
 					result = await ExecuteEmbedded(startInfo.Timeout
 						, startInfo.StandardInput
@@ -180,8 +185,8 @@ namespace AuleTech.Core.Processing.Runners
 
 						if (!waitResult)
 						{
-							_logger.LogDebug($"pId({process?.Id}) - will be killed as no wait was set.");
-							process.KillGracefully();
+							_logger.LogDebug( $"pId({process.Id}) - will be killed as no wait was set.");
+							ProcessEx.KillGracefully(process.Id);
 						}
 
 						await Task.WhenAll(outputReader, errorReader);
@@ -194,7 +199,7 @@ namespace AuleTech.Core.Processing.Runners
 
 						await WaitForLastOutputToArriveAsync();
 
-						result = new ProcessResult(process!.ExitCode, process.StartInfo.UseShellExecute
+						result = new ProcessResult(process.ExitCode, process.StartInfo.UseShellExecute
 							? combinedStream.ToString()
 							: string.Join(Environment.NewLine, _outputLines.ToArray()));
 					}
@@ -202,7 +207,7 @@ namespace AuleTech.Core.Processing.Runners
 			}
 			catch (OperationCanceledException)
 			{
-				_logger.LogInformation($"pId({process?.Id}) - The operation was cancelled.");
+				_logger.LogInformation( $"pId({process?.Id}) - The operation was cancelled.");
 
 				Kill(process);
 				throw;
@@ -229,8 +234,8 @@ namespace AuleTech.Core.Processing.Runners
 				throw new ArgumentNullException(nameof(process));
 			}
 
-            
-			Task.Run(() => 
+			// ReSharper disable once MethodSupportsCancellation
+			Task.Run(() => ResilientOperations.Default.RetryIfNeeded(_ =>
 				{
 					try
 					{
@@ -244,7 +249,10 @@ namespace AuleTech.Core.Processing.Runners
 						}
 					}
 				}
-			);
+				, TimeSpan.FromSeconds(30)
+				, TimeSpan.Zero
+				, e => Console.WriteLine($"{e}")
+			));
 		}
 
 		private Process StartProcess(PlatformProcessStartInfo startInfo)
@@ -281,7 +289,7 @@ namespace AuleTech.Core.Processing.Runners
 				info.Verb = "runAs";
 			}
 
-			_logger.LogInformation($"{process.StartInfo.FileName} {startInfo.Arguments}");
+			_logger.LogInformation( $"{process.StartInfo.FileName} {startInfo.Arguments}");
 			process.Start();
 
 			if (!process.HasExited)
@@ -303,16 +311,12 @@ namespace AuleTech.Core.Processing.Runners
 		{
 			if (!string.IsNullOrEmpty(e.Data))
 			{
-				_logger.LogInformation(e.Data);
+				_logger.LogInformation( e.Data);
 			}
-            CheckIfLastOutputMessage();
 
-            if (e.Data is null)
-            {
-                return;
-            }
-            
-			_outputLines.Enqueue(e.Data!);
+			_outputLines.Enqueue(e.Data ?? string.Empty);
+
+			CheckIfLastOutputMessage();
 
 			void CheckIfLastOutputMessage()
 			{
@@ -345,7 +349,7 @@ namespace AuleTech.Core.Processing.Runners
 					}
 
 					var line1 = line;
-					_logger.LogInformation(line1);
+					_logger.LogInformation( line1);
 				}
 			}
 		}
