@@ -1,3 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("FitTech.Api.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+[assembly: InternalsVisibleTo("FitTech.Api.UnitTests")]
+[assembly: InternalsVisibleTo("FitTech.Api.IntegrationTests")]

@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using FitTech.Api.Tests.Models;
+using FitTech.Api.IntegrationTests.Models;
 using FitTech.Application;
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Dtos;
@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TUnit.Core.Extensions;
 
-namespace FitTech.Api.Tests.IntegrationTests;
+namespace FitTech.Api.IntegrationTests;
 
 public class AuthenticationTests
 {

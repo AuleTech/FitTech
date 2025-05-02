@@ -1,4 +1,4 @@
-﻿namespace FitTech.Api.Tests.Models;
+﻿namespace FitTech.Api.IntegrationTests.Models;
 
 public class TestUserInfo
 {

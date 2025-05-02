@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using FitTech.Domain.Entities;
 
-namespace FitTech.Api.Tests.Data.Generators;
+namespace FitTech.Api.UnitTests.Data.Generators;
 
 public sealed class FitTechUserTestGenerator : Faker<FitTechUser>
 {
