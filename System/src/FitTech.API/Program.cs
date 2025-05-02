@@ -17,7 +17,6 @@ builder.Host.UseDefaultServiceProvider((_, options) =>
 
 var connectionString = builder.Configuration.GetConnectionString("fittechdb");
 
-builder.Services.AddScoped<IResetPasswordEmail, ResetPasswordRepository>();
 builder.AddFitTechAuth();
 builder.Services
     .AddFastEndpoints()

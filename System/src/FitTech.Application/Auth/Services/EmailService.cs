@@ -9,12 +9,12 @@ internal sealed class EmailService : IEmailService
 {
     private readonly IResend _resend;
     private readonly ILogger<EmailService> _logger;
-    private readonly IResetPasswordEmail _resetPasswordEmail;
-    public EmailService( IResend resend, ILogger<EmailService> logger, IResetPasswordEmail resetPasswordEmail)
+    private readonly IEmailRepository _emailRepository;
+    public EmailService( IResend resend, ILogger<EmailService> logger, IEmailRepository emailRepository)
     {
         _resend = resend;
         _logger = logger;
-        _resetPasswordEmail = resetPasswordEmail;
+        _emailRepository = emailRepository;
     }
 
     public async Task SendEmailAsync(string to, string subject, string htmlBody)
@@ -35,13 +35,13 @@ internal sealed class EmailService : IEmailService
             _logger.LogError("Couldn't send email: {ExceptionMessage}",response.Exception!.Message);
         }
 
-        await CreateLogEmailResetAsync(Guid.NewGuid(), to, htmlBody);
+        await CreateLogEmailResetAsync(response.Content, to, htmlBody);
     }
     
     private async Task CreateLogEmailResetAsync(Guid emailId, String ToEmail, String Message)
     {
-        var emailLog = new ResetPasswordEmail(Guid.NewGuid(), ToEmail, Message);
-        await _resetPasswordEmail.AddAsync(emailLog);
+        var emailLog = new Email(emailId, ToEmail, Message);
+        await _emailRepository.AddAsync(emailLog);
     }
 }
 

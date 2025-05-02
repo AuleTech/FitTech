@@ -115,7 +115,7 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         var encodedToken = HttpUtility.UrlEncode(resetPasswordToken);
         var callbackUrl = $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={encodedToken}";
         
-        // TODO: Hacer una platilla real.
+        // TODO: Create email template.
         var emailBody = $"<p>Click <a href='{callbackUrl}'>here</a> to reset your password.</p>";
         
         //Llamamos a la funcion Enviar email

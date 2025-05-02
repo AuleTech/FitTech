@@ -4,18 +4,18 @@ using FitTech.Domain.Interfaces;
 
 namespace FitTech.Persistence.Repositories;
 
-public class ResetPasswordRepository : IResetPasswordEmail
+internal sealed class EmailRepository : IEmailRepository
 {
     private readonly FitTechDbContext _context;
 
-    public ResetPasswordRepository(FitTechDbContext context)
+    public EmailRepository(FitTechDbContext context)
     {
         _context = context;
     }
     
-    public async Task AddAsync(ResetPasswordEmail resetPasswordEmail)
+    public async Task AddAsync(Email email)
     {
-        await _context.ResetPasswordEmail.AddAsync(resetPasswordEmail);
+        await _context.ResetPasswordEmail.AddAsync(email);
         await _context.SaveChangesAsync();
     }
 }
