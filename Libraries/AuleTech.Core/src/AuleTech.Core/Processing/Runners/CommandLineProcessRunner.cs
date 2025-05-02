@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AuleTech.Core.Processing.Runners;
 
+//TODO: User Terminal.app or zsh on MacOs or keep Bash, but ensure that RunAsync uses the proper terminal depending on the OS.
 internal class CommandLineProcessRunner : IProcessRunner
 {
     private readonly object _appendSyncLock = new();
@@ -41,12 +42,12 @@ internal class CommandLineProcessRunner : IProcessRunner
         return result;
     }
 
-    public async Task<ProcessResult> RunBashAsync(PlatformProcessStartInfo startInfo
+    public async Task<ProcessResult> RunBashAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
         return await ExecuteAsync(
-            new PlatformProcessStartInfo($"{(startInfo.RunAsAdministrator ? "sudo /bin/bash" : "/bin/bash")}"
+            new AuleTechProcessStartInfo($"{(startInfo.RunAsAdministrator ? "sudo /bin/bash" : "/bin/bash")}"
                 , $"-l -c \"{startInfo.FilePath} {startInfo.Arguments}\""
                 , startInfo.WorkingDirectory
                 , startInfo.Timeout
@@ -56,7 +57,7 @@ internal class CommandLineProcessRunner : IProcessRunner
             , appendOutputPrefix);
     }
 
-    public ProcessResult RunBash(PlatformProcessStartInfo startInfo
+    public ProcessResult RunBash(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
@@ -66,7 +67,7 @@ internal class CommandLineProcessRunner : IProcessRunner
     }
 
 
-    public ProcessResult Run(PlatformProcessStartInfo startInfo
+    public ProcessResult Run(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
@@ -80,10 +81,10 @@ internal class CommandLineProcessRunner : IProcessRunner
         , bool appendOutputPrefix = true
         , CancellationToken cancellationToken = default)
     {
-        return Run(new PlatformProcessStartInfo(process, arguments), cancellationToken, appendOutputPrefix);
+        return Run(new AuleTechProcessStartInfo(process, arguments), cancellationToken, appendOutputPrefix);
     }
 
-    public async Task<ProcessResult> RunAsync(PlatformProcessStartInfo startInfo
+    public async Task<ProcessResult> RunAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
@@ -91,7 +92,7 @@ internal class CommandLineProcessRunner : IProcessRunner
     }
 
 
-    private async Task<ProcessResult> ExecuteAsync(PlatformProcessStartInfo startInfo
+    private async Task<ProcessResult> ExecuteAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken
         , bool appendOutputPrefix)
     {
@@ -264,7 +265,7 @@ internal class CommandLineProcessRunner : IProcessRunner
         ));
     }
 
-    private Process StartProcess(PlatformProcessStartInfo startInfo)
+    private Process StartProcess(AuleTechProcessStartInfo startInfo)
     {
         var process = new Process();
 

@@ -2,6 +2,8 @@
 using Cocona;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Sample;
+using DevopsCli.Core.Tools;
+using DevopsCli.Core.Tools.Node;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DevopsCli.Core;
@@ -12,6 +14,7 @@ public static class ServiceCollectionExtension
     {
         return services
             .AddTransient<ICommand<SampleCommandParams, CommandResult>, SampleCommand>()
+            .AddTransient<IInstaller<NodeTool>, NodeUnixInstaller>() //TODO: Find proper way to inject need it
             .AddAuleTechPlatformCore()
             .Configure<CoconaAppOptions>(options =>
             {
