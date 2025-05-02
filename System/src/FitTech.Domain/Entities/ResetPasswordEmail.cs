@@ -4,6 +4,7 @@ namespace FitTech.Domain.Entities;
 
 public class ResetPasswordEmail 
 {
+    public int Id { get; set; }
     public Guid EmailId { get; set; }  
     public string? ToEmail { get; set; }
     public string? Message { get; set; }

@@ -4,6 +4,9 @@ using FitTech.API;
 using FitTech.Persistence;
 using Resend;
 using FitTech.Application.Auth.Services;
+using FitTech.Domain.Entities;
+using FitTech.Domain.Interfaces;
+using FitTech.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseDefaultServiceProvider((_, options) =>
@@ -14,7 +17,7 @@ builder.Host.UseDefaultServiceProvider((_, options) =>
 
 var connectionString = builder.Configuration.GetConnectionString("fittechdb");
 
-
+builder.Services.AddScoped<IResetPasswordEmail, ResetPasswordRepository>();
 builder.AddFitTechAuth();
 builder.Services
     .AddFastEndpoints()
