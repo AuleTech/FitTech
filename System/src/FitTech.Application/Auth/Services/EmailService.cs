@@ -1,16 +1,20 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FitTech.Domain.Entities;
+using FitTech.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
 using Resend;
-
+using FitTech.Persistence.Repositories;
 namespace FitTech.Application.Auth.Services;
 
 internal sealed class EmailService : IEmailService
 {
     private readonly IResend _resend;
     private readonly ILogger<EmailService> _logger;
-    public EmailService( IResend resend, ILogger<EmailService> logger)
+    private readonly IResetPasswordEmail _resetPasswordEmail;
+    public EmailService( IResend resend, ILogger<EmailService> logger, IResetPasswordEmail resetPasswordEmail)
     {
         _resend = resend;
         _logger = logger;
+        _resetPasswordEmail = resetPasswordEmail;
     }
 
     public async Task SendEmailAsync(string to, string subject, string htmlBody)
@@ -30,6 +34,14 @@ internal sealed class EmailService : IEmailService
         {
             _logger.LogError("Couldn't send email: {ExceptionMessage}",response.Exception!.Message);
         }
+
+        await CreateLogEmailResetAsync(Guid.NewGuid(), to, htmlBody);
+    }
+    
+    private async Task CreateLogEmailResetAsync(Guid emailId, String ToEmail, String Message)
+    {
+        var emailLog = new ResetPasswordEmail(Guid.NewGuid(), ToEmail, Message);
+        await _resetPasswordEmail.AddAsync(emailLog);
     }
 }
 
