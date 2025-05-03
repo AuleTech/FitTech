@@ -4,6 +4,14 @@
     "Sample": {
       "commandName": "Project",
       "commandLineArgs": "sample --param1 Hola"
+    },
+    "Help": {
+      "commandName": "Project",
+      "commandLineArgs": "--help"
+    },
+    "GenerateOpenApiTypedClient": {
+      "commandName": "Project",
+      "commandLineArgs": "generate-open-api-typed-client --open-api-json-url \"http://localhost:5165/swagger/v1/swagger.json\" --output-folder \"/Users/jairo/Desktop/workspace/FitTech/System/src/FitTech.API.Client/Generated\" --namespace \"FitTech.ApiClient\""
     }
   }
 }
