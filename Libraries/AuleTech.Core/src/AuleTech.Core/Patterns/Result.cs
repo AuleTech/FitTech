@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+
 namespace AuleTech.Core.Patterns;
 
 public class Result
@@ -20,6 +22,14 @@ public class Result
     public static Result Failure()
     {
         return new Result();
+    }
+
+    public void LogErrorsIfAny(ILogger logger)
+    {
+        if (!Succeeded)
+        {
+            logger.LogError("Execution exited with errors: [{Errors}]", string.Join(',', Errors.Select(x => $"'{x}'")));   
+        }
     }
 }
 

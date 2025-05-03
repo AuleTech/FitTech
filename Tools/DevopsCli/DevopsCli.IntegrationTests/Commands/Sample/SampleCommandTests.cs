@@ -1,4 +1,5 @@
-﻿using DevopsCli.Core.Commands;
+﻿using AuleTech.Core.Patterns;
+using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Sample;
 
 namespace DevopsCli.IntegrationTests.Commands.Sample;
@@ -6,9 +7,9 @@ namespace DevopsCli.IntegrationTests.Commands.Sample;
 [TestCliContainer]
 public class SampleCommandTests
 {
-    private readonly ICommand<SampleCommandParams, CommandResult> _sut;
+    private readonly ICommand<SampleCommandParams, Result> _sut;
 
-    public SampleCommandTests(ICommand<SampleCommandParams, CommandResult> sut)
+    public SampleCommandTests(ICommand<SampleCommandParams, Result> sut)
     {
         _sut = sut;
     }
@@ -19,6 +20,6 @@ public class SampleCommandTests
     {
         var result = await _sut.RunAsync(new SampleCommandParams { Param1 = "Test" }, cancellationToken);
 
-        await Assert.That(result.Code).IsEqualTo(CommandCode.Succeed);
+        await Assert.That(result.Succeeded).IsTrue();
     }
 }

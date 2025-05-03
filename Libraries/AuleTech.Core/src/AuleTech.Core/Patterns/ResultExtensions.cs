@@ -13,4 +13,6 @@ public static class ResultExtensions
         
         return Result.Success;
     }
+
+    public static int ToCliExitCode(this Result result) => result.Succeeded ? 0 : 255;
 }

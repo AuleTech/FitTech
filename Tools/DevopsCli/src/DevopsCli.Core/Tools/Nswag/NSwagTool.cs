@@ -24,9 +24,9 @@ internal sealed class NSwagTool : INSwagTool
     public async Task<Result> GenerateCSharpClientAsync(string openApiJsonUrl
         , string outputFolder
         , string @namespace
-        , bool generatePublicDtoModels
         , CancellationToken cancellationToken
         , bool allowToolToSpecifyClientName = false
+        , bool generatePublicDtoModels = true
         , string? rawOptions = null)
     {
         var installResult = await _installer.InstallAsync(cancellationToken);

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using AuleTech.Core;
+using AuleTech.Core.Patterns;
 using AuleTech.Core.Reflection;
 using Cocona;
 using DevopsCli.Core.Commands;
@@ -15,7 +16,7 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddCore(this IServiceCollection services)
     {
         return services
-            .AddTransient<ICommand<SampleCommandParams, CommandResult>, SampleCommand>()
+            .AddTransient<ICommand<SampleCommandParams, Result>, SampleCommand>()
             .DiscoverAndRegisterTools()
             .AddAuleTechPlatformCore()
             .Configure<CoconaAppOptions>(options =>

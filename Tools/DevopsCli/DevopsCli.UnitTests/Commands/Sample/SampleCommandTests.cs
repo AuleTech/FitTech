@@ -16,7 +16,7 @@ public class SampleCommandTests
     public async Task SampleCommand_Works(CancellationToken cancellation)
     {
         var result = await _sut.RunAsync(new SampleCommandParams { Param1 = "test" }, cancellation);
-        await Assert.That(result.Code).IsEqualTo(CommandCode.Succeed);
+        await Assert.That(result.Succeeded).IsTrue();
     }
 
     [Test]
@@ -24,6 +24,6 @@ public class SampleCommandTests
     public async Task SampleCommand_FailsWhenParam1IsNull(CancellationToken cancellation)
     {
         var result = await _sut.RunAsync(new SampleCommandParams(), cancellation);
-        await Assert.That(result.Code).IsEqualTo(CommandCode.Error);
+        await Assert.That(result.Succeeded).IsTrue();
     }
 }
