@@ -2,9 +2,9 @@
 
 namespace AuleTech.Core.Processing.Runners;
 
-public class PlatformProcessStartInfo
+public class AuleTechProcessStartInfo
 {
-    public PlatformProcessStartInfo(string filePath
+    public AuleTechProcessStartInfo(string filePath
         , string arguments
         , string? workingDirectory = null
         , TimeSpan? timeout = null

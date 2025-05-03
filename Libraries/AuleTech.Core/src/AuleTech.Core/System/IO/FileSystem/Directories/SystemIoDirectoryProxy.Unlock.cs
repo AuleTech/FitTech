@@ -134,7 +134,7 @@ internal partial class SystemIoDirectoryProxy
 
             async Task<ProcessResult> RunHandleExe(string arguments)
             {
-                var processInfo = new PlatformProcessStartInfo(ResolveHandleExePath(), arguments);
+                var processInfo = new AuleTechProcessStartInfo(ResolveHandleExePath(), arguments);
                 var processRunner = new CommandLineProcessRunner(); //TODO: Fix
                 return await processRunner.RunAsync(processInfo, cancellationToken);
             }
@@ -168,14 +168,14 @@ internal partial class SystemIoDirectoryProxy
                 {
                     var processRunner = new CommandLineProcessRunner();
 
-                    var processInfo = new PlatformProcessStartInfo("/bin/bash", "sudo apt install -y lsof");
+                    var processInfo = new AuleTechProcessStartInfo("/bin/bash", "sudo apt install -y lsof");
                     var result = await processRunner.RunBashAsync(processInfo, cancellationToken);
                     if (result.ExitCode != 0)
                     {
                         throw new Exception("Error while installing lsof.");
                     }
 
-                    processInfo = new PlatformProcessStartInfo("lsof", "-v");
+                    processInfo = new AuleTechProcessStartInfo("lsof", "-v");
                     result = await processRunner.RunBashAsync(processInfo, cancellationToken);
                     if (result.ExitCode != 0)
                     {
@@ -208,7 +208,7 @@ internal partial class SystemIoDirectoryProxy
             async Task<ProcessResult> RunBashAsync(string process
                 , string arguments)
             {
-                var processInfo = new PlatformProcessStartInfo(process, arguments);
+                var processInfo = new AuleTechProcessStartInfo(process, arguments);
                 var processRunner = new CommandLineProcessRunner();
                 return await processRunner.RunBashAsync(processInfo, cancellationToken);
             }

@@ -16,13 +16,12 @@ public class TestCliContainer : DependencyInjectionDataSourceAttribute<IServiceS
     {
         return scope.ServiceProvider.GetService(type);
     }
-    
+
     private static IServiceProvider CreateSharedServiceProvider()
     {
         return new ServiceCollection()
             .AddCore()
             .AddLogging()
             .BuildServiceProvider();
-
     }
 }

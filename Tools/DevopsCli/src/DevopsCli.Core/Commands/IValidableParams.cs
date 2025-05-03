@@ -1,6 +1,8 @@
-﻿namespace DevopsCli.Core.Commands;
+﻿using AuleTech.Core.Patterns;
+
+namespace DevopsCli.Core.Commands;
 
 public interface IValidableParams
 {
-    bool IsValid();
+    Result Validate();
 }

@@ -24,29 +24,17 @@ internal class CommandLineProcessRunner : IProcessRunner
         _logger = logger;
     }
 
-    public IEnumerable<string> GetCurrentProcessOutputLines()
-    {
-        if (_process == null)
-        {
-            return Array.Empty<string>();
-        }
-
-        var result = new List<string>();
-
-        while (_outputLines.TryDequeue(out var line))
-        {
-            result.Add(line);
-        }
-
-        return result;
-    }
-
-    public async Task<ProcessResult> RunBashAsync(PlatformProcessStartInfo startInfo
+    public async Task<ProcessResult> RunBashAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
+        if (OperatingSystem.IsWindows())
+        {
+            return await RunGitBashAsync(startInfo, cancellationToken);
+        }
+        
         return await ExecuteAsync(
-            new PlatformProcessStartInfo($"{(startInfo.RunAsAdministrator ? "sudo /bin/bash" : "/bin/bash")}"
+            new AuleTechProcessStartInfo($"{(startInfo.RunAsAdministrator ? "sudo /bin/bash" : "/bin/bash")}"
                 , $"-l -c \"{startInfo.FilePath} {startInfo.Arguments}\""
                 , startInfo.WorkingDirectory
                 , startInfo.Timeout
@@ -56,42 +44,40 @@ internal class CommandLineProcessRunner : IProcessRunner
             , appendOutputPrefix);
     }
 
-    public ProcessResult RunBash(PlatformProcessStartInfo startInfo
+    public async Task<ProcessResult> RunGitBashAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
-        return RunBashAsync(startInfo, cancellationToken, appendOutputPrefix)
-            .GetAwaiter()
-            .GetResult();
+        if (!OperatingSystem.IsWindows())
+        {
+            throw new InvalidOperationException("Only supported for Windows");
+        }
+        
+        return await ExecuteAsync(
+            new AuleTechProcessStartInfo($@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\Git\bin\bash.exe"
+                , $"-l -c \"{startInfo.FilePath} {startInfo.Arguments}\""
+                , startInfo.WorkingDirectory
+                , startInfo.Timeout
+                , startInfo.StandardInput
+                , startInfo.AddOutputToResult)
+            , cancellationToken
+            , appendOutputPrefix);
     }
 
-
-    public ProcessResult Run(PlatformProcessStartInfo startInfo
+    public async Task<ProcessResult> RunAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
-        return RunAsync(startInfo, cancellationToken, appendOutputPrefix)
-            .GetAwaiter()
-            .GetResult();
-    }
-
-    public ProcessResult Run(string process
-        , string arguments
-        , bool appendOutputPrefix = true
-        , CancellationToken cancellationToken = default)
-    {
-        return Run(new PlatformProcessStartInfo(process, arguments), cancellationToken, appendOutputPrefix);
-    }
-
-    public async Task<ProcessResult> RunAsync(PlatformProcessStartInfo startInfo
-        , CancellationToken cancellationToken = default
-        , bool appendOutputPrefix = true)
-    {
+        if (!OperatingSystem.IsWindows())
+        {
+            return await RunBashAsync(startInfo, cancellationToken);
+        }
+        
         return await ExecuteAsync(startInfo, cancellationToken, appendOutputPrefix);
     }
 
 
-    private async Task<ProcessResult> ExecuteAsync(PlatformProcessStartInfo startInfo
+    private async Task<ProcessResult> ExecuteAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken
         , bool appendOutputPrefix)
     {
@@ -264,7 +250,7 @@ internal class CommandLineProcessRunner : IProcessRunner
         ));
     }
 
-    private Process StartProcess(PlatformProcessStartInfo startInfo)
+    private Process StartProcess(AuleTechProcessStartInfo startInfo)
     {
         var process = new Process();
 
