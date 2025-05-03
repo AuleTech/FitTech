@@ -4,6 +4,7 @@ using AuleTech.Core.Patterns;
 using AuleTech.Core.Reflection;
 using Cocona;
 using DevopsCli.Core.Commands;
+using DevopsCli.Core.Commands.GenerateOpenApiTypedClient;
 using DevopsCli.Core.Commands.Sample;
 using DevopsCli.Core.Tools;
 using DevopsCli.Core.Tools.Node;
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtension
     {
         return services
             .AddTransient<ICommand<SampleCommandParams, Result>, SampleCommand>()
+            .AddTransient<ICommand<GenerateOpenApiTypedClientParams, Result>, GenerateOpenApiTypedClientCommand>()
             .DiscoverAndRegisterTools()
             .AddAuleTechPlatformCore()
             .Configure<CoconaAppOptions>(options =>

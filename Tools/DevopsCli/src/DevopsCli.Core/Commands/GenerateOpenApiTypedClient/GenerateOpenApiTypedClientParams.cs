@@ -10,14 +10,14 @@ public class GenerateOpenApiTypedClientParams : ICommandParameterSet, IValidable
     public string Namespace { get; set; } = null!;
     
     
-    public Result IsValid()
+    public Result Validate()
     {
         if (string.IsNullOrWhiteSpace(OpenApiJsonUrl))
         {
             return Result.Failure($"{nameof(OpenApiJsonUrl)} cannot be null");
         }
         
-        if (string.IsNullOrWhiteSpace(OutputFolder))
+        if (string.IsNullOrWhiteSpace(OutputFolder)) //TODO: validate that is a path
         {
             return Result.Failure($"{nameof(OutputFolder)} cannot be null");
         }

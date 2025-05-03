@@ -13,9 +13,9 @@ internal sealed class SampleCommand : ICommand<SampleCommandParams, Result>
         _logger = logger;
     }
 
-    public Task<Result> RunAsync(SampleCommandParams commandParams, CancellationToken cancellation)
+    public Task<Result> RunAsync(SampleCommandParams commandParams, CancellationToken cancellationToken)
     {
-        var isValidResult = commandParams.IsValid(); 
+        var isValidResult = commandParams.Validate(); 
         
         if (!isValidResult.Succeeded)
         {
@@ -23,7 +23,7 @@ internal sealed class SampleCommand : ICommand<SampleCommandParams, Result>
         }
 
         _logger.LogInformation("Running sample command with param: {Param}", commandParams.Param1);
-        return Task.FromResult(Result.Failure());
+        return Task.FromResult(Result.Success);
     }
 
     [Command("sample")]

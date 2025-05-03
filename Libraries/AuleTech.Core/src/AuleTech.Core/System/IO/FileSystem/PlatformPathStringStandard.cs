@@ -8,7 +8,7 @@ internal class PlatformPathStringStandard
     // https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=powershell
     public PlatformPathStringStandard(string inputPath)
     {
-        _path = OperatingSystem.IsLinux()
+        _path = !OperatingSystem.IsWindows()
             ? inputPath
             : ResolveStandardPath();
 

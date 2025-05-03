@@ -7,7 +7,7 @@ public class SampleCommandParams : ICommandParameterSet, IValidableParams
 {
     public string Param1 { get; set; } = null!;
 
-    public Result IsValid()
+    public Result Validate()
     {
         if (string.IsNullOrWhiteSpace(Param1))
         {

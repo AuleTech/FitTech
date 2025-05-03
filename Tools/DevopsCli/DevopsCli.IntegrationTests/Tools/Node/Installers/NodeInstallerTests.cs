@@ -1,7 +1,7 @@
 ﻿using DevopsCli.Core.Tools;
 using DevopsCli.Core.Tools.Node;
 
-namespace DevopsCli.IntegrationTests.Tools.Node;
+namespace DevopsCli.IntegrationTests.Tools.Node.Installers;
 
 [TestCliContainer]
 internal class NodeInstallerTests

@@ -40,9 +40,8 @@ internal sealed class NSwagMultiplatformInstaller : IInstaller<NSwagTool>
 
         async Task<Result> IsInstalledAsync()
         {
-            var process = new AuleTechProcessStartInfo("nswag", "help");
+            var process = new AuleTechProcessStartInfo("nswag", "version");
             var processResult = await _processRunner.RunAsync(process, cancellationToken);
-            
             
             return processResult.ToResult();
         }

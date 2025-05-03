@@ -4,5 +4,5 @@ namespace DevopsCli.Core.Commands;
 
 public interface IValidableParams
 {
-    Result IsValid();
+    Result Validate();
 }

@@ -1,16 +1,19 @@
 ﻿using AuleTech.Core.Patterns;
 using Cocona;
+using DevopsCli.Core.Tools.Nswag;
 using Microsoft.Extensions.Logging;
 
 namespace DevopsCli.Core.Commands.GenerateOpenApiTypedClient;
 
-public class GenerateOpenApiTypedClientCommand : ICommand<GenerateOpenApiTypedClientParams, Result>
+internal sealed class GenerateOpenApiTypedClientCommand : ICommand<GenerateOpenApiTypedClientParams, Result>
 {
     private readonly ILogger<GenerateOpenApiTypedClientCommand> _logger;
+    private readonly INSwagTool _nSwagTool;
 
-    public GenerateOpenApiTypedClientCommand(ILogger<GenerateOpenApiTypedClientCommand> logger)
+    public GenerateOpenApiTypedClientCommand(ILogger<GenerateOpenApiTypedClientCommand> logger, INSwagTool nSwagTool)
     {
         _logger = logger;
+        _nSwagTool = nSwagTool;
     }
 
     [Command("GenerateOpenApiTypedClient")]
@@ -23,8 +26,16 @@ public class GenerateOpenApiTypedClientCommand : ICommand<GenerateOpenApiTypedCl
         return result.ToCliExitCode();
     }
     
-    public Task<Result> RunAsync(GenerateOpenApiTypedClientParams commandParams, CancellationToken cancellation)
+    public async Task<Result> RunAsync(GenerateOpenApiTypedClientParams commandParams, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var validationResult = commandParams.Validate();
+
+        if (!validationResult.Succeeded)
+        {
+            return validationResult;
+        }
+        
+        return await _nSwagTool.GenerateCSharpClientAsync(commandParams.OpenApiJsonUrl, commandParams.OutputFolder,
+            commandParams.Namespace, cancellationToken);
     }
 }
