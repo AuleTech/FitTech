@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace AuleTech.Core.Processing.Runners;
 
-//TODO: User Terminal.app or zsh on MacOs or keep Bash, but ensure that RunAsync uses the proper terminal depending on the OS.
 internal class CommandLineProcessRunner : IProcessRunner
 {
     private readonly object _appendSyncLock = new();
@@ -25,27 +24,15 @@ internal class CommandLineProcessRunner : IProcessRunner
         _logger = logger;
     }
 
-    public IEnumerable<string> GetCurrentProcessOutputLines()
-    {
-        if (_process == null)
-        {
-            return Array.Empty<string>();
-        }
-
-        var result = new List<string>();
-
-        while (_outputLines.TryDequeue(out var line))
-        {
-            result.Add(line);
-        }
-
-        return result;
-    }
-
     public async Task<ProcessResult> RunBashAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
+        if (OperatingSystem.IsWindows())
+        {
+            return await RunGitBashAsync(startInfo, cancellationToken);
+        }
+        
         return await ExecuteAsync(
             new AuleTechProcessStartInfo($"{(startInfo.RunAsAdministrator ? "sudo /bin/bash" : "/bin/bash")}"
                 , $"-l -c \"{startInfo.FilePath} {startInfo.Arguments}\""
@@ -57,37 +44,35 @@ internal class CommandLineProcessRunner : IProcessRunner
             , appendOutputPrefix);
     }
 
-    public ProcessResult RunBash(AuleTechProcessStartInfo startInfo
+    public async Task<ProcessResult> RunGitBashAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
-        return RunBashAsync(startInfo, cancellationToken, appendOutputPrefix)
-            .GetAwaiter()
-            .GetResult();
-    }
-
-
-    public ProcessResult Run(AuleTechProcessStartInfo startInfo
-        , CancellationToken cancellationToken = default
-        , bool appendOutputPrefix = true)
-    {
-        return RunAsync(startInfo, cancellationToken, appendOutputPrefix)
-            .GetAwaiter()
-            .GetResult();
-    }
-
-    public ProcessResult Run(string process
-        , string arguments
-        , bool appendOutputPrefix = true
-        , CancellationToken cancellationToken = default)
-    {
-        return Run(new AuleTechProcessStartInfo(process, arguments), cancellationToken, appendOutputPrefix);
+        if (!OperatingSystem.IsWindows())
+        {
+            throw new InvalidOperationException("Only supported for Windows");
+        }
+        
+        return await ExecuteAsync(
+            new AuleTechProcessStartInfo($@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\Git\bin\bash.exe"
+                , $"-l -c \"{startInfo.FilePath} {startInfo.Arguments}\""
+                , startInfo.WorkingDirectory
+                , startInfo.Timeout
+                , startInfo.StandardInput
+                , startInfo.AddOutputToResult)
+            , cancellationToken
+            , appendOutputPrefix);
     }
 
     public async Task<ProcessResult> RunAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true)
     {
+        if (!OperatingSystem.IsWindows())
+        {
+            return await RunBashAsync(startInfo, cancellationToken);
+        }
+        
         return await ExecuteAsync(startInfo, cancellationToken, appendOutputPrefix);
     }
 

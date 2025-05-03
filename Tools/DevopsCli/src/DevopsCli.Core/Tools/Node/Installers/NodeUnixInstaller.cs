@@ -1,15 +1,17 @@
 ﻿using AuleTech.Core.Patterns;
 using AuleTech.Core.Processing.Runners;
+using Microsoft.Extensions.Logging;
 
-namespace DevopsCli.Core.Tools.Node;
+namespace DevopsCli.Core.Tools.Node.Installers;
 
-public class NodeUnixInstaller : IInstaller<NodeTool>
+internal sealed class NodeUnixInstaller : IInstaller<NodeTool>
 {
     private const string VercelInstallUrl = "https://fnm.vercel.app/install";
 
     private readonly IProcessRunner _processRunner;
+    private readonly ILogger<NodeTool> _logger;
 
-    public NodeUnixInstaller(IProcessRunner processRunner)
+    public NodeUnixInstaller(IProcessRunner processRunner, ILogger<NodeTool> logger)
     {
         if (OperatingSystem.IsWindows())
         {
@@ -17,6 +19,7 @@ public class NodeUnixInstaller : IInstaller<NodeTool>
         }
 
         _processRunner = processRunner;
+        _logger = logger;
     }
 
     public bool IsSupported(PlatformID platform)
@@ -28,9 +31,12 @@ public class NodeUnixInstaller : IInstaller<NodeTool>
     {
         if (await IsInstalledAsync())
         {
+            _logger.LogInformation("Node is already installed, skipping...");
             return Result.Success;
         }
 
+        _logger.LogDebug("Downloading Node installer for version {Version}", NodeTool.NodeVersion);
+        
         var result = await _processRunner.RunSequenceAsync([
             new KeyValuePair<string, string>("curl", $"-o- {VercelInstallUrl} | bash"),
             new KeyValuePair<string, string>("fnm", $"install {NodeTool.NodeVersion}"),

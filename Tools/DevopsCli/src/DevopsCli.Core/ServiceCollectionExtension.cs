@@ -47,7 +47,7 @@ public static class ServiceCollectionExtension
 
         foreach (var toolType in toolsType)
         {
-            var implementedInterfaces = toolType.GetInterfaces().Where(x => x != typeof(ITool));
+            var implementedInterfaces = toolType.GetInterfaces();
 
             foreach (var toolInterface in implementedInterfaces)
             {

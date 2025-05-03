@@ -3,7 +3,7 @@ using AuleTech.Core.Processing.Runners;
 using AuleTech.Core.System.IO.FileSystem;
 using Microsoft.Extensions.Logging;
 
-namespace DevopsCli.Core.Tools.Node;
+namespace DevopsCli.Core.Tools.Node.Installers;
 
 internal sealed class NodeWindowsInstaller : IInstaller<NodeTool>
 {

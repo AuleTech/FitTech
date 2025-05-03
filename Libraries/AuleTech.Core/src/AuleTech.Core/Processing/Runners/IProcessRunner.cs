@@ -2,13 +2,7 @@
 
 public interface IProcessRunner
 {
-    IEnumerable<string> GetCurrentProcessOutputLines();
-
     Task<ProcessResult> RunBashAsync(AuleTechProcessStartInfo startInfo
-        , CancellationToken cancellationToken = default
-        , bool appendOutputPrefix = true);
-
-    ProcessResult RunBash(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true);
 
@@ -16,12 +10,8 @@ public interface IProcessRunner
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true);
 
-    ProcessResult Run(AuleTechProcessStartInfo startInfo
+    Task<ProcessResult> RunGitBashAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true);
-
-    ProcessResult Run(string process
-        , string arguments
-        , bool appendOutputPrefix = true
-        , CancellationToken cancellationToken = default);
+    
 }
