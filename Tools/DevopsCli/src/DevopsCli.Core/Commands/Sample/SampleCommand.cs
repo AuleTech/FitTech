@@ -3,8 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace DevopsCli.Core.Commands.Sample;
 
-
-
 internal sealed class SampleCommand : ICommand<SampleCommandParams, CommandResult>
 {
     private readonly ILogger<SampleCommand> _logger;

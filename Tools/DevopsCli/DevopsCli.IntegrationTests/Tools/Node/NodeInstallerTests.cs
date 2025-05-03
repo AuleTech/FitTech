@@ -8,9 +8,9 @@ internal class NodeInstallerTests
 {
     private readonly IInstaller<NodeTool> _sut;
 
-    public NodeInstallerTests(IEnumerable<IInstaller<NodeTool>> installers)
+    public NodeInstallerTests(IInstaller<NodeTool> installer)
     {
-        _sut = installers.Single(x => x.IsSupported(Environment.OSVersion.Platform));
+        _sut = installer;
     }
 
     [Test]

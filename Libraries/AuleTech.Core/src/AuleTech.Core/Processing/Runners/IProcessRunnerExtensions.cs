@@ -38,7 +38,7 @@ public static class IProcessRunnerExtensions
         IEnumerable<KeyValuePair<string, string>> commandArgumentsPairs, CancellationToken cancellationToken)
     {
         var keyValuePairs = commandArgumentsPairs as KeyValuePair<string, string>[] ?? commandArgumentsPairs.ToArray();
-        
+
         if (!keyValuePairs.Any())
         {
             return Result.Success;
@@ -47,7 +47,7 @@ public static class IProcessRunnerExtensions
         foreach (var commandArgumentsPair in keyValuePairs)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            
+
             var process = new AuleTechProcessStartInfo(commandArgumentsPair.Key, commandArgumentsPair.Value);
             var result = await runner.RunBashAsync(process,
                 cancellationToken);
@@ -57,7 +57,7 @@ public static class IProcessRunnerExtensions
                 return Result.Failure(result.Output);
             }
         }
-        
+
         return Result.Success;
-    } 
+    }
 }

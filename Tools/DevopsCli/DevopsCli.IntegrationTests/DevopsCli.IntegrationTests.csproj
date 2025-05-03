@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\DevopsCli.Core\DevopsCli.Core.csproj" />
+    <ProjectReference Include="..\src\DevopsCli.Core\DevopsCli.Core.csproj"/>
   </ItemGroup>
 
 </Project>
