@@ -6,7 +6,7 @@ using FitTech.Application.Extensions;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-
+using FitTech.Domain.Templates.EmailsTemplates;
 namespace FitTech.Application.Auth.Services;
 
 internal sealed class FitTechAuthenticationService : IFitTechAuthenticationService
@@ -114,12 +114,13 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         var encodedToken = HttpUtility.UrlEncode(resetPasswordToken);
         var callbackUrl = $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={encodedToken}";
         
-        // TODO: Create email template.
-        var emailBody = $"<p>Click <a href='{callbackUrl}'>here</a> to reset your password.</p>";
+        var template = new ResetPasswordTemplate();
+        var model = new ResetPasswordEmailModel { CallbackUrl = callbackUrl };
+        var emailBody = template.HtmlBody(model);
         
         await _emailService.SendEmailAsync(
             forgotPasswordDto.Email,
-            "Reset your FitTech password",
+            template.Subject,
             emailBody
         );
         
