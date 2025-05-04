@@ -111,14 +111,12 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
             await _userManager.GeneratePasswordResetTokenAsync(user)
                 .WaitAsync(cancellationToken); //TODO: We need to normalized for http.
         
-        //Creamos Url con token.
         var encodedToken = HttpUtility.UrlEncode(resetPasswordToken);
         var callbackUrl = $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={encodedToken}";
         
         // TODO: Create email template.
         var emailBody = $"<p>Click <a href='{callbackUrl}'>here</a> to reset your password.</p>";
         
-        //Llamamos a la funcion Enviar email
         await _emailService.SendEmailAsync(
             forgotPasswordDto.Email,
             "Reset your FitTech password",
