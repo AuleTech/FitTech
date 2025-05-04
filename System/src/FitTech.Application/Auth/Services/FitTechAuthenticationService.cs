@@ -124,11 +124,6 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
             emailBody
         );
         
-        //TODO: Remove this log when we send the email
-        //CallbackUrl url/resetpassword
-        _logger.LogInformation("ResetPasswordUrl: {Url}",
-            $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={resetPasswordToken}");
-
         return Result<string>.Success(HttpUtility.UrlEncode(resetPasswordToken));
     }
 
