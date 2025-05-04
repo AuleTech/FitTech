@@ -15,7 +15,7 @@ internal sealed class EmailRepository : IEmailRepository
     
     public async Task AddAsync(Email email)
     {
-        await _context.ResetPasswordEmail.AddAsync(email);
+        await _context.EmailLog.AddAsync(email);
         await _context.SaveChangesAsync();
     }
 }

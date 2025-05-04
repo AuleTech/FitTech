@@ -3,6 +3,8 @@ using FitTech.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using Resend;
 using FitTech.Persistence.Repositories;
+using Npgsql.Replication.PgOutput.Messages;
+
 namespace FitTech.Application.Auth.Services;
 
 internal sealed class EmailService : IEmailService
@@ -17,7 +19,7 @@ internal sealed class EmailService : IEmailService
         _emailRepository = emailRepository;
     }
 
-    public async Task SendEmailAsync(string to, string subject, string htmlBody)
+    public async Task SendEmailAsync(string to, string subject, string htmlBody, string typeMessage)
     {
 
         var message = new EmailMessage
@@ -35,12 +37,12 @@ internal sealed class EmailService : IEmailService
             _logger.LogError("Couldn't send email: {ExceptionMessage}",response.Exception!.Message);
         }
 
-        await CreateLogEmailResetAsync(response.Content, to, htmlBody);
+        await CreateLogEmailResetAsync(response.Content, to, htmlBody, typeMessage);
     }
     
-    private async Task CreateLogEmailResetAsync(Guid emailId, String ToEmail, String Message)
+    private async Task CreateLogEmailResetAsync(Guid emailId, String ToEmail, String Message, String TypeMessage)
     {
-        var emailLog = new Email(emailId, ToEmail, Message);
+        var emailLog = new Email(emailId, ToEmail, Message, TypeMessage);
         await _emailRepository.AddAsync(emailLog);
     }
 }

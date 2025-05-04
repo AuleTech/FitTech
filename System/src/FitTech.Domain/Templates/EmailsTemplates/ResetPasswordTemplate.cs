@@ -3,6 +3,7 @@
 public class ResetPasswordTemplate
 {
     public string Subject { get; set; } = "Reset your FitTech Password";
+    public string TypeMessage { get; set; } = "Reset Password";
     public string HtmlBody(ResetPasswordEmailModel model)
     {
         return $@"

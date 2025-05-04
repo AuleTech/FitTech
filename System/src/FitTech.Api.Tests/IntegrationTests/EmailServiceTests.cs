@@ -33,6 +33,6 @@ public class EmailServiceTest
     [Timeout(30_000)]
     public async Task CanSendEmailAsync(CancellationToken cancellationToken)
     {
-        await _sut!.SendEmailAsync("", "Test", "<strong>it works!</strong>");
+        await _sut!.SendEmailAsync("", "Test", "<strong>it works!</strong>", "ResetEmanil");
     }
 }

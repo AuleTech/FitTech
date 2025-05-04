@@ -6,7 +6,7 @@ namespace FitTech.Persistence;
 
 public class FitTechDbContext : IdentityDbContext<FitTechUser, FitTechRole, Guid>
 {
-    public DbSet<Email> ResetPasswordEmail { get; set; }
+    public DbSet<Email> EmailLog { get; set; }
     public FitTechDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
     {
         

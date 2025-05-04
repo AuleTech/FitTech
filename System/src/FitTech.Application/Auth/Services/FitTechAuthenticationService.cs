@@ -121,7 +121,9 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         await _emailService.SendEmailAsync(
             forgotPasswordDto.Email,
             template.Subject,
-            emailBody
+            emailBody,
+            template.TypeMessage
+            
         );
         
         return Result<string>.Success(HttpUtility.UrlEncode(resetPasswordToken));
