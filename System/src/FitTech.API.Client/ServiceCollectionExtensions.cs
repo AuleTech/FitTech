@@ -1,5 +1,5 @@
 using FitTech.API.Client.Configuration;
-using FitTech.Api.Client.Generated;
+using FitTech.ApiClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,27 +18,15 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton(fitTechConfig);
 
         var apiHttpClientBuilder = serviceCollection
-            .AddHttpClient(nameof(FitTechAPIClient));
+            .AddHttpClient(nameof(Proxy));
 
         if (httpClientHandlerFunc is not null)
         {
             apiHttpClientBuilder.AddHttpMessageHandler(httpClientHandlerFunc!);
         }
-
-
-        serviceCollection.AddTransient<FitTechAPIClient>(c =>
-        {
-            var httpClientFactory = c.GetRequiredService<IHttpClientFactory>();
-
-            var fitTechApiClient =
-                new FitTechAPIClient(httpClientFactory.CreateClient(nameof(FitTechAPIClient)))
-                {
-                    BaseUrl = fitTechConfig.Url
-                };
-
-
-            return fitTechApiClient;
-        });
+        
+        serviceCollection.AddTransient<IFitTechApiClient, FitTechApiClient>();
+        serviceCollection.AddTransient<IFitTechApiClientFactory, FitTechApiClientFactory>();
 
         return serviceCollection;
     }

@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
 using Blazored.LocalStorage;
-using FitTech.API.Client.Configuration;
-using FitTech.Api.Client.Generated;
+using FitTech.API.Client;
+using FitTech.ApiClient;
 using FitTech.WebComponents.Models;
 
 namespace FitTech.WebComponents.Authentication;
@@ -11,15 +11,12 @@ namespace FitTech.WebComponents.Authentication;
 public class FitTechDelegationHandler : DelegatingHandler
 {
     private readonly ILocalStorageService _localStorageService;
-    private readonly FitTechAPIClient _apiClient;
+    private readonly IFitTechApiClient _apiClient;
 
-    public FitTechDelegationHandler(ILocalStorageService localStorageService, FitTechApiConfiguration apiConfiguration, IHttpClientFactory httpClientFactory)
+    public FitTechDelegationHandler(ILocalStorageService localStorageService, IFitTechApiClientFactory apiClientFactory)
     {
         _localStorageService = localStorageService;
-        var httpClient = httpClientFactory.CreateClient(nameof(FitTechDelegationHandler));
-        httpClient.BaseAddress = new Uri(apiConfiguration.Url);
-
-        _apiClient = new FitTechAPIClient(httpClient);
+        _apiClient = apiClientFactory.Create();
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -45,7 +42,7 @@ public class FitTechDelegationHandler : DelegatingHandler
         async Task<HttpResponseMessage> RefreshTokenAndRetryAsync()
         {
             //TODO: Critical section
-            var refreshedToken = await _apiClient.RefreshTokenEndpointAsync(
+            var refreshedToken = await _apiClient.RefreshTokenAsync(
                 new RefreshTokenRequest()
                 {
                     RefreshToken = user.RefreshToken, ExpiredAccessToken = user.AccessToken

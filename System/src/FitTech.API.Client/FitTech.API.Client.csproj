@@ -4,4 +4,7 @@
       <PackageReference Include="Microsoft.Extensions.Http" />
       <PackageReference Include="Newtonsoft.Json" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\AuleTech.Core\src\AuleTech.Core\AuleTech.Core.csproj" />
+    </ItemGroup>
 </Project>

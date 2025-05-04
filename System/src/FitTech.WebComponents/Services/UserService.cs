@@ -1,20 +1,22 @@
-﻿using Blazored.LocalStorage;
-using FitTech.Api.Client.Generated;
+﻿using AuleTech.Core.Patterns;
+using Blazored.LocalStorage;
+using FitTech.API.Client;
+using FitTech.ApiClient;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using Microsoft.Extensions.Logging;
-using Result = FitTech.WebComponents.Models.Result;
+using Result = AuleTech.Core.Patterns.Result;
 
 namespace FitTech.WebComponents.Services;
 
 internal sealed class UserService : IUserService
 {
     private readonly FitTechAuthStateProvider _authStateProvider;
-    private readonly FitTechAPIClient _fitTechApiClient;
+    private readonly IFitTechApiClient _fitTechApiClient;
     private readonly ILocalStorageService _localStorageService;
     private readonly ILogger<UserService> _logger;
 
-    public UserService(FitTechAPIClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
+    public UserService(IFitTechApiClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
         ILogger<UserService> logger, ILocalStorageService localStorageService)
     {
         _fitTechApiClient = fitTechApiClient;
@@ -33,10 +35,14 @@ internal sealed class UserService : IUserService
 
         try
         {
-            var result = await _fitTechApiClient.LoginEndpointAsync(
-                new LoginRequest() { Email = email, Password = password }, cancellationToken);
+            var result = await _fitTechApiClient.LoginAsync(new LoginRequest() { Email = email, Password = password }, cancellationToken);
 
-            var user = new FitTechUser { Email = email, AccessToken = result.Value.AccessToken, RefreshToken =result.Value.RefreshToken};
+            if (!result.Succeeded)
+            {
+                return result.MapFailure<FitTechUser>();
+            }
+            
+            var user = new FitTechUser { Email = email, AccessToken = result.Value?.AccessToken, RefreshToken = result.Value?.RefreshToken};
 
             await _localStorageService.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
             
@@ -56,7 +62,7 @@ internal sealed class UserService : IUserService
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
         ArgumentException.ThrowIfNullOrWhiteSpace(password);
 
-        var result = await _fitTechApiClient.RegisterEndpointAsync(
+        var result = await _fitTechApiClient.RegisterAsync(
             new RegisterRequest() { Email = email, Password = password }, cancellationToken);
 
         return result.Succeeded
@@ -67,18 +73,13 @@ internal sealed class UserService : IUserService
     public async Task<Result<string>> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        var result = await _fitTechApiClient.ForgotPasswordEndpointAsync(
+        var result = await _fitTechApiClient.ForgotPasswordAsync(
             new ForgotPasswordRequest()
             {
                 Email = email, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
             }, cancellationToken);
 
-        return new Result<string>()
-        {
-            Errors = result.Errors.ToArray(),
-            Succeeded = result.Succeeded,
-            Value = result.Value
-        };
+        return result;
     }
 
     public async Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken cancellationToken)
@@ -87,13 +88,13 @@ internal sealed class UserService : IUserService
         ArgumentException.ThrowIfNullOrWhiteSpace(token);
         ArgumentException.ThrowIfNullOrWhiteSpace(newPassword);
 
-        var result = await _fitTechApiClient.ResetPasswordEndpointAsync(
+        var result = await _fitTechApiClient.ResetPasswordAsync(
             new ResetPasswordRequest()
             {
                 Email = email, Token = token, NewPassword = newPassword
             }, cancellationToken);
 
-        return new Result() { Errors = result.Errors.ToArray(), Succeeded = result.Succeeded };
+        return result;
     }
 
     public async Task<Result> LogoutAsync(CancellationToken cancellationToken)
