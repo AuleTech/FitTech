@@ -7,7 +7,7 @@ using Npgsql.Replication.PgOutput.Messages;
 
 namespace FitTech.Application.Auth.Services;
 
-internal sealed class EmailService : IEmailService
+public sealed class EmailService : IEmailService
 {
     private readonly IResend _resend;
     private readonly ILogger<EmailService> _logger;
