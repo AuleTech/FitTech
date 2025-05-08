@@ -1,0 +1,51 @@
+@inject IUserService UserService
+
+<div class="fixed top-0 left-64 right-0 z-50 flex items-center bg-gray-800 text-white rounded-b-lg px-4 py-2">
+    <label for="NameUser" class="">Nombre del Cliente</label>
+    <input @bind="AddUserModel!.NameUser"
+           type="text"
+           placeholder="Search..."
+           class="bg-transparent focus:outline-none w-full text-white placeholder-gray-400" />
+    <label for="LastName" class="">Apellido del cliente</label>
+    <input @bind="AddUserModel!.LastNameuser"
+           type="text"
+           placeholder="Search..."
+           class="bg-transparent focus:outline-none w-full text-white placeholder-gray-400" />
+    <label for="EmailUser" class="">Email del Cliente</label>
+    <input @bind="AddUserModel!.EmailUser"
+           type="text"
+           placeholder="Search..."
+           class="bg-transparent focus:outline-none w-full text-white placeholder-gray-400" />
+    
+    <button type="submit" class="ml-2 text-gray-400 hover:text-white">Agregar Usuario</button>
+    
+    
+</div>
+
+@code {
+
+    [SupplyParameterFromForm] private AddUserModel? AddUserModel{ get; set; }
+    
+    private string _message = string.Empty;
+       
+    protected override void OnInitialized()
+       
+    { 
+        AddUserModel ??= new AddUserModel();
+    }
+
+    private async Task AddUser()
+    {
+        var response = await UserService.AddUserAsync(AddUserModel!.NameUser, AddUserModel!.LastNameuser, AddUserModel!.EmailUser);
+
+        if (!response!.Succeeded)
+        {
+            _message = "No ha podido añadirse el usuario a tu equipo"; 
+            return;
+        }
+        _message = "Se ha añadido el usuario a tu equipo"; 
+        StateHasChanged();
+       
+    }
+    
+}
