@@ -1,4 +1,5 @@
 @page "/SearchBar"
+@using FitTech.WebComponents.Components.AddClientForm
 
 <div class="fixed top-0 left-64 right-0 z-50 flex items-center bg-gray-800 text-white rounded-b-lg px-4 py-2">
     <input @bind="SearchText"
@@ -26,18 +27,34 @@
         </svg>
     </button>
     <!-- Botón para agregar un nuevo cliente. -->
-    <button class="ml-2 text-gray-400 hover:text-white">
+    <button class="ml-2 text-gray-400 hover:text-white"@onclick="ToggleAddUserModal">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
     </button>
+    @if (_isAddUserModalOpen)
+    {
+        <AddUserForm></AddUserForm>
+    }
 </div>
 
 @code {
     private string SearchText { get; set; } = "";
+    private bool _isAddUserModalOpen = false;
 
     private void ClearSearch()
     {
         SearchText = "";
+    }
+    
+    private void ToggleAddUserModal()
+    {
+        _isAddUserModalOpen = !_isAddUserModalOpen;
+    }
+
+   
+    private void CloseAddUserModal()
+    {
+        _isAddUserModalOpen = false;
     }
 }

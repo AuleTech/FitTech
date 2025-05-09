@@ -27,12 +27,13 @@
     [SupplyParameterFromForm] private AddUserModel? AddUserModel{ get; set; }
     
     private string _message = string.Empty;
-       
+    
     protected override void OnInitialized()
        
     { 
         AddUserModel ??= new AddUserModel();
     }
+    
 
     /*private async Task AddUser()
     {
