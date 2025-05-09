@@ -1,7 +1,7 @@
 @page "/SearchBar"
 @using FitTech.WebComponents.Components.AddClientForm
 
-<div class="fixed top-0 left-64 right-0 z-50 flex items-center bg-gray-800 text-white rounded-b-lg px-4 py-2">
+<div class="fixed top-0 left-64 right-0 z-50 flex items-center bg-gray-800 text-white rounded-b-lg px-4 py-5">
     <input @bind="SearchText"
            type="text"
            placeholder="Search..."
@@ -19,6 +19,12 @@
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
         </svg>
     </button>
+    <!-- Botón para agregar un nuevo cliente. -->
+    <button class="ml-2 text-gray-400 hover:text-white" @onclick="ToggleAddUserModal">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+    </button>
     <!-- Botón para cerrar sesiom. -->
     <button class="ml-2 text-gray-400 hover:text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -26,12 +32,7 @@
                   d="M12 11c1.104 0 2 .896 2 2v2a2 2 0 01-4 0v-2c0-1.104.896-2 2-2zM17 11V8a5 5 0 00-10 0v3m10 0a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2h10z" />
         </svg>
     </button>
-    <!-- Botón para agregar un nuevo cliente. -->
-    <button class="ml-2 text-gray-400 hover:text-white" @onclick="ToggleAddUserModal">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-    </button>
+   
     @if (_isAddUserModalOpen)
     {
         <AddUserForm OnClose="CloseAddUserModal" />
