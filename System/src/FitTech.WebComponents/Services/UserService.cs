@@ -102,18 +102,5 @@ internal sealed class UserService : IUserService
         await _localStorageService.RemoveItemAsync(FitTechUser.StorageKey, cancellationToken);
         return Result.Success;
     }
-
-    public async Task<Result> AddUserAsync(string name, string lastname, string email)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        ArgumentException.ThrowIfNullOrWhiteSpace(lastname);
-        
-        var result = await _fitTechApiClient.AddUserAsync(
-            new AddUserRequest() { Email = email, Name=name, Lastname=lastname});
-
-        return result.Succeeded
-            ? Result.Success
-            : Result.Failure(result.Errors.Select(x => x).ToArray());
-    }
+    
 }
