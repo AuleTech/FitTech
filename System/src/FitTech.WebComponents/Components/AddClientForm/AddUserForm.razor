@@ -1,0 +1,85 @@
+@inject IUserService UserService
+@using FitTech.WebComponents.Components.SearchBar
+
+<div class="fixed top-0 left-64 right-0 z-50 flex items-center bg-gray-800 text-white rounded-b-lg px-4 py-5">
+<!--<label for="NameUser" class="">Nombre del Cliente</label>-->
+    <input @bind="AddUserModel!.NameUser"
+           type="text"
+           placeholder="Nombre del Usuario"
+           class="bg-transparent focus:outline-none w-full text-white placeholder-gray-400" />
+   <!-- <label for="LastName" class="">Apellido del cliente</label>-->
+    <input @bind="AddUserModel!.LastNameuser"
+           type="text"
+           placeholder="Apellido del Usuario"
+           class="bg-transparent focus:outline-none w-full text-white placeholder-gray-400" />
+    <!--<label for="EmailUser" class="">Email del Cliente</label>-->
+    <input @bind="AddUserModel!.EmailUser"
+           type="text"
+           placeholder="Correo Electrónico del Usuario"
+           class="bg-transparent focus:outline-none w-full text-white placeholder-gray-400" />
+    
+    @if (!string.IsNullOrEmpty(_message))
+    {
+        <button class="ml-2 text-gray-400 hover:text-white" @onclick="CloseModal">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+        </button>
+    }
+    
+    <button type="submit" class="ml-2 text-gray-400 hover:text-white" @onclick="AddMethod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+    </button>
+    <button class="ml-2 text-gray-400 hover:text-white" @onclick="CloseModal">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+   
+</div>
+
+@code {
+    [Parameter] public EventCallback OnClose { get; set; }
+    
+    [SupplyParameterFromForm] private AddUserModel? AddUserModel{ get; set; }
+    
+    private string _message = string.Empty;
+    
+    protected override void OnInitialized()
+    { 
+        AddUserModel ??= new AddUserModel();
+    }
+
+    private async Task CloseModal()
+    {
+        await OnClose.InvokeAsync();
+    }
+
+    private void AddMethod()
+    {
+        _message = "Has añadido correctamente al usuario!";
+        AddUserModel!.NameUser = "";
+        AddUserModel!.LastNameuser = "";
+        AddUserModel!.EmailUser = "";
+        StateHasChanged();
+        
+    }
+    
+
+    /*private async Task AddUser()
+    {
+        var response = await UserService.AddUserAsync(AddUserModel!.NameUser, AddUserModel!.LastNameuser, AddUserModel!.EmailUser);
+
+        if (!response!.Succeeded)
+        {
+            _message = "No ha podido añadirse el usuario a tu equipo"; 
+            return;
+        }
+        _message = "Se ha añadido el usuario a tu equipo"; 
+        StateHasChanged();
+       
+    }*/
+    
+}
