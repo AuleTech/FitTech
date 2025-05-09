@@ -34,14 +34,14 @@
     </button>
     @if (_isAddUserModalOpen)
     {
-        <AddUserForm></AddUserForm>
+        <AddUserForm OnClose="CloseAddUserModal" />
     }
 </div>
 
 @code {
     
     private string SearchText { get; set; } = "";
-    private static bool _isAddUserModalOpen = false;
+    private bool _isAddUserModalOpen = false;
     
     private void ClearSearch()
     {
@@ -53,10 +53,9 @@
         _isAddUserModalOpen = !_isAddUserModalOpen;
     }
     
-    public static void CloseAddUserModal()
+    public void CloseAddUserModal()
     {
         _isAddUserModalOpen = false;
-        Console.WriteLine("Entro2");
+        StateHasChanged();
     }
- }
 }

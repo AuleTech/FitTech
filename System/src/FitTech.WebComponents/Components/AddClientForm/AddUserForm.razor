@@ -31,22 +31,20 @@
 </div>
 
 @code {
-
+    [Parameter] public EventCallback OnClose { get; set; }
+    
     [SupplyParameterFromForm] private AddUserModel? AddUserModel{ get; set; }
     
     private string _message = string.Empty;
+    
     protected override void OnInitialized()
-       
     { 
         AddUserModel ??= new AddUserModel();
     }
 
-    public void CloseModal()
+    private async Task CloseModal()
     {
-        Console.WriteLine("Entro");
-
-        SearchBar.CloseAddUserModal();
-
+        await OnClose.InvokeAsync();
     }
     
 
