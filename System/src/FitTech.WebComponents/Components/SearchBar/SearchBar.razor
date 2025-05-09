@@ -35,14 +35,14 @@
     @if (_isAddUserModalOpen)
     {
         <AddUserForm></AddUserForm>
-        <button class="ml-2 text-gray-400 hover:text-white" @onclick="CloseAddUserModal">Cerrar</button>
     }
 </div>
 
 @code {
+    
     private string SearchText { get; set; } = "";
-    private bool _isAddUserModalOpen = false;
-
+    private static bool _isAddUserModalOpen = false;
+    
     private void ClearSearch()
     {
         SearchText = "";
@@ -52,11 +52,11 @@
     {
         _isAddUserModalOpen = !_isAddUserModalOpen;
     }
-
-   
-    private void CloseAddUserModal()
+    
+    public static void CloseAddUserModal()
     {
         _isAddUserModalOpen = false;
+        Console.WriteLine("Entro2");
     }
  }
 }
