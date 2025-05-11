@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Services;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Interfaces;
@@ -23,7 +24,7 @@ public class EmailServiceTests
             resend.EmailSendAsync(Arg.Any<EmailMessage>())
                   .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
 
-            var service = new EmailService(resend, logger, repo);
+            var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
             
             await service.SendEmailAsync("user@test.com", "Welcome", "<b>Hello</b>", "WelcomeEmail");
        
@@ -47,7 +48,7 @@ public class EmailServiceTests
         resend.EmailSendAsync(Arg.Any<EmailMessage>())
             .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
 
-        var service = new EmailService(resend, logger, repo);
+        var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
         
         // Act
         await service.SendEmailAsync("log@test.com", "Subject Test", "<p>Message Content</p>", "LogEmailType");

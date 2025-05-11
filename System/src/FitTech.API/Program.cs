@@ -2,11 +2,7 @@ using FastEndpoints;
 using FastEndpoints.Swagger;
 using FitTech.API;
 using FitTech.Persistence;
-using Resend;
-using FitTech.Application.Auth.Services;
-using FitTech.Domain.Entities;
-using FitTech.Domain.Interfaces;
-using FitTech.Persistence.Repositories;
+using FitTech.Application.Auth.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseDefaultServiceProvider((_, options) =>
@@ -36,6 +32,14 @@ builder.Services
         policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:7083","http://localhost:5174");
     }))
     .AddPersistence(connectionString);
+
+builder.Services.Configure<DbSecretsSettings>(
+    builder.Configuration.GetSection("DbSecretsSettings"));
+
+builder.Services.AddSingleton(sp =>
+    sp.GetRequiredService<IConfiguration>()
+        .GetSection("DbSecretsSettings")
+        .Get<DbSecretsSettings>()!);
 
 var app = builder.Build();
 

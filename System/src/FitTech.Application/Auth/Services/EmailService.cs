@@ -1,4 +1,5 @@
-﻿using FitTech.Domain.Entities;
+﻿using FitTech.Application.Auth.Configuration;
+using FitTech.Domain.Entities;
 using FitTech.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using Resend;
@@ -12,11 +13,13 @@ public sealed class EmailService : IEmailService
     private readonly IResend _resend;
     private readonly ILogger<EmailService> _logger;
     private readonly IEmailRepository _emailRepository;
-    public EmailService( IResend resend, ILogger<EmailService> logger, IEmailRepository emailRepository)
+    private readonly DbSecretsSettings _dbSettings;
+    public EmailService( IResend resend, ILogger<EmailService> logger, IEmailRepository emailRepository, DbSecretsSettings dbSettings)
     {
         _resend = resend;
         _logger = logger;
         _emailRepository = emailRepository;
+        _dbSettings = dbSettings;
     }
 
     public async Task SendEmailAsync(string to, string subject, string htmlBody, string typeMessage)
@@ -24,7 +27,7 @@ public sealed class EmailService : IEmailService
 
         var message = new EmailMessage
         {
-            From = "admin@fittech.es",
+            From =  _dbSettings.EmailFitTech!,
             To =  {  to },
             Subject = subject,
             HtmlBody = htmlBody,
