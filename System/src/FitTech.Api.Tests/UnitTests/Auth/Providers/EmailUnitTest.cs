@@ -6,6 +6,7 @@ using FitTech.Domain.Entities;
 using FitTech.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 using Resend;
 using TUnit;
 
@@ -59,6 +60,75 @@ public class EmailServiceTests
             e.Message == "<p>Message Content</p>" &&
             e.TypeMessage == "LogEmailType"
         ));
+    }
+    [Test]
+    public async Task Shouldnt_Send_Email_Successful_When_Null()
+    {
+        var resend = Substitute.For<IResend>();
+        var logger = Substitute.For<ILogger<EmailService>>();
+        var repo = Substitute.For<IEmailRepository>();
+
+        resend.EmailSendAsync(Arg.Any<EmailMessage>())
+            .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
+
+        var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
+            
+        await service.SendEmailAsync("user@test.com", "Welcome", "<b>Hello</b>", "WelcomeEmail");
+       
+        await resend.DidNotReceive().EmailSendAsync(Arg.Is<EmailMessage>(msg =>
+            msg.To.Contains("user@test.com") &&
+            msg.Subject == "Welcome" &&
+            msg.HtmlBody == String.Empty));
+        
+        await resend.DidNotReceive().EmailSendAsync(Arg.Is<EmailMessage>(msg =>
+            msg.To.Contains("user@test.com") &&
+            msg.Subject == String.Empty &&
+            msg.HtmlBody == String.Empty));
+        
+        await resend.DidNotReceive().EmailSendAsync(Arg.Is<EmailMessage>(msg =>
+            msg.To.Contains(String.Empty) &&
+            msg.Subject == String.Empty &&
+            msg.HtmlBody == String.Empty));
+    }
+    
+    [Test]
+    public async Task Email_dont_Create_Log_Null()
+    {
+        // Arrange
+        var resend = Substitute.For<IResend>();
+        var logger = Substitute.For<ILogger<EmailService>>();
+        var repo = Substitute.For<IEmailRepository>();
+        var expectedId = Guid.NewGuid();
+       
+        
+        resend.EmailSendAsync(Arg.Any<EmailMessage>())
+            .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
+
+        var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
+        
+        // Act
+        await service.SendEmailAsync("log@test.com", "Subject Test", "<p>Message Content</p>", "LogEmailType");
+
+        // Assert 
+        await repo.DidNotReceive().AddAsync(Arg.Is<Email>(e =>
+            e.ToEmail == "log@test.com" &&
+            e.Message == "<p>Message Content</p>" &&
+            e.TypeMessage == String.Empty
+        ));
+        
+        
+        await repo.DidNotReceive().AddAsync(Arg.Is<Email>(e =>
+            e.ToEmail == "log@test.com" &&
+            e.Message == String.Empty &&
+            e.TypeMessage == String.Empty
+        ));
+        
+        await repo.DidNotReceive().AddAsync(Arg.Is<Email>(e =>
+            e.ToEmail == String.Empty &&
+            e.Message == String.Empty &&
+            e.TypeMessage == String.Empty
+        ));
+        
     }
    
 }
