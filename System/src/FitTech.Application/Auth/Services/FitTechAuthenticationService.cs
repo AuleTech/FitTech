@@ -117,7 +117,7 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         var template = new ResetPasswordTemplate();
         var model = new ResetPasswordEmailModel { CallbackUrl = callbackUrl };
         var emailBody = template.HtmlBody(model);
-        
+        //TODO
         await _emailService.SendEmailAsync(
             forgotPasswordDto.Email,
             template.Subject,
