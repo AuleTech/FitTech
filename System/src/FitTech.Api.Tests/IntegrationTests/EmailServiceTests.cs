@@ -2,6 +2,7 @@
 using FitTech.Application.Auth.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Resend;
 
 namespace FitTech.Api.Tests.IntegrationTests;
 
@@ -9,6 +10,7 @@ namespace FitTech.Api.Tests.IntegrationTests;
 public class EmailServiceTest
 {
     private static IEmailService? _sut;
+    public static IResend? _resend;
     
     [Before(Class)]
     public static void Setup()
@@ -34,5 +36,23 @@ public class EmailServiceTest
     public async Task CanSendEmailAsync(CancellationToken cancellationToken)
     {
         await _sut!.SendEmailAsync("", "Test", "<strong>it works!</strong>", "ResetEmail");
+    }
+    
+    [Test]
+    [Timeout(30_000)]
+    public async Task CanSendAndRetrieveEmailAsync(CancellationToken cancellationToken)
+    {
+        
+         var message = _sut!.SendEmailAsync(
+            to: "example@email.com", 
+            subject: "Test", 
+            htmlbody: "<strong>it works!</strong>",
+            "ResetEmail"
+        );
+         
+        var retrieved = await _resend!.EmailRetrieveAsync(Guid.Parse(message.Id.ToString()));
+
+       await Assert.That(retrieved.Content.LastEvent).IsNotNull();
+       await Assert.That(retrieved.Content.LastEvent).IsEquivalentTo("Delivered"); 
     }
 }

@@ -33,13 +33,13 @@ builder.Services
     }))
     .AddPersistence(connectionString);
 
-builder.Services.Configure<DbSecretsSettings>(
-    builder.Configuration.GetSection("DbSecretsSettings"));
+builder.Services.Configure<SecretsSettings>(
+    builder.Configuration.GetSection("SecretsSettings"));
 
 builder.Services.AddSingleton(sp =>
     sp.GetRequiredService<IConfiguration>()
-        .GetSection("DbSecretsSettings")
-        .Get<DbSecretsSettings>()!);
+        .GetSection("SecretsSettings")
+        .Get<SecretsSettings>()!);
 
 var app = builder.Build();
 

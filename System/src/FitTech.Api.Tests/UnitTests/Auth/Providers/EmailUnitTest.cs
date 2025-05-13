@@ -25,7 +25,7 @@ public class EmailServiceTests
             resend.EmailSendAsync(Arg.Any<EmailMessage>())
                   .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
 
-            var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
+            var service = new EmailService(resend, logger, repo, new SecretsSettings());
             
             await service.SendEmailAsync("user@test.com", "Welcome", "<b>Hello</b>", "WelcomeEmail");
        
@@ -49,7 +49,7 @@ public class EmailServiceTests
         resend.EmailSendAsync(Arg.Any<EmailMessage>())
             .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
 
-        var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
+        var service = new EmailService(resend, logger, repo, new SecretsSettings());
         
         // Act
         await service.SendEmailAsync("log@test.com", "Subject Test", "<p>Message Content</p>", "LogEmailType");
@@ -71,7 +71,7 @@ public class EmailServiceTests
         resend.EmailSendAsync(Arg.Any<EmailMessage>())
             .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
 
-        var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
+        var service = new EmailService(resend, logger, repo, new SecretsSettings());
             
         await service.SendEmailAsync("user@test.com", "Welcome", "<b>Hello</b>", "WelcomeEmail");
        
@@ -104,7 +104,7 @@ public class EmailServiceTests
         resend.EmailSendAsync(Arg.Any<EmailMessage>())
             .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
 
-        var service = new EmailService(resend, logger, repo, new DbSecretsSettings());
+        var service = new EmailService(resend, logger, repo, new SecretsSettings());
         
         // Act
         await service.SendEmailAsync("log@test.com", "Subject Test", "<p>Message Content</p>", "LogEmailType");
