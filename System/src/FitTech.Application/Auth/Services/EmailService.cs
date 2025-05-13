@@ -1,6 +1,7 @@
 ﻿using FitTech.Application.Auth.Configuration;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Resend;
 
@@ -32,8 +33,12 @@ public sealed class EmailService : IEmailService
                 From = _dbSettings.EmailFitTech!, To = { to }, Subject = subject, HtmlBody = htmlBody,
             };
             var response = await _resend.EmailSendAsync(message);
+
+            var delivered = await _resend.EmailRetrieveAsync(response.Content);
+
+            var status = delivered.Content.LastEvent.ToString();
             
-            await CreateLogEmailResetAsync(response.Content, to, htmlBody, typeMessage);
+            await CreateLogEmailResetAsync(response.Content, to, htmlBody, typeMessage, status!);
             
         }
         catch (ResendException e)
@@ -43,9 +48,9 @@ public sealed class EmailService : IEmailService
         
     }
     
-    private async Task CreateLogEmailResetAsync(Guid emailId, String ToEmail, String Message, String TypeMessage)
+    private async Task CreateLogEmailResetAsync(Guid emailId, String ToEmail, String Message, String TypeMessage, String emailStatus)
     {
-        var emailLog = new Email(emailId, ToEmail, Message, TypeMessage);
+        var emailLog = new Email(emailId, ToEmail, Message, TypeMessage, emailStatus);
         await _emailRepository.AddAsync(emailLog);
     }
 }
