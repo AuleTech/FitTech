@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
         
         ArgumentNullException.ThrowIfNull(authSettings);
         
-        services.AddSingleton(authSettings!);
+        services.AddSingleton(authSettings);
         
         services.Configure<DataProtectionTokenProviderOptions>(options =>
         {
@@ -53,6 +53,16 @@ public static class ServiceCollectionExtensions
     
     public static IServiceCollection AddEmailService(this IServiceCollection services , IConfiguration configuration)
     {
+        //TODO: Extended to be part of ResendClientOptions -> ResendSettings : ResendClientOptions
+        var secretsSettings = configuration
+            .GetSection("SecretsSettings")
+            .Get<SecretsSettings>();
+        
+        ArgumentNullException.ThrowIfNull(secretsSettings);
+        
+        services.AddSingleton(secretsSettings);
+
+        
         services.AddHttpClient<ResendClient>();
         services.Configure<ResendClientOptions>(configuration.GetSection("Resend"));
         services.AddTransient<IResend, ResendClient>();

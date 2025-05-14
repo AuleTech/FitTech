@@ -33,14 +33,6 @@ builder.Services
     }))
     .AddPersistence(connectionString);
 
-builder.Services.Configure<SecretsSettings>(
-    builder.Configuration.GetSection("SecretsSettings"));
-
-builder.Services.AddSingleton(sp =>
-    sp.GetRequiredService<IConfiguration>()
-        .GetSection("SecretsSettings")
-        .Get<SecretsSettings>()!);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

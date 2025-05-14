@@ -19,6 +19,7 @@ public class AuthenticationTests
     private static IServiceProvider? _serviceProvider;
     private readonly Faker _faker = new ();
     
+    //TODO: Think a way to wireup IT configuration properly and reusable.
     [Before(Class)]
     public static Task SetUp()
     {
@@ -27,7 +28,9 @@ public class AuthenticationTests
             .AddInMemoryCollection([
                 new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.Audience)}", "testAudience"),
                 new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.Issuer)}", "testIssuer"),
-                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.SigningKey)}", "ThisIsALocalKey1234ThisIsALocalKey1234!")
+                new KeyValuePair<string, string?>($"Authentication:{nameof(AuthenticationSettings.SigningKey)}", "ThisIsALocalKey1234ThisIsALocalKey1234!"),
+                new KeyValuePair<string, string?>($"SecretsSettings:{nameof(SecretsSettings.EmailFitTech)}", "admin@fittech.es"),
+                new KeyValuePair<string, string?>("Resend:ApiToken","re_emUGHF3R_GSSKHxQxbYvx4jGKuv3tVsmA")
             ]);
         
         serviceCollection.AddAuth(configurationBuilder.Build()).AddLogging();
@@ -38,7 +41,6 @@ public class AuthenticationTests
         }).AddEntityFrameworkStores<FitTechDbContext>().AddDefaultTokenProviders();
         
         serviceCollection.AddInMemorydb(Guid.CreateVersion7().ToString());
-        
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         _serviceProvider = serviceProvider;
