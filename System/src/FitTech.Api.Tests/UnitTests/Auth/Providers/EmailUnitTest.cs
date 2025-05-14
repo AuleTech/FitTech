@@ -24,6 +24,9 @@ public class EmailServiceTests
 
             resend.EmailSendAsync(Arg.Any<EmailMessage>())
                   .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
+            
+            resend.EmailRetrieveAsync(Arg.Any<Guid>())
+                .Returns(_ => Task.FromResult(new ResendResponse<EmailReceipt>(new EmailReceipt(), new ResendRateLimit())));
 
             var service = new EmailService(resend, logger, repo, new SecretsSettings());
             
@@ -48,6 +51,9 @@ public class EmailServiceTests
         
         resend.EmailSendAsync(Arg.Any<EmailMessage>())
             .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
+        
+        resend.EmailRetrieveAsync(Arg.Any<Guid>())
+            .Returns(_ => Task.FromResult(new ResendResponse<EmailReceipt>(new EmailReceipt(), new ResendRateLimit())));
 
         var service = new EmailService(resend, logger, repo, new SecretsSettings());
         
@@ -70,6 +76,9 @@ public class EmailServiceTests
 
         resend.EmailSendAsync(Arg.Any<EmailMessage>())
             .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
+        
+        resend.EmailRetrieveAsync(Arg.Any<Guid>())
+            .Returns(_ => Task.FromResult(new ResendResponse<EmailReceipt>(new EmailReceipt(), new ResendRateLimit())));
 
         var service = new EmailService(resend, logger, repo, new SecretsSettings());
             
@@ -104,7 +113,10 @@ public class EmailServiceTests
         resend.EmailSendAsync(Arg.Any<EmailMessage>())
             .Returns(Task.FromResult(new ResendResponse<Guid>(Guid.Empty, new ResendRateLimit())), Task.CompletedTask);
 
-        var service = new EmailService(resend, logger, repo, new SecretsSettings());
+        resend.EmailRetrieveAsync(Arg.Any<Guid>())
+            .Returns(_ => Task.FromResult(new ResendResponse<EmailReceipt>(new EmailReceipt(), new ResendRateLimit())));
+
+        var service = new EmailService(resend, logger, repo,  new SecretsSettings());
         
         // Act
         await service.SendEmailAsync("log@test.com", "Subject Test", "<p>Message Content</p>", "LogEmailType");

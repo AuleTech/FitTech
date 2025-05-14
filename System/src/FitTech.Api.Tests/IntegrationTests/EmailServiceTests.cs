@@ -32,6 +32,7 @@ public class EmailServiceTest
         var sp = serviceCollection.BuildServiceProvider();
 
         _sut = sp.GetRequiredService<IEmailService>();
+        _resend = sp.GetRequiredService<IResend>();
     }
 
     [Test]
@@ -46,16 +47,21 @@ public class EmailServiceTest
     public async Task CanSendAndRetrieveEmailAsync(CancellationToken cancellationToken)
     {
         
-         var message = _sut!.SendEmailAsync(
-            to: "example@email.com", 
-            subject: "Test", 
-            htmlbody: "<strong>it works!</strong>",
-            "ResetEmail"
-        );
-         
-        var retrieved = await _resend!.EmailRetrieveAsync(Guid.Parse(message.Id.ToString()));
+        
+        var message = new EmailMessage
+        {
+            From ="admin@fittech.es",
+            To = "wdwdw@hotmail.com",
+            Subject = "wwfwf",
+            HtmlBody = "htmlBody",
+        };
 
-       await Assert.That(retrieved.Content.LastEvent).IsNotNull();
-       await Assert.That(retrieved.Content.LastEvent).IsEquivalentTo("Delivered"); 
+        var response = await _resend!.EmailSendAsync(message);
+
+        var delivered = await _resend.EmailRetrieveAsync(response.Content);
+        var status = delivered.Content.LastEvent.ToString();
+
+       await Assert.That(status).IsNotNull();
+       await Assert.That(status).IsEquivalentTo("Delivered"); 
     }
 }
