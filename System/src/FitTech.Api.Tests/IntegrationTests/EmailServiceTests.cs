@@ -1,4 +1,5 @@
 ﻿using FitTech.Application;
+using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,8 @@ public class EmailServiceTest
         var configurationBuilder =
             new ConfigurationBuilder().AddInMemoryCollection(new KeyValuePair<string, string?>[]
             {
-                new KeyValuePair<string, string?>("Resend:ApiToken","re_emUGHF3R_GSSKHxQxbYvx4jGKuv3tVsmA")
+                new KeyValuePair<string, string?>("Resend:ApiToken","re_emUGHF3R_GSSKHxQxbYvx4jGKuv3tVsmA"),
+                new KeyValuePair<string, string?>($"SecretsSettings:{nameof(SecretsSettings.EmailFitTech)}", "admin@fittech.es"),
             });
 
         var configuration = configurationBuilder.Build();
