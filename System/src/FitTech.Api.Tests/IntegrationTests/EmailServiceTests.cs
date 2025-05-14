@@ -1,6 +1,7 @@
 ﻿using FitTech.Application;
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Services;
+using FitTech.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Resend;
@@ -26,7 +27,7 @@ public class EmailServiceTest
         var configuration = configurationBuilder.Build();
         
         var serviceCollection = new ServiceCollection().AddHttpClient().AddLogging();
-        serviceCollection.AddEmailService(configuration);
+        serviceCollection.AddEmailService(configuration).AddInMemorydb(Guid.NewGuid().ToString());
 
         var sp = serviceCollection.BuildServiceProvider();
 
