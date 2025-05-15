@@ -47,21 +47,43 @@ public class EmailServiceTest
     public async Task CanSendAndRetrieveEmailAsync(CancellationToken cancellationToken)
     {
         
-        
         var message = new EmailMessage
         {
             From ="admin@fittech.es",
-            To = "wdwdw@hotmail.com",
-            Subject = "wwfwf",
+            To = "yerayblanco@hotmail.com",
+            Subject = "Test",
             HtmlBody = "htmlBody",
         };
 
         var response = await _resend!.EmailSendAsync(message);
-
+        
+        await Task.Delay(3000);
         var delivered = await _resend.EmailRetrieveAsync(response.Content);
         var status = delivered.Content.LastEvent.ToString();
 
        await Assert.That(status).IsNotNull();
        await Assert.That(status).IsEquivalentTo("Delivered"); 
+    }
+    
+    [Test]
+    public async Task BoundedEmailAndRetrieveEmailAsync(CancellationToken cancellationToken)
+    {
+        
+        var message = new EmailMessage
+        {
+            From ="admin@fittech.es",
+            To = "wdwdw@hotmail.com",
+            Subject = "Test",
+            HtmlBody = "htmlBody",
+        };
+
+        var response = await _resend!.EmailSendAsync(message);
+        
+        await Task.Delay(3000);
+        var delivered = await _resend.EmailRetrieveAsync(response.Content);
+        var status = delivered.Content.LastEvent.ToString();
+
+        await Assert.That(status).IsNotNull();
+        await Assert.That(status).IsEquivalentTo("Bounced"); 
     }
 }
