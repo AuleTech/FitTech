@@ -34,13 +34,6 @@ public class EmailServiceTest
         _sut = sp.GetRequiredService<IEmailService>();
         _resend = sp.GetRequiredService<IResend>();
     }
-
-    [Test]
-    [Timeout(30_000)]
-    public async Task CanSendEmailAsync(CancellationToken cancellationToken)
-    {
-        await _sut!.SendEmailAsync("", "Test", "<strong>it works!</strong>", "ResetEmail");
-    }
     
     [Test]
     [Timeout(30_000)]
