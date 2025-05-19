@@ -24,6 +24,7 @@ public class Result
         return new Result();
     }
 
+    //TODO: Think a better way
     public void LogErrorsIfAny(ILogger logger)
     {
         if (!Succeeded)

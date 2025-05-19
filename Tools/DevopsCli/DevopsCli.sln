@@ -16,9 +16,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuleTech.Core", "..\..\Libr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Tests", "3.Tests", "{0DEAB0EA-7CF2-4B52-BFE8-7E42E8F0AC8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevopsCli.UnitTests", "DevopsCli.UnitTests\DevopsCli.UnitTests.csproj", "{812A9EC6-63F1-4CE5-8712-84AEF2DC1CC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevopsCli.UnitTests", "src\DevopsCli.UnitTests\DevopsCli.UnitTests.csproj", "{812A9EC6-63F1-4CE5-8712-84AEF2DC1CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevopsCli.IntegrationTests", "DevopsCli.IntegrationTests\DevopsCli.IntegrationTests.csproj", "{0176CA6C-2666-40F2-A6B8-783586F70B3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevopsCli.IntegrationTests", "src\DevopsCli.IntegrationTests\DevopsCli.IntegrationTests.csproj", "{0176CA6C-2666-40F2-A6B8-783586F70B3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
