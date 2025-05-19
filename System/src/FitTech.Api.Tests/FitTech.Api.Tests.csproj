@@ -8,6 +8,7 @@
         <PackageReference Include="Bogus" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />       
         <PackageReference Include="TUnit" />
+        <PackageReference Include="NSubstitute" />
     </ItemGroup>
 
     <ItemGroup>

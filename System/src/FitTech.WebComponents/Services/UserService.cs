@@ -19,7 +19,7 @@ internal sealed class UserService : IUserService
     private readonly ILogger<UserService> _logger;
     
 
-    public UserService(FitTechAPIClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
+    public UserService(IFitTechApiClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
         ILogger<UserService> logger, ILocalStorageService localStorageService )
     {
         _fitTechApiClient = fitTechApiClient;
@@ -76,7 +76,7 @@ internal sealed class UserService : IUserService
     public async Task<Result<string>> ForgotPasswordAsync(string to, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(to);
-        var result = await _fitTechApiClient.ForgotPasswordEndpointAsync(
+        var result = await _fitTechApiClient.ForgotPasswordAsync(
             new ForgotPasswordRequest()
             {
                 Email = to, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
