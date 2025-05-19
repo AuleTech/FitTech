@@ -1,4 +1,5 @@
 ﻿using FitTech.Application;
+using FitTech.Application.Auth.Services;
 using FitTech.Domain.Entities;
 using FitTech.Persistence;
 using Microsoft.AspNetCore.Identity;

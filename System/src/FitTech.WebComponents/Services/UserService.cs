@@ -7,6 +7,8 @@ using FitTech.WebComponents.Models;
 using Microsoft.Extensions.Logging;
 using Result = AuleTech.Core.Patterns.Result;
 
+
+
 namespace FitTech.WebComponents.Services;
 
 internal sealed class UserService : IUserService
@@ -15,9 +17,10 @@ internal sealed class UserService : IUserService
     private readonly IFitTechApiClient _fitTechApiClient;
     private readonly ILocalStorageService _localStorageService;
     private readonly ILogger<UserService> _logger;
+    
 
-    public UserService(IFitTechApiClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
-        ILogger<UserService> logger, ILocalStorageService localStorageService)
+    public UserService(FitTechAPIClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
+        ILogger<UserService> logger, ILocalStorageService localStorageService )
     {
         _fitTechApiClient = fitTechApiClient;
         _authStateProvider = authStateProvider;
@@ -70,16 +73,20 @@ internal sealed class UserService : IUserService
             : Result.Failure(result.Errors.Select(x => x).ToArray());
     }
 
-    public async Task<Result<string>> ForgotPasswordAsync(string email, CancellationToken cancellationToken)
+    public async Task<Result<string>> ForgotPasswordAsync(string to, CancellationToken cancellationToken)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        var result = await _fitTechApiClient.ForgotPasswordAsync(
+        ArgumentException.ThrowIfNullOrWhiteSpace(to);
+        var result = await _fitTechApiClient.ForgotPasswordEndpointAsync(
             new ForgotPasswordRequest()
             {
-                Email = email, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
+                Email = to, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
             }, cancellationToken);
-
-        return result;
+        return new Result<string>()
+        {
+            Errors = result.Errors.ToArray(),
+            Succeeded = result.Succeeded,
+            Value = result.Value
+        };
     }
 
     public async Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken cancellationToken)

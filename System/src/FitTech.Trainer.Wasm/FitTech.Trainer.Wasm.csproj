@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FitTech.API.Client\FitTech.API.Client.csproj" />
       <ProjectReference Include="..\FitTech.WebComponents\FitTech.WebComponents.csproj" />
     </ItemGroup>
 

@@ -2,6 +2,7 @@ using FastEndpoints;
 using FastEndpoints.Swagger;
 using FitTech.API;
 using FitTech.Persistence;
+using FitTech.Application.Auth.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseDefaultServiceProvider((_, options) =>
@@ -28,10 +29,9 @@ builder.Services
     .AddOpenApi()
     .AddCors( c => c.AddPolicy("FitTechCorsPolicy", policyBuilder =>
     {
-        policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:7083");
+        policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:7083","http://localhost:5174");
     }))
     .AddPersistence(connectionString);
-
 
 var app = builder.Build();
 

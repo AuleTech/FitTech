@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FitTech.Domain.Interfaces;
+using FitTech.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,6 +10,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPersistence(this IServiceCollection serviceCollection, string? connectionString)
     {
+        serviceCollection.AddRepositories();
+
         serviceCollection.AddDbContext<FitTechDbContext>(options =>
         {
             options.UseNpgsql(connectionString);
@@ -17,7 +21,9 @@ public static class ServiceCollectionExtensions
     }
 
     public static IServiceCollection AddInMemorydb(this IServiceCollection serviceCollection, string dbName)
-    {
+    { 
+        serviceCollection.AddRepositories();
+        
         serviceCollection.AddDbContext<FitTechDbContext>(options =>
         {
             options.UseInMemoryDatabase(dbName);
@@ -25,6 +31,9 @@ public static class ServiceCollectionExtensions
 
         return serviceCollection;
     }
+
+    private static IServiceCollection AddRepositories(this IServiceCollection service) =>
+        service.AddTransient<IEmailRepository, EmailRepository>();
     
     public static async Task ApplyMigrationsAsync(this IServiceProvider serviceProvider)
     {
