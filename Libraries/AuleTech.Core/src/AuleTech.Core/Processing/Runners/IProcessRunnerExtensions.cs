@@ -1,31 +1,33 @@
-﻿namespace AuleTech.Core.Processing.Runners;
+﻿using AuleTech.Core.Patterns;
+
+namespace AuleTech.Core.Processing.Runners;
 
 public static class IProcessRunnerExtensions
 {
-	public static Task RunGitBashAsync(this IProcessRunner target, string arguments
-	                                         , CancellationToken cancellationToken
-	                                         , string? workingFolder = null) =>
-		RunGitBashAndGetResponseAsync(target, arguments, cancellationToken, workingFolder);
+    public static async Task<Result> RunSequenceAsync(this IProcessRunner runner,
+        IEnumerable<KeyValuePair<string, string>> commandArgumentsPairs, CancellationToken cancellationToken)
+    {
+        var keyValuePairs = commandArgumentsPairs as KeyValuePair<string, string>[] ?? commandArgumentsPairs.ToArray();
 
-	public static async Task<string> RunGitBashAndGetResponseAsync(this IProcessRunner target, string arguments
-	                                                               , CancellationToken cancellationToken
-	                                                               , string? workingFolder = null)
-	{
-		var gitBash = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\Git\bin\bash.exe";
-		var result = await target.RunAsync(
-			new PlatformProcessStartInfo(
-				gitBash
-				, $"-l -c \"{arguments}\""
-				, addOutputToResult: true
-				, runAsAdministrator: true
-				, workingDirectory: workingFolder
-			), cancellationToken);
+        if (!keyValuePairs.Any())
+        {
+            return Result.Success;
+        }
 
-		if (result.ExitCode != 0)
-		{
-			throw new ApplicationException($"Git Bash {arguments}. Failed with exit code {result.ExitCode}.{Environment.NewLine}{result.Output}");
-		}
+        foreach (var commandArgumentsPair in keyValuePairs)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
 
-		return result.Output;
-	}
+            var process = new AuleTechProcessStartInfo(commandArgumentsPair.Key, commandArgumentsPair.Value);
+            var result = await runner.RunAsync(process,
+                cancellationToken);
+
+            if (result.Errored())
+            {
+                return Result.Failure(result.Output);
+            }
+        }
+
+        return Result.Success;
+    }
 }

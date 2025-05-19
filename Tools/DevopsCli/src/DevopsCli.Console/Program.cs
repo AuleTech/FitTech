@@ -1,19 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using AuleTech.Core.Patterns;
 using Cocona;
+using DevopsCli.Core;
 using DevopsCli.Core.Commands;
-using DevopsCli.Core.Commands.Sample;
+using DevopsCli.Core.Commands.GenerateOpenApiTypedClient;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = CoconaApp.CreateBuilder();
 
-builder.Services.AddTransient<ICommand<SampleCommandParams, CommandResult>, SampleCommand>();
-
-builder.Services.Configure<CoconaAppOptions>(options =>
-{
-    options.TreatPublicMethodsAsCommands = false;
-});
+builder.Services.AddCore();
 
 var app = builder.Build();
-app.AddCommands<SampleCommand>();
+app.DiscoverAndWireUpCoconaCommands();
 await app.RunAsync();

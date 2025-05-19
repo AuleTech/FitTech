@@ -1,26 +1,38 @@
-﻿using Cocona;
+﻿using AuleTech.Core.Patterns;
+using Cocona;
 using Microsoft.Extensions.Logging;
 
 namespace DevopsCli.Core.Commands.Sample;
 
-public class SampleCommand : ICommand<SampleCommandParams, CommandResult>
+internal sealed class SampleCommand : ICommand<SampleCommandParams, Result>
 {
-    private ILogger<SampleCommand> _logger;
+    private readonly ILogger<SampleCommand> _logger;
 
     public SampleCommand(ILogger<SampleCommand> logger)
     {
         _logger = logger;
     }
 
-    [Command("sample")]
-    public async Task<int> SampleAsync(SampleCommandParams commandParams, [FromService] CoconaAppContext context)
+    public Task<Result> RunAsync(SampleCommandParams commandParams, CancellationToken cancellationToken)
     {
-        return await RunAsync(commandParams, context.CancellationToken);
+        var isValidResult = commandParams.Validate(); 
+        
+        if (!isValidResult.Succeeded)
+        {
+            return Task.FromResult(Result.Failure());
+        }
+
+        _logger.LogInformation("Running sample command with param: {Param}", commandParams.Param1);
+        return Task.FromResult(Result.Success);
     }
 
-    public Task<CommandResult> RunAsync(SampleCommandParams commandParams, CancellationToken cancellation)
+    [Command("sample")]
+    public async Task<int> RunCommandAsync(SampleCommandParams commandParams, [FromService] CoconaAppContext context)
     {
-        _logger.LogInformation("Running sample command with param: {Param}", commandParams.Param1);
-        return Task.FromResult(CommandResult.Succeed());
+        var result = await RunAsync(commandParams, context.CancellationToken);
+
+        result.LogErrorsIfAny(_logger);
+
+        return result.ToCliExitCode();
     }
 }

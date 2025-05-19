@@ -6,110 +6,114 @@ namespace AuleTech.Core.Processing;
 
 public static partial class ProcessEx
 {
-	[DllImport("advapi32.dll", SetLastError = true)]
-	private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+    private const int TokenElevation = 20;
+    private const uint TOKEN_QUERY = 0x0008;
 
-	[DllImport("advapi32.dll", SetLastError = true)]
-	private static extern bool GetTokenInformation(IntPtr TokenHandle, TOKEN_INFORMATION_CLASS TokenInformationClass, IntPtr TokenInformation, int TokenInformationLength, out int ReturnLength);
+    [DllImport("advapi32.dll", SetLastError = true)]
+    private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
 
-	public static void ThrowIfNotElevated()
-	{
-		if (!IsCurrentProcessRunningAsAdmin())
-		{
-			throw new InvalidOperationException(
-				"This process requires to be running as an ADMIN to perform correctly its operation. Please start me with elevated permissions.");
-		}
-	}
-	public static bool IsCurrentProcessRunningAsAdmin()
-	{
-		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-		{
-			throw new PlatformNotSupportedException("This method is only supported on Windows NT or later.");
-		}
+    [DllImport("advapi32.dll", SetLastError = true)]
+    private static extern bool GetTokenInformation(IntPtr TokenHandle, TOKEN_INFORMATION_CLASS TokenInformationClass,
+        IntPtr TokenInformation, int TokenInformationLength, out int ReturnLength);
 
-		using (WindowsIdentity.GetCurrent())
-		{
-			var tokenHandle = IntPtr.Zero;
+    public static void ThrowIfNotElevated()
+    {
+        if (!IsCurrentProcessRunningAsAdmin())
+        {
+            throw new InvalidOperationException(
+                "This process requires to be running as an ADMIN to perform correctly its operation. Please start me with elevated permissions.");
+        }
+    }
 
-			if (!OpenProcessToken(Process.GetCurrentProcess().Handle, TOKEN_QUERY, out tokenHandle))
-			{
-				throw new ApplicationException("Could not get process token.  Win32 Error Code: " + Marshal.GetLastWin32Error());
-			}
+    public static bool IsCurrentProcessRunningAsAdmin()
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            throw new PlatformNotSupportedException("This method is only supported on Windows NT or later.");
+        }
 
-			TOKEN_ELEVATION tokenElevation;
-			tokenElevation.TokenIsElevated = 0;
+        using (WindowsIdentity.GetCurrent())
+        {
+            var tokenHandle = IntPtr.Zero;
 
-			var tokenInfoLength = Marshal.SizeOf(typeof(TOKEN_ELEVATION));
-			var tokenInfoPtr = Marshal.AllocHGlobal(tokenInfoLength);
+            if (!OpenProcessToken(Process.GetCurrentProcess().Handle, TOKEN_QUERY, out tokenHandle))
+            {
+                throw new ApplicationException("Could not get process token.  Win32 Error Code: " +
+                                               Marshal.GetLastWin32Error());
+            }
 
-			try
-			{
-				int returnLength;
-				var result = GetTokenInformation(tokenHandle, TOKEN_INFORMATION_CLASS.TokenElevation, tokenInfoPtr, tokenInfoLength, out returnLength);
-				if (!result)
-				{
-					throw new ApplicationException("Unable to determine the current elevation.");
-				}
+            TOKEN_ELEVATION tokenElevation;
+            tokenElevation.TokenIsElevated = 0;
 
-				tokenElevation = (TOKEN_ELEVATION)Marshal.PtrToStructure(tokenInfoPtr, typeof(TOKEN_ELEVATION))!;
-			}
-			finally
-			{
-				if (tokenHandle != IntPtr.Zero)
-				{
-					Marshal.FreeHGlobal(tokenInfoPtr);
-					CloseHandle(tokenHandle);
-				}
-			}
+            var tokenInfoLength = Marshal.SizeOf(typeof(TOKEN_ELEVATION));
+            var tokenInfoPtr = Marshal.AllocHGlobal(tokenInfoLength);
 
-			return tokenElevation.TokenIsElevated != 0;
-		}
-	}
-	[DllImport("kernel32.dll", SetLastError = true)]
-	[return: MarshalAs(UnmanagedType.Bool)]
-	private static extern bool CloseHandle(IntPtr hObject);
-	private const int TokenElevation = 20;
-	private const uint TOKEN_QUERY = 0x0008;
+            try
+            {
+                int returnLength;
+                var result = GetTokenInformation(tokenHandle, TOKEN_INFORMATION_CLASS.TokenElevation, tokenInfoPtr,
+                    tokenInfoLength, out returnLength);
+                if (!result)
+                {
+                    throw new ApplicationException("Unable to determine the current elevation.");
+                }
 
-	private enum TOKEN_INFORMATION_CLASS
-	{
-		TokenUser = 1,
-		TokenGroups,
-		TokenPrivileges,
-		TokenOwner,
-		TokenPrimaryGroup,
-		TokenDefaultDacl,
-		TokenSource,
-		TokenType,
-		TokenImpersonationLevel,
-		TokenStatistics,
-		TokenRestrictedSids,
-		TokenSessionId,
-		TokenGroupsAndPrivileges,
-		TokenSessionReference,
-		TokenSandBoxInert,
-		TokenAuditPolicy,
-		TokenOrigin,
-		TokenElevationType,
-		TokenLinkedToken,
-		TokenElevation,
-		TokenHasRestrictions,
-		TokenAccessInformation,
-		TokenVirtualizationAllowed,
-		TokenVirtualizationEnabled,
-		TokenIntegrityLevel,
-		TokenUIAccess,
-		TokenMandatoryPolicy,
-		TokenLogonSid,
-		MaxTokenInfoClass
-	}
-	
+                tokenElevation = (TOKEN_ELEVATION)Marshal.PtrToStructure(tokenInfoPtr, typeof(TOKEN_ELEVATION))!;
+            }
+            finally
+            {
+                if (tokenHandle != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(tokenInfoPtr);
+                    CloseHandle(tokenHandle);
+                }
+            }
 
-	[StructLayout(LayoutKind.Sequential)]
-	private struct TOKEN_ELEVATION
-	{
-		public int TokenIsElevated;
-	}
+            return tokenElevation.TokenIsElevated != 0;
+        }
+    }
 
-	
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CloseHandle(IntPtr hObject);
+
+    private enum TOKEN_INFORMATION_CLASS
+    {
+        TokenUser = 1,
+        TokenGroups,
+        TokenPrivileges,
+        TokenOwner,
+        TokenPrimaryGroup,
+        TokenDefaultDacl,
+        TokenSource,
+        TokenType,
+        TokenImpersonationLevel,
+        TokenStatistics,
+        TokenRestrictedSids,
+        TokenSessionId,
+        TokenGroupsAndPrivileges,
+        TokenSessionReference,
+        TokenSandBoxInert,
+        TokenAuditPolicy,
+        TokenOrigin,
+        TokenElevationType,
+        TokenLinkedToken,
+        TokenElevation,
+        TokenHasRestrictions,
+        TokenAccessInformation,
+        TokenVirtualizationAllowed,
+        TokenVirtualizationEnabled,
+        TokenIntegrityLevel,
+        TokenUIAccess,
+        TokenMandatoryPolicy,
+        TokenLogonSid,
+        MaxTokenInfoClass
+    }
+
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct TOKEN_ELEVATION
+    {
+        public int TokenIsElevated;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using FitTech.WebComponents.Models;
+﻿using AuleTech.Core.Patterns;
+using FitTech.WebComponents.Models;
 
 namespace FitTech.WebComponents.Services;
 
