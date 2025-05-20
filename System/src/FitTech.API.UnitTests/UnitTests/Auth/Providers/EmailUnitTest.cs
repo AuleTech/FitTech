@@ -138,10 +138,4 @@ public class EmailServiceTests
         ));
         
     }
-
-    [Test]
-    public async Task FailTestAsync()
-    {
-        await Assert.That(true).IsFalse();
-    }
 }
