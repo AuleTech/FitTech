@@ -80,7 +80,7 @@ class Build : NukeBuild
                         cts.Token)
                     .GetAwaiter().GetResult();
 
-            Serilog.Log.Logger.Information("HOLAAA");
+            Serilog.Log.Logger.Information($"Resutado: {result.Succeeded} : [{string.Join(',',result.Errors.Select(x => x))}]");
             
             result.ThrowIfFailed();
         });
