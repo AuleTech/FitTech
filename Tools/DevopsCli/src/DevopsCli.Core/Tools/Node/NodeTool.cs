@@ -14,7 +14,7 @@ internal sealed class NodeTool : INodeTool
         _processRunner = processRunner;
     }
 
-    public async Task<Result> NpmInstallAsync(string packageName, CancellationToken cancellationToken, bool isGlobal = true)
+    public async Task<Result> NpmInstallAsync(string packageName, CancellationToken cancellationToken, bool isGlobal = true, string? workingDir = null)
     {
         var installResult = await _installer.InstallAsync(cancellationToken);
 
@@ -23,7 +23,7 @@ internal sealed class NodeTool : INodeTool
             return installResult;
         }
 
-        var process = new AuleTechProcessStartInfo("npm", $"install{(isGlobal ? " -g " : " ")}{packageName}");
+        var process = new AuleTechProcessStartInfo("npm", $"install{(isGlobal ? " -g " : " ")}{packageName}", workingDirectory: workingDir);
         var result = await _processRunner.RunAsync(process, cancellationToken);
 
         return result.ToResult();

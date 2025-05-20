@@ -1,5 +1,5 @@
 ﻿namespace DevopsCli.Core.Tools;
 
-internal interface ITool
+public interface ITool
 {
 }

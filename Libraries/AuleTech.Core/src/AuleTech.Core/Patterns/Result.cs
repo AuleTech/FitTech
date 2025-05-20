@@ -24,13 +24,24 @@ public class Result
         return new Result();
     }
 
+    //TODO: Think a better way
     public void LogErrorsIfAny(ILogger logger)
     {
         if (!Succeeded)
         {
-            logger.LogError("Execution exited with errors: [{Errors}]", string.Join(',', Errors.Select(x => $"'{x}'")));   
+            logger.LogError("Execution exited with errors: [{Errors}]", ToErrorString());   
         }
     }
+
+    public void ThrowIfFailed()
+    {
+        if (!Succeeded)
+        {
+            throw new Exception($"Error during execution: {ToErrorString()}");
+        }
+    }
+
+    private string ToErrorString() => string.Join(',', Errors.Select(x => $"'{x}'"));
 }
 
 public class Result<T> : Result

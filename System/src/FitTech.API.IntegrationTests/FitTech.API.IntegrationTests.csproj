@@ -2,6 +2,7 @@
 
     <PropertyGroup>       
         <OutputType>Exe</OutputType>
+        <RootNamespace>FitTech.Api.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

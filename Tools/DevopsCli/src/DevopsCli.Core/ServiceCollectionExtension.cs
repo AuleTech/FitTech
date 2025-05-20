@@ -4,21 +4,22 @@ using AuleTech.Core.Patterns;
 using AuleTech.Core.Reflection;
 using Cocona;
 using DevopsCli.Core.Commands;
+using DevopsCli.Core.Commands.Dotnet.Build;
+using DevopsCli.Core.Commands.Dotnet.Restore;
+using DevopsCli.Core.Commands.Dotnet.Tests;
 using DevopsCli.Core.Commands.GenerateOpenApiTypedClient;
 using DevopsCli.Core.Commands.Sample;
 using DevopsCli.Core.Tools;
-using DevopsCli.Core.Tools.Node;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DevopsCli.Core;
 
 public static class ServiceCollectionExtension
 {
-    public static IServiceCollection AddCore(this IServiceCollection services)
+    public static IServiceCollection AddCliCore(this IServiceCollection services)
     {
         return services
-            .AddTransient<ICommand<SampleCommandParams, Result>, SampleCommand>()
-            .AddTransient<ICommand<GenerateOpenApiTypedClientParams, Result>, GenerateOpenApiTypedClientCommand>()
+            .RegisterCommands()
             .DiscoverAndRegisterTools()
             .AddAuleTechPlatformCore()
             .Configure<CoconaAppOptions>(options =>
@@ -38,6 +39,13 @@ public static class ServiceCollectionExtension
 
         return app;
     }
+
+    public static IServiceCollection RegisterCommands(this IServiceCollection services) => services
+        .AddTransient<ICommand<SampleCommandParams, Result>, SampleCommand>()
+        .AddTransient<ICommand<GenerateOpenApiTypedClientParams, Result>, GenerateOpenApiTypedClientCommand>()
+        .AddTransient<ICommand<RestoreCommandParams, Result>, RestoreCommand>()
+        .AddTransient<ICommand<RunTestsCommandParams, Result>, RunTestsCommand>()
+        .AddTransient<ICommand<BuildCommandParams, Result>, BuildCommand>(); 
 
     public static IServiceCollection DiscoverAndRegisterTools(this IServiceCollection serviceCollection)
     {
@@ -65,8 +73,7 @@ public static class ServiceCollectionExtension
 
             if (!installerInterface.Any())
             {
-                throw new InvalidOperationException(
-                    $"No installer found for Tool:'{toolType.Name}'. You need to define an installer");
+                continue;
             }
 
             if (installerInterface.Count() > 1)
