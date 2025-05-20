@@ -28,7 +28,7 @@ class Build : NukeBuild
         .Executes(() =>
         {
             var nodeTool = PacDependencyInjection.Default.Get<INodeTool>();
-            var result = nodeTool.NpmInstallAsync("tailwindcss", CancellationToken.None).GetAwaiter().GetResult();
+            var result = nodeTool.NpmInstallAsync("tailwindcss @tailwindcss/cli", CancellationToken.None).GetAwaiter().GetResult();
             result.ThrowIfFailed();
         });
     
