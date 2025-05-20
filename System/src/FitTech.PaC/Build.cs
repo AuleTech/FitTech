@@ -11,12 +11,11 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.Npm;
 
 [GitHubActions(
-    "Continous Integration",
+    "Continuous Integration",
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.PullRequest })]
 class Build : NukeBuild
 {
-    //TODO: Check async execution
     [Solution(GenerateProjects = true)] readonly Solution Solution;
 
     public static int Main() => Execute<Build>(x => x.UnitTests, x => x.IntegrationTests);
