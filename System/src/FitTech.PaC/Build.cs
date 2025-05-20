@@ -30,6 +30,12 @@ class Build : NukeBuild
             var nodeTool = PacDependencyInjection.Default.Get<INodeTool>();
             var result = nodeTool.NpmInstallAsync("tailwindcss @tailwindcss/cli", CancellationToken.None).GetAwaiter().GetResult();
             result.ThrowIfFailed();
+
+            result = nodeTool.NpmInstallAsync(string.Empty, CancellationToken.None, 
+                    workingDir: Solution.src._Presentation.FitTech_WebComponents.Directory, isGlobal: false)
+                .GetAwaiter().GetResult();
+            
+            result.ThrowIfFailed();
         });
     
     Target Restore => _ => _
