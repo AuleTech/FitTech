@@ -3,7 +3,7 @@ using AuleTech.Core.Processing.Runners;
 
 namespace DevopsCli.Core.Tools.Node;
 
-internal sealed class NodeTool : INodeTool
+public sealed class NodeTool : INodeTool
 {
     public const string NodeVersion = "v22.15.0";
     private readonly IInstaller<NodeTool> _installer;

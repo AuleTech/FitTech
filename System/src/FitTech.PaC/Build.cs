@@ -3,9 +3,12 @@ using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
 using DevopsCli.Core.Commands.Dotnet.Tests;
+using DevopsCli.Core.Tools;
+using DevopsCli.Core.Tools.Node;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tools.Npm;
 
 [GitHubActions(
     "Continous Integration",
@@ -21,6 +24,14 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
+    private Target InstallDependencies => _ => _
+        .Executes(() =>
+        {
+            var nodeInstaller = PacDependencyInjection.Default.Get<IInstaller<NodeTool>>();
+            var result = nodeInstaller.InstallAsync(CancellationToken.None).GetAwaiter().GetResult();
+            result.ThrowIfFailed();
+        });
+    
     Target Restore => _ => _
         .Executes(() =>
         {
@@ -29,7 +40,7 @@ class Build : NukeBuild
 
             var result =
                 command.RunAsync(
-                    new RestoreCommandParams() { SolutionPath = Solution.src._APIs.FitTech.FitTech_API.Path },
+                    new RestoreCommandParams() { SolutionPath = Solution },
                     cts.Token).GetAwaiter().GetResult();
 
             result.ThrowIfFailed();
@@ -37,6 +48,7 @@ class Build : NukeBuild
 
     Target Compile => _ => _
         .DependsOn(Restore)
+        .DependsOn(InstallDependencies)
         .Executes(() =>
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
@@ -44,7 +56,7 @@ class Build : NukeBuild
 
             var result =
                 command.RunAsync(
-                        new BuildCommandParams() { SolutionPath = Solution.src._APIs.FitTech.FitTech_API.Path },
+                        new BuildCommandParams() { SolutionPath = Solution },
                         cts.Token)
                     .GetAwaiter().GetResult();
 
