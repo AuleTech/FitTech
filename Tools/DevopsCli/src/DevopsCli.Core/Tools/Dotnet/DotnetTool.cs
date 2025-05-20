@@ -50,7 +50,7 @@ internal sealed class DotnetTool : IDotnetTool
             return Result.Failure($"Project {projectPath} does not exist");
         }
         
-        var processInfo = new AuleTechProcessStartInfo("dotnet", $"test {projectPath}");
+        var processInfo = new AuleTechProcessStartInfo("dotnet", $"test {projectPath} --no-restore --no-build");
 
         var result = await _processRunner.RunAsync(processInfo, cancellationToken);
 
