@@ -96,8 +96,6 @@ class Build : NukeBuild
                         new RunTestsCommandParams() { ProjectPath = Solution.src._APIs.FitTech.Tests.FitTech_API_IntegrationTests.Path },
                         cts.Token)
                     .GetAwaiter().GetResult();
-
-            Serilog.Log.Logger.Information($"Resutado: {result.Succeeded} : [{string.Join(',',result.Errors.Select(x => x))}]");
             
             result.ThrowIfFailed();
         });
