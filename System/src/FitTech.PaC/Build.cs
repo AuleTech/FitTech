@@ -80,6 +80,8 @@ class Build : NukeBuild
                         cts.Token)
                     .GetAwaiter().GetResult();
 
+            Serilog.Log.Logger.Information("HOLAAA");
+            
             result.ThrowIfFailed();
         });
 }
