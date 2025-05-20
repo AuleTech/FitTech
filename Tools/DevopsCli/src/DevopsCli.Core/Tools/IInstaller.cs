@@ -2,13 +2,13 @@
 
 namespace DevopsCli.Core.Tools;
 
-public interface IInstaller<TTool> where TTool : ITool
+internal interface IInstaller<TTool> where TTool : ITool
 {
     bool IsSupported(PlatformID platform);
     Task<Result> InstallAsync(CancellationToken cancellationToken);
 }
 
-public interface IInstaller<TTool, in TConfig> where TConfig : class
+internal interface IInstaller<TTool, in TConfig> where TConfig : class
     where TTool : ITool
 {
     bool IsSupported(PlatformID platform);
