@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
-using FitTech.Api.Tests.Data.Generators;
+using FitTech.API.UnitTests.Data.Generators;
 using FitTech.Application.Auth.Providers;
 
-namespace FitTech.Api.Tests.UnitTests.Auth.Providers;
+namespace FitTech.API.UnitTests.UnitTests.Auth.Providers;
 
 public class TokenProviderTests
 {

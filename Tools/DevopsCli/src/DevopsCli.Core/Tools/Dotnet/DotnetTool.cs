@@ -42,4 +42,18 @@ internal sealed class DotnetTool : IDotnetTool
 
         return result.ToResult();
     }
+
+    public async Task<Result> TestAsync(string projectPath, CancellationToken cancellationToken)
+    {
+        if (!_systemIo.File.Exists(projectPath))
+        {
+            return Result.Failure($"Project {projectPath} does not exist");
+        }
+        
+        var processInfo = new AuleTechProcessStartInfo("dotnet", $"test {projectPath} --no-restore --no-build");
+
+        var result = await _processRunner.RunAsync(processInfo, cancellationToken);
+
+        return result.ToResult();
+    }
 }

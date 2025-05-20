@@ -1,3 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("FitTech.Api.Tests")]
+[assembly: InternalsVisibleTo("FitTech.API.IntegrationTests")]
+[assembly: InternalsVisibleTo("FitTech.API.UnitTests")]

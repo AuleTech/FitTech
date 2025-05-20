@@ -1,16 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using FitTech.Application.Auth.Configuration;
+﻿using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Services;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using NSubstitute.ReturnsExtensions;
 using Resend;
-using TUnit;
 
-namespace FitTech.Api.Tests.UnitTests.Auth.Providers;
+namespace FitTech.API.UnitTests.UnitTests.Auth.Providers;
 
 public class EmailServiceTests
 {

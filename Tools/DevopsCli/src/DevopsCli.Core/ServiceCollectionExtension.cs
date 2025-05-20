@@ -6,6 +6,7 @@ using Cocona;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
+using DevopsCli.Core.Commands.Dotnet.Tests;
 using DevopsCli.Core.Commands.GenerateOpenApiTypedClient;
 using DevopsCli.Core.Commands.Sample;
 using DevopsCli.Core.Tools;
@@ -43,6 +44,7 @@ public static class ServiceCollectionExtension
         .AddTransient<ICommand<SampleCommandParams, Result>, SampleCommand>()
         .AddTransient<ICommand<GenerateOpenApiTypedClientParams, Result>, GenerateOpenApiTypedClientCommand>()
         .AddTransient<ICommand<RestoreCommandParams, Result>, RestoreCommand>()
+        .AddTransient<ICommand<RunTestsCommandParams, Result>, RunTestsCommand>()
         .AddTransient<ICommand<BuildCommandParams, Result>, BuildCommand>(); 
 
     public static IServiceCollection DiscoverAndRegisterTools(this IServiceCollection serviceCollection)

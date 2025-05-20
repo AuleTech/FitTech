@@ -27,4 +27,8 @@
     <ProjectReference Include="..\..\..\Tools\DevopsCli\src\DevopsCli.Core\DevopsCli.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="..\..\..\.github\workflows\FitTech_Pr_pipeline.yml" />
+  </ItemGroup>
+
 </Project>

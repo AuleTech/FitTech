@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using FitTech.Application.Auth.Configuration;
 
-namespace FitTech.Api.Tests.Data.Generators;
+namespace FitTech.API.UnitTests.Data.Generators;
 
 public sealed class AuthenticationSettingsTestGenerator: Faker<AuthenticationSettings>
 {

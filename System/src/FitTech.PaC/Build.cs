@@ -2,26 +2,21 @@ using AuleTech.Core.Patterns;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
+using DevopsCli.Core.Commands.Dotnet.Tests;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 
 [GitHubActions(
-    "FitTech Pr pipeline",
+    "Continous Integration",
     GitHubActionsImage.UbuntuLatest,
-    On = new[] { GitHubActionsTrigger.PullRequest },
-    InvokedTargets = new[] { nameof(Compile) })]
+    On = new[] { GitHubActionsTrigger.PullRequest })]
 class Build : NukeBuild
 {
+    //TODO: Check async execution
     [Solution(GenerateProjects = true)] readonly Solution Solution;
-    
-    public static int Main()
-    {
-        var result = Execute<Build>(x => x.Compile);
 
-        return result;
-    }
+    public static int Main() => Execute<Build>(x => x.UnitTests, x => x.IntegrationTests);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -29,12 +24,13 @@ class Build : NukeBuild
     Target Restore => _ => _
         .Executes(() =>
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             var command = PacDependencyInjection.Default.Get<ICommand<RestoreCommandParams, Result>>();
 
             var result =
                 command.RunAsync(
-                    new RestoreCommandParams() { SolutionPath = Solution }, cts.Token).GetAwaiter().GetResult();
+                    new RestoreCommandParams() { SolutionPath = Solution.src._APIs.FitTech.FitTech_API.Path },
+                    cts.Token).GetAwaiter().GetResult();
 
             result.ThrowIfFailed();
         });
@@ -43,12 +39,46 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             var command = PacDependencyInjection.Default.Get<ICommand<BuildCommandParams, Result>>();
 
             var result =
                 command.RunAsync(
-                    new BuildCommandParams() { SolutionPath = Solution }, cts.Token).GetAwaiter().GetResult();
+                        new BuildCommandParams() { SolutionPath = Solution.src._APIs.FitTech.FitTech_API.Path },
+                        cts.Token)
+                    .GetAwaiter().GetResult();
+
+            result.ThrowIfFailed();
+        });
+
+    private Target UnitTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            var command = PacDependencyInjection.Default.Get<ICommand<RunTestsCommandParams, Result>>();
+
+            var result =
+                command.RunAsync(
+                        new RunTestsCommandParams() { ProjectPath = Solution.src._APIs.FitTech.Tests.FitTech_API_UnitTests.Path },
+                        cts.Token)
+                    .GetAwaiter().GetResult();
+
+            result.ThrowIfFailed();
+        });
+    
+    private Target IntegrationTests => _ => _
+        .DependsOn(Compile)
+        .Executes(() =>
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            var command = PacDependencyInjection.Default.Get<ICommand<RunTestsCommandParams, Result>>();
+
+            var result =
+                command.RunAsync(
+                        new RunTestsCommandParams() { ProjectPath = Solution.src._APIs.FitTech.Tests.FitTech_API_IntegrationTests.Path },
+                        cts.Token)
+                    .GetAwaiter().GetResult();
 
             result.ThrowIfFailed();
         });

@@ -25,7 +25,9 @@
       "type": "string",
       "enum": [
         "Compile",
-        "Restore"
+        "IntegrationTests",
+        "Restore",
+        "UnitTests"
       ]
     },
     "Verbosity": {
