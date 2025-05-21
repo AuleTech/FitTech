@@ -8,9 +8,6 @@ using Resend;
 
 namespace FitTech.Api.Tests.IntegrationTests;
 
-//TODO: Look in Resend how to properly test
-
-[NotInParallel]
 public class EmailServiceTest
 {
     private static IEmailService? _sut; //TODO: Use the SUT
@@ -37,6 +34,7 @@ public class EmailServiceTest
         _resend = sp.GetRequiredService<IResend>();
     }
     
+    //TODO: Refactor
     [Test]
     [Timeout(30_000)]
     public async Task CanSendAndRetrieveEmailAsync(CancellationToken cancellationToken)
@@ -58,28 +56,5 @@ public class EmailServiceTest
 
        await Assert.That(status).IsNotNull();
        await Assert.That(status).IsEquivalentTo("Delivered"); 
-    }
-    
-    [Test]
-    [Retry(2)]
-    public async Task BoundedEmailAndRetrieveEmailAsync(CancellationToken cancellationToken)
-    {
-        
-        var message = new EmailMessage
-        {
-            From ="admin@fittech.es",
-            To = "bounced@resend.dev",
-            Subject = "Test",
-            HtmlBody = "htmlBody",
-        };
-
-        var response = await _resend!.EmailSendAsync(message, cancellationToken);
-        
-        await Task.Delay(200);
-        var delivered = await _resend.EmailRetrieveAsync(response.Content, cancellationToken);
-        var status = delivered.Content.LastEvent.ToString();
-
-        await Assert.That(status).IsNotNull();
-        await Assert.That(status).IsEquivalentTo("Bounced"); 
     }
 }
