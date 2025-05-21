@@ -9,6 +9,7 @@ using Resend;
 namespace FitTech.Api.Tests.IntegrationTests;
 
 //TODO: Look in Resend how to properly test
+
 public class EmailServiceTest
 {
     private static IEmailService? _sut; //TODO: Use the SUT
@@ -36,6 +37,7 @@ public class EmailServiceTest
     }
     
     [Test]
+    [Retry(5)]
     [Timeout(30_000)]
     public async Task CanSendAndRetrieveEmailAsync(CancellationToken cancellationToken)
     {
@@ -59,6 +61,7 @@ public class EmailServiceTest
     }
     
     [Test]
+    [Retry(5)]
     public async Task BoundedEmailAndRetrieveEmailAsync(CancellationToken cancellationToken)
     {
         
