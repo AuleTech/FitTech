@@ -379,6 +379,9 @@
   .border-gray-700 {
     border-color: var(--color-gray-700);
   }
+  .border-transparent {
+    border-color: transparent;
+  }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
   }
