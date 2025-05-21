@@ -50,7 +50,7 @@ public class EmailServiceTest
 
         var response = await _resend!.EmailSendAsync(message, cancellationToken);
         
-        await Task.Delay(200, cancellationToken);
+        await Task.Delay(3000, cancellationToken);
         var delivered = await _resend.EmailRetrieveAsync(response.Content, cancellationToken);
         var status = delivered.Content.LastEvent.ToString();
 
