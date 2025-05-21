@@ -11,7 +11,7 @@ namespace FitTech.Api.Tests.IntegrationTests;
 //TODO: Look in Resend how to properly test
 public class EmailServiceTest
 {
-    private static IEmailService? _sut;
+    private static IEmailService? _sut; //TODO: Use the SUT
     public static IResend? _resend;
     
     [Before(Class)]
@@ -43,15 +43,15 @@ public class EmailServiceTest
         var message = new EmailMessage
         {
             From ="admin@fittech.es",
-            To = "yerayblanco@hotmail.com",
+            To = "delivered@resend.dev",
             Subject = "Test",
             HtmlBody = "htmlBody",
         };
 
-        var response = await _resend!.EmailSendAsync(message);
+        var response = await _resend!.EmailSendAsync(message, cancellationToken);
         
-        await Task.Delay(3000);
-        var delivered = await _resend.EmailRetrieveAsync(response.Content);
+        await Task.Delay(200, cancellationToken);
+        var delivered = await _resend.EmailRetrieveAsync(response.Content, cancellationToken);
         var status = delivered.Content.LastEvent.ToString();
 
        await Assert.That(status).IsNotNull();
@@ -65,15 +65,15 @@ public class EmailServiceTest
         var message = new EmailMessage
         {
             From ="admin@fittech.es",
-            To = "wdwdw@hotmail.com",
+            To = "bounced@resend.dev",
             Subject = "Test",
             HtmlBody = "htmlBody",
         };
 
-        var response = await _resend!.EmailSendAsync(message);
+        var response = await _resend!.EmailSendAsync(message, cancellationToken);
         
-        await Task.Delay(3000);
-        var delivered = await _resend.EmailRetrieveAsync(response.Content);
+        await Task.Delay(200);
+        var delivered = await _resend.EmailRetrieveAsync(response.Content, cancellationToken);
         var status = delivered.Content.LastEvent.ToString();
 
         await Assert.That(status).IsNotNull();

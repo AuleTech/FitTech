@@ -1,10 +1,20 @@
 ﻿namespace FitTech.Domain.Templates.EmailsTemplates;
 
-public class ResetPasswordTemplate
+public class ResetPasswordTemplate : IEmailTemplate
 {
-    public string Subject { get; set; } = "Reset your FitTech Password";
-    public string TypeMessage { get; set; } = "Reset Password";
-    public string HtmlBody(ResetPasswordEmailModel model)
+    public static ResetPasswordTemplate Create(ResetPasswordEmailModel model) => new ResetPasswordTemplate(model);
+
+    public string Subject { get; } = "Reestablece tu contraseña";
+    public string MessageType { get; } = "Reset Password";
+    
+    private readonly ResetPasswordEmailModel _model;
+    
+    private ResetPasswordTemplate(ResetPasswordEmailModel model)
+    {
+        _model = model;
+    }
+    
+    public string GetBody()
     {
         return $@"
         <html>
@@ -16,7 +26,7 @@ public class ResetPasswordTemplate
                 <h2>Restablecer contraseña</h2>
                 <p>Hemos recibido una solicitud para restablecer tu contraseña.</p>
                 <p>Haz clic en el siguiente enlace para continuar:</p>
-                <a href=""{model.CallbackUrl}"" style=""display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;"">
+                <a href=""{_model.CallbackUrl}"" style=""display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;"">
                     Restablecer contraseña
                 </a>
                 <p>Si no solicitaste este cambio, puedes ignorar este mensaje.</p>

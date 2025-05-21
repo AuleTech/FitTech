@@ -3,5 +3,5 @@ namespace FitTech.Domain.Interfaces;
 
 public interface IEmailRepository
 {
-  Task AddAsync(Email email);
+  Task AddAsync(Email email, CancellationToken cancellationToken);
 }

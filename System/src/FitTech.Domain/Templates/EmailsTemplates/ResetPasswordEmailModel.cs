@@ -2,5 +2,5 @@
 
 public class ResetPasswordEmailModel
 {
-    public string CallbackUrl { get; set; } = default!;
+    public string CallbackUrl { get; set; } = null!;
 }
