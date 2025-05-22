@@ -117,7 +117,7 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         //TODO: do this async.
         await _emailService.SendEmailAsync(
             forgotPasswordDto.Email,
-            ResetPasswordTemplate.Create(new ResetPasswordEmailModel(){CallbackUrl = callbackUrl}),
+            ResetPasswordTemplate.Create(callbackUrl),
             cancellationToken
         );
         

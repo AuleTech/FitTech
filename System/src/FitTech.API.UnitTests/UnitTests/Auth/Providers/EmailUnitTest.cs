@@ -27,7 +27,7 @@ public class EmailServiceTests
 
             var service = new EmailService(resend, logger, repo, new SecretsSettings());
             
-            await service.SendEmailAsync("user@test.com", ResetPasswordTemplate.Create(new ResetPasswordEmailModel(){CallbackUrl = "test"}), CancellationToken.None);
+            await service.SendEmailAsync("user@test.com", ResetPasswordTemplate.Create("test"), CancellationToken.None);
        
             await resend.Received(1).EmailSendAsync(Arg.Any<EmailMessage>());
             await repo.Received(1).AddAsync(Arg.Any<Email>(), Arg.Any<CancellationToken>());
@@ -49,7 +49,7 @@ public class EmailServiceTests
         var service = new EmailService(resend, logger, repo, new SecretsSettings());
 
         await Assert.ThrowsAsync<ArgumentException>(async () => await service.SendEmailAsync(string.Empty,
-            ResetPasswordTemplate.Create(new ResetPasswordEmailModel() { CallbackUrl = "test" }),
+            ResetPasswordTemplate.Create("test"),
             CancellationToken.None));
 
     }
