@@ -1,6 +1,8 @@
-﻿namespace FitTech.Application.Auth.Services;
+﻿using FitTech.Domain.Templates;
+
+namespace FitTech.Application.Auth.Services;
 
 public interface IEmailService
 {
-    Task SendEmailAsync(string to, string subject, string htmlbody, string typeMessage);
+    Task SendEmailAsync(string to,IEmailTemplate template, CancellationToken cancellationToken);
 }

@@ -114,16 +114,11 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         var encodedToken = HttpUtility.UrlEncode(resetPasswordToken);
         var callbackUrl = $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={encodedToken}";
         
-        var template = new ResetPasswordTemplate();
-        var model = new ResetPasswordEmailModel { CallbackUrl = callbackUrl };
-        var emailBody = template.HtmlBody(model);
-        //TODO: moving this to do this async.
+        //TODO: do this async.
         await _emailService.SendEmailAsync(
             forgotPasswordDto.Email,
-            template.Subject,
-            emailBody,
-            template.TypeMessage
-            
+            ResetPasswordTemplate.Create(callbackUrl),
+            cancellationToken
         );
         
         return Result<string>.Success(HttpUtility.UrlEncode(resetPasswordToken));
