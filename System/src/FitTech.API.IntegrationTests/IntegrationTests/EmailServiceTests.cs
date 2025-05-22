@@ -52,7 +52,8 @@ public class EmailServiceTest
         var log = await dbContext!.EmailLog.SingleAsync(cancellationToken);
         await Assert.That(log.EmailStatus).IsEqualTo("Delivered");
         await Assert.That(log.TypeMessage).IsEqualTo(template.MessageType);
-        
+
+        await Task.Delay(3000, cancellationToken); //TODO: Use Polly for Pull
         var emailRetrieved = await resendApiClient!.EmailRetrieveAsync(log.ExternalId, cancellationToken);
         await Assert.That(emailRetrieved.Content.LastEvent.ToString()).IsEqualTo("Delivered");
     }
