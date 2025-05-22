@@ -345,6 +345,9 @@
   .justify-center {
     justify-content: center;
   }
+  .justify-end {
+    justify-content: flex-end;
+  }
   .rounded {
     border-radius: 0.25rem;
   }
@@ -441,6 +444,9 @@
   }
   .py-5 {
     padding-block: calc(var(--spacing) * 5);
+  }
+  .py-10 {
+    padding-block: calc(var(--spacing) * 10);
   }
   .text-center {
     text-align: center;
