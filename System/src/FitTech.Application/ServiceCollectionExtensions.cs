@@ -2,11 +2,13 @@
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Providers;
 using FitTech.Application.Auth.Services;
+using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Resend;
 
 namespace FitTech.Application;
 
@@ -18,7 +20,7 @@ public static class ServiceCollectionExtensions
         
         ArgumentNullException.ThrowIfNull(authSettings);
         
-        services.AddSingleton(authSettings!);
+        services.AddSingleton(authSettings);
         
         services.Configure<DataProtectionTokenProviderOptions>(options =>
         {
@@ -44,6 +46,28 @@ public static class ServiceCollectionExtensions
         
         services.AddAuthorization();
         
+        services.AddEmailService(configuration);
+        
+        return services;
+    }
+    
+    public static IServiceCollection AddEmailService(this IServiceCollection services , IConfiguration configuration)
+    {
+        //TODO: Extended to be part of ResendClientOptions -> ResendSettings : ResendClientOptions
+        var secretsSettings = configuration
+            .GetSection("SecretsSettings")
+            .Get<SecretsSettings>();
+        
+        ArgumentNullException.ThrowIfNull(secretsSettings);
+        
+        services.AddSingleton(secretsSettings);
+
+        
+        services.AddHttpClient<ResendClient>();
+        services.Configure<ResendClientOptions>(configuration.GetSection("Resend"));
+        services.AddTransient<IResend, ResendClient>();
+        services.AddTransient<IEmailService, EmailService>();
+
         return services;
     }
 }

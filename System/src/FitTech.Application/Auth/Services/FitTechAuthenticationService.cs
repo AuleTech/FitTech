@@ -6,7 +6,7 @@ using FitTech.Application.Extensions;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-
+using FitTech.Domain.Templates.EmailsTemplates;
 namespace FitTech.Application.Auth.Services;
 
 internal sealed class FitTechAuthenticationService : IFitTechAuthenticationService
@@ -14,13 +14,15 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
     private readonly ILogger<FitTechAuthenticationService> _logger;
     private readonly ITokenProvider _tokenProvider;
     private readonly UserManager<FitTechUser> _userManager;
+    private readonly IEmailService _emailService;
 
     public FitTechAuthenticationService(UserManager<FitTechUser> userManager,
-        ILogger<FitTechAuthenticationService> logger, ITokenProvider tokenProvider)
+        ILogger<FitTechAuthenticationService> logger, ITokenProvider tokenProvider, IEmailService emailService)
     {
         _userManager = userManager;
         _logger = logger;
         _tokenProvider = tokenProvider;
+        _emailService = emailService;
     }
 
     public async Task<Result> RegisterAsync(RegisterUserDto registerUserDto, CancellationToken cancellationToken)
@@ -108,12 +110,17 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
         var resetPasswordToken =
             await _userManager.GeneratePasswordResetTokenAsync(user)
                 .WaitAsync(cancellationToken); //TODO: We need to normalized for http.
-
-        //TODO: Remove this log when we send the email
-        //CallbackUrl url/resetpassword
-        _logger.LogInformation("ResetPasswordUrl: {Url}",
-            $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={resetPasswordToken}");
-
+        
+        var encodedToken = HttpUtility.UrlEncode(resetPasswordToken);
+        var callbackUrl = $"{forgotPasswordDto.CallbackUrl}?email={forgotPasswordDto.Email}&token={encodedToken}";
+        
+        //TODO: do this async.
+        await _emailService.SendEmailAsync(
+            forgotPasswordDto.Email,
+            ResetPasswordTemplate.Create(callbackUrl),
+            cancellationToken
+        );
+        
         return Result<string>.Success(HttpUtility.UrlEncode(resetPasswordToken));
     }
 

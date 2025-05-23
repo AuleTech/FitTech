@@ -22,6 +22,28 @@ namespace FitTech.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("FitTech.Domain.Entities.Email", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ExternalId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ToEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ResetPasswordEmail");
+                });
+
             modelBuilder.Entity("FitTech.Domain.Entities.FitTechRole", b =>
                 {
                     b.Property<Guid>("Id")
