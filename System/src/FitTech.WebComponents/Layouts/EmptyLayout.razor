@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@using FitTech.WebComponents.Components.SideMenu
 
-<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen transition-colors duration-300">
-@Body
-</body>
+
+<div class="flex h-screen">
+    <!-- Para quitar la barra de buscar del layaut estatico, tenemos que quitar este componente y declarar solamente <Menubar>-->
+    <FitTechSideMenu/>
+</div>

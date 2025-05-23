@@ -81,4 +81,5 @@ internal sealed class FitTechApiClient : IFitTechApiClient
 
         return new Result() { Errors = result.Errors?.ToArray() ?? [], Succeeded = result.Succeeded!.Value };
     }
+    
 }
