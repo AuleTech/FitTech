@@ -2,6 +2,7 @@
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Providers;
 using FitTech.Application.Auth.Services;
+using FitTech.Application.Services;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +44,7 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<IFitTechAuthenticationService, FitTechAuthenticationService>();
         services.AddTransient<ITokenProvider, TokenProvider>();
+        services.AddTransient<IUserService, UserService>();
         
         services.AddAuthorization();
         

@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = CoconaApp.CreateBuilder();
 
-builder.Services.AddCore();
+builder.Services.AddCliCore();
 
 var app = builder.Build();
 app.DiscoverAndWireUpCoconaCommands();

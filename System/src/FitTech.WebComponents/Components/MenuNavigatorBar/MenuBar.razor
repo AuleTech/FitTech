@@ -1,6 +1,8 @@
 ﻿@page "/MenuNavigatorBar"
-@inherits FitTech.WebComponents.Components.CancellableComponent;
+@inherits CancellableComponent;
+@using FitTech.API.Client
 @using FitTech.WebComponents.Components.IconsSVG
+@inject IFitTechApiClient ApiClient
 
 
 <aside class="fixed left-0 top-0 h-full bg-gray-900 bg-gradient-to-t from-gray-800 to-zinc-900 
@@ -16,13 +18,16 @@
     <div class="flex items-center justify-center p-4 rounded-lg transition-all duration-300 ease-in-out relative">
         @if (string.IsNullOrEmpty(imagePreviewFromChild))
         {
-            <div class="my-4 flex flex-col justify-center items-center opacity-100 cursor-pointer" @onclick="ToggleAvatarModal">
-                <img src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg"
-                     alt="No Avatar"
-                     class="w-18 h-18 rounded-full object-cover" />
+            <div class="my-4 flex flex-col justify-center items-center opacity-100 cursor-pointer"
+                 @onclick="ToggleAvatarModal">
+                <img
+                    src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg"
+                    alt="No Avatar"
+                    class="w-18 h-18 rounded-full object-cover"/>
                 <div class="mt-2 text-center">
-                    <span class="block text-sm font-semibold text-white transition-opacity duration-300 @(isExpanded ? "opacity-100" : "opacity-0")">
-                        User Name
+                    <span
+                        class="block text-sm font-semibold text-white transition-opacity duration-300 @(isExpanded ? "opacity-100" : "opacity-0")">
+                        @(_userName)
                     </span>
                 </div>
             </div>
@@ -30,9 +35,10 @@
         else
         {
             <div class="my-7 flex flex-col justify-center items-center cursor-pointer" @onclick="ToggleAvatarModal">
-                <img src="@imagePreviewFromChild" alt="Avatar Preview" class="w-18 h-18 rounded-full object-cover" />
+                <img src="@imagePreviewFromChild" alt="Avatar Preview" class="w-18 h-18 rounded-full object-cover"/>
                 <div class="mt-2 text-center">
-                    <span class="block text-sm font-semibold text-white transition-opacity duration-300 @(isExpanded ? "opacity-100" : "opacity-0")">
+                    <span
+                        class="block text-sm font-semibold text-white transition-opacity duration-300 @(isExpanded ? "opacity-100" : "opacity-0")">
                         User Name
                     </span>
                 </div>
@@ -47,9 +53,11 @@
                 Cambiar Avatar
             </h3>
             <CascadingValue Value=this>
-                <AvatarUpload />
+                <AvatarUpload/>
             </CascadingValue>
-            <button class="mt-4 bg-white text-red-500 p-2 rounded-full w-full hover:bg-red-500 hover:text-white transition-colors duration-300" @onclick="CloseAvatarModal">
+            <button
+                class="mt-4 bg-white text-red-500 p-2 rounded-full w-full hover:bg-red-500 hover:text-white transition-colors duration-300"
+                @onclick="CloseAvatarModal">
                 Cerrar
             </button>
         </div>
@@ -64,8 +72,10 @@
             @foreach (var menuItem in menuItems)
             {
                 <li class="mt-4">
-                    <a href="@menuItem.Link" class="flex items-center border border-transparent block p-2 rounded-lg text-white hover:text-[#ADC539] hover:border hover:border-white transition-colors duration-300">
-                        <span class="@(isExpanded ? "mr-2 flex items-center justify-center w-6 h-6" : "flex items-center justify-center w-full -ml-1")">
+                    <a href="@menuItem.Link"
+                       class="flex items-center border border-transparent block p-2 rounded-lg text-white hover:text-[#ADC539] hover:border hover:border-white transition-colors duration-300">
+                        <span
+                            class="@(isExpanded ? "mr-2 flex items-center justify-center w-6 h-6" : "flex items-center justify-center w-full -ml-1")">
                             <IconsSVG Icon="@menuItem.Icon"/>
                         </span>
                         <span class="text-sm @(isExpanded ? "block" : "hidden")">
@@ -95,8 +105,10 @@
 @code {
     private bool isExpanded = true;
     private string? imagePreviewFromChild;
-    private bool isAvatarModalOpen = false;
-
+    private bool isAvatarModalOpen;
+    private string _userName = null!;
+    
+    
     private void ToggleSidebar()
     {
         isExpanded = !isExpanded;
@@ -109,7 +121,7 @@
         public string? Icon { get; set; }
     }
 
-    private List<MenuItem> menuItems = new List<MenuItem>
+    private readonly List<MenuItem> menuItems = new()
     {
         new MenuItem { Text = "Inicio", Link = "/home", Icon = "HomeIcon" },
         new MenuItem { Text = "Mi Perfil", Link = "/MyProfile", Icon = "ProfileIcon" },
@@ -120,7 +132,6 @@
         new MenuItem { Text = "Configuración", Link = "/settings", Icon = "SettingsIcon" },
         new MenuItem { Text = "Soporte", Link = "/support", Icon = "SupportIcon" },
         new MenuItem { Text = "Cerrar Sesión", Link = "/logout", Icon = "LogoutIcon" }
-
     };
 
     private void ToggleAvatarModal()
@@ -128,7 +139,7 @@
         isAvatarModalOpen = !isAvatarModalOpen;
     }
 
-   
+
     private void CloseAvatarModal()
     {
         isAvatarModalOpen = false;
@@ -137,7 +148,16 @@
     public void ActualizarAvatar(string? newImagePreview)
     {
         imagePreviewFromChild = newImagePreview;
-        StateHasChanged(); 
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var result = await ApiClient.GetCurrentUserAsync(CancellationToken.None);
+
+        _userName = result.Value!.UserName!;
+        
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     // private async Task session()

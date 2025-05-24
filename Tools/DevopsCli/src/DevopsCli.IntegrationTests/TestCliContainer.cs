@@ -20,7 +20,7 @@ public class TestCliContainer : DependencyInjectionDataSourceAttribute<IServiceS
     private static IServiceProvider CreateSharedServiceProvider()
     {
         return new ServiceCollection()
-            .AddCore()
+            .AddCliCore()
             .AddLogging()
             .BuildServiceProvider();
     }
