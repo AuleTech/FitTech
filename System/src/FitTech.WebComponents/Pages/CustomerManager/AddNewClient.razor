@@ -1,0 +1,113 @@
+@page "/AddNewClient"
+
+<div class="w-full max-w-md px-4">
+    <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
+        <EditForm Model="CustomerModel" OnSubmit="Submit" FormName="CostumerForm">
+            <div class="mb-4">
+                <label for="firstName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
+                <InputText type="text" @bind-Value="CustomerModel!.NameUser" id="firstName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+            </div>
+            <div class="mb-4">
+                <label for="lastName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Apellidos</label>
+                <InputText type="text" @bind-Value="CustomerModel!.LastNameuser" id="lastName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+            </div>
+            <div class="mb-4">
+                <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>
+                <InputDate  @bind-Value="CustomerModel!.Birthdate" id="birthday" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+            </div>
+            <div class="mb-4">
+                <label for="phonenumber" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Teléfono</label>
+                <InputNumber type="text" @bind-Value="CustomerModel!.PhoneNumber" id="phonenumber" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+            </div>
+        </EditForm>
+        <EditForm Model="SubscriptionModel" OnSubmit="Submit" FormName="SubscriptionForm">
+            <div class="mb-4">
+                <label for="subscriptiontype" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Tipo de Subscripción</label>
+                <InputSelect type="text" @bind-Value="SubscriptionType" TValue="string" id="subscriptiontype" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    <option value="standar">Selecciona un tipo de Subscripción </option>
+                    <option value="weight">Pérdida de Peso</option>
+                    <option value="muscle">Aumento de Masa Muscular</option>
+                    <option value="performance">Mejora Rendimiento Deportivo</option>
+                </InputSelect>
+            </div>
+            <div class="mb-4">
+                <label for="price" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Precio</label>
+                <label for="price" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@SelectedPrice Euros</label>
+            </div>
+            <div class="mb-4">
+                <label for="stardate" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>
+                <InputDate  @bind-Value="SubscriptionModel!.Stardate" id="stardate" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+            </div>
+            <button type="submit" class="w-full rounded bg-green-600 py-2 text-white transition-colors hover:bg-green-700">Siguiente</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    
+    [SupplyParameterFromForm]
+    private CustomerModel? CustomerModel { get; set; }
+    private SubscriptionModel? SubscriptionModel { get; set; }
+    private decimal selectedPrice;
+   
+    
+    protected override void OnInitialized()
+    {
+        CustomerModel ??= new();
+        SubscriptionModel ??= new();
+    }
+
+    public static void Submit()
+    {
+        
+    }
+    
+    private string subscriptionType = "";
+
+    public string SubscriptionType
+    {
+        get => subscriptionType;
+        set
+        {
+            if (subscriptionType != value)
+            {
+                subscriptionType = value;
+                UpdatePriceForSubscription(value);
+            }
+        }
+    }
+    
+    public decimal SelectedPrice
+    {
+        get => selectedPrice;
+        set
+        {
+            if (selectedPrice != value)
+            {
+                selectedPrice = value;
+                StateHasChanged(); 
+            }
+        }
+    }
+
+    private readonly Dictionary<string, decimal> SubscriptionPrices = new()
+    {
+        { "standar", 0m },
+        { "weight", 29.99m },
+        { "muscle", 39.99m },
+        { "performance", 49.99m }
+    };
+
+    private void UpdatePriceForSubscription(string subscription)
+    {
+        if (SubscriptionPrices.TryGetValue(subscription, out var price))
+        {
+            SelectedPrice = price;
+        }
+        else
+        {
+            SelectedPrice = 0m;
+        }
+    }
+    
+}

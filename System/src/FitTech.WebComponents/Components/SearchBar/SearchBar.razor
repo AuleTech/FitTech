@@ -1,11 +1,11 @@
 @page "/SearchBar"
-@using FitTech.WebComponents.Components.AddClientForm
+
 @inject NavigationManager NavigationManager
 
 <div class="fixed top-0 left-64 right-0 z-50 flex items-center justify-end bg-gray-800 text-white rounded-b-lg px-4 py-5">
-    @if (CurrentPath.Contains("progress"))
+    @if (CurrentPath.Contains("CustomerManager"))
     {
-        <button class="ml-2 text-gray-400 hover:text-white" @onclick="ToggleAddUserModal">
+        <button class="ml-2 text-gray-400 hover:text-white" @onclick="GoToAddUser">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
@@ -21,32 +21,15 @@
             </svg>
         </button>
     }
-    
-    @if (_isAddUserModalOpen)
-    {
-        <AddUserForm OnClose="CloseAddUserModal" />
-    }
 </div>
 
 @code {
     
-    private string SearchText { get; set; } = "";
-    private bool _isAddUserModalOpen = false;
     private string CurrentPath => NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
     
-    private void ClearSearch()
+    private void GoToAddUser()
     {
-        SearchText = "";
+        NavigationManager.NavigateTo("/AddNewClient");
     }
     
-    private void ToggleAddUserModal()
-    {
-        _isAddUserModalOpen = !_isAddUserModalOpen;
-    }
-    
-    public void CloseAddUserModal()
-    {
-        _isAddUserModalOpen = false;
-        StateHasChanged();
-    }
 }
