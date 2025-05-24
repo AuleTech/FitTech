@@ -17,12 +17,12 @@ namespace FitTech.WebComponents.Pages.Register
 
         [Required(ErrorMessage = "El apellido es obligatorio.")]
         [StringLength(20, ErrorMessage = "El apellido no puede tener más de 20 caracteres.")]
-        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ'-]+$", ErrorMessage = "El apellido solo puede contener letras y guiones.")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ' \\-]+$", ErrorMessage = "El apellido solo puede contener letras, guiones y espacios.")]
         public string LastName { get; set; } = null!;
 
         [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
         [EmailAddress(ErrorMessage = "Por favor ingresa un correo electrónico válido.")]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Por favor ingresa un correo electrónico válido y sin caracteres no permitidos.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Por favor ingresa un correo electrónico sin caracteres no permitidos.")]
         public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "La contraseña es obligatoria.")]
