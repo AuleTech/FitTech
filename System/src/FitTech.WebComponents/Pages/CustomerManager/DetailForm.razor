@@ -1,0 +1,38 @@
+
+<EditForm Model="DetailsModel" OnSubmit="Submit" FormName="CostumerForm">
+    <div class="mb-4">
+        <label for="firstName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Horas de entrenamiento contratados</label>
+        <InputNumber type="text" @bind-Value="DetailsModel!.TrainingHours" id="firstName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+    </div>
+    <div class="mb-4">
+        <label for="trainingModel" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Modalidad de Entrenamiento</label>
+        <InputSelect type="text" @bind-Value="DetailsModel!.TrainingModel" TValue="string" id="trainingModel" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+        <option value="online">Online</option>
+        <option value="presencial">Presencial</option>
+        <option value="híbrida">Híbrida</option>
+        </InputSelect>
+    </div>
+    <div class="mb-4">
+        <label for="evento" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha Límita o Evento</label>
+        <InputDate  @bind-Value="DetailsModel!.Event" id="evento" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+    </div>
+    <div class="mb-4">
+        <label for="center" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Entrenamiento Conjunto: Centro deportivo</label>
+        <InputText type="text" @bind-Value="DetailsModel!.Center" id="center" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+    </div>
+</EditForm>
+
+@code {
+    private DetailsModel? DetailsModel { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        DetailsModel ??= new();
+    }
+
+    public void Submit()
+    {
+        
+    }
+
+}
