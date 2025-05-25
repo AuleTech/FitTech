@@ -27,7 +27,7 @@
                 <div class="mt-2 text-center">
                     <span
                         class="block text-sm font-semibold text-white transition-opacity duration-300 @(isExpanded ? "opacity-100" : "opacity-0")">
-                        @(_userName)
+                        @_userName
                     </span>
                 </div>
             </div>
@@ -151,13 +151,12 @@
         StateHasChanged();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
         var result = await ApiClient.GetCurrentUserAsync(CancellationToken.None);
 
-        _userName = result.Value!.UserName!;
-        
-        await base.OnAfterRenderAsync(firstRender);
+        _userName = result.Value!.UserName ?? "Usuario";
+        await base.OnInitializedAsync();
     }
 
     // private async Task session()
