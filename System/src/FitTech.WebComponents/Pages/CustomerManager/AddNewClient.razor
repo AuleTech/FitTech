@@ -1,7 +1,31 @@
 @page "/AddNewClient"
 
 <div class="w-full max-w-md px-4">
+    <!-- Barra de pasos -->
+    <div class="flex items-center justify-between mb-6 relative">
+        <!-- Línea de fondo -->
+        <div class="absolute top-1/2 left-0 right-0 h-1 bg-gray-300 dark:bg-gray-600 -z-10"></div>
+
+        @for (int step = 1; step <= TotalSteps; step++)
+        {
+            var isActive = step == CurrentStep;
+            var stepClasses = isActive
+                ? "w-10 h-10 flex items-center justify-center rounded-full border-4 border-pink-500 text-pink-500 bg-white dark:bg-gray-800 font-bold"
+                : "w-10 h-10 flex items-center justify-center rounded-full border-4 border-gray-400 text-gray-400 bg-white dark:bg-gray-800 font-bold";
+
+            <div class="flex flex-col items-center z-10">
+                <div class="@stepClasses">@step</div>
+            </div>
+        }
+    </div>
+
+    <!-- Contenido según el paso -->
     <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
+        @if (CurrentStep == 1)
+        {
+            <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 1: Información personal</p>
+            
+   
         <EditForm Model="CustomerModel" OnSubmit="Submit" FormName="CostumerForm">
             <div class="mb-4">
                 <label for="firstName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
@@ -38,10 +62,29 @@
                 <label for="stardate" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>
                 <InputDate  @bind-Value="SubscriptionModel!.Stardate" id="stardate" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
             </div>
-            <button type="submit" class="w-full rounded bg-green-600 py-2 text-white transition-colors hover:bg-green-700">Siguiente</button>
         </EditForm>
+  
+        }
+        else if (CurrentStep == 2)
+        {
+            <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 2: Subscripción</p>
+            <!-- Aquí tu formulario del paso 2 -->
+        }
+        else if (CurrentStep == 3)
+        {
+            <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 3: Confirmación</p>
+            <!-- Aquí tu resumen o confirmación -->
+        }
+
+        <!-- Botones -->
+        <div class="mt-6 flex justify-between">
+            <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
+            <button @onclick="NextStep" class="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700" disabled="@(CurrentStep == TotalSteps)">Siguiente</button>
+        </div>
     </div>
 </div>
+
+
 
 @code {
     
@@ -108,6 +151,22 @@
         {
             SelectedPrice = 0m;
         }
+    }
+    
+    private int CurrentStep = 1;
+
+    private readonly int TotalSteps = 3;
+
+    private void NextStep()
+    {
+        if (CurrentStep < TotalSteps)
+            CurrentStep++;
+    }
+
+    private void PreviousStep()
+    {
+        if (CurrentStep > 1)
+            CurrentStep--;
     }
     
 }
