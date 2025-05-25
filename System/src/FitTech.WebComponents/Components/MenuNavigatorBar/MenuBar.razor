@@ -1,70 +1,19 @@
 ﻿@page "/MenuNavigatorBar"
 @inherits CancellableComponent;
-@using FitTech.API.Client
 @using FitTech.WebComponents.Components.IconsSVG
-@inject IFitTechApiClient ApiClient
 
 
 <aside class="fixed left-0 top-0 h-full bg-gray-900 bg-gradient-to-t from-gray-800 to-zinc-900 
               dark:bg-gray-800 border-r border-gray-700 shadow-lg transition-all duration-300 ease-in-out 
-              @(isExpanded ? "w-64" : "w-30")">
+              @(_isExpanded ? "w-64" : "w-30")">
     <!-- Ahi tenemos el If que ajusta el collapse del Menubar-->
     <div class="mb-6 text-center p-4">
-        <h3 class="text-2xl font-bold text-white transition-opacity duration-300 ease-in-out @(isExpanded ? "opacity-100" : "opacity-0")">
+        <h3 class="text-2xl font-bold text-white transition-opacity duration-300 ease-in-out @(_isExpanded ? "opacity-100" : "opacity-0")">
             FitTech
         </h3>
     </div>
 
-    <div class="flex items-center justify-center p-4 rounded-lg transition-all duration-300 ease-in-out relative">
-        @if (string.IsNullOrEmpty(imagePreviewFromChild))
-        {
-            <div class="my-4 flex flex-col justify-center items-center opacity-100 cursor-pointer"
-                 @onclick="ToggleAvatarModal">
-                <img
-                    src="https://previews.123rf.com/images/fayethequeen/fayethequeen2209/fayethequeen220900007/191787954-avatar-de-mujer-de-negocios-con-signo-de-interrogaci%C3%B3n-aislado-en-fondo-blanco-silueta-de-avatar-de.jpg"
-                    alt="No Avatar"
-                    class="w-18 h-18 rounded-full object-cover"/>
-                <div class="mt-2 text-center">
-                    <span
-                        class="block text-sm font-semibold text-white transition-opacity duration-300 @(isExpanded ? "opacity-100" : "opacity-0")">
-                        @_userName
-                    </span>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="my-7 flex flex-col justify-center items-center cursor-pointer" @onclick="ToggleAvatarModal">
-                <img src="@imagePreviewFromChild" alt="Avatar Preview" class="w-18 h-18 rounded-full object-cover"/>
-                <div class="mt-2 text-center">
-                    <span
-                        class="block text-sm font-semibold text-white transition-opacity duration-300 @(isExpanded ? "opacity-100" : "opacity-0")">
-                        User Name
-                    </span>
-                </div>
-            </div>
-        }
-    </div>
-
-    @if (isAvatarModalOpen)
-    {
-        <div class="absolute top-0 left-full ml-4 bg-white p-6 rounded-lg shadow-lg max-w-sm w-full z-10">
-            <h3 class="text-xl font-semibold text-center transition-colors duration-300 ease-in-out">
-                Cambiar Avatar
-            </h3>
-            <CascadingValue Value=this>
-                <AvatarUpload/>
-            </CascadingValue>
-            <button
-                class="mt-4 bg-white text-red-500 p-2 rounded-full w-full hover:bg-red-500 hover:text-white transition-colors duration-300"
-                @onclick="CloseAvatarModal">
-                Cerrar
-            </button>
-        </div>
-    }
-
     <!-- Separadores -->
-    <div class="my-4 mx-6 border-t border-gray-700 opacity-30"></div>
     <div class="my-4 mx-6 border-t border-gray-700 opacity-30"></div>
 
     <div class="p-6">
@@ -72,13 +21,12 @@
             @foreach (var menuItem in menuItems)
             {
                 <li class="mt-4">
-                    <a href="@menuItem.Link"
-                       class="flex items-center border border-transparent block p-2 rounded-lg text-white hover:text-[#ADC539] hover:border hover:border-white transition-colors duration-300">
+                    <a href="@menuItem.Link" class="group flex items-center border border-transparent block p-2 rounded-lg text-white hover:border-lime-300 transition-colors duration-300">
                         <span
-                            class="@(isExpanded ? "mr-2 flex items-center justify-center w-6 h-6" : "flex items-center justify-center w-full -ml-1")">
-                            <IconsSVG Icon="@menuItem.Icon"/>
+                            class="@(_isExpanded ? "mr-2 flex items-center justify-center w-6 h-6" : "flex items-center justify-center w-full -ml-1")">
+                            <IconsSVG CssClass="h-5 w-5 ml-2 text-gray-400 group-hover:text-white" Icon="@menuItem.Icon"/>
                         </span>
-                        <span class="text-sm @(isExpanded ? "block" : "hidden")">
+                        <span class="text-sm @(_isExpanded ? "block" : "hidden")">
                             @menuItem.Text
                         </span>
                     </a>
@@ -88,8 +36,8 @@
     </div>
 
     <!-- Footer -->
-    <div class="mt-4 p-4 text-center">
-        <p class="text-gray-400 text-sm">© 2025 FitTech</p>
+    <div class="@(_isExpanded ? "absolute bottom-0 left-9 mt-4 p-4 text-center" : "hidden")">
+        <p class="text-sm text-gray-400">© 2025 FitTech</p>
     </div>
 
     <!-- Botón para contraer/expandir -->
@@ -103,61 +51,29 @@
 
 
 @code {
-    private bool isExpanded = true;
-    private string? imagePreviewFromChild;
-    private bool isAvatarModalOpen;
-    private string _userName = null!;
-    
+    private bool _isExpanded = true;
     
     private void ToggleSidebar()
     {
-        isExpanded = !isExpanded;
+        _isExpanded = !_isExpanded;
     }
 
     private class MenuItem
     {
-        public string? Text { get; set; }
-        public string? Link { get; set; }
-        public string? Icon { get; set; }
+        public string? Text { get; init; }
+        public string? Link { get; init; }
+        public string? Icon { get; init; }
     }
 
     private readonly List<MenuItem> menuItems = new()
     {
         new MenuItem { Text = "Inicio", Link = "/home", Icon = "HomeIcon" },
-        new MenuItem { Text = "Mi Perfil", Link = "/MyProfile", Icon = "ProfileIcon" },
         new MenuItem { Text = "Rutinas de Ejercicio", Link = "/workouts", Icon = "WorkoutsIcon" },
-        new MenuItem { Text = "Gestion de Clientes", Link = "/progress", Icon = "ProgressIcon" },
-        new MenuItem { Text = "Planes de Alimentación", Link = "/nutrition", Icon = "NutritionIcon" },
-        new MenuItem { Text = "Notificaciones", Link = "/notifications", Icon = "NotificationsIcon" },
+        new MenuItem { Text = "Gestion de Clientes", Link = "/progress", Icon = "ProgressIcon" },                
         new MenuItem { Text = "Configuración", Link = "/settings", Icon = "SettingsIcon" },
         new MenuItem { Text = "Soporte", Link = "/support", Icon = "SupportIcon" },
         new MenuItem { Text = "Cerrar Sesión", Link = "/logout", Icon = "LogoutIcon" }
     };
-
-    private void ToggleAvatarModal()
-    {
-        isAvatarModalOpen = !isAvatarModalOpen;
-    }
-
-
-    private void CloseAvatarModal()
-    {
-        isAvatarModalOpen = false;
-    }
-
-    public void ActualizarAvatar(string? newImagePreview)
-    {
-        imagePreviewFromChild = newImagePreview;
-        StateHasChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var result = await ApiClient.GetCurrentUserAsync(CancellationToken.None);
-
-        _userName = result.Value!.UserName ?? "Usuario";
-        await base.OnInitializedAsync();
-    }
 
     // private async Task session()
     // {
