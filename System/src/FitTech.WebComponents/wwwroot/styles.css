@@ -7,8 +7,8 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
+    --color-lime-300: oklch(89.7% 0.196 126.665);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
     --color-green-700: oklch(52.7% 0.154 150.069);
@@ -27,15 +27,11 @@
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
-    --container-sm: 24rem;
     --container-md: 28rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
-    --text-xl: 1.25rem;
-    --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
-    --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --radius-md: 0.375rem;
     --radius-lg: 0.5rem;
@@ -204,9 +200,6 @@
   .fixed {
     position: fixed;
   }
-  .relative {
-    position: relative;
-  }
   .static {
     position: static;
   }
@@ -219,20 +212,20 @@
   .right-4 {
     right: calc(var(--spacing) * 4);
   }
+  .bottom-0 {
+    bottom: calc(var(--spacing) * 0);
+  }
   .bottom-4 {
     bottom: calc(var(--spacing) * 4);
   }
   .left-0 {
     left: calc(var(--spacing) * 0);
   }
+  .left-9 {
+    left: calc(var(--spacing) * 9);
+  }
   .left-64 {
     left: calc(var(--spacing) * 64);
-  }
-  .left-full {
-    left: 100%;
-  }
-  .z-10 {
-    z-index: 10;
   }
   .z-50 {
     z-index: 50;
@@ -242,9 +235,6 @@
   }
   .my-4 {
     margin-block: calc(var(--spacing) * 4);
-  }
-  .my-7 {
-    margin-block: calc(var(--spacing) * 7);
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -273,9 +263,6 @@
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
-  .ml-4 {
-    margin-left: calc(var(--spacing) * 4);
-  }
   .block {
     display: block;
   }
@@ -294,9 +281,6 @@
   .h-6 {
     height: calc(var(--spacing) * 6);
   }
-  .h-18 {
-    height: calc(var(--spacing) * 18);
-  }
   .h-full {
     height: 100%;
   }
@@ -309,9 +293,6 @@
   .w-6 {
     width: calc(var(--spacing) * 6);
   }
-  .w-18 {
-    width: calc(var(--spacing) * 18);
-  }
   .w-30 {
     width: calc(var(--spacing) * 30);
   }
@@ -323,15 +304,6 @@
   }
   .max-w-md {
     max-width: var(--container-md);
-  }
-  .max-w-sm {
-    max-width: var(--container-sm);
-  }
-  .cursor-pointer {
-    cursor: pointer;
-  }
-  .flex-col {
-    flex-direction: column;
   }
   .items-center {
     align-items: center;
@@ -418,9 +390,6 @@
     --tw-gradient-to: var(--color-zinc-900);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
-  .object-cover {
-    object-fit: cover;
-  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -453,17 +422,9 @@
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
-  .text-xl {
-    font-size: var(--text-xl);
-    line-height: var(--tw-leading, var(--text-xl--line-height));
-  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
-  }
-  .font-semibold {
-    --tw-font-weight: var(--font-weight-semibold);
-    font-weight: var(--font-weight-semibold);
   }
   .text-black {
     color: var(--color-black);
@@ -479,12 +440,6 @@
   }
   .text-green-500 {
     color: var(--color-green-500);
-  }
-  .text-green-700 {
-    color: var(--color-green-700);
-  }
-  .text-red-500 {
-    color: var(--color-red-500);
   }
   .text-red-600 {
     color: var(--color-red-600);
@@ -537,18 +492,17 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
-  .hover\:border {
-    &:hover {
+  .group-hover\:text-white {
+    &:is(:where(.group):hover *) {
       @media (hover: hover) {
-        border-style: var(--tw-border-style);
-        border-width: 1px;
+        color: var(--color-white);
       }
     }
   }
-  .hover\:border-white {
+  .hover\:border-lime-300 {
     &:hover {
       @media (hover: hover) {
-        border-color: var(--color-white);
+        border-color: var(--color-lime-300);
       }
     }
   }
@@ -563,20 +517,6 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-green-700);
-      }
-    }
-  }
-  .hover\:bg-red-500 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-red-500);
-      }
-    }
-  }
-  .hover\:text-\[\#ADC539\] {
-    &:hover {
-      @media (hover: hover) {
-        color: #ADC539;
       }
     }
   }
