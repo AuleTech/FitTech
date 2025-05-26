@@ -22,7 +22,7 @@
             <div class="mb-4">
                 <label for="subscriptiontype" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Tipo de Subscripción</label>
                 <InputSelect type="text" @bind-Value="SubscriptionType" TValue="string" id="subscriptiontype" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                    <option value="standar">Selecciona un tipo de Subscripción </option>
+                    <option value="standar">Selecciona un tipo de Subscripción</option>
                     <option value="weight">Pérdida de Peso</option>
                     <option value="muscle">Aumento de Masa Muscular</option>
                     <option value="performance">Mejora Rendimiento Deportivo</option>
@@ -31,10 +31,6 @@
             <div class="mb-4">
                 <label for="price" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Precio</label>
                 <label for="price" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@SelectedPrice Euros</label>
-            </div>
-            <div class="mb-4">
-                <label for="stardate" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>
-                <InputDate  @bind-Value="SubscriptionModel!.Stardate" id="stardate" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
             </div>
         </EditForm>
 

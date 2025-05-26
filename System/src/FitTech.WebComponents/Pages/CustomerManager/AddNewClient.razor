@@ -10,7 +10,7 @@
         {
             var isActive = step == CurrentStep;
             var stepClasses = isActive
-                ? "w-10 h-10 flex items-center justify-center rounded-full border-4 border-pink-500 text-pink-500 bg-white dark:bg-gray-800 font-bold"
+                ? "w-10 h-10 flex items-center justify-center rounded-full border-4 text-green-600 text-green-600 bg-white dark:bg-gray-800 font-bold"
                 : "w-10 h-10 flex items-center justify-center rounded-full border-4 border-gray-400 text-gray-400 bg-white dark:bg-gray-800 font-bold";
 
             <div class="flex flex-col items-center z-10">
@@ -25,24 +25,28 @@
         {
             <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 1: Información personal</p>
             <PersonalInformationForm></PersonalInformationForm>
-            
+            <div class="mt-6 flex justify-between">
+            <button @onclick="NextStep" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled="@(CurrentStep == TotalSteps)">Siguiente</button>
+            </div>
         }
         else if (CurrentStep == 2)
         {
-            <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 2: Historial Médico</p>
+            <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 2: Detalles del entrenamiento</p>
             <DetailForm></DetailForm>
+            <div class="mt-6 flex justify-between">
+                <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
+                <button @onclick="NextStep" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled="@(CurrentStep == TotalSteps)">Siguiente</button>
+            </div>
         }
         else if (CurrentStep == 3)
         {
             <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 3: Confirmación</p>
-            <!-- Aquí tu resumen o confirmación -->
+            <ConfirmDataForm></ConfirmDataForm>
+            <div class="mt-6 flex justify-between">
+                <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
+                <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled="@(CurrentStep == TotalSteps)">Finalizar</button>
+            </div>
         }
-
-        <!-- Botones -->
-        <div class="mt-6 flex justify-between">
-            <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
-            <button @onclick="NextStep" class="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700" disabled="@(CurrentStep == TotalSteps)">Siguiente</button>
-        </div>
     </div>
 </div>
 
