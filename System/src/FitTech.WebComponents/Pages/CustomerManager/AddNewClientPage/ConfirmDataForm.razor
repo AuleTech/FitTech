@@ -45,15 +45,11 @@
 
 @code {
     [SupplyParameterFromForm]
-    private CustomerModel? CustomerModel { get; set; }
-    private SubscriptionModel? SubscriptionModel { get; set; }
-    private DetailsModel? DetailModel { get; set; }
+    private NewClientModel? NewClientModel { get; set; }
     
     protected override void OnInitialized()
     {
-        CustomerModel ??= new();
-        SubscriptionModel ??= new();
-        DetailModel ??= new ();
+        NewClientModel ??= new NewClientModel();
     }
 
     public void Submit()
