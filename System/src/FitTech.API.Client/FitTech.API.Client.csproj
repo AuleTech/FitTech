@@ -7,4 +7,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Libraries\AuleTech.Core\src\AuleTech.Core\AuleTech.Core.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Generated\" />
+    </ItemGroup>
 </Project>

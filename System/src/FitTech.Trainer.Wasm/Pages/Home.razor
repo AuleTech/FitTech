@@ -1,8 +1,10 @@
 ﻿@page "/"
 @attribute [Authorize]
-@using FitTech.API.Client
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
 @using Microsoft.AspNetCore.Authorization
-@inject IFitTechApiClient ApiClient
+@inject AppHeaderStateHandler AppHeaderStateHandler
+@implements IDisposable
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
@@ -11,8 +13,24 @@ Welcome to your new app.
 
 @code
 {
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        var response = await ApiClient.GetCurrentUserAsync(CancellationToken.None);
+        AppHeaderStateHandler.AddButton(HeroiconName.Plus, DoSomething, "Añadir usuario");
+
+        AppHeaderStateHandler.AddButton(HeroiconName.ArchiveBox, DoSomething, "Archivar usuario");
+
+        base.OnInitialized();
+    }
+
+    public Task DoSomething()
+    {
+        Console.WriteLine("Button clicked");
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        AppHeaderStateHandler?.Clear();
     }
 }
