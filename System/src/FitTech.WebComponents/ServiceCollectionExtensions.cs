@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using FitTech.API.Client;
 using FitTech.WebComponents.Authentication;
+using FitTech.WebComponents.Components.AppHeader;
 using FitTech.WebComponents.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         serviceCollection.AddScoped<FitTechDelegationHandler>();
+        serviceCollection.AddSingleton<AppHeaderStateHandler>();
         
         return serviceCollection
             .AddFitTechApiClient(configuration, provider => provider.GetRequiredService<FitTechDelegationHandler>())

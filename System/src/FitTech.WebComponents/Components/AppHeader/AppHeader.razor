@@ -1,9 +1,29 @@
+@inject AppHeaderStateHandler Handler;
+@implements IDisposable
 <div class="fixed top-0 w-full h-16 flex items-center justify-between bg-zinc-900 text-white px-4 py-5 shadow-md">
-    <div>
-        <!-- Placeholder for any future icons or actions -->
+    <div class="flex-1"></div> <!-- spacer to push buttons to the right -->
+    <div class="flex items-center space-x-2">
+        @foreach (var button in Handler.HeaderButtons)
+        {
+            @button
+        }
     </div>
 </div>
 
+
 @code {
-    // Future C# code for the AppHeader can go here.
+
+    protected override void OnInitialized()
+    {
+        Handler.OnChange += StateHasChanged;
+
+        base.OnInitialized();
+    }
+
+    public void Dispose()
+    {
+        Handler.OnChange -= StateHasChanged;
+        Handler.Clear();
+    }
+
 }
