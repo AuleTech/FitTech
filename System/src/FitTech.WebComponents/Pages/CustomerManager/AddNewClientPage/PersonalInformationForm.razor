@@ -33,9 +33,9 @@
         </EditForm>
 
 @code {
-    
-    [SupplyParameterFromForm]
-    private NewClientModel? NewClientModel { get; set; }
+
+    [SupplyParameterFromForm] 
+    private NewClientModel? NewClientModel { get; set; } = default!;
     private decimal selectedPrice;
     private string subscriptionType = "";
     
@@ -91,9 +91,9 @@
         }
     }
     
-    public static void Submit()
+    public static void  Submit()
     {
-        
+       
     }
 
     
