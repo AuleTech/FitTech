@@ -1,7 +1,7 @@
 ﻿using FitTech.Application;
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Services;
-using FitTech.Domain.Interfaces;
+using FitTech.Domain.Repositories;
 using FitTech.Domain.Templates.EmailsTemplates;
 using FitTech.Persistence;
 using Microsoft.EntityFrameworkCore;

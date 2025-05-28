@@ -47,7 +47,7 @@
             <ConfirmDataForm Model="NewClient"></ConfirmDataForm>
             <div class="mt-6 flex justify-between">
                 <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
-                <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="Submit">Finalizar</button>
+                <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="AddNewClient">Finalizar</button>
             </div>
         }
     </div>
@@ -74,8 +74,9 @@
             CurrentStep--;
     }
 
-    private static void Submit()
+    private async Task AddNewClient()
     {
+        var response = await UserService
        
     }
     

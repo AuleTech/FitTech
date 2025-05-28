@@ -1,6 +1,6 @@
 ﻿using FitTech.Application.Auth.Configuration;
 using FitTech.Domain.Entities;
-using FitTech.Domain.Interfaces;
+using FitTech.Domain.Repositories;
 using FitTech.Domain.Templates;
 using Microsoft.Extensions.Logging;
 using Resend;

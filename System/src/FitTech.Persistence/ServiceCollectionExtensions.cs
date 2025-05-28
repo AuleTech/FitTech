@@ -1,4 +1,4 @@
-﻿using FitTech.Domain.Interfaces;
+﻿using FitTech.Domain.Repositories;
 using FitTech.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
