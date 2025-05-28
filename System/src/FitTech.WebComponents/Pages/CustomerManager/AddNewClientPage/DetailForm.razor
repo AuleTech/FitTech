@@ -1,33 +1,36 @@
+@using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
-<EditForm Model="NewClientModel" OnSubmit="Submit" FormName="CostumerForm">
+<EditForm Model="Model" OnSubmit="Submit" FormName="CostumerForm">
     <div class="mb-4">
         <label for="firstName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Horas de entrenamiento contratados</label>
-        <InputNumber type="text" @bind-Value="NewClientModel!.TrainingHours" id="firstName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputNumber type="text" @bind-Value="Model!.TrainingHours" id="firstName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
     </div>
     <div class="mb-4">
         <label for="trainingModel" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Modalidad de Entrenamiento</label>
-        <InputSelect type="text" @bind-Value="NewClientModel!.TrainingModel" TValue="string" id="trainingModel" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-        <option value="online">Online</option>
-        <option value="presencial">Presencial</option>
-        <option value="híbrida">Híbrida</option>
+        <InputSelect type="text" @bind-Value="Model!.TrainingModel" TValue="string" id="trainingModel" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+        <option value="Online">Online</option>
+        <option value="Presencial">Presencial</option>
+        <option value="Híbrida">Híbrida</option>
         </InputSelect>
     </div>
     <div class="mb-4">
         <label for="evento" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha Límita o Evento</label>
-        <InputDate  @bind-Value="NewClientModel!.Event" id="evento" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputDate  @bind-Value="Model!.Event" id="evento" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
     </div>
     <div class="mb-4">
         <label for="center" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Entrenamiento Conjunto: Centro deportivo</label>
-        <InputText type="text" @bind-Value="NewClientModel!.Center" id="center" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputText type="text" @bind-Value="Model!.Center" id="center" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
     </div>
 </EditForm>
 
 @code {
-    private NewClientModel? NewClientModel { get; set; }
+    
+    [Parameter]
+    public required NewClientModel Model { get; set; }
     
     protected override void OnInitialized()
     {
-        NewClientModel ??= new();
+        Model ??= new();
     }
 
     public void Submit()

@@ -1,4 +1,4 @@
-﻿namespace FitTech.WebComponents.Pages.CustomerManager;
+﻿namespace FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
 public class NewClientModel
 {
