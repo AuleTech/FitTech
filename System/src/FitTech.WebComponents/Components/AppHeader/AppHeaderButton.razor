@@ -1,0 +1,29 @@
+@using Blazor.Heroicons
+
+<div class="relative group">
+    <!-- Button -->
+    <div class="border border-gray-400 hover:border-white px-2 py-1 rounded flex items-center justify-center transition-transform active:scale-95 active:shadow-inner">
+        <button class="text-gray-400 group-hover:text-white" onclick="@Delegate">
+            <Heroicon Name="@IconName" Type="HeroiconType.Outline" class = "h-5 w-5"/>
+        </button>
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(Tooltip))
+    {
+        <!-- Tooltip Container -->
+        <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-10 flex flex-col items-center pointer-events-none opacity-0 scale-95 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0">
+            <!-- Tooltip Box -->
+            <div class="bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap shadow-md">
+                @Tooltip
+            </div>
+        </div>   
+    }
+</div>
+
+
+@code
+{
+    [Parameter] public Func<Task> Delegate { get; set; } = null!;
+    [Parameter] public string IconName { get; set; } = null!;
+    [Parameter] public string? Tooltip { get; set; }
+}
