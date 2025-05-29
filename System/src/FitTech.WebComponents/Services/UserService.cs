@@ -7,7 +7,6 @@ using FitTech.WebComponents.Models;
 using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 using Microsoft.Extensions.Logging;
 using Result = AuleTech.Core.Patterns.Result;
-using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
 
 
@@ -111,17 +110,6 @@ internal sealed class UserService : IUserService
         await _localStorageService.RemoveItemAsync(FitTechUser.StorageKey, cancellationToken);
         return Result.Success;
     }
-
-    public async Task<Result<NewClientModel>> AddNewClient(string userName, string lastNameUser, DateOnly birthday, int phoneNumber, string subscriptionType, int trainingHours, string trainingType , DateOnly eventTime, string center, CancellationToken cancellationToken)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(userName);
-        ArgumentException.ThrowIfNullOrWhiteSpace(lastNameUser);
-        ArgumentException.ThrowIfNullOrWhiteSpace(subscriptionType);
-        ArgumentException.ThrowIfNullOrWhiteSpace(trainingType);
-        ArgumentException.ThrowIfNullOrWhiteSpace(center);
-        
-        var response = await 
-        
-    }
+    
 
 }

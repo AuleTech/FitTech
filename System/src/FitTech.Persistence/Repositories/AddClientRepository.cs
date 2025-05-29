@@ -3,7 +3,7 @@ using FitTech.Domain.Repositories;
 
 namespace FitTech.Persistence.Repositories;
 
-internal sealed class AddClientRepository : IAddClientRepository
+public sealed class AddClientRepository : IAddClientRepository
     {
         private readonly FitTechDbContext _context;
 
