@@ -1,6 +1,6 @@
 @page "/usermanager/add"
+@inject UserService UserService
 @using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels
-@inject HttpClient Http
 
 
 <div class="w-full max-w-md px-4">
@@ -74,9 +74,10 @@
             CurrentStep--;
     }
 
-    public static void AddNClient()
+    public async Task AddNClient()
     {
-        
+        var response = await UserService.AddNewClientAsync(NewClient);
+
     }
 
 }

@@ -10,6 +10,10 @@
                 <InputText type="text" @bind-Value="Model!.LastNameuser" id="lastName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
             </div>
             <div class="mb-4">
+                <label for="lastName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo Electrónico</label>
+                <InputText type="text" @bind-Value="Model!.EmailUser" id="lastName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+            </div>
+            <div class="mb-4">
                 <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>
                 <InputDate  @bind-Value="Model!.Birthdate" id="birthday" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
             </div>
