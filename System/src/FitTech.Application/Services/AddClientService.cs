@@ -22,5 +22,6 @@ public class AddClientService : IAddClientService
             throw new ArgumentNullException(nameof(client));
 
         await _addClientrepository.AddClientAsync(client, cancellationToken);
+        _logger.LogInformation("New client added");
     }
 }

@@ -4,7 +4,6 @@ using FitTech.API.Client;
 using FitTech.ApiClient;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
-using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 using Microsoft.Extensions.Logging;
 using Result = AuleTech.Core.Patterns.Result;
 
