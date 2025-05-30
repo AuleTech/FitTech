@@ -11,15 +11,15 @@
     },
     "GenerateOpenApiTypedClient": {
       "commandName": "Project",
-      "commandLineArgs": "generate-open-api-typed-client --open-api-json-url \"http://localhost:5165/swagger/v1/swagger.json\" --output-folder \"/Users/jairo/Desktop/workspace/FitTech/System/src/FitTech.API.Client/Generated\" --namespace \"FitTech.ApiClient\""
+      "commandLineArgs": "generate-open-api-typed-client --open-api-json-url \"http://localhost:5165/swagger/v1/swagger.json\" --output-folder \"/Users/yerayblancoaldao/Documents/GitHub/FitTech/System/src/FitTech.API.Client/Generated\" --namespace \"FitTech.ApiClient\""
     },
     "Restore": {
       "commandName": "Project",
-      "commandLineArgs": "restore --solution-path \"/Users/jairo/Desktop/workspace/FitTech/System/FitTech.sln\""
+      "commandLineArgs": "restore --solution-path \"/Users/yerayblancoaldao/Documents/GitHub/FitTech/System/FitTech.sln\""
     },
     "Build": {
       "commandName": "Project",
-      "commandLineArgs": "build --solution-path \"/Users/jairo/Desktop/workspace/FitTech/System/FitTech.sln\""
+      "commandLineArgs": "build --solution-path \"/Documents/GitHub/FitTech/System/FitTech.sln\""
     }
   }
 }
