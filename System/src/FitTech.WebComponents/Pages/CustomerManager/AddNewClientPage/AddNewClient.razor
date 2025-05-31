@@ -1,6 +1,8 @@
 @page "/usermanager/add"
 @inject UserService UserService
 @using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels
+@inject NavigationManager Navigation
+@inherits FitTech.WebComponents.Components.CancellableComponent
 
 
 <div class="w-full max-w-md px-4">
@@ -56,7 +58,9 @@
 
 @code {
     
-    private NewClientModel NewClient = new(); // Modelo compartido
+    private NewClientModel NewClient = new(); 
+    
+    private string _message = string.Empty;
     
     private int CurrentStep = 1;
 
@@ -74,9 +78,21 @@
             CurrentStep--;
     }
 
-    public static  void AddClient()
+    public async Task AddClient()
     {
-        
+
+        var response = await UserService.AddNewClientAsync(NewClient.NameUser, NewClient.LastNameuser, NewClient.EmailUser, NewClient.Birthdate, NewClient.PhoneNumber, NewClient.TrainingHours, NewClient.TrainingModel, NewClient.Event, NewClient.Center, NewClient.SubscriptionType, _cts.Token);
+
+        if (!response!.Succeeded)
+        {
+            _message = "Hubo un error en al añadir a su cliente. Intentalo de  nuevo."; 
+            return;
+        }
+        _message = "El nuevo cliente se ha añadido correctamente"; 
+        StateHasChanged();
+        await Task.Delay(2000); 
+        Navigation.NavigateTo("/usermanager");
+
     }
 
 }

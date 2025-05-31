@@ -110,12 +110,22 @@ internal sealed class UserService : IUserService
         return Result.Success;
     }
 
-    public async Task<Result> AddNewClientAsync(AddNewClientRequest addNewClientRequest,
+    public async Task<Result> AddNewClientAsync(string userName, string lastName, string emailUser, DateTime birthdate, int phoneNumber, int trainingHours, string trainingModel, DateTime eventDate, string center, string subscriptionType,
         CancellationToken cancellationToken)
     {
         var result = await _fitTechApiClient.AddNewClientAsync(
             new AddNewClientRequest()
             {
+                NameUser = userName,
+                LastNameuser = lastName,
+                EmailUser = emailUser,
+                Birthdate = birthdate,
+                PhoneNumber = phoneNumber,
+                TrainingHours = trainingHours,
+                TrainingModel = trainingModel,
+                EventDate = eventDate,
+                Center = center,
+                SubscriptionType = subscriptionType
                 
                 
             }, cancellationToken);

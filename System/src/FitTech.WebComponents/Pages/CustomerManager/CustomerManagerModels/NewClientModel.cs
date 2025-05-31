@@ -5,11 +5,11 @@ public class NewClientModel
     public string NameUser { get; set; } = null!;
     public string LastNameuser { get; set; } = null!;
     public string EmailUser { get; set; } = null!;
-    public DateOnly Birthdate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+    public DateTime Birthdate { get; set; }
     public int PhoneNumber { get; set; } 
     public int TrainingHours { get; set; }
     public string TrainingModel { get; set; } = string.Empty;
-    public DateOnly Event { get; set; } =DateOnly.FromDateTime(DateTime.Now);
+    public DateTime Event { get; set; }
     public string Center { get; set; } = string.Empty;
     public string SubscriptionType { get; set; } = null!;
    
