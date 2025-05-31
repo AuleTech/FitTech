@@ -1,4 +1,6 @@
-﻿using AuleTech.Core.Patterns;
+﻿using System.Runtime.InteropServices.JavaScript;
+using AuleTech.Core.Patterns;
+using Blazor.Heroicons.Solid;
 using FitTech.WebComponents.Models;
 using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
@@ -12,5 +14,7 @@ public interface IUserService
     Task<Result<string>> ForgotPasswordAsync(string email, CancellationToken cancellationToken);
     Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken cancellationToken);
     Task<Result> LogoutAsync(CancellationToken cancellationToken);
+    
+    Task<Result> AddNewClientAsync(string username, string lastname, DateTime birthdate, string email, int phoneNumber, int trainingHours, string trainingMode, string center, DateTime eventDate, string subscriptionType,  CancellationToken cancellationToken);
     
 }

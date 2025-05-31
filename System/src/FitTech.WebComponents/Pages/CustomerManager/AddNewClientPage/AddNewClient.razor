@@ -1,5 +1,5 @@
 @page "/usermanager/add"
-@inject UserService UserService
+@inject IUserService UserService
 @using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels
 @inject NavigationManager Navigation
 @inherits FitTech.WebComponents.Components.CancellableComponent
@@ -81,7 +81,7 @@
     public async Task AddClient()
     {
 
-        var response = await UserService.AddNewClientAsync(NewClient.NameUser, NewClient.LastNameuser, NewClient.EmailUser, NewClient.Birthdate, NewClient.PhoneNumber, NewClient.TrainingHours, NewClient.TrainingModel, NewClient.Event, NewClient.Center, NewClient.SubscriptionType, _cts.Token);
+        var response = await UserService.AddNewClientAsync(NewClient.NameUser, NewClient.LastNameuser, NewClient.Birthdate, NewClient.EmailUser, NewClient.PhoneNumber, NewClient.TrainingHours, NewClient.TrainingModel, NewClient.Center, NewClient.Event, NewClient.SubscriptionType, _cts.Token);
 
         if (!response!.Succeeded)
         {
