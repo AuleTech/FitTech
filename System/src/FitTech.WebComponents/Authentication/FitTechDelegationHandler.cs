@@ -4,24 +4,25 @@ using Blazored.LocalStorage;
 using FitTech.API.Client;
 using FitTech.ApiClient;
 using FitTech.WebComponents.Models;
+using FitTech.WebComponents.Persistence;
 
 namespace FitTech.WebComponents.Authentication;
 
 //TODO: Hacky, we need to refactor.
 public class FitTechDelegationHandler : DelegatingHandler
 {
-    private readonly ILocalStorageService _localStorageService;
+    private readonly IStorage _storage;
     private readonly IFitTechApiClient _apiClient;
 
-    public FitTechDelegationHandler(ILocalStorageService localStorageService, IFitTechApiClientFactory apiClientFactory)
+    public FitTechDelegationHandler(IStorage storage, IFitTechApiClientFactory apiClientFactory)
     {
-        _localStorageService = localStorageService;
+        _storage = storage;
         _apiClient = apiClientFactory.Create();
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var user = await _localStorageService.GetItemAsync<FitTechUser>(FitTechUser.StorageKey, cancellationToken);
+        var user = await _storage.GetItemAsync<FitTechUser>(FitTechUser.StorageKey, cancellationToken);
 
         if (user is null)
         {
@@ -55,7 +56,7 @@ public class FitTechDelegationHandler : DelegatingHandler
 
             user.AccessToken = refreshedToken.Value;
 
-            await _localStorageService.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
+            await _storage.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", user.AccessToken);
             return await base.SendAsync(request, cancellationToken);
         }
