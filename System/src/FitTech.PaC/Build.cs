@@ -3,6 +3,7 @@ using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
 using DevopsCli.Core.Commands.Dotnet.Tests;
+using DevopsCli.Core.Commands.Dotnet.Workloads;
 using DevopsCli.Core.Tools;
 using DevopsCli.Core.Tools.Node;
 using Nuke.Common;
@@ -33,6 +34,11 @@ class Build : NukeBuild
             result = nodeTool.NpmInstallAsync(string.Empty, CancellationToken.None, 
                     workingDir: Solution.src._Presentation.FitTech_WebComponents.Directory, isGlobal: false)
                 .GetAwaiter().GetResult();
+            
+            result.ThrowIfFailed();
+
+            var restoreWorkloadCommand = PacDependencyInjection.Default.Get<ICommand<WorkloadsCommandParams, Result>>();
+            result = restoreWorkloadCommand.RunAsync(new WorkloadsCommandParams(){ Project = Solution.src._Presentation.Client.FitTech_Client_Mobile}, CancellationToken.None).GetAwaiter().GetResult();
             
             result.ThrowIfFailed();
         });

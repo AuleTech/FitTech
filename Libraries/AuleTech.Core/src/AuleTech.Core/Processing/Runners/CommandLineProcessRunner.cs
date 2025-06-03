@@ -34,8 +34,8 @@ internal class CommandLineProcessRunner : IProcessRunner
         }
         
         return await ExecuteAsync(
-            new AuleTechProcessStartInfo($"{(startInfo.RunAsAdministrator ? "sudo /bin/bash" : "/bin/bash")}"
-                , $"-l -c \"{startInfo.FilePath} {startInfo.Arguments}\""
+            new AuleTechProcessStartInfo("/bin/bash"
+                , $"-l -c \"{(startInfo.RunAsAdministrator ? "sudo " : string.Empty)}{startInfo.FilePath} {startInfo.Arguments}\""
                 , startInfo.WorkingDirectory
                 , startInfo.Timeout
                 , startInfo.StandardInput

@@ -56,4 +56,13 @@ internal sealed class DotnetTool : IDotnetTool
 
         return result.ToResult();
     }
+
+    public async Task<Result> RestoreWorkloadsAsync(string projectPath, CancellationToken cancellationToken)
+    {
+        var processInfo = new AuleTechProcessStartInfo("dotnet", $"workload restore {projectPath}", runAsAdministrator: true);
+        
+        var result = await _processRunner.RunAsync(processInfo, cancellationToken);
+
+        return result.ToResult();
+    }
 }
