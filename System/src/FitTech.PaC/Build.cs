@@ -44,6 +44,7 @@ class Build : NukeBuild
         });
     
     Target Restore => _ => _
+        .DependsOn(InstallDependencies)
         .Executes(() =>
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
@@ -59,7 +60,6 @@ class Build : NukeBuild
 
     Target Compile => _ => _
         .DependsOn(Restore)
-        .DependsOn(InstallDependencies)
         .Executes(() =>
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
