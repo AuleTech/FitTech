@@ -1,4 +1,5 @@
 using AuleTech.Core.Patterns;
+using AuleTech.Core.Processing.Runners;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
@@ -27,6 +28,9 @@ class Build : NukeBuild
     private Target InstallDependencies => _ => _
         .Executes(() =>
         {
+            var processRunner = PacDependencyInjection.Default.Get<IProcessRunner>();
+            processRunner.RunAsync(new AuleTechProcessStartInfo("dotnet", "--version")).GetAwaiter().GetResult();
+            processRunner.RunAsync(new AuleTechProcessStartInfo("dotnet", "--list-sdks")).GetAwaiter().GetResult();
             var nodeTool = PacDependencyInjection.Default.Get<INodeTool>();
             var result = nodeTool.NpmInstallAsync("tailwindcss @tailwindcss/cli", CancellationToken.None).GetAwaiter().GetResult();
             result.ThrowIfFailed();
