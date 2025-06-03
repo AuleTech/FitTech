@@ -29,8 +29,6 @@ class Build : NukeBuild
         .Executes(() =>
         {
             var processRunner = PacDependencyInjection.Default.Get<IProcessRunner>();
-            processRunner.RunAsync(new AuleTechProcessStartInfo("dotnet", "--version")).GetAwaiter().GetResult();
-            processRunner.RunAsync(new AuleTechProcessStartInfo("dotnet", "--list-sdks")).GetAwaiter().GetResult();
             var nodeTool = PacDependencyInjection.Default.Get<INodeTool>();
             var result = nodeTool.NpmInstallAsync("tailwindcss @tailwindcss/cli", CancellationToken.None).GetAwaiter().GetResult();
             result.ThrowIfFailed();
@@ -42,7 +40,10 @@ class Build : NukeBuild
             result.ThrowIfFailed();
 
             var restoreWorkloadCommand = PacDependencyInjection.Default.Get<ICommand<WorkloadsCommandParams, Result>>();
-            result = restoreWorkloadCommand.RunAsync(new WorkloadsCommandParams(){ Project = Solution.src._Presentation.Client.FitTech_Client_Mobile}, CancellationToken.None).GetAwaiter().GetResult();
+            result = restoreWorkloadCommand
+                .RunAsync(
+                    new WorkloadsCommandParams { Project = Solution.src._Presentation.Client.FitTech_Client_Mobile, RunAsAdministrator = IsLocalBuild},
+                    CancellationToken.None).GetAwaiter().GetResult();
             
             result.ThrowIfFailed();
         });

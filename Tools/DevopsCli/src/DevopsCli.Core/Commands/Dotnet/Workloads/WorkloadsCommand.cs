@@ -28,7 +28,7 @@ internal sealed class WorkloadsCommand : ICommand<WorkloadsCommandParams, Result
     
     public async Task<Result> RunAsync(WorkloadsCommandParams commandParams, CancellationToken cancellationToken)
     {
-        var result = await _dotnetTool.RestoreWorkloadsAsync(commandParams.Project, cancellationToken);
+        var result = await _dotnetTool.RestoreWorkloadsAsync(commandParams.Project, commandParams.RunAsAdministrator ,cancellationToken);
 
         return result;
     }
