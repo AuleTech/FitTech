@@ -1,4 +1,7 @@
-﻿namespace FitTech.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
+
+namespace FitTech.Domain.Entities;
 
 public class Client
 {
@@ -14,7 +17,13 @@ public class Client
     public string Center { get; set; }
     public string SubscriptionType { get; set; } 
     
-    public Client(Guid id, string nameUser, string lastNameuser, DateOnly eventDate, string emailUser, DateOnly birthdate, int phoneNumber, string center, int trainingHours, string trainingModel, string subscriptionType)
+    
+    public string CreatedByUserId { get; set; }
+
+    [ForeignKey("CreatedByUserId")]
+    public IdentityUser? CreatedByUser { get; set; }
+    
+    public Client(Guid id, string nameUser, string lastNameuser, DateOnly eventDate, string emailUser, DateOnly birthdate, int phoneNumber, string center, int trainingHours, string trainingModel, string subscriptionType, string createdByUserId)
     {
         
         NameUser = nameUser;
@@ -27,6 +36,7 @@ public class Client
         Center = center;
         SubscriptionType = subscriptionType;
         EventDate = eventDate;
+        CreatedByUserId = createdByUserId;
     }
 
 }

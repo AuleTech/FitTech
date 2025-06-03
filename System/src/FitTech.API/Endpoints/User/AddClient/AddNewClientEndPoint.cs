@@ -1,13 +1,16 @@
-﻿using FastEndpoints;
+﻿
+using System.Security.Claims;
+using FastEndpoints;
+using FitTech.API.Endpoints.User.GetCurrent;
 using FitTech.Application;
-using FitTech.Application.Dtos;
 using FitTech.Application.Services;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.API.Endpoints.User.AddClient;
 
-[AllowAnonymous]
+[Authorize]
 public sealed class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
 {
     private readonly AddClientService _service;
@@ -32,6 +35,15 @@ public sealed class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
 
     public override async Task HandleAsync(AddNewClientRequest req, CancellationToken ct)
     {
+        //llega nulo, buscar manera de que recoja el AccesToken o el email del usuario
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            await SendUnauthorizedAsync(ct);
+            return;
+        }
+        
         var client = new Client(
             id: Guid.NewGuid(),
             nameUser: req.NameUser,
@@ -43,7 +55,8 @@ public sealed class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
             center: req.Center,
             trainingHours: req.TrainingHours,
             trainingModel: req.TrainingModel,
-            subscriptionType: req.SubscriptionType
+            subscriptionType: req.SubscriptionType,
+            createdByUserId: userId!
         );
         await _service.AddNewClientAsync(client, ct);
         _logger.LogInformation("New client added");

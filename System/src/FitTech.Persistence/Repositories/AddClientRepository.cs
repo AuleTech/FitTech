@@ -14,7 +14,7 @@ public sealed class AddClientRepository : IAddClientRepository
     
         public async Task AddClientAsync(Client client, CancellationToken cancellationToken)
         {
-            await _context.ClientLog.AddAsync(client, cancellationToken);
+            await _context.ClientTable.AddAsync(client, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
     }
