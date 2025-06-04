@@ -52,7 +52,7 @@ class Build : NukeBuild
         .DependsOn(InstallDependencies)
         .Executes(() =>
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             var command = PacDependencyInjection.Default.Get<ICommand<RestoreCommandParams, Result>>();
 
             var result =
@@ -67,7 +67,7 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
             var command = PacDependencyInjection.Default.Get<ICommand<BuildCommandParams, Result>>();
 
             var result =
