@@ -31,6 +31,8 @@ public class NewClientModel
     [Required(ErrorMessage = "Es obligatorio indicar la modalidad de entrenamiento")]
     public string TrainingModel { get; set; } = string.Empty;
     public DateTime Event { get; set; }
+    
+    [StringLength(20, ErrorMessage = "El Centro deportivo no puede contener mas de 20 caracteres.")]
     public string Center { get; set; } = string.Empty;
     
     [Required(ErrorMessage = "Es obligatorio indicar el tipo de subscripción contratada")]
