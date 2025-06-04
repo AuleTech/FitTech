@@ -28,7 +28,6 @@ class Build : NukeBuild
     private Target InstallDependencies => _ => _
         .Executes(() =>
         {
-            var processRunner = PacDependencyInjection.Default.Get<IProcessRunner>();
             var nodeTool = PacDependencyInjection.Default.Get<INodeTool>();
             var result = nodeTool.NpmInstallAsync("tailwindcss @tailwindcss/cli", CancellationToken.None).GetAwaiter().GetResult();
             result.ThrowIfFailed();
