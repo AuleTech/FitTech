@@ -1,22 +1,23 @@
 using System.Security.Claims;
 using Blazored.LocalStorage;
 using FitTech.WebComponents.Models;
+using FitTech.WebComponents.Persistence;
 using Microsoft.AspNetCore.Components.Authorization;
 namespace FitTech.WebComponents.Authentication;
 
 internal sealed class FitTechAuthStateProvider : AuthenticationStateProvider
 {
-    private readonly ILocalStorageService _localStorageService;
-    public FitTechAuthStateProvider(ILocalStorageService localStorageService)
+    private readonly IStorage _storage;
+    public FitTechAuthStateProvider(IStorage storage)
     {
-        _localStorageService = localStorageService;
+        _storage = storage;
     }
     
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var user = await _localStorageService.GetItemAsync<FitTechUser>(FitTechUser.StorageKey);
+        var user = await _storage.GetItemAsync<FitTechUser>(FitTechUser.StorageKey, CancellationToken.None);
 
-        return new AuthenticationState(user is not null ? user.GetClaimsPrincipal() : new ClaimsPrincipal(Array.Empty<ClaimsIdentity>()));
+        return new AuthenticationState(user is not null ? user.GetClaimsPrincipal() : new ClaimsPrincipal([]));
     }
 
     public void RaiseLoginEvent(FitTechUser user)

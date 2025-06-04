@@ -19,7 +19,6 @@ public static class ServiceCollectionExtensions
         
         return serviceCollection
             .AddFitTechApiClient(configuration, provider => provider.GetRequiredService<FitTechDelegationHandler>())
-            .AddBlazoredLocalStorage() //TODO: Expose an interface to be implemented by the front to manage the user
             .AddTransient<IUserService, UserService>()
             .AddScoped<AuthenticationStateProvider, FitTechAuthStateProvider>()
             .AddScoped<FitTechAuthStateProvider>()

@@ -11,7 +11,6 @@ var fitTechApi = builder.AddProject<FitTech_API>("fittech-api")
     .WithExternalHttpEndpoints();
 
 _ = builder.AddProject<FitTech_Trainer_Wasm>("trainer-web")
-    .WaitFor(fitTechApi); 
-
+    .WaitFor(fitTechApi);
 
 builder.Build().Run();
