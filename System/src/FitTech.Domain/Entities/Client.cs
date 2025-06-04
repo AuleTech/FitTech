@@ -16,16 +16,13 @@ public class Client
     public DateOnly EventDate { get; set; } 
     public string Center { get; set; }
     public string SubscriptionType { get; set; } 
-    
-    
     public string CreatedByUserId { get; set; }
 
-    [ForeignKey("CreatedByUserId")]
-    public IdentityUser? CreatedByUser { get; set; }
+  
     
     public Client(Guid id, string nameUser, string lastNameuser, DateOnly eventDate, string emailUser, DateOnly birthdate, int phoneNumber, string center, int trainingHours, string trainingModel, string subscriptionType, string createdByUserId)
     {
-        
+        Id=id;
         NameUser = nameUser;
         LastNameuser = lastNameuser;
         EmailUser = emailUser;
