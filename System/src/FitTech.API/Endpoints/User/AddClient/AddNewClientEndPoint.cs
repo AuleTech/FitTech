@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.API.Endpoints.User.AddClient;
 
-[Authorize]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public sealed class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
 {
     private readonly AddClientService _service;
