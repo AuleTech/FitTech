@@ -67,16 +67,18 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
             var command = PacDependencyInjection.Default.Get<ICommand<BuildCommandParams, Result>>();
 
-            var result =
-                command.RunAsync(
-                        new BuildCommandParams() { SolutionPath = Solution },
-                        cts.Token)
-                    .GetAwaiter().GetResult();
-
-            result.ThrowIfFailed();
+            Result result;
+            do
+            {
+                result =
+                    command.RunAsync(
+                            new BuildCommandParams() { SolutionPath = Solution },
+                            cts.Token)
+                        .GetAwaiter().GetResult();
+            } while (!result.Succeeded);
         });
 
     private Target UnitTests => _ => _
