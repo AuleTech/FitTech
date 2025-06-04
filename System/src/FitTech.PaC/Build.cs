@@ -71,7 +71,7 @@ class Build : NukeBuild
             var command = PacDependencyInjection.Default.Get<ICommand<BuildCommandParams, Result>>();
 
             Result result;
-            do
+            do //TODO: There is a bug where the .gz file is not generated on the first compilation so we need to retry. We need to add a proper retry way with Polly.
             {
                 result =
                     command.RunAsync(
