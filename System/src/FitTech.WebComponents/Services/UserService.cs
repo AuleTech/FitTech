@@ -4,6 +4,7 @@ using FitTech.API.Client;
 using FitTech.ApiClient;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
+using FitTech.WebComponents.Persistence;
 using Microsoft.Extensions.Logging;
 using Result = AuleTech.Core.Patterns.Result;
 
@@ -15,20 +16,20 @@ internal sealed class UserService : IUserService
 {
     private readonly FitTechAuthStateProvider _authStateProvider;
     private readonly IFitTechApiClient _fitTechApiClient;
-    private readonly ILocalStorageService _localStorageService;
+    private readonly IStorage _storage;
     private readonly ILogger<UserService> _logger;
     
 
     public UserService(IFitTechApiClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
-        ILogger<UserService> logger, ILocalStorageService localStorageService )
+        ILogger<UserService> logger, IStorage storage )
     {
         _fitTechApiClient = fitTechApiClient;
         _authStateProvider = authStateProvider;
         _logger = logger;
-        _localStorageService = localStorageService;
+        _storage = storage;
     }
 
-    public async Task<bool> IsLoggedAsync() => await _localStorageService.ContainKeyAsync(FitTechUser.StorageKey); //Let's keep it simple for now
+    public async Task<bool> IsLoggedAsync() => await _storage.ContainsKeyAsync(FitTechUser.StorageKey, CancellationToken.None); //Let's keep it simple for now
 
     public async Task<Result<FitTechUser>> LoginAsync(string email, string password,
         CancellationToken cancellationToken)
@@ -47,7 +48,7 @@ internal sealed class UserService : IUserService
             
             var user = new FitTechUser { Email = email, AccessToken = result.Value?.AccessToken, RefreshToken = result.Value?.RefreshToken};
 
-            await _localStorageService.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
+            await _storage.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
             
             _authStateProvider.RaiseLoginEvent(user);
 
@@ -106,7 +107,7 @@ internal sealed class UserService : IUserService
 
     public async Task<Result> LogoutAsync(CancellationToken cancellationToken)
     {
-        await _localStorageService.RemoveItemAsync(FitTechUser.StorageKey, cancellationToken);
+        await _storage.ClearAsync(cancellationToken);
         return Result.Success;
     }
 

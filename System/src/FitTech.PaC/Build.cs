@@ -1,8 +1,10 @@
 using AuleTech.Core.Patterns;
+using AuleTech.Core.Processing.Runners;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
 using DevopsCli.Core.Commands.Dotnet.Tests;
+using DevopsCli.Core.Commands.Dotnet.Workloads;
 using DevopsCli.Core.Tools;
 using DevopsCli.Core.Tools.Node;
 using Nuke.Common;
@@ -35,12 +37,21 @@ class Build : NukeBuild
                 .GetAwaiter().GetResult();
             
             result.ThrowIfFailed();
+
+            var restoreWorkloadCommand = PacDependencyInjection.Default.Get<ICommand<WorkloadsCommandParams, Result>>();
+            result = restoreWorkloadCommand
+                .RunAsync(
+                    new WorkloadsCommandParams { Project = Solution.src._Presentation.Client.FitTech_Client_Mobile, RunAsAdministrator = IsLocalBuild},
+                    CancellationToken.None).GetAwaiter().GetResult();
+            
+            result.ThrowIfFailed();
         });
     
     Target Restore => _ => _
+        .DependsOn(InstallDependencies)
         .Executes(() =>
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             var command = PacDependencyInjection.Default.Get<ICommand<RestoreCommandParams, Result>>();
 
             var result =
@@ -53,19 +64,20 @@ class Build : NukeBuild
 
     Target Compile => _ => _
         .DependsOn(Restore)
-        .DependsOn(InstallDependencies)
         .Executes(() =>
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
             var command = PacDependencyInjection.Default.Get<ICommand<BuildCommandParams, Result>>();
 
-            var result =
-                command.RunAsync(
-                        new BuildCommandParams() { SolutionPath = Solution },
-                        cts.Token)
-                    .GetAwaiter().GetResult();
-
-            result.ThrowIfFailed();
+            Result result;
+            do //TODO: There is a bug where the .gz file is not generated on the first compilation so we need to retry. We need to add a proper retry way with Polly.
+            {
+                result =
+                    command.RunAsync(
+                            new BuildCommandParams() { SolutionPath = Solution },
+                            cts.Token)
+                        .GetAwaiter().GetResult();
+            } while (!result.Succeeded);
         });
 
     private Target UnitTests => _ => _
