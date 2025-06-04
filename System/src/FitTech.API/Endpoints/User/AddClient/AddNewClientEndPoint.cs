@@ -1,17 +1,15 @@
-﻿
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using FastEndpoints;
-using FitTech.API.Endpoints.User.GetCurrent;
 using FitTech.Application;
 using FitTech.Application.Services;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.API.Endpoints.User.AddClient;
 
 [Authorize(AuthenticationSchemes = "Bearer")]
-public sealed class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
+[HttpPost("/user/add-client")]
+public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
 {
     private readonly AddClientService _service;
     private readonly ILogger<AddNewClientEndPoint> _logger;
@@ -20,17 +18,6 @@ public sealed class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
     {
         _service = service;
         _logger = logger;
-    }
-
-    public override void Configure()
-    {
-        Post("/User/AddClient");
-        AllowAnonymous();
-        Summary(s =>
-        {
-            s.Summary = "Adds a new client to the system.";
-            s.Description = "This endpoint adds a new client to the database using the provided client data.";
-        });
     }
 
     public override async Task HandleAsync(AddNewClientRequest req, CancellationToken ct)

@@ -164,12 +164,6 @@ namespace FitTech.ApiClient
             }
         }
 
-        /// <summary>
-        /// Adds a new client to the system.
-        /// </summary>
-        /// <remarks>
-        /// This endpoint adds a new client to the database using the provided client data.
-        /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<Result> AddNewClientEndPointAsync(AddNewClientRequest addNewClientRequest)
@@ -178,12 +172,6 @@ namespace FitTech.ApiClient
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Adds a new client to the system.
-        /// </summary>
-        /// <remarks>
-        /// This endpoint adds a new client to the database using the provided client data.
-        /// </remarks>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<Result> AddNewClientEndPointAsync(AddNewClientRequest addNewClientRequest, System.Threading.CancellationToken cancellationToken)
@@ -206,8 +194,8 @@ namespace FitTech.ApiClient
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "User/AddClient"
-                    urlBuilder_.Append("User/AddClient");
+                    // Operation Path: "user/add-client"
+                    urlBuilder_.Append("user/add-client");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -240,6 +228,18 @@ namespace FitTech.ApiClient
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("Unauthorized", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 403)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("Forbidden", status_, responseText_, headers_, null);
                         }
                         else
                         {

@@ -1,9 +1,8 @@
 using FitTech.Domain.Entities;
-using FitTech.Domain.Interfaces;
+using FitTech.Domain.Repositories;
 using FitTech.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FitTech.Persistence;
