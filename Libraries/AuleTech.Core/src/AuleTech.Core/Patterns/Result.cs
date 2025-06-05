@@ -70,7 +70,11 @@ public class Result<T> : Result
 
     public static new Result<T> Failure(string[] errors)
     {
-        return (Result.Failure(errors) as Result<T>)!;
+        return new Result<T>()
+        {
+            Succeeded = false,
+            Errors = errors
+        };
     }
 
     public static new Result<T> Failure()

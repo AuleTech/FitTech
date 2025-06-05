@@ -1,0 +1,13 @@
+﻿@using FitTech.WebComponents.Components.SideMenu
+@using FitTech.Client.Mobile.Components.Menu
+@inherits LayoutComponentBase
+
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+<!-- Scrollable content with bottom padding to avoid overlap -->
+    <div class="min-h-screen pb-20">
+        @Body
+    </div>
+
+    <!-- Fixed bottom nav that overlays the content -->
+    <MobileMenu/>
+</body>
