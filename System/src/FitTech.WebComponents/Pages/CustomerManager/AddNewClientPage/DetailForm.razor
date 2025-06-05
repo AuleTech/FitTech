@@ -6,18 +6,19 @@
 
     <div class="mb-4">
         <label for="firstName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Horas de entrenamiento contratados</label>
-        <InputNumber type="text" @bind-Value="Model!.TrainingHours" id="firstName" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputNumber type="text" @bind-Value="Model!.TrainingHours" placeholder="Horas de entrenamiento semanales" id="firstName" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.TrainingHours)" class="text-red-600 text-sm"/>
     </div>
-    <div class="mb-4">
-        <label for="trainingModel" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Modalidad de Entrenamiento</label>
-        <InputSelect type="text" @bind-Value="Model!.TrainingModel" TValue="string" id="trainingModel" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-            <option value="Online">Online</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Híbrida">Híbrida</option>
-        </InputSelect>
-        <ValidationMessage For="@(() => Model.TrainingModel)" class="text-red-600 text-sm"/>
-    </div>
+        <div class="mb-4">
+            <label for="trainingtype" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Modalidad de Entrenamiento</label>
+            <InputSelect type="text" @bind-Value="Model.TrainingModel" TValue="string" id="trainingtype" class=" w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                <option value="Selecciona un tipo de Subscripción">Selecciona la modalidad de entrenamiento</option>
+                <option value="Online">Online</option>
+                <option value="Presencial">Presencial</option>
+                <option value="Híbrida">Híbrida</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => Model.TrainingModel)" class="text-red-600 text-sm"/>
+        </div>
     <div class="mb-4">
         <label for="evento" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha Límita o Evento</label>
         <InputDate @bind-Value="Model!.Event" id="evento" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
@@ -25,7 +26,7 @@
     </div>
     <div class="mb-4">
         <label for="center" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Entrenamiento Conjunto: Centro deportivo</label>
-        <InputText type="text" @bind-Value="Model!.Center" id="center" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputText type="text" @bind-Value="Model!.Center" id="center" placeholder="Centro Deportivo para entrenar" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.Center)" class="text-red-600 text-sm"/>
     </div>
 </EditForm>
@@ -39,7 +40,7 @@
     {
         Model ??= new();
     }
-
+    
     public void Submit()
     {
         

@@ -52,6 +52,12 @@
                 <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="AddClient">Finalizar</button>
             </div>
         }
+        @if (!string.IsNullOrEmpty(_message))
+        {
+            <p class="mt-3" style="color: @( _message.Contains("Error") ? "red" : "green")">
+                @(_message)
+            </p>
+        }
     </div>
 </div>
 
@@ -81,7 +87,7 @@
     public async Task AddClient()
     {
 
-        var response = await UserService.AddNewClientAsync(NewClient.NameUser, NewClient.LastNameuser, NewClient.Birthdate, NewClient.EmailUser, NewClient.PhoneNumber, NewClient.TrainingHours, NewClient.TrainingModel, NewClient.Center, NewClient.Event, NewClient.SubscriptionType, _cts.Token);
+        var response = await UserService.AddNewClientAsync(NewClient.NameUser, NewClient.LastNameuser, NewClient.Birthdate, NewClient.EmailUser, NewClient.PhoneNumber!, NewClient.TrainingHours!, NewClient.TrainingModel, NewClient.Center, NewClient.Event, NewClient.SubscriptionType, _cts.Token);
 
         if (!response!.Succeeded)
         {
