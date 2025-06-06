@@ -18,7 +18,7 @@ public class NewClientModel
     [EmailAddress(ErrorMessage = "Por favor ingresa un correo electrónico válido.")]
     [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Por favor ingresa un correo electrónico sin caracteres no permitidos.")]
     public string EmailUser { get; set; } = null!;
-    public DateTime Birthdate { get; set; } = DateTime.Now;
+    public DateTime Birthdate { get; set; } = DateTime.Today;
 
     [Required(ErrorMessage = "El número de telefono es obligatorio.")]
     [StringLength(9, ErrorMessage = "El teléfono no puede tener más de 9 dígitos.")]
@@ -30,7 +30,7 @@ public class NewClientModel
     
     [Required(ErrorMessage = "Es obligatorio indicar la modalidad de entrenamiento")]
     public string TrainingModel { get; set; } = null!;
-    public DateTime Event { get; set; } = DateTime.Now;
+    public DateTime Event { get; set; } = DateTime.Today;
     
     [StringLength(20, ErrorMessage = "El Centro deportivo no puede contener mas de 20 caracteres.")]
     public string Center { get; set; } = string.Empty;
