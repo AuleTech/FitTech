@@ -20,6 +20,10 @@
     "Build": {
       "commandName": "Project",
       "commandLineArgs": "build --solution-path \"/Users/jairo/Desktop/workspace/FitTech/System/FitTech.sln\""
+    },
+    "Restore Workloads": {
+      "commandName": "Project",
+      "commandLineArgs": "restore-workloads"
     }
   }
 }

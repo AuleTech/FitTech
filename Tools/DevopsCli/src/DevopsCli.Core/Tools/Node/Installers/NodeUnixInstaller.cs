@@ -13,11 +13,6 @@ internal sealed class NodeUnixInstaller : IInstaller<NodeTool>
 
     public NodeUnixInstaller(IProcessRunner processRunner, ILogger<NodeTool> logger)
     {
-        if (OperatingSystem.IsWindows())
-        {
-            throw new NotSupportedException();
-        }
-
         _processRunner = processRunner;
         _logger = logger;
     }

@@ -1,5 +1,6 @@
 ﻿using AuleTech.Core.Patterns;
 using AuleTech.Core.Processing.Runners;
+using AuleTech.Core.Processing.Runners.Factory;
 using AuleTech.Core.System.IO.FileSystem;
 using Microsoft.Extensions.Logging;
 
@@ -11,12 +12,12 @@ internal sealed class NodeWindowsInstaller : IInstaller<NodeTool>
         $"https://nodejs.org/dist/{NodeTool.NodeVersion}/node-{NodeTool.NodeVersion}-x64.msi";
 
     private readonly ILogger<NodeTool> _logger;
-    private readonly IProcessRunner _processRunner;
+    private readonly IProcessRunnerFactory _processRunnerFactory;
     private readonly ISystemIo _systemIo;
-
-    public NodeWindowsInstaller(IProcessRunner processRunner, ISystemIo systemIo, ILogger<NodeTool> logger)
+    public string NodeInstallationFolder => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "nodejs");
+    public NodeWindowsInstaller(IProcessRunnerFactory processRunnerFactory, ISystemIo systemIo, ILogger<NodeTool> logger)
     {
-        _processRunner = processRunner;
+        _processRunnerFactory = processRunnerFactory;
         _systemIo = systemIo;
         _logger = logger;
     }
@@ -46,9 +47,9 @@ internal sealed class NodeWindowsInstaller : IInstaller<NodeTool>
         await _systemIo.File.WriteStreamAsync(msiPath, await response.Content.ReadAsStreamAsync(cancellationToken)
             , FileMode.CreateNew, cancellationToken);
 
-        var processInfo = new AuleTechProcessStartInfo("msiexec.exe", $"/i {msiPath} /quiet /passive /qn"
+        var processInfo = new AuleTechProcessStartInfo("msiexec.exe", $"/i {msiPath} /passive /qn"
             , runAsAdministrator: true);
-        var result = await _processRunner.RunAsync(processInfo, cancellationToken);
+        var result = await _processRunnerFactory.GetOne().RunAsync(processInfo, cancellationToken);
 
         if (result.Errored())
         {
@@ -59,11 +60,20 @@ internal sealed class NodeWindowsInstaller : IInstaller<NodeTool>
 
         async Task<bool> IsInstalledAsync()
         {
-            var nodeProcess = new AuleTechProcessStartInfo("node", "-v");
+            try
+            {
+                var nodeProcess =
+                    new AuleTechProcessStartInfo(Path.Combine(NodeInstallationFolder, "node"), "--version");
 
-            var processResult = await _processRunner.RunBashAsync(nodeProcess, cancellationToken);
+                var processResult = await _processRunnerFactory.GetOne().RunAsync(nodeProcess, cancellationToken);
 
-            return !processResult.Errored();
+                return !processResult.Errored();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
+            }
         }
     }
 }

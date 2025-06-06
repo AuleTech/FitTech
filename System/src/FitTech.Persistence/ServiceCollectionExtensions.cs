@@ -1,5 +1,7 @@
-﻿using FitTech.Domain.Interfaces;
+﻿using FitTech.Domain.Entities;
+using FitTech.Domain.Interfaces;
 using FitTech.Persistence.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,28 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.AddDbContext<FitTechDbContext>(options =>
         {
-            options.UseNpgsql(connectionString);
+            options.UseNpgsql(connectionString).UseAsyncSeeding(async (context, _, cancellationToken) =>
+            {
+                context.Set<FitTechUser>();
+                var passwordHasher = new PasswordHasher<FitTechUser>();
+
+                var email = "admin@fittech.es";
+                
+                var fitTechAdminUser = new FitTechUser
+                {
+                    Id = Guid.CreateVersion7(),
+                    UserName = email,
+                    NormalizedUserName = email.ToUpperInvariant(),
+                    Email = email,
+                    NormalizedEmail = email.ToUpperInvariant(),
+                    SecurityStamp = "PAXJBLPK3OCIXX4B62CQI4ECMLDCBCPN"
+                };
+
+                fitTechAdminUser.PasswordHash = passwordHasher.HashPassword(fitTechAdminUser, "FitTech2025!");
+
+                await context.AddAsync(fitTechAdminUser, cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
+            });
         });
 
         return serviceCollection;

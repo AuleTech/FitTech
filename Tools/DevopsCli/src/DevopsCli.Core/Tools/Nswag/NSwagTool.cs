@@ -46,7 +46,7 @@ internal sealed class NSwagTool : INSwagTool
             {
                 var outputFile = $"{outputFolder}/Proxy.generated.cs";
                 var arguments =
-                    $"openapi2csclient /input:\"{openApiJsonUrl}\" /namespace:{@namespace} /output:\"{outputFile}\" /clientClassAccessModifier:internal /typeAccessModifier:{(generatePublicDtoModels ? "public" : "internal")} {(allowToolToSpecifyClientName ? string.Empty : "/classname:Proxy")} /generateOptionalPropertiesAsNullable:true /generateNullableReferenceTypes:true {rawOptions}";
+                    $"openapi2csclient /input:\"{openApiJsonUrl}\" /namespace:{@namespace} /output:\"{outputFile}\" /clientClassAccessModifier:internal /typeAccessModifier:{(generatePublicDtoModels ? "public" : "internal")} {(allowToolToSpecifyClientName ? string.Empty : "/classname:Proxy")} /generateOptionalPropertiesAsNullable:true /useBaseUrl:false /generateNullableReferenceTypes:true {rawOptions}";
                 var result = await _processRunner.RunAsync(new AuleTechProcessStartInfo("nswag"
                         , arguments)
                     , cancellationToken);
