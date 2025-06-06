@@ -45,6 +45,7 @@ public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
             subscriptionType: req.SubscriptionType,
             createdByUserId: userId!
         );
+        
         await _service.AddNewClientAsync(client, ct);
         _logger.LogInformation("New client added");
         await SendOkAsync(ct);
