@@ -130,7 +130,7 @@ internal sealed class UserService : IUserService
                 
             }, cancellationToken);
 
-        return result;
+        return Result.Success;
     }
 
 }

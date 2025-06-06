@@ -48,6 +48,7 @@ public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
         
         await _service.AddNewClientAsync(client, ct);
         _logger.LogInformation("New client added");
-        await SendOkAsync(ct);
+        await SendOkAsync(Result.Success, ct);
+        
     }
 }
