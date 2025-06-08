@@ -29,7 +29,7 @@ builder.Services
     .AddOpenApi()
     .AddCors( c => c.AddPolicy("FitTechCorsPolicy", policyBuilder =>
     {
-        policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:7083", "http://localhost:5174");
+        policyBuilder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
 
     }))
     .AddPersistence(connectionString);
