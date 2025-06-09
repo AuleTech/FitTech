@@ -288,8 +288,8 @@
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
-  .ml-64 {
-    margin-left: calc(var(--spacing) * 64);
+  .ml-80 {
+    margin-left: calc(var(--spacing) * 80);
   }
   .block {
     display: block;
