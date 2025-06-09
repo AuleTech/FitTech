@@ -58,7 +58,6 @@
             <!-- Contenido dinámico por paso -->
             @if (CurrentStep == 1)
             {
-                <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 1: Información personal</p>
                 <PersonalInformationForm Model="NewClient"></PersonalInformationForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="NextStep" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled="@(CurrentStep == TotalSteps)">Siguiente</button>
@@ -66,7 +65,6 @@
             }
             else if (CurrentStep == 2)
             {
-                <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 2: Detalles del entrenamiento</p>
                 <DetailForm Model="NewClient"></DetailForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
@@ -75,7 +73,6 @@
             }
             else if (CurrentStep == 3)
             {
-                <p class="mb-4 text-gray-700 dark:text-gray-200">Paso 3: Confirmación</p>
                 <ConfirmDataForm Model="NewClient"></ConfirmDataForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
