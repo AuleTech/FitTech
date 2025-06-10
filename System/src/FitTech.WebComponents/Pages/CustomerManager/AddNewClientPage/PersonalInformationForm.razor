@@ -29,16 +29,6 @@
         <InputNumber type="text" @bind-Value="Model!.PhoneNumber" placeholder="Número de teléfono del cliente" id="phonenumber" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.PhoneNumber)" class="text-red-600 text-sm"/>
     </div>
-    <div class="mb-4">
-        <label for="subscriptiontype" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Tipo de Subscripción</label>
-        <InputSelect type="text" @bind-Value="Model.SubscriptionType" TValue="string" id="subscriptiontype" class=" w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-            <option value="Selecciona un tipo de Subscripción">Selecciona un tipo de Subscripción</option>
-            <option value="Pérdida de Peso">Pérdida de Peso</option>
-            <option value="Aumento de Masa Muscular">Aumento de Masa Muscular</option>
-            <option value="Mejora Rendimiento Deportivo">Mejora Rendimiento Deportivo</option>
-        </InputSelect>
-        <ValidationMessage For="@(() => Model.SubscriptionType)" class="text-red-600 text-sm"/>
-    </div>
 </EditForm>
 
 @code {

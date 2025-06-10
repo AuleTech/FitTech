@@ -1,47 +1,35 @@
 @using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
-<div>
-    <div class="mb-4">
-        <label for="firstName" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Nombre:</label>
-        <label for="firstName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.NameUser</label>
-    </div>
-    <div class="mb-4">
-        <label for="lastName" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Apellidos:</label>
-        <label for="lastname" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.LastNameuser</label>
-    </div>
-    <div class="mb-4">
-        <label for="email" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Correo Electrónico:</label>
-        <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.EmailUser</label>
-    </div>
-    <div class="mb-4">
-        <label for="birthday" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Fecha de Nacimiento:</label>
-        <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.Birthdate</label>
-    </div>
-    <div class="mb-4">
-        <label for="phonenumber" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Teléfono:</label>
-        <label for="phonenumber" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.PhoneNumber</label>
-    </div>
-    <div class="mb-4">
-        <label for="subscriptiontype" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Tipo de Subscripción:</label>
-        <label for="subscriptiontype" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.SubscriptionType</label>
-    </div>
-    <div class="mb-4">
-        <label for="trainingHours" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Horas de entrenamiento contratados:</label>
-        <label for="trainingHours" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.TrainingHours</label>
-    </div>
-    <div class="mb-4">
-        <label for="trainingModel" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Modalidad de Entrenamiento:</label>
-        <label for="trainingModel" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.TrainingModel</label>
-    </div>
-    <div class="mb-4">
-        <label for="evento" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Fecha Límita o Evento:</label>
-        <label for="evento" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.Event</label>
-    </div>
-    <div class="mb-4">
-        <label for="center" class="mb-2 block text-sm font-bold text-green-600 dark:text-gray-300">Centro deportivo para entrenamiento conjunto:</label>
-        <label for="center" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">@Model.Center</label>
-    </div>
+<div class="p-6 space-y-6 bg-white rounded-xl shadow">
 
+    <h2 class="text-2xl font-semibold text-gray-800">Revisa y confirma tus datos</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Tarjeta de datos personales -->
+        <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">👤 Datos personales</h3>
+            <p class="text-gray-700"><strong>Nombre:</strong> @Model.NameUser</p>
+            <p class="text-gray-700"><strong>Apellidos:</strong> @Model.LastNameuser</p>
+            <p class="text-gray-700"><strong>Correo:</strong> @Model.EmailUser</p>
+            <p class="text-gray-700"><strong>Teléfono:</strong> @Model.PhoneNumber</p>
+            <p class="text-gray-700"><strong>Fecha de nacimiento:</strong> @Model.Birthdate</p>
+        </div>
+
+        <!-- Tarjeta de suscripción -->
+        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">📦 Subscripción</h3>
+            <p class="text-gray-700"><strong>Tipo:</strong> @Model.SubscriptionType</p>
+            <p class="text-gray-700"><strong>Horas contratadas:</strong> @Model.TrainingHours</p>
+            <p class="text-gray-700"><strong>Modalidad:</strong> @Model.TrainingModel</p>
+        </div>
+
+        <!-- Tarjeta de planificación -->
+        <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 shadow-sm md:col-span-2">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">📅 Planificación</h3>
+            <p class="text-gray-700"><strong>Evento o fecha límite:</strong> @Model.Event</p>
+            <p class="text-gray-700"><strong>Centro deportivo:</strong> @Model.Center</p>
+        </div>
+    </div>
 </div>
 
 @code {
