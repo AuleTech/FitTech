@@ -16,8 +16,12 @@
 
     <div id="app">Loading...</div>
 
-    <script src="_framework/blazor.webview.js" autostart="false"></script>
-
+    <script src="_framework/blazor.webview.js" autostart="false"></script> 
+    <script>
+        function addTouchStartGlobalEvent() {
+            document.addEventListener("touchstart", function () { }, true);
+        }
+    </script>
 </body>
 
 </html>
