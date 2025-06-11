@@ -20,12 +20,12 @@ public class NewClientModel
     public string EmailUser { get; set; } = null!;
     public DateTime Birthdate { get; set; } = DateTime.Today;
 
-    [Required(ErrorMessage = "El número de telefono es obligatorio.")]
-    [StringLength(9, ErrorMessage = "El teléfono no puede tener más de 9 dígitos.")]
+    [Required(ErrorMessage = "El número de teléfono es obligatorio.")]
+    [Range(100000000, 999999999, ErrorMessage = "El teléfono debe tener exactamente 9 dígitos.")]
     public int? PhoneNumber { get; set; } = null;
 
     [Required(ErrorMessage = "Las horas semanas son obligatorias.")]
-    [StringLength(2, ErrorMessage = "No se pueden asignar mas de 99 horas semanales.")]
+    [Range(1,30, ErrorMessage = "No se pueden asignar mas de 99 horas semanales.")]
     public int? TrainingHours { get; set; } = null;
     
     [Required(ErrorMessage = "Es obligatorio indicar la modalidad de entrenamiento")]

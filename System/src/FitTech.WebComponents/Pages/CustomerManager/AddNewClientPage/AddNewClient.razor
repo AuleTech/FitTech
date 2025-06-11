@@ -1,10 +1,13 @@
 @page "/usermanager/add"
 @inject IUserService UserService
+@using System.ComponentModel.DataAnnotations
 @using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels
 @inject NavigationManager Navigation
 @inherits FitTech.WebComponents.Components.CancellableComponent
 
 
+<DataAnnotationsValidator />
+<ValidationSummary />
 <div class="h-full w-full ml-80 p-6">
     <!-- Título principal -->
     <div class="text-center">
@@ -60,22 +63,22 @@
             {
                 <PersonalInformationForm Model="NewClient"></PersonalInformationForm>
                 <div class="mt-6 flex justify-between">
-                    <button @onclick="NextStep" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled="@(CurrentStep == TotalSteps)">Siguiente</button>
-                </div>
+                    <button @onclick="ValidateStep1" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Siguiente</button> 
+                    </div>
             }
             else if (CurrentStep == 2)
             {
                 <DetailForm Model="NewClient"></DetailForm>
                 <div class="mt-6 flex justify-between">
-                    <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
-                    <button @onclick="NextStep" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" disabled="@(CurrentStep == TotalSteps)">Siguiente</button>
+                    <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded">Anterior</button>
+                    <button @onclick="ValidateStep2" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Siguiente</button>
                 </div>
             }
             else if (CurrentStep == 3)
             {
                 <ConfirmDataForm Model="NewClient"></ConfirmDataForm>
                 <div class="mt-6 flex justify-between">
-                    <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded" disabled="@(CurrentStep == 1)">Anterior</button>
+                    <button @onclick="PreviousStep" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded">Anterior</button>
                     <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="AddClient">Finalizar</button>
                 </div>
             }
@@ -86,25 +89,79 @@
                     @(_message)
                 </p>
             }
+            
+            @if (validationErrors.Any())
+            {
+                @foreach (var err in validationErrors)
+                {
+                    <p class="mt-3 text-red-500">
+                        @err
+                    </p>
+                }
+                
+            }
         </div>
     </div>
 </div>
 
 
 @code {
-    
-    private NewClientModel NewClient = new(); 
-    
-    private string _message = string.Empty;
-    
-    private int CurrentStep = 1;
 
+    private NewClientModel NewClient = new();
+    private string _message = string.Empty;
+    private int CurrentStep = 1;
     private readonly int TotalSteps = 3;
+    private List<string> validationErrors = new();
+
+    private void ValidateStep1()
+    {
+        validationErrors.Clear();
+        var context = new ValidationContext(NewClient);
+        var results = new List<ValidationResult>();
+
+        bool isValid =
+            Validator.TryValidateProperty(NewClient.NameUser, new ValidationContext(NewClient) { MemberName = nameof(NewClient.NameUser) }, results) &&
+            Validator.TryValidateProperty(NewClient.LastNameuser, new ValidationContext(NewClient) { MemberName = nameof(NewClient.LastNameuser) }, results) &&
+            Validator.TryValidateProperty(NewClient.PhoneNumber, new ValidationContext(NewClient) { MemberName = nameof(NewClient.PhoneNumber) }, results) &&
+            Validator.TryValidateProperty(NewClient.EmailUser, new ValidationContext(NewClient) { MemberName = nameof(NewClient.EmailUser) }, results);
+
+        if (isValid)
+        {
+            CurrentStep++;
+        }
+        else
+        {
+            validationErrors = results.Select(r => r.ErrorMessage!).ToList();
+        }
+    }
+
+    private void ValidateStep2()
+    {
+        validationErrors.Clear();
+        var context = new ValidationContext(NewClient);
+        var results = new List<ValidationResult>();
+
+        bool isValid =
+            Validator.TryValidateProperty(NewClient.TrainingHours, new ValidationContext(NewClient) { MemberName = nameof(NewClient.TrainingHours) }, results) &&
+            Validator.TryValidateProperty(NewClient.TrainingModel, new ValidationContext(NewClient) { MemberName = nameof(NewClient.TrainingModel) }, results) &&
+            Validator.TryValidateProperty(NewClient.SubscriptionType, new ValidationContext(NewClient) { MemberName = nameof(NewClient.SubscriptionType) }, results);
+
+        if (isValid)
+        {
+            CurrentStep++;
+        }
+        else
+        {
+            validationErrors = results.Select(r => r.ErrorMessage!).ToList();
+        }
+    }
+
 
     private void NextStep()
     {
         if (CurrentStep < TotalSteps)
             CurrentStep++;
+        validationErrors.Clear();
     }
 
     private void PreviousStep()
@@ -116,18 +173,23 @@
     public async Task AddClient()
     {
 
+        validationErrors.Clear();
+
         var response = await UserService.AddNewClientAsync(NewClient.NameUser, NewClient.LastNameuser, NewClient.Birthdate, NewClient.EmailUser, NewClient.PhoneNumber!, NewClient.TrainingHours!, NewClient.TrainingModel, NewClient.Center, NewClient.Event, NewClient.SubscriptionType, _cts.Token);
 
         if (!response!.Succeeded)
         {
-            _message = "Hubo un error en al añadir a su cliente. Intentalo de  nuevo."; 
+            _message = "Hubo un error en al añadir a su cliente. Intentalo de  nuevo.";
             return;
         }
-        _message = "El nuevo cliente se ha añadido correctamente"; 
+
+        _message = "El nuevo cliente se ha añadido correctamente";
         StateHasChanged();
-        await Task.Delay(2000); 
+        await Task.Delay(2000);
         Navigation.NavigateTo("/usermanager");
 
     }
+
+ }
 
 }
