@@ -3,10 +3,10 @@
 public record AddNewClientRequest(string NameUser,
     string LastNameuser,
     string EmailUser,
-    DateOnly Birthdate,
+    DateTime Birthdate,
     int PhoneNumber,
     int TrainingHours,
     string TrainingModel,
-    DateOnly EventDate,
+    DateTime EventDate,
     string Center,
     string SubscriptionType);

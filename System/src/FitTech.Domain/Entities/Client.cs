@@ -9,18 +9,18 @@ public class Client
     public string NameUser { get; set; }
     public string LastNameuser { get; set; }
     public string EmailUser { get; set; }
-    public DateOnly Birthdate { get; set; }
+    public DateTime Birthdate { get; set; }
     public int PhoneNumber { get; set; } 
     public int TrainingHours { get; set; }
     public string TrainingModel { get; set; }
-    public DateOnly EventDate { get; set; } 
+    public DateTime EventDate { get; set; } 
     public string Center { get; set; }
     public string SubscriptionType { get; set; } 
     public string CreatedByUserId { get; set; }
 
   
     
-    public Client(Guid id, string nameUser, string lastNameuser, DateOnly eventDate, string emailUser, DateOnly birthdate, int phoneNumber, string center, int trainingHours, string trainingModel, string subscriptionType, string createdByUserId)
+    public Client(Guid id, string nameUser, string lastNameuser, DateTime eventDate, string emailUser, DateTime birthdate, int phoneNumber, string center, int trainingHours, string trainingModel, string subscriptionType, string createdByUserId)
     {
         Id=id;
         NameUser = nameUser;
