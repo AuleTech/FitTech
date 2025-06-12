@@ -1,7 +1,6 @@
 @page "/login"
 @layout EmptyLayout
 @inherits FitTech.WebComponents.Components.CancellableComponent
-@using FitTech.WebComponents.Components.Banners
 @inject ILogger<Login> Logger
 @inject IUserService UserService
 @inject NavigationManager NavigationManager
@@ -13,9 +12,6 @@
         <div class="mb-6 text-center">
             <h2 class="mt-4 text-2xl font-bold text-black dark:text-white">Bienvenido a FitTech</h2>
         </div>
-
-		<ShowBanners></ShowBanners>
-
         <EditForm Model="LoginModel" OnSubmit="Submit" FormName="LoginForm">
             <div class="mb-4">
                 <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Email</label>
