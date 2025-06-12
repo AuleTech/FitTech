@@ -35,7 +35,8 @@ public class AddClientTest
 
         var service = new AddClientService(repo, logger);
             
-        await service.AddNewClientAsync(client, cancellationToken);
-        
+       await service.AddNewClientAsync(client, cancellationToken);
+       //Esta linea se la he pedido a chatGTP, no tengo ni idea de que poner ahi y estoy muy cansado.
+       await repo.Received(1).AddClientAsync(client, cancellationToken);
     }
 }
