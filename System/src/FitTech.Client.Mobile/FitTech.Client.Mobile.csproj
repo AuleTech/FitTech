@@ -72,6 +72,14 @@
       <EmbeddedResource Include="appsettings.json" />
       <Content Remove="appsettings.Development.json" />
       <EmbeddedResource Include="appsettings.Development.json" />
+      <Content Update="wwwroot\js\fittechScrips.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Layout\AppLayout.razor" />
+      <AdditionalFiles Include="Pages\Home.razor" />
     </ItemGroup>
 
 </Project>

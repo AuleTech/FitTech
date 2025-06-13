@@ -1,11 +1,13 @@
 @page "/logout"
 @inject IUserService UserService
 @inject NavigationManager NavigationManager
+
 @code
 {
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        
-        return base.OnInitializedAsync();
+        await UserService.LogoutAsync(CancellationToken.None);
+        NavigationManager.NavigateTo("/");
+        NavigationManager.Refresh(true);
     }
 }
