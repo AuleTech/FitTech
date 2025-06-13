@@ -1,4 +1,7 @@
 ﻿using System.Reflection;
+using System.Text;
+using AuleTech.Core.Maui;
+using AuleTech.Core.System.IO;
 using FitTech.Client.Mobile.Persistence;
 using FitTech.WebComponents;
 using FitTech.WebComponents.Persistence;
@@ -10,7 +13,7 @@ namespace FitTech.Client.Mobile;
 
 public static class MauiProgram
 {
-    public static MauiApp CreateMauiApp()
+    public static async Task<MauiApp> CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
         builder
@@ -22,7 +25,7 @@ public static class MauiProgram
             });
         
         builder.Services.AddMauiBlazorWebView();
-        builder.AddAppSettings();
+        await builder.AddAppSettingsAsync("FitTech.Client.Mobile", Assembly.GetExecutingAssembly());
         builder.Services
             .AddScoped<IStorage, MauiStorage>()
             .AddSingleton<IPreferences>(_ => Preferences.Default)
@@ -34,23 +37,5 @@ public static class MauiProgram
 #endif
 
         return builder.Build();
-    }
-
-    private static void AddAppSettings(this MauiAppBuilder builder)
-    {
-        using Stream appsettings = GetAppSettingsFile()!;
-        using Stream environmentAppSettings = GetAppSettingsFile(Environments.Development)!; //TODO: Define how to set environment
-        
-        builder.Configuration
-            .AddJsonStream(appsettings)
-            .AddJsonStream(environmentAppSettings);
-
-        Stream? GetAppSettingsFile(string? environment = null)
-        {
-            return Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream(string.IsNullOrWhiteSpace(environment)
-                    ? "FitTech.Client.Mobile.appsettings.json"
-                    : $"FitTech.Client.Mobile.appsettings.{environment}.json");
-        }
     }
 }

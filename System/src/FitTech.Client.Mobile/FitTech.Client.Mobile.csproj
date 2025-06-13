@@ -74,4 +74,9 @@
       <EmbeddedResource Include="appsettings.Development.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Layout\AppLayout.razor" />
+      <AdditionalFiles Include="Pages\Home.razor" />
+    </ItemGroup>
+
 </Project>
