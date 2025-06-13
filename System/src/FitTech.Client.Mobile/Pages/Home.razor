@@ -1,9 +1,7 @@
 ﻿@page "/"
-@attribute [Authorize]
 @using FitTech.API.Client.Configuration
 @using Microsoft.AspNetCore.Authorization
 @inject FitTechApiConfiguration ApiConfiguration
-
 <h1>Hello!</h1>
 
 This is the url to you API -> @ApiConfiguration.Url
