@@ -1,0 +1,21 @@
+@page "/usermanager"
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
+@inject AppHeaderStateHandler AppHeaderStateHandler
+@inject NavigationManager NavigationManager
+
+<h1>Bienvenido a la página de Gestión de tus Clientes</h1>
+
+@code {
+    protected override void OnInitialized()
+    {
+        AppHeaderStateHandler.Clear();
+        AppHeaderStateHandler.AddButton(HeroiconName.Plus, () =>
+        {
+            NavigationManager.NavigateTo("/usermanager/add");
+            return Task.CompletedTask;
+        }, "Añadir usuario");
+        
+        base.OnInitialized();
+    }
+}

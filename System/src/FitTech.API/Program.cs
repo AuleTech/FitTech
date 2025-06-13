@@ -3,7 +3,9 @@ using FastEndpoints.Swagger;
 using FitTech.API;
 using FitTech.Persistence;
 using FitTech.Application.Auth.Configuration;
-
+using FitTech.Application.Services;
+using FitTech.Persistence.Repositories;
+    
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseDefaultServiceProvider((_, options) =>
 {

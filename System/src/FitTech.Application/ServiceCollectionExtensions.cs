@@ -3,7 +3,8 @@ using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Providers;
 using FitTech.Application.Auth.Services;
 using FitTech.Application.Services;
-using FitTech.Domain.Entities;
+using FitTech.Persistence.Repositories;
+using FitTech.Domain.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -69,7 +70,9 @@ public static class ServiceCollectionExtensions
         services.Configure<ResendClientOptions>(configuration.GetSection("Resend"));
         services.AddTransient<IResend, ResendClient>();
         services.AddTransient<IEmailService, EmailService>();
-
+        services.AddTransient<IAddClientService, AddClientService>();
+        services.AddTransient<IAddClientRepository, AddClientRepository>();
+        services.AddTransient<AddClientService>();
         return services;
     }
 }
