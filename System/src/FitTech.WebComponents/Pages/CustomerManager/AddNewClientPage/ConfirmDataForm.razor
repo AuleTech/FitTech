@@ -8,9 +8,9 @@
         <!-- Tarjeta de datos personales -->
         <div class="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
             <h3 class="text-lg font-semibold text-gray-800 mb-3">👤 Datos personales</h3>
-            <p class="text-gray-700"><strong>Nombre:</strong> @Model.NameUser</p>
-            <p class="text-gray-700"><strong>Apellidos:</strong> @Model.LastNameuser</p>
-            <p class="text-gray-700"><strong>Correo:</strong> @Model.EmailUser</p>
+            <p class="text-gray-700"><strong>Nombre:</strong> @Model.Name</p>
+            <p class="text-gray-700"><strong>Apellidos:</strong> @Model.LastName</p>
+            <p class="text-gray-700"><strong>Correo:</strong> @Model.Email</p>
             <p class="text-gray-700"><strong>Teléfono:</strong> @Model.PhoneNumber</p>
             <p class="text-gray-700"><strong>Fecha de nacimiento:</strong> @Model.Birthdate.ToString("dd/MM/yyyy")</p>
         </div>
@@ -26,7 +26,7 @@
         <!-- Tarjeta de planificación -->
         <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 shadow-sm md:col-span-2">
             <h3 class="text-lg font-semibold text-gray-800 mb-3">📅 Planificación</h3>
-            <p class="text-gray-700"><strong>Evento o fecha límite:</strong> @Model.Event.ToString("dd/MM/yyyy")</p>
+            <p class="text-gray-700"><strong>Evento o fecha límite:</strong> @Model.DateSportEvent.ToString("dd/MM/yyyy")</p>
             <p class="text-gray-700"><strong>Centro deportivo:</strong> @Model.Center</p>
         </div>
     </div>

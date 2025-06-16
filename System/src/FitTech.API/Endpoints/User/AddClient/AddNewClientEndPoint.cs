@@ -11,10 +11,10 @@ namespace FitTech.API.Endpoints.User.AddClient;
 [HttpPost("/user/add-client")]
 public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
 {
-    private readonly AddClientService _service;
+    private readonly NewClientService _service;
     private readonly ILogger<AddNewClientEndPoint> _logger;
 
-    public AddNewClientEndPoint(AddClientService service, ILogger<AddNewClientEndPoint> logger)
+    public AddNewClientEndPoint(NewClientService service, ILogger<AddNewClientEndPoint> logger)
     {
         _service = service;
         _logger = logger;
@@ -46,7 +46,7 @@ public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
             createdByUserId: userId!
         );
         
-        await _service.AddNewClientAsync(client, ct);
+        await _service.NewClientAsync(client, ct);
         _logger.LogInformation("New client added");
         await SendOkAsync(Result.Success, ct);
         

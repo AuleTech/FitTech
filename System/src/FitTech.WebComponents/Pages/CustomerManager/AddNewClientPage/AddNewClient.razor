@@ -120,10 +120,10 @@
         var results = new List<ValidationResult>();
 
         bool isValid =
-            Validator.TryValidateProperty(NewClient.NameUser, new ValidationContext(NewClient) { MemberName = nameof(NewClient.NameUser) }, results) &&
-            Validator.TryValidateProperty(NewClient.LastNameuser, new ValidationContext(NewClient) { MemberName = nameof(NewClient.LastNameuser) }, results) &&
+            Validator.TryValidateProperty(NewClient.Name, new ValidationContext(NewClient) { MemberName = nameof(NewClient.Name) }, results) &&
+            Validator.TryValidateProperty(NewClient.LastName, new ValidationContext(NewClient) { MemberName = nameof(NewClient.LastName) }, results) &&
             Validator.TryValidateProperty(NewClient.PhoneNumber, new ValidationContext(NewClient) { MemberName = nameof(NewClient.PhoneNumber) }, results) &&
-            Validator.TryValidateProperty(NewClient.EmailUser, new ValidationContext(NewClient) { MemberName = nameof(NewClient.EmailUser) }, results);
+            Validator.TryValidateProperty(NewClient.Email, new ValidationContext(NewClient) { MemberName = nameof(NewClient.Email) }, results);
 
         if (isValid)
         {
@@ -175,7 +175,7 @@
 
         validationErrors.Clear();
 
-        var response = await UserService.AddNewClientAsync(NewClient.NameUser, NewClient.LastNameuser, NewClient.Birthdate, NewClient.EmailUser, NewClient.PhoneNumber!, NewClient.TrainingHours!, NewClient.TrainingModel, NewClient.Center, NewClient.Event, NewClient.SubscriptionType, _cts.Token);
+        var response = await UserService.AddNewClientAsync(NewClient.Name, NewClient.LastName, NewClient.Birthdate, NewClient.Email, NewClient.PhoneNumber!, NewClient.TrainingHours!, NewClient.TrainingModel, NewClient.Center, NewClient.DateSportEvent, NewClient.SubscriptionType, _cts.Token);
 
         if (!response!.Succeeded)
         {

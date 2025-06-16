@@ -54,8 +54,16 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    private static IServiceCollection AddRepositories(this IServiceCollection service) =>
+    private static IServiceCollection AddRepositories(this IServiceCollection service)
+    {
         service.AddTransient<IEmailRepository, EmailRepository>();
+        service.AddTransient<IClientRepository, ClientRepository>();
+        
+        return service;
+        
+    }
+      
+    
     
     public static async Task ApplyMigrationsAsync(this IServiceProvider serviceProvider)
     {

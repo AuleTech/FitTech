@@ -2,7 +2,7 @@
 
 namespace FitTech.Domain.Repositories;
 
-public interface IAddClientRepository
+public interface IClientRepository
 {
-    Task AddClientAsync(Client client, CancellationToken cancellationToken);
+    Task ClientAsync(Client client, CancellationToken cancellationToken);
 }

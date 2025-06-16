@@ -31,8 +31,8 @@
         </div>
     <div class="mb-4">
         <label for="evento" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha Límita o Evento</label>
-        <InputDate @bind-Value="Model!.Event" id="evento" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-        <ValidationMessage For="@(() => Model.Event)" class="text-red-600 text-sm"/>
+        <InputDate @bind-Value="Model!.DateSportEvent" id="evento" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <ValidationMessage For="@(() => Model.DateSportEvent)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
         <label for="center" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Entrenamiento Conjunto: Centro deportivo</label>

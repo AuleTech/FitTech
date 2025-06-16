@@ -15,9 +15,9 @@ public class AddClientTest
     [Test]
     public async Task Should_Add_Client_Successful(CancellationToken cancellationToken)
     {
-        var addClient = Substitute.For<IAddClientService>();
+        var addClient = Substitute.For<INewClientService>();
         var logger = Substitute.For<ILogger<Client>>();
-        var repo = Substitute.For<IAddClientRepository>();
+        var repo = Substitute.For<IClientRepository>();
 
         var client = new Client(
             Guid.NewGuid(),
@@ -33,10 +33,10 @@ public class AddClientTest
             subscriptionType:"Subscription",
             createdByUserId:"b3a2f8d6-09e6-4e7b-9d26-3cc27430e98f");
 
-        var service = new AddClientService(repo, logger);
+        var service = new NewClientService(repo, logger);
             
-       await service.AddNewClientAsync(client, cancellationToken);
+       await service.NewClientAsync(client, cancellationToken);
        //Esta linea se la he pedido a chatGTP, no tengo ni idea de que poner ahi y estoy muy cansado.
-       await repo.Received(1).AddClientAsync(client, cancellationToken);
+       await repo.Received(1).ClientAsync(client, cancellationToken);
     }
 }

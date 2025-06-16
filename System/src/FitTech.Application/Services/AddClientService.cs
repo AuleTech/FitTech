@@ -5,23 +5,22 @@ using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Services;
 
-public class AddClientService : IAddClientService
+public class NewClientService : INewClientService
 {
     private readonly ILogger<Client> _logger;
-    private readonly IAddClientRepository _addClientrepository;
+    private readonly IClientRepository _addClientrepository;
     
-    public AddClientService(IAddClientRepository repository, ILogger<Client> logger)
+    public NewClientService(IClientRepository repository, ILogger<Client> logger)
     {
         _logger = logger;
         _addClientrepository = repository;
     }
 
-    public async Task AddNewClientAsync(Client client, CancellationToken cancellationToken)
+    public async Task NewClientAsync(Client client, CancellationToken cancellationToken)
     {
-        if (client == null)
-            throw new ArgumentNullException(nameof(client));
+       ArgumentNullException.ThrowIfNull(client);
 
-        await _addClientrepository.AddClientAsync(client, cancellationToken);
+        await _addClientrepository.ClientAsync(client, cancellationToken);
         _logger.LogInformation("New client added");
     }
 }

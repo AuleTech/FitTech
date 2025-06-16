@@ -2,8 +2,10 @@
 using FitTech.Application.Auth.Services;
 using FitTech.Application.Services;
 using FitTech.Domain.Entities;
+using FitTech.Domain.Repositories;
 using FitTech.Domain.Templates.EmailsTemplates;
 using FitTech.Persistence;
+using FitTech.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
@@ -11,17 +13,20 @@ using Resend;
 
 namespace FitTech.Api.Tests.IntegrationTests;
 
-public class AddNewClientTests
+public class NewClientTests
 {
-    private static IAddClientService? _sut;
+    private static INewClientService? _sut;
     private static IServiceProvider? _serviceProvider; 
     
     public static void Setup()
     {
-        
-        var serviceCollection = new ServiceCollection().AddHttpClient().AddLogging();
+        var serviceCollection = new ServiceCollection().AddLogging();
+        serviceCollection.AddTransient<INewClientService, NewClientService>();
+        serviceCollection.AddTransient<IClientRepository, ClientRepository>();
+        serviceCollection.AddInMemorydb(Guid.NewGuid().ToString());
+      
         var sp = serviceCollection.BuildServiceProvider();
-        _sut = sp.GetRequiredService<IAddClientService>();
+        _sut = sp.GetRequiredService<INewClientService>();
         _serviceProvider = sp;
        
     }
@@ -46,7 +51,7 @@ public class AddNewClientTests
             createdByUserId:"b3a2f8d6-09e6-4e7b-9d26-3cc27430e98f");
         
         
-        await _sut!.AddNewClientAsync(client, cancellationToken);
+        await _sut!.NewClientAsync(client, cancellationToken);
         
         await using var dbContext = _serviceProvider?.GetRequiredService<FitTechDbContext>();
          

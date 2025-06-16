@@ -70,9 +70,13 @@ public static class ServiceCollectionExtensions
         services.Configure<ResendClientOptions>(configuration.GetSection("Resend"));
         services.AddTransient<IResend, ResendClient>();
         services.AddTransient<IEmailService, EmailService>();
-        services.AddTransient<IAddClientService, AddClientService>();
-        services.AddTransient<IAddClientRepository, AddClientRepository>();
-        services.AddTransient<AddClientService>();
+        return services;
+    }
+
+    public static IServiceCollection AddNewClientService(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddTransient<INewClientService, NewClientService>();
+        
         return services;
     }
 }

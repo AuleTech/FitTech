@@ -5,19 +5,19 @@
     <DataAnnotationsValidator/>
     
     <div class="mb-4">
-        <label for="firstName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
-        <InputText type="text" @bind-Value="Model!.NameUser" id="firstName" placeholder="Nombre del cliente" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-        <ValidationMessage For="@(() => Model.NameUser)" class="text-red-600 text-sm"/>
+        <label for="name" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
+        <InputText type="text" @bind-Value="Model!.Name" id="firstName" placeholder="Nombre del cliente" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <ValidationMessage For="@(() => Model.Name)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
         <label for="lastName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300 ">Apellidos</label>
-        <InputText type="text" @bind-Value="Model!.LastNameuser" id="lastName" placeholder="Apellidos del cliente" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-        <ValidationMessage For="@(() => Model.LastNameuser)" class="text-red-600 text-sm"/>
+        <InputText type="text" @bind-Value="Model!.LastName" id="lastName" placeholder="Apellidos del cliente" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <ValidationMessage For="@(() => Model.LastName)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
-        <label for="lastName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo Electrónico</label>
-        <InputText type="text" @bind-Value="Model!.EmailUser" id="lastName" placeholder="FitTech@example.com" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-        <ValidationMessage For="@(() => Model.EmailUser)" class="text-red-600 text-sm"/>
+        <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo Electrónico</label>
+        <InputText type="text" @bind-Value="Model!.Email" id="lastName" placeholder="FitTech@example.com" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <ValidationMessage For="@(() => Model.Email)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
         <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>

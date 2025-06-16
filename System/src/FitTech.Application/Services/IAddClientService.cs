@@ -2,9 +2,9 @@
 
 namespace FitTech.Application.Services;
 
-public interface IAddClientService
+public interface INewClientService
 {
     
-    Task AddNewClientAsync( Client client, CancellationToken cancellationToken);
+    Task NewClientAsync( Client client, CancellationToken cancellationToken);
     
 }

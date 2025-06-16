@@ -3,16 +3,16 @@ using FitTech.Domain.Repositories;
 
 namespace FitTech.Persistence.Repositories;
 
-public sealed class AddClientRepository : IAddClientRepository
+public sealed class ClientRepository : IClientRepository
     {
         private readonly FitTechDbContext _context;
 
-        public AddClientRepository(FitTechDbContext context)
+        public ClientRepository(FitTechDbContext context)
         {
             _context = context;
         }
     
-        public async Task AddClientAsync(Client client, CancellationToken cancellationToken)
+        public async Task ClientAsync(Client client, CancellationToken cancellationToken)
         {
             await _context.ClientTable.AddAsync(client, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
