@@ -1,5 +1,6 @@
 ﻿using FitTech.Domain.Entities;
-namespace FitTech.Domain.Interfaces;
+
+namespace FitTech.Domain.Repositories;
 
 public interface IEmailRepository
 {

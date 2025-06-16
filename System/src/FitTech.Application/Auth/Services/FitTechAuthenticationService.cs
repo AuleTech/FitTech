@@ -179,4 +179,5 @@ internal sealed class FitTechAuthenticationService : IFitTechAuthenticationServi
 
         return new RefreshTokenResultDto(_tokenProvider.GenerateAccessToken(user), false);
     }
+    
 }
