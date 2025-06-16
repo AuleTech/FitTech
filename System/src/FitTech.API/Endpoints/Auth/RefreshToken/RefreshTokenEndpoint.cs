@@ -1,4 +1,5 @@
-﻿using FastEndpoints;
+﻿using AuleTech.Core.Patterns;
+using FastEndpoints;
 using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;

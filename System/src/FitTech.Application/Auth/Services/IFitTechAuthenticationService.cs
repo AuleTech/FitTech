@@ -1,4 +1,5 @@
-﻿using FitTech.Application.Auth.Dtos;
+﻿using AuleTech.Core.Patterns;
+using FitTech.Application.Auth.Dtos;
 
 namespace FitTech.Application.Auth.Services;
 

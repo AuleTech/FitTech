@@ -3,5 +3,9 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" />
     </ItemGroup>
+  
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\AuleTech.Core\src\AuleTech.Core\AuleTech.Core.csproj" />
+    </ItemGroup>
 
 </Project>

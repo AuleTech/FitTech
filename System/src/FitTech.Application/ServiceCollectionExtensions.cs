@@ -46,6 +46,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IFitTechAuthenticationService, FitTechAuthenticationService>();
         services.AddTransient<ITokenProvider, TokenProvider>();
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IClientService, ClientService>(); //TODO: Move
         
         services.AddAuthorization();
         
@@ -70,13 +71,6 @@ public static class ServiceCollectionExtensions
         services.Configure<ResendClientOptions>(configuration.GetSection("Resend"));
         services.AddTransient<IResend, ResendClient>();
         services.AddTransient<IEmailService, EmailService>();
-        return services;
-    }
-
-    public static IServiceCollection AddNewClientService(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddTransient<INewClientService, NewClientService>();
-        
         return services;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Web;
+using AuleTech.Core.Patterns;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Providers;
 using FitTech.Application.Extensions;

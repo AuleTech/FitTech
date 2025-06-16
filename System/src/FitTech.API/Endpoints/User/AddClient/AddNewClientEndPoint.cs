@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using AuleTech.Core.Patterns;
 using FastEndpoints;
 using FitTech.Application;
 using FitTech.Application.Services;
@@ -11,10 +12,10 @@ namespace FitTech.API.Endpoints.User.AddClient;
 [HttpPost("/user/add-client")]
 public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
 {
-    private readonly NewClientService _service;
+    private readonly IClientService _service;
     private readonly ILogger<AddNewClientEndPoint> _logger;
 
-    public AddNewClientEndPoint(NewClientService service, ILogger<AddNewClientEndPoint> logger)
+    public AddNewClientEndPoint(IClientService service, ILogger<AddNewClientEndPoint> logger)
     {
         _service = service;
         _logger = logger;
@@ -31,7 +32,7 @@ public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
             return;
         }
         
-        var client = new Client(
+        var client = new Domain.Entities.Client(
             id: Guid.NewGuid(),
             nameUser: req.NameUser,
             lastNameuser: req.LastNameuser,
@@ -46,7 +47,7 @@ public class AddNewClientEndPoint : Endpoint<AddNewClientRequest, Result>
             createdByUserId: userId!
         );
         
-        await _service.NewClientAsync(client, ct);
+        await _service.AddAsync(client, ct);
         _logger.LogInformation("New client added");
         await SendOkAsync(Result.Success, ct);
         

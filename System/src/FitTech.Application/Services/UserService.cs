@@ -1,7 +1,7 @@
-﻿using FitTech.Application.Dtos;
+﻿using AuleTech.Core.Patterns;
+using FitTech.Application.Dtos;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FitTech.Application.Services;
 

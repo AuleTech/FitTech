@@ -67,7 +67,17 @@
         new MenuItem { Text = "Rutinas", Link = "/workouts", Icon = HeroiconName.ClipboardDocumentCheck },
         new MenuItem { Text = "Ajustes", Link = "/settings", Icon = HeroiconName.Cog8Tooth}
     };
+    
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += HandleLocationChanged;
+    }
 
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        StateHasChanged();   
+    }
+    
     private bool IsActive(string href)
     {
         var current = Navigation.ToBaseRelativePath(Navigation.Uri).TrimEnd('/');

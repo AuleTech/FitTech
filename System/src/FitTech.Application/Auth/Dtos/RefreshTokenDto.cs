@@ -1,4 +1,5 @@
-﻿using FitTech.Application.Extensions;
+﻿using AuleTech.Core.Patterns;
+using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Auth.Dtos;
 
