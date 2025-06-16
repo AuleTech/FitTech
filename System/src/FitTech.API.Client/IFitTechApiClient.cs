@@ -13,4 +13,5 @@ public interface IFitTechApiClient
     Task<Result> ResetPasswordAsync(ResetPasswordRequest resetPasswordRequest, CancellationToken cancellationToken);
     Task<Result<UserInfoDto>> GetCurrentUserAsync(CancellationToken cancellationToken);
     Task<Result> AddNewClientAsync(AddNewClientRequest addNewClientRequest, CancellationToken cancellationToken);
+    Task<Result<ClientSettingsDto>> GetClientSettings(CancellationToken cancellationToken);
 }

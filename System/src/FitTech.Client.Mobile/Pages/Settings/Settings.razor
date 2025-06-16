@@ -1,5 +1,6 @@
 @page "/settings"
-@using Microsoft.AspNetCore.Authorization
+@using FitTech.API.Client
+@inject IFitTechApiClient ApiClient
 @inject NavigationManager NavigationManager
 
 <div class="flex flex-col">
@@ -10,15 +11,15 @@
         <div class="text-gray-900 space-y-4 text-sm">
             <div>
                 <span class="font-semibold">Nombre</span>
-                <p class="text-gray-600">Admin FitTech</p>
+                <p class="text-gray-600">@_settingsModel.Name</p>
             </div>
             <div>
                 <span class="font-semibold">Email</span>
-                <p class="text-gray-600">admin@fittech.es</p>
+                <p class="text-gray-600">@_settingsModel.Email</p>
             </div>
             <div>
                 <span class="font-semibold">Entrenador</span>
-                <p class="text-gray-600">Admin Trainer</p>
+                <p class="text-gray-600">@_settingsModel.Trainer</p>
             </div>
         </div>
     </div>
@@ -39,7 +40,30 @@
 </div>
 
 @code {
-    public void Logout()
+
+    private SettingsModel _settingsModel = new ();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await ApiClient.GetClientSettings(CancellationToken.None);
+
+        if (!result.Succeeded)
+        {
+            //TODO: Banner
+            return;
+        }
+        
+        _settingsModel = new SettingsModel
+        {
+            Name = result.Value!.Name!,
+            Email = result.Value!.Email!,
+            Trainer = result.Value!.TrainerName!
+        };
+
+        await base.OnInitializedAsync();
+    }
+
+    private void Logout()
     {
         NavigationManager.NavigateTo("/logout");
     }

@@ -31,11 +31,11 @@ public class FitTechDelegationHandler : DelegatingHandler
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", user.AccessToken);
 
-        var respone = await base.SendAsync(request, cancellationToken);
+        var response = await base.SendAsync(request, cancellationToken);
 
-        if (respone.StatusCode != HttpStatusCode.Unauthorized)
+        if (response.StatusCode != HttpStatusCode.Unauthorized)
         {
-            return respone;
+            return response;
         }
 
         return await RefreshTokenAndRetryAsync();
@@ -43,22 +43,29 @@ public class FitTechDelegationHandler : DelegatingHandler
         async Task<HttpResponseMessage> RefreshTokenAndRetryAsync()
         {
             //TODO: Critical section
-            var refreshedToken = await _apiClient.RefreshTokenAsync(
-                new RefreshTokenRequest()
-                {
-                    RefreshToken = user.RefreshToken, ExpiredAccessToken = user.AccessToken
-                }, cancellationToken);
-
-            if (!refreshedToken.Succeeded)
+            try
             {
-                return respone;
+                var refreshedToken = await _apiClient.RefreshTokenAsync(
+                    new RefreshTokenRequest()
+                    {
+                        RefreshToken = user.RefreshToken, ExpiredAccessToken = user.AccessToken
+                    }, cancellationToken);
+                
+                if (!refreshedToken.Succeeded)
+                {
+                    return response;
+                }
+
+                user.AccessToken = refreshedToken.Value;
+
+                await _storage.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", user.AccessToken);
+                return await base.SendAsync(request, cancellationToken);
             }
-
-            user.AccessToken = refreshedToken.Value;
-
-            await _storage.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", user.AccessToken);
-            return await base.SendAsync(request, cancellationToken);
+            catch (Exception)
+            {
+                return response;
+            }
         }
     }
 }

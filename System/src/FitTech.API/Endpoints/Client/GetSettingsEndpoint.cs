@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Authorization;
 namespace FitTech.API.Endpoints.Client;
 
 [HttpGet("/client/settings")]
-[Authorize(AuthenticationSchemes = "Bearer",Roles = "Client")]
-public class GetSettingsRequest : EndpointWithoutRequest<Result<ClientSettingsDto>>
+[Authorize(AuthenticationSchemes = "Bearer")]
+public class GetSettingsEndpoint : EndpointWithoutRequest<Result<ClientSettingsDto>>
 {
     private readonly IClientService _clientService;
 
-    public GetSettingsRequest(IClientService clientService)
+    public GetSettingsEndpoint(IClientService clientService)
     {
         _clientService = clientService;
     }

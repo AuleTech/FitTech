@@ -90,5 +90,15 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         return new Result(){ Succeeded = result.Succeeded!.Value, Errors = result.Errors!.ToArray() ?? [] };
         
     }
+
+    public async Task<Result<ClientSettingsDto>> GetClientSettings(CancellationToken cancellationToken)
+    {
+        var result = await _proxy.GetSettingsEndpointAsync(cancellationToken);
+
+        return new Result<ClientSettingsDto>()
+        {
+            Succeeded = result.Succeeded!.Value, Errors = result.Errors!.ToArray(), Value = result.Value
+        };
+    } 
     
 }
