@@ -1,6 +1,7 @@
 @page "/login"
 @layout EmptyLayout
 @inherits FitTech.WebComponents.Components.CancellableComponent
+@using FitTech.WebComponents.Components.Banners
 @inject ILogger<Login> Logger
 @inject IUserService UserService
 @inject NavigationManager NavigationManager
@@ -12,6 +13,10 @@
         <div class="mb-6 text-center">
             <h2 class="mt-4 text-2xl font-bold text-black dark:text-white">Bienvenido a FitTech</h2>
         </div>
+
+		<ShowBanners showErrorBanner="@_errorLogin"></ShowBanners>
+
+
         <EditForm Model="LoginModel" OnSubmit="Submit" FormName="LoginForm">
             <div class="mb-4">
                 <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Email</label>
@@ -40,20 +45,23 @@
 
 @code
 {
-    [SupplyParameterFromForm]
-    private LoginModel? LoginModel { get; set; }
+	[SupplyParameterFromForm]
+	private LoginModel? LoginModel { get; set; }
 
-    protected override void OnInitialized() => LoginModel ??= new();
+	private string _errorLogin = string.Empty;
 
-    private async Task Submit()
-    {
-        Logger.LogInformation("Email: {Email}", LoginModel?.Email);
-        var response = await UserService.LoginAsync(LoginModel!.Email, LoginModel.Password, _cts.Token);
+	protected override void OnInitialized() => LoginModel ??= new();
 
-        if (!response!.Succeeded)
-        {
-            //TODO: Show error
-            return;
+	private async Task Submit()
+	{
+		Logger.LogInformation("Email: {Email}", LoginModel?.Email);
+		var response = await UserService.LoginAsync(LoginModel!.Email, LoginModel.Password, _cts.Token);
+
+		if (!response!.Succeeded)
+		{
+
+			_errorLogin = "Invalid credentials message";
+			return;
         } 
         NavigationManager.NavigateTo("/", new NavigationOptions
         {
