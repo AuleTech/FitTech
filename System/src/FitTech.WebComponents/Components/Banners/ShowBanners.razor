@@ -42,5 +42,39 @@
 	[Parameter] public string? showWarningBanner { get; set; }
 	[Parameter] public string? showSuccessBanner { get; set; }
 	[Parameter] public string? showInfoBanner { get; set; }
+    
+    //Esto no sería necesario, solamente [Parameter] public string? TypeInfoBanner { get; set; }
+    
+    //Puede usar una función que lea lo que viene en el parametro y en función de eso te añada un color y un mensaje, por lo tanto obviamos repetir la estrucutra.
+    
+   /* private string BannerClass(string type) => type switch
+    {
+        "error" => "flex bg-red-100 rounded-lg p-4 mb-4 text-sm text-red-700",
+        "success" => "flex bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700",
+        "info" => "flex bg-yellow-100 rounded-lg p-4 mb-4 text-sm text-yellow-700",
+        "warning" => "flex bg-blue-100 rounded-lg p-4 mb-4 text-sm text-blue-700",
+        _ => "flex p-4 mb-4 text-sm"
+        
+        Entonces en función del contenido de la variable BannerType el estilo será uno u otro
+    };
+    
+    Y aqui puedes añadirle el título que corresponda. Si trae por ejemplo bannertype = error, pues su título y puede meterle mensaje.
 
+    private string GetTitle(string type) => type switch
+    {
+        "error" => "Error",
+        "success" => "Éxito",
+        "info" => "Información",
+        "warning" => "Advertencia",
+        _ => "Aviso"
+    };*/
+   
+   // esta manera de usar switch es una manera nueva que ha salido en C# 8 en adelante, yo tampoco la conocía.
+    
+   
+   //Que te queda? crear un solo componente dinamico que cambia en función de las respuestas:
+   //para ello utiliza este ejemplo para enlazar los valores de las funciones con las etiquetas:
+   //<div class="@BannerClass(Type)" role="alert"> 
+   //<span class="font-medium">@GetTitle(Type)</span>
+   // Eso integrado en tu componente debería de funcionar. No lo he probado,seguramente tengas que hacer ajustes, pero creo que con esto tendras guía de sobra.
 }
