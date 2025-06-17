@@ -30,8 +30,10 @@ internal sealed class ClientService : IClientService
         return new ClientSettingsDto(user.UserName!, "Trainer name", user.Email!);
     }
     
-    public async Task<Result> AddAsync(Client client, CancellationToken cancellationToken)
+    public async Task<Result> AddAsync(AddClientDto client, CancellationToken cancellationToken)
     {
-        return await _clientRepository.AddAsync(client, cancellationToken);
+        //TODO: Need mapper
+        //TODO: Missing migrations
+        return await _clientRepository.AddAsync(new Client(), cancellationToken);
     }
 }

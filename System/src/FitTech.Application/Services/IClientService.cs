@@ -8,5 +8,5 @@ public interface IClientService
 {
     Task<Result<ClientSettingsDto>> GetSettingsAsync(Guid id, CancellationToken cancellationToken);
 
-    Task<Result> AddAsync(Client client, CancellationToken cancellationToken);
+    Task<Result> AddAsync(AddClientDto client, CancellationToken cancellationToken);
 }

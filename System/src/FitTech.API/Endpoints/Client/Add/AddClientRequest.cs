@@ -1,6 +1,6 @@
-﻿namespace FitTech.API.Endpoints.User.AddClient;
+﻿namespace FitTech.API.Endpoints.Client.Add;
 
-public record AddNewClientRequest(string NameUser,
+public record AddClientRequest(string NameUser,
     string LastNameuser,
     string EmailUser,
     DateTime Birthdate,
@@ -10,3 +10,5 @@ public record AddNewClientRequest(string NameUser,
     DateTime EventDate,
     string Center,
     string SubscriptionType);
+
+//TODO: Need mappers
