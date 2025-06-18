@@ -1,9 +1,9 @@
-﻿using AuleTech.Core.Patterns;
+﻿using AuleTech.Core.Patterns.Result;
 using Cocona;
 using DevopsCli.Core.Tools.Dotnet;
 using Microsoft.Extensions.Logging;
 
-namespace DevopsCli.Core.Commands.Dotnet.Tests;
+namespace DevopsCli.Core.Commands.Dotnet.Test;
 
 internal sealed class RunTestsCommand : ICommand<RunTestsCommandParams, Result>
 {

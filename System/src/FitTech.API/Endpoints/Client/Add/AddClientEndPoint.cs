@@ -1,28 +1,27 @@
 ﻿using System.Security.Claims;
 using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
-using FitTech.Application.Dtos.Client;
-using FitTech.Application.Services;
+using FitTech.Application.Commands.Client.Add;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Client.Add;
 
 [Authorize(AuthenticationSchemes = "Bearer")]
 [HttpPost("/user/add-client")]
-public class AddClientEndPoint : Endpoint<AddClientRequest, Result>
+public class AddClientEndPoint : Endpoint<AddClientRequest>
 {
-    private readonly IClientService _service;
-    private readonly ILogger<AddClientEndPoint> _logger;
+    private readonly IAuleTechCommandHandler<AddClientCommand, Result> _commandHandler;
 
-    public AddClientEndPoint(IClientService service, ILogger<AddClientEndPoint> logger)
+    public AddClientEndPoint(IAuleTechCommandHandler<AddClientCommand, Result> commandHandler)
     {
-        _service = service;
-        _logger = logger;
+        _commandHandler = commandHandler;
     }
 
     public override async Task HandleAsync(AddClientRequest req, CancellationToken ct)
     {
-        //llega nulo, buscar manera de que recoja el AccesToken o el email del usuario
+        //TODO: Probably add Id when created or something 
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         if (string.IsNullOrWhiteSpace(userId))
@@ -31,9 +30,13 @@ public class AddClientEndPoint : Endpoint<AddClientRequest, Result>
             return;
         }
         
-        await _service.AddAsync(new AddClientDto(), ct);
-        _logger.LogInformation("New client added");
-        await SendOkAsync(Result.Success, ct);
+        var result = await _commandHandler.HandleAsync(new AddClientCommand(), ct);
+
+        if (!result.Succeeded)
+        {
+            ThrowError(result.Errors.First());
+        }
         
+        await SendOkAsync(null, ct);
     }
 }

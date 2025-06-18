@@ -6,17 +6,17 @@ namespace FitTech.Persistence;
 
 public class FitTechDbContext : IdentityDbContext<FitTechUser, FitTechRole, Guid>
 {
-    public DbSet<Email> EmailLog { get; set; }
-    public DbSet<Client> ClientTable { get; set; }
     public FitTechDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
     {
-        
     }
+
+    public DbSet<Email> EmailLog { get; set; }
+    public DbSet<Client> ClientTable { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Email>().HasKey(x => x.Id);
-        
+
         base.OnModelCreating(builder);
     }
 }

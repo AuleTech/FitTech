@@ -1,7 +1,8 @@
 ﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client.Configuration;
 using FitTech.ApiClient;
-using Result = AuleTech.Core.Patterns.Result;
+using Result = AuleTech.Core.Patterns.Result.Result;
 
 namespace FitTech.API.Client;
 

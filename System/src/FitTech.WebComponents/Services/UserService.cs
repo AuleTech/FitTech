@@ -1,4 +1,5 @@
 ﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using Blazored.LocalStorage;
 using FitTech.API.Client;
 using FitTech.ApiClient;
@@ -6,7 +7,7 @@ using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using FitTech.WebComponents.Persistence;
 using Microsoft.Extensions.Logging;
-using Result = AuleTech.Core.Patterns.Result;
+using Result = AuleTech.Core.Patterns.Result.Result;
 
 
 

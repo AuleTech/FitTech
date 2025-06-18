@@ -41,8 +41,8 @@
 
 @code {
 
-    private SettingsModel _settingsModel = new ();
-    
+    private SettingsModel _settingsModel = new();
+
     protected override async Task OnInitializedAsync()
     {
         var result = await ApiClient.GetClientSettings(CancellationToken.None);
@@ -52,7 +52,7 @@
             //TODO: Banner
             return;
         }
-        
+
         _settingsModel = new SettingsModel
         {
             Name = result.Value!.Name!,
@@ -67,4 +67,5 @@
     {
         NavigationManager.NavigateTo("/logout");
     }
+
 }

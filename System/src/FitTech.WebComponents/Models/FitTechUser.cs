@@ -16,7 +16,7 @@ public class FitTechUser
         {
             return new ClaimsPrincipal();
         }
-        
+
         var tokenHandler = new JwtSecurityTokenHandler();
         tokenHandler.InboundClaimTypeMap.Clear();
         var claims = new ClaimsIdentity("FitTechAuth");
@@ -30,4 +30,3 @@ public class FitTechUser
         return new ClaimsPrincipal(claims);
     }
 }
-

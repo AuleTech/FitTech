@@ -1,7 +1,7 @@
-﻿using AuleTech.Core.Patterns;
+﻿using AuleTech.Core.Patterns.Result;
 using Cocona;
 
-namespace DevopsCli.Core.Commands.Dotnet.Tests;
+namespace DevopsCli.Core.Commands.Dotnet.Test;
 
 public class RunTestsCommandParams : ICommandParameterSet, IValidableParams
 {

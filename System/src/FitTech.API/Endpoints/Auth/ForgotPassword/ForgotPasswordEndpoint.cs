@@ -1,28 +1,34 @@
-﻿using AuleTech.Core.Patterns;
+﻿using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
-using FitTech.Application;
-using FitTech.Application.Auth.Dtos;
-using FitTech.Application.Auth.Services;
+using FitTech.Application.Commands.Auth.ForgotPassword;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Auth.ForgotPassword;
 
 [AllowAnonymous]
 [HttpPost("/auth/forgot-password")]
-public class ForgotPasswordEndpoint: Endpoint<ForgotPasswordRequest, Result<string>>
+public class ForgotPasswordEndpoint : Endpoint<ForgotPasswordRequest, string>
 {
-    private readonly IFitTechAuthenticationService _authenticationService;
+    private readonly IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>
+        _auleTechCommandHandler;
 
-    public ForgotPasswordEndpoint(IFitTechAuthenticationService authenticationService)
+    public ForgotPasswordEndpoint(IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>> auleTechCommandHandler)
     {
-        _authenticationService = authenticationService;
+        _auleTechCommandHandler = auleTechCommandHandler;
     }
 
+    //TODO: Add validation
     public override async Task HandleAsync(ForgotPasswordRequest req, CancellationToken ct)
     {
         var result =
-            await _authenticationService.ForgotPasswordAsync(new ForgotPasswordDto(req.Email, req.CallbackUrl), ct);
+            await _auleTechCommandHandler.HandleAsync(new ForgotPasswordCommand(req.Email, req.CallbackUrl), ct);
 
-        await SendAsync(result, result.Succeeded ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest, ct);
+        if (!result.Succeeded)
+        {
+            ThrowError(result.Errors.First()); //TODO: Just for now
+        }
+
+        await SendAsync(result.Value!, cancellation: ct);
     }
 }

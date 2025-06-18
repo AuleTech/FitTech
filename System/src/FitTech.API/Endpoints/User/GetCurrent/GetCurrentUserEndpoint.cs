@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application;
 using FitTech.Application.Dtos;

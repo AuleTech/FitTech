@@ -23,7 +23,8 @@
                 <li class="mt-4">
                     <a href="@item.Link" class="group flex items-center p-2 rounded-lg border-l-4 transition-colors duration-300
                                                 @(isActive ? "border-lime-400 bg-gray-800 text-white" : "border-transparent text-gray-400 hover:border-lime-300 hover:text-white")">
-                        <Heroicon Name="@item.Icon" Type="HeroiconType.Outline" class="h-5 w-5 mr-3 group-hover:text-white" />
+                        <Heroicon Name="@item.Icon" Type="HeroiconType.Outline"
+                                  class="h-5 w-5 mr-3 group-hover:text-white"/>
                         <span class="text-sm">@item.Text</span>
                     </a>
                 </li>
@@ -38,14 +39,16 @@
 </aside>
 
 <!-- Bottom Nav for mobile -->
-<nav class="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-gray-900 bg-gradient-to-t from-zinc-900 to-gray-800 shadow-inner border-t border-gray-700">
+<nav
+    class="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-gray-900 bg-gradient-to-t from-zinc-900 to-gray-800 shadow-inner border-t border-gray-700">
     <ul class="flex justify-around items-center h-16 text-white">
         @foreach (var item in menuItems)
         {
             var isActive = IsActive(item.Link);
             <li>
-                <a href="@item.Link" class="flex flex-col items-center text-xs group transition-colors duration-300 @(isActive ? "text-lime-400" : "text-gray-400 hover:text-lime-300")">
-                    <Heroicon Name="@item.Icon" Type="HeroiconType.Outline" class="h-6 w-6 mb-1" />
+                <a href="@item.Link"
+                   class="flex flex-col items-center text-xs group transition-colors duration-300 @(isActive ? "text-lime-400" : "text-gray-400 hover:text-lime-300")">
+                    <Heroicon Name="@item.Icon" Type="HeroiconType.Outline" class="h-6 w-6 mb-1"/>
                     <span>@item.Text</span>
                 </a>
             </li>
@@ -54,6 +57,7 @@
 </nav>
 
 @code {
+
     private class MenuItem
     {
         public string Text { get; init; } = null!;
@@ -65,9 +69,9 @@
     {
         new MenuItem { Text = "Inicio", Link = "/", Icon = HeroiconName.Home },
         new MenuItem { Text = "Rutinas", Link = "/workouts", Icon = HeroiconName.ClipboardDocumentCheck },
-        new MenuItem { Text = "Ajustes", Link = "/settings", Icon = HeroiconName.Cog8Tooth}
+        new MenuItem { Text = "Ajustes", Link = "/settings", Icon = HeroiconName.Cog8Tooth }
     };
-    
+
     protected override void OnInitialized()
     {
         Navigation.LocationChanged += HandleLocationChanged;
@@ -75,9 +79,9 @@
 
     private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
     {
-        StateHasChanged();   
+        StateHasChanged();
     }
-    
+
     private bool IsActive(string href)
     {
         var current = Navigation.ToBaseRelativePath(Navigation.Uri).TrimEnd('/');
@@ -85,4 +89,5 @@
 
         return string.Equals(current, target, StringComparison.OrdinalIgnoreCase);
     }
+
 }

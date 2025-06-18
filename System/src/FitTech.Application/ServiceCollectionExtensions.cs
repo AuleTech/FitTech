@@ -43,10 +43,8 @@ public static class ServiceCollectionExtensions
             };
         });
 
-        services.AddTransient<IFitTechAuthenticationService, FitTechAuthenticationService>();
         services.AddTransient<ITokenProvider, TokenProvider>();
         services.AddTransient<IUserService, UserService>();
-        services.AddTransient<IClientService, ClientService>(); //TODO: Move
         
         services.AddAuthorization();
         

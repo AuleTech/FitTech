@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices.JavaScript;
 using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using Blazor.Heroicons.Solid;
 using FitTech.WebComponents.Models;
 using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;

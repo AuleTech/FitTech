@@ -1,8 +1,11 @@
 ﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
+using FitTech.Application.Commands.Auth.RequestPassword;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Auth.ResetPassword;
@@ -11,17 +14,17 @@ namespace FitTech.API.Endpoints.Auth.ResetPassword;
 [AllowAnonymous]
 public class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest, Result>
 {
-    private readonly IFitTechAuthenticationService _authenticationService;
+    private readonly IAuleTechCommandHandler<ResetPasswordCommand, Result> _commandHandler;
 
-    public ResetPasswordEndpoint(IFitTechAuthenticationService authenticationService)
+    public ResetPasswordEndpoint(IAuleTechCommandHandler<ResetPasswordCommand, Result> commandHandler)
     {
-        _authenticationService = authenticationService;
+        _commandHandler = commandHandler;
     }
 
     public override async Task HandleAsync(ResetPasswordRequest req, CancellationToken ct)
     {
         var result =
-            await _authenticationService.ResetPasswordAsync(new ResetPasswordDto(req.Email, req.NewPassword, req.Token),
+            await _commandHandler.HandleAsync(new ResetPasswordCommand(req.Email, req.NewPassword, req.Token),
                 ct);
 
         await SendAsync(result, result.Succeeded ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest, ct);
