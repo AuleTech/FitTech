@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
         {
             apiHttpClientBuilder.AddHttpMessageHandler(httpClientHandlerFunc!);
         }
-        
+
         serviceCollection.AddTransient<IFitTechApiClient, FitTechApiClient>();
         serviceCollection.AddTransient<IFitTechApiClientFactory, FitTechApiClientFactory>();
 

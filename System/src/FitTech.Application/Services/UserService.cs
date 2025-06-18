@@ -1,9 +1,18 @@
-﻿using FitTech.Application.Dtos;
+﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
+using FitTech.Application.Dtos;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FitTech.Application.Services;
+
+//TODO: Think about this, move to Query or just remove it
+
+public interface IUserService
+{
+    Task<Result<UserInfoDto>> GetUserInfoAsync(Guid userId, CancellationToken cancellation);
+}
+
 
 internal sealed class UserService : IUserService
 {

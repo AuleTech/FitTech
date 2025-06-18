@@ -1,50 +1,56 @@
 @using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
 <EditForm Model="Model" OnInvalidSubmit="Submit" FormName="CostumerForm">
-    
+
     <DataAnnotationsValidator/>
-    
+
     <div class="mb-4">
         <label for="name" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
-        <InputText type="text" @bind-Value="Model!.Name" id="firstName" placeholder="Nombre del cliente" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputText type="text" @bind-Value="Model!.Name" id="firstName" placeholder="Nombre del cliente"
+                   class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.Name)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
         <label for="lastName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300 ">Apellidos</label>
-        <InputText type="text" @bind-Value="Model!.LastName" id="lastName" placeholder="Apellidos del cliente" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputText type="text" @bind-Value="Model!.LastName" id="lastName" placeholder="Apellidos del cliente"
+                   class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.LastName)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
-        <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo Electrónico</label>
-        <InputText type="text" @bind-Value="Model!.Email" id="lastName" placeholder="FitTech@example.com" class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo
+            Electrónico</label>
+        <InputText type="text" @bind-Value="Model!.Email" id="lastName" placeholder="FitTech@example.com"
+                   class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.Email)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
-        <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>
-        <InputDate @bind-Value="Model!.Birthdate" id="birthday" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de
+            Nacimiento</label>
+        <InputDate @bind-Value="Model!.Birthdate" id="birthday"
+                   class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.Birthdate)" class="text-red-600 text-sm"/>
     </div>
     <div class="mb-4">
         <label for="phonenumber" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Teléfono</label>
-        <InputNumber type="text" @bind-Value="Model!.PhoneNumber" placeholder="Número de teléfono del cliente" id="phonenumber" class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+        <InputNumber type="text" @bind-Value="Model!.PhoneNumber" placeholder="Número de teléfono del cliente"
+                     id="phonenumber"
+                     class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
         <ValidationMessage For="@(() => Model.PhoneNumber)" class="text-red-600 text-sm"/>
     </div>
 </EditForm>
 
 @code {
 
-    [Parameter]
-    public required NewClientModel Model { get; set; }
-    
+    [Parameter] public required NewClientModel Model { get; set; }
+
     protected override void OnInitialized()
     {
-       Model ??= new();
-    }
-    
-    public static void  Submit()
-    {
-       
+        Model ??= new();
     }
 
-    
+    public static void Submit()
+    {
+    }
+
+
 }

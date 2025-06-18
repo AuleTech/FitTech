@@ -1,10 +1,10 @@
 using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using FitTech.Trainer.Wasm;
 using FitTech.Trainer.Wasm.Persistence;
 using FitTech.WebComponents;
 using FitTech.WebComponents.Persistence;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

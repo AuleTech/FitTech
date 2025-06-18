@@ -1,4 +1,6 @@
 ﻿using System.Security.Claims;
+using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application;
 using FitTech.Application.Dtos;
@@ -9,7 +11,7 @@ namespace FitTech.API.Endpoints.User.GetCurrent;
 
 [Authorize(AuthenticationSchemes = "Bearer")]
 [HttpGet("/user/get-current")]
-public class GetCurrentUserEndpoint : EndpointWithoutRequest<Result<UserInfoDto>>
+public class GetCurrentUserEndpoint : EndpointWithoutRequest<UserInfoDto>
 {
     private readonly IUserService _userService;
 
@@ -30,6 +32,11 @@ public class GetCurrentUserEndpoint : EndpointWithoutRequest<Result<UserInfoDto>
 
         var userInfo = await _userService.GetUserInfoAsync(Guid.Parse(userId), ct);
 
-        await SendAsync(userInfo, cancellation: ct);
+        if (!userInfo.Succeeded)
+        {
+            ThrowError(userInfo.Errors.First());
+        }
+        
+        await SendAsync(userInfo.Value!, cancellation: ct);
     }
 }

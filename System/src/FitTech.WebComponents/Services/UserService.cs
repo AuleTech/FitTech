@@ -1,12 +1,11 @@
-﻿using AuleTech.Core.Patterns;
-using Blazored.LocalStorage;
+﻿using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client;
 using FitTech.ApiClient;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using FitTech.WebComponents.Persistence;
 using Microsoft.Extensions.Logging;
-using Result = AuleTech.Core.Patterns.Result;
+using Result = AuleTech.Core.Patterns.Result.Result;
 
 
 
@@ -114,7 +113,7 @@ internal sealed class UserService : IUserService
     public async Task<Result> AddNewClientAsync(string username, string lastname, DateTime birthdate, string email, int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTime eventDate, string subscriptionType,  CancellationToken cancellationToken)
     {
         var result = await _fitTechApiClient.AddNewClientAsync(
-            new AddNewClientRequest()
+            new AddClientRequest()
             {
                 NameUser = username,
                 LastNameuser = lastname,

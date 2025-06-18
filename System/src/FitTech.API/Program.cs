@@ -1,6 +1,7 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FitTech.API;
+using FitTech.Application;
 using FitTech.Persistence;
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Services;
@@ -34,7 +35,8 @@ builder.Services
         policyBuilder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
 
     }))
-    .AddPersistence(connectionString);
+    .AddPersistence(connectionString)
+    .AddCQRS();
 
 var app = builder.Build();
 

@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0"/>
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0"/>
 
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <IsAspireHost>true</IsAspireHost>
-        <UserSecretsId>6cdf02a6-6c1a-4659-873c-838470c23d7e</UserSecretsId>
-    </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>6cdf02a6-6c1a-4659-873c-838470c23d7e</UserSecretsId>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Aspire.Hosting.AppHost" />
-      <PackageReference Include="Aspire.Hosting.PostgreSQL" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost"/>
+    <PackageReference Include="Aspire.Hosting.PostgreSQL"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\FitTech.API\FitTech.API.csproj" />
-      <ProjectReference Include="..\FitTech.Trainer.Wasm\FitTech.Trainer.Wasm.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FitTech.API\FitTech.API.csproj"/>
+    <ProjectReference Include="..\FitTech.Trainer.Wasm\FitTech.Trainer.Wasm.csproj"/>
+  </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
+using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.Application.Extensions;
 

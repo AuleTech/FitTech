@@ -16,7 +16,7 @@
 
 name: Continuous_Integration
 
-on: [pull_request]
+on: [ pull_request ]
 
 jobs:
   ubuntu-latest:

@@ -26,16 +26,16 @@
         <!-- Tarjeta de planificación -->
         <div class="bg-gray-100 border border-gray-200 rounded-lg p-4 shadow-sm md:col-span-2">
             <h3 class="text-lg font-semibold text-gray-800 mb-3">📅 Planificación</h3>
-            <p class="text-gray-700"><strong>Evento o fecha límite:</strong> @Model.DateSportEvent.ToString("dd/MM/yyyy")</p>
+            <p class="text-gray-700"><strong>Evento o fecha
+                    límite:</strong> @Model.DateSportEvent.ToString("dd/MM/yyyy")</p>
             <p class="text-gray-700"><strong>Centro deportivo:</strong> @Model.Center</p>
         </div>
     </div>
 </div>
 
 @code {
-    [Parameter]
-    public required NewClientModel Model { get; set; }
-    
+    [Parameter] public required NewClientModel Model { get; set; }
+
     protected override void OnInitialized()
     {
         Model ??= new NewClientModel();
@@ -45,5 +45,5 @@
     {
         // 
     }
-    
+
 }

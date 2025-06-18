@@ -1,12 +1,13 @@
 ﻿using System.Reflection;
 using AuleTech.Core;
 using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using AuleTech.Core.Reflection;
 using Cocona;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
-using DevopsCli.Core.Commands.Dotnet.Tests;
+using DevopsCli.Core.Commands.Dotnet.Test;
 using DevopsCli.Core.Commands.Dotnet.Workloads;
 using DevopsCli.Core.Commands.GenerateOpenApiTypedClient;
 using DevopsCli.Core.Commands.Sample;

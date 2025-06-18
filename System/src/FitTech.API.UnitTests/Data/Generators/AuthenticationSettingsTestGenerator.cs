@@ -3,7 +3,7 @@ using FitTech.Application.Auth.Configuration;
 
 namespace FitTech.API.UnitTests.Data.Generators;
 
-public sealed class AuthenticationSettingsTestGenerator: Faker<AuthenticationSettings>
+public sealed class AuthenticationSettingsTestGenerator : Faker<AuthenticationSettings>
 {
     public AuthenticationSettingsTestGenerator()
     {
