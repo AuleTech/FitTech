@@ -9,7 +9,7 @@ using FitTech.Application.Commands.Auth.Login;
 
 namespace FitTech.API.Endpoints.Auth.Login;
 
-public sealed class LoginEndpoint : Endpoint<LoginRequest, Result<LoginResponse>>
+public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
     private readonly IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> _commandHandler;
 

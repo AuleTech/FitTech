@@ -4,11 +4,11 @@ using FitTech.Domain.Repositories;
 
 namespace FitTech.Application.Commands.Client.Add;
 
-internal sealed class AddClientAuleTechCommandHandler : IAuleTechCommandHandler<AddClientCommand, Result>
+internal sealed class AddClientCommandHandler : IAuleTechCommandHandler<AddClientCommand, Result>
 {
     private readonly IClientRepository _clientRepository;
 
-    public AddClientAuleTechCommandHandler(IClientRepository clientRepository)
+    public AddClientCommandHandler(IClientRepository clientRepository)
     {
         _clientRepository = clientRepository;
     }

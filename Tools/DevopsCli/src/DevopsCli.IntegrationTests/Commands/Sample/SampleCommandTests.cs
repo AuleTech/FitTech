@@ -1,4 +1,4 @@
-﻿using AuleTech.Core.Patterns;
+﻿using AuleTech.Core.Patterns.Result;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Sample;
 

@@ -1,4 +1,5 @@
 ﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using AuleTech.Core.System.IO.FileSystem;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.GenerateOpenApiTypedClient;

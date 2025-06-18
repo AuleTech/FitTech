@@ -13,6 +13,6 @@ public interface IFitTechApiClient
     Task<Result<string>> ForgotPasswordAsync(ForgotPasswordRequest forgotPasswordRequest, CancellationToken cancellationToken);
     Task<Result> ResetPasswordAsync(ResetPasswordRequest resetPasswordRequest, CancellationToken cancellationToken);
     Task<Result<UserInfoDto>> GetCurrentUserAsync(CancellationToken cancellationToken);
-    Task<Result> AddNewClientAsync(AddNewClientRequest addNewClientRequest, CancellationToken cancellationToken);
+    Task<Result> AddNewClientAsync(AddClientRequest addNewClientRequest, CancellationToken cancellationToken);
     Task<Result<ClientSettingsDto>> GetClientSettings(CancellationToken cancellationToken);
 }

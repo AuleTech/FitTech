@@ -1,10 +1,6 @@
-﻿using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.CQRS;
+﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
-using FitTech.Application;
-using FitTech.Application.Auth.Dtos;
-using FitTech.Application.Auth.Services;
 using FitTech.Application.Commands.Auth.RequestPassword;
 using Microsoft.AspNetCore.Authorization;
 
@@ -12,7 +8,7 @@ namespace FitTech.API.Endpoints.Auth.ResetPassword;
 
 [HttpPost("/auth/reset-password")]
 [AllowAnonymous]
-public class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest, Result>
+public class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
 {
     private readonly IAuleTechCommandHandler<ResetPasswordCommand, Result> _commandHandler;
 

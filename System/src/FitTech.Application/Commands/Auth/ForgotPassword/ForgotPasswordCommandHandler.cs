@@ -9,13 +9,13 @@ using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Commands.Auth.ForgotPassword;
 
-internal sealed class ForgotPasswordAuleTechCommandHandler : IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>
+internal sealed class ForgotPasswordCommandHandler : IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>
 {
     private readonly IEmailService _emailService;
-    private readonly ILogger<ForgotPasswordAuleTechCommandHandler> _logger;
+    private readonly ILogger<ForgotPasswordCommandHandler> _logger;
     private readonly UserManager<FitTechUser> _userManager;
 
-    public ForgotPasswordAuleTechCommandHandler(ILogger<ForgotPasswordAuleTechCommandHandler> logger,
+    public ForgotPasswordCommandHandler(ILogger<ForgotPasswordCommandHandler> logger,
         UserManager<FitTechUser> userManager, IEmailService emailService)
     {
         _logger = logger;

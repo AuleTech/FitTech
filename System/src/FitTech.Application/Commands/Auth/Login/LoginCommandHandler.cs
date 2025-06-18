@@ -8,13 +8,13 @@ using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Commands.Auth.Login;
 
-internal sealed class LoginAuleTechCommandHandler : IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>
+internal sealed class LoginCommandHandler : IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>
 {
     private readonly UserManager<FitTechUser> _userManager;
-    private readonly ILogger<LoginAuleTechCommandHandler> _logger;
+    private readonly ILogger<LoginCommandHandler> _logger;
     private readonly ITokenProvider _tokenProvider;
 
-    public LoginAuleTechCommandHandler(UserManager<FitTechUser> userManager, ILogger<LoginAuleTechCommandHandler> logger, ITokenProvider tokenProvider)
+    public LoginCommandHandler(UserManager<FitTechUser> userManager, ILogger<LoginCommandHandler> logger, ITokenProvider tokenProvider)
     {
         _userManager = userManager;
         _logger = logger;

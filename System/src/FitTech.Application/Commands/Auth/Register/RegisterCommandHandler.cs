@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.Application.Commands.Auth.Register;
 
-internal sealed class RegisterAuleTechCommandHandler : IAuleTechCommandHandler<RegisterCommand, Result>
+internal sealed class RegisterCommandHandler : IAuleTechCommandHandler<RegisterCommand, Result>
 {
     private readonly UserManager<FitTechUser> _userManager;
 
-    public RegisterAuleTechCommandHandler(UserManager<FitTechUser> userManager)
+    public RegisterCommandHandler(UserManager<FitTechUser> userManager)
     {
         _userManager = userManager;
     }
