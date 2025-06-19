@@ -1,7 +1,9 @@
-﻿namespace FitTech.API.Endpoints.Client.Add;
+﻿using FitTech.Application.Commands.Client.Add;
 
-public record AddClientRequest(string NameUser,
-    string LastNameuser,
+namespace FitTech.API.Endpoints.Client.Add;
+
+public record AddClientRequest(string Name,
+    string LastName,
     string EmailUser,
     DateTime Birthdate,
     int PhoneNumber,
@@ -11,4 +13,17 @@ public record AddClientRequest(string NameUser,
     string Center,
     string SubscriptionType);
 
-//TODO: Need mappers
+public static class AddClientRequestExtensions
+{
+    public static AddClientCommand ToCommand(this AddClientRequest request) => new AddClientCommand
+    {
+        Name = request.Name,
+        LastName = request.LastName,
+        Birthdate = request.Birthdate,
+        TrainingHours = request.TrainingHours,
+        TrainingModel = request.TrainingModel,
+        EventDate = request.EventDate,
+        Center = request.Center,
+        SubscriptionType = request.SubscriptionType
+    };
+}

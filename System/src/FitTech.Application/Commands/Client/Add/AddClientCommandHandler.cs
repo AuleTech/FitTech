@@ -15,8 +15,13 @@ internal sealed class AddClientCommandHandler : IAuleTechCommandHandler<AddClien
 
     public async Task<Result> HandleAsync(AddClientCommand command, CancellationToken cancellationToken)
     {
-        //TODO: Need mapper
-        //TODO: Missing migrations
-        return await _clientRepository.AddAsync(new Domain.Entities.Client(), cancellationToken);
+        var result = command.Validate();
+
+        if (!result.Succeeded)
+        {
+            return result;
+        }
+        
+        return await _clientRepository.AddAsync(command.ToEntity(), cancellationToken);
     }
 }
