@@ -1,0 +1,31 @@
+@page "/configurationpage"
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
+@inject AppHeaderStateHandler AppHeaderStateHandler
+@inject NavigationManager NavigationManager
+
+<section class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+    <div class="bg-black border border-blue-400 rounded-2xl p-16 text-center hover:bg-zinc-900 transition">
+        <h3 class="text-3xl text-blue-300">Información personal</h3>
+    </div>
+    <div class="bg-black border border-blue-400 rounded-2xl p-16 text-center hover:bg-zinc-900 transition">
+        <h3 class="text-3xl text-blue-300">Apariencia</h3>
+    </div>
+    <div class="bg-black border border-blue-400 rounded-2xl p-16 text-center hover:bg-zinc-900 transition">
+        <h3 class="text-3xl text-blue-300">Ajustes de cuenta</h3>
+    </div>
+    <div class="bg-black border border-blue-400 rounded-2xl p-16 text-center hover:bg-zinc-900 transition">
+        <h3 class="text-3xl text-blue-300">Coming soon</h3>
+    </div>
+</section>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        AppHeaderStateHandler.Clear();
+
+        base.OnInitialized();
+    }
+
+}
