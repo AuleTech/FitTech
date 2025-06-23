@@ -738,6 +738,9 @@
   .text-white {
     color: var(--color-white);
   }
+  .no-underline {
+    text-decoration-line: none;
+  }
   .placeholder-gray-500 {
     &::placeholder {
       color: var(--color-gray-500);
