@@ -4,63 +4,26 @@
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject NavigationManager NavigationManager
 
+@page "/configuracion"
 
-    <!-- Submenú lateral -->
-    <aside class="w-56 h-full bg-gray-100 p-4 space-y-4 border-r shrink-0 ml-64">
-        <button class="block text-left text-sm font-semibold text-green-600">INFORMACIÓN PERSONAL</button>
-        <button class="block text-left text-sm font-semibold text-gray-600">APARIENCIA</button>
-        <button class="block text-left text-sm font-semibold text-gray-600">AJUSTES DE LA CUENTA</button>
-        <button class="block text-left text-sm font-semibold text-gray-600">OPCIONES</button>
-        <button class="block text-left text-sm font-semibold text-gray-600">CONFIGURAR</button>
-        <button class="block text-left text-sm font-semibold text-gray-600">AYUDA</button>
-    </aside>
-
-    <!-- Contenido principal (configuración del sitio) -->
-    <main class="flex-1 h-full bg-white">
-        <div class="h-full w-full px-8 py-6">
-            <!-- Pestañas -->
-            <div class="flex border-b mb-6 space-x-6 text-sm font-medium">
-                <button class="pb-2 border-b-2 border-green-600">Datos de la cienta</button>
-                <button class="pb-2 text-gray-600">Privacidad</button>
-                <button class="pb-2 text-gray-600">Formas de Pago</button>
-            </div>
-
-            <!-- Formulario -->
-            <div class="space-y-6 text-sm text-gray-800">
-                <div>
-                    <label class="font-medium">Nombre de Usuario</label>
-                    <div>
-                        <inputText class="text-green-600">Yeray</inputText>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="font-medium">Dirección de correo Electrónico</label>
-                    <div>
-                        <inputText class="text-green-600">yerayblanco@hotmail.com</inputText>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="font-medium">Suscripción</label>
-                    <div>
-                        <inputText class="text-green-600">Te uniste a FitTech el 25/06/2025</inputText>
-                    </div>
-                </div>
-                
-                <div class="flex items-center space-x-3">
-                    <label class="font-medium">Opciones avanzadas</label>
-                    <input type="checkbox" class="form-checkbox" @bind="AdvancedOptions" />
-                </div>
-            </div>
+<div class="min-h-screen text-blue-400 flex items-center justify-center">
+    <div class="grid grid-cols-2 gap-12">
+        <div class="rounded-3xl border-2 border-blue-400 px-10 py-12 text-center text-xl font-semibold">
+            <a href="/ConfigurationUserPage">Información personal</a>
         </div>
-    </main>
+        <div class="rounded-3xl border-2 border-blue-400 px-10 py-12 text-center text-xl font-semibold">
+            Apariencia
+        </div>
+        <div class="rounded-3xl border-2 border-blue-400 px-10 py-12 text-center text-xl font-semibold">
+            Ajustes de cuenta
+        </div>
+        <div class="rounded-3xl border-2 border-blue-400 px-10 py-12 text-center text-xl font-semibold">
+            Coming soon
+        </div>
+    </div>
+</div>
 
 @code {
-    private string SiteTitle { get; set; } = string.Empty;
-    private string PageDelimiter { get; set; } = "-";
-    private string Domain { get; set; } = "contactwebsite.net";
-    private bool AdvancedOptions { get; set; } = true;
 
     protected override void OnInitialized()
     {
