@@ -1,68 +1,80 @@
 @page "/ConfigurationUserPage"
+@using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
 
+<div class="h-full w-full ml-80 p-6">
+<div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
+    <div class="w-full h-full px-4">
+        <EditForm Model="ConfigurationUserModel" FormName="CostumerForm">
 
-<div class="rounded-md border border-gray-300 shadow-md  text-black h-full w-full ml-80 p-6">
-    <div class="w-full max-w-2xl space-y-8">
-        <h1 class="text-3xl font-bold mb-6">Editar información personal</h1>
+            <DataAnnotationsValidator/>
 
-        <!-- Nombre de usuario -->
-        <div>
-            <label class="block mb-2 text-sm font-semibold">Nombre de usuario</label>
-            <p class="bg-transparent border border-gray-600 rounded px-4 py-2">yerayblancoladao</p>
-        </div>
-
-        <!-- Correo electrónico -->
-        <div>
-            <label class="block mb-2 text-sm font-semibold">Correo electrónico</label>
-            <input type="email" class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" value="yerayblanco21@gmail.com" />
-        </div>
-
-        <!-- Contraseña -->
-        <div>
-            <label class="block mb-2 text-sm font-semibold">Contraseña</label>
-            <input type="password" class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
-        </div>
-
-        <!-- Sexo -->
-        <div>
-            <label class="block mb-2 text-sm font-semibold">Sexo</label>
-            <select class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 text-white">
-                <option selected>Masculino</option>
-                <option>Femenino</option>
-                <option>Otro</option>
-            </select>
-        </div>
-
-        <!-- Fecha de nacimiento -->
-        <div>
-            <label class="block mb-2 text-sm font-semibold">Fecha de nacimiento</label>
-            <div class="flex gap-4">
-                <input type="number" min="1" max="31" class="w-1/4 bg-transparent border border-gray-600 rounded px-4 py-2" value="27" />
-                <select class="w-1/2 bg-transparent border border-gray-600 rounded px-4 py-2 text-white">
-                    <option selected>Noviembre</option>
-                    <!-- Agrega más meses aquí -->
-                </select>
-                <input type="number" min="1900" max="2025" class="w-1/4 bg-transparent border border-gray-600 rounded px-4 py-2" value="1991" />
+            <div class="mb-4">
+                <label for="name" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
+                <InputText type="text" @bind-Value="ConfigurationUserModel!.Name" id="firstName" placeholder="Nombre del cliente"
+                           class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => ConfigurationUserModel!.Name)" class="text-red-600 text-sm"/>
             </div>
-        </div>
-
-        <!-- País o región -->
-        <div>
-            <label class="block mb-2 text-sm font-semibold">País o región</label>
-            <select disabled class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 text-gray-400 cursor-not-allowed">
-                <option>España</option>
-            </select>
-            <p class="text-xs mt-1">Infórmate sobre lo que supone <a href="#" class="underline text-blue-400">cambiar tu país o región</a>.</p>
-        </div>
-
-        <!-- Botones -->
-        <div class="flex justify-end gap-4 mt-6">
+            <div class="mb-4">
+                <label for="lastName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300 ">Apellidos</label>
+                <InputText type="text" @bind-Value="ConfigurationUserModel!.LastName" id="lastName" placeholder="Apellidos del cliente"
+                           class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => ConfigurationUserModel!.LastName)" class="text-red-600 text-sm"/>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo
+                    Electrónico</label>
+                <InputText type="text" @bind-Value="ConfigurationUserModel!.Email" id="lastName" placeholder="FitTech@example.com"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => ConfigurationUserModel!.Email)" class="text-red-600 text-sm"/>
+            </div>
+            <div class="mb-4">
+                <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de
+                    Nacimiento</label>
+                <InputDate @bind-Value="ConfigurationUserModel!.Birthdate" id="birthday"
+                           class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => ConfigurationUserModel!.Birthdate)" class="text-red-600 text-sm"/>
+            </div>
+            <div class="mb-4">
+                <label for="phonenumber" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Teléfono</label>
+                <InputNumber type="text" @bind-Value="ConfigurationUserModel!.PhoneNumber" placeholder="Número de teléfono del cliente"
+                             id="phonenumber"
+                             class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => ConfigurationUserModel!.PhoneNumber)" class="text-red-600 text-sm"/>
+            </div>
+            <div class="mb-4">
+                <label for="Password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nueva Contraseña</label>
+                <InputText type="text" @bind-Value="ConfigurationUserModel!.Password" id="Password" placeholder="Escriba su nueva contraseña"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => ConfigurationUserModel!.Password)" class="text-red-600 text-sm"/>
+            </div>
+            <div class="mb-4">
+                <label for="Password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Repita su nueva Contraseña</label>
+                <InputText type="text" @bind-Value="ConfigurationUserModel!.Password" id="Password" placeholder="Repita la contraseña"
+                           class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                <ValidationMessage For="@(() => ConfigurationUserModel!.Password)" class="text-red-600 text-sm"/>
+            </div>
+            <div class="flex justify-end gap-4 mt-6">
+            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="SaveChanges">Guardar Cambios</button>
             <button class="text-gray-400 hover:underline">Cancelar</button>
-            <button class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-full">Guardar perfil</button>
-        </div>
+            </div>
+        </EditForm>
     </div>
 </div>
+</div>
+
 
 @code {
+    
+    [SupplyParameterFromForm] private ConfigurationUserModel? ConfigurationUserModel { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        ConfigurationUserModel ??= new ConfigurationUserModel();
+    }
+    
+    public void SaveChanges()
+    {
+        
+    }
     
 }
