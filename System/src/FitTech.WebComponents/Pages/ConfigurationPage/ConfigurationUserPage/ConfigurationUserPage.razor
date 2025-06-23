@@ -1,5 +1,67 @@
 @page "/ConfigurationUserPage"
-<h3>ConfigurationUserPage</h3>
+
+
+<div class="rounded-md border border-gray-300 shadow-md  text-black h-full w-full ml-80 p-6">
+    <div class="w-full max-w-2xl space-y-8">
+        <h1 class="text-3xl font-bold mb-6">Editar información personal</h1>
+
+        <!-- Nombre de usuario -->
+        <div>
+            <label class="block mb-2 text-sm font-semibold">Nombre de usuario</label>
+            <p class="bg-transparent border border-gray-600 rounded px-4 py-2">yerayblancoladao</p>
+        </div>
+
+        <!-- Correo electrónico -->
+        <div>
+            <label class="block mb-2 text-sm font-semibold">Correo electrónico</label>
+            <input type="email" class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" value="yerayblanco21@gmail.com" />
+        </div>
+
+        <!-- Contraseña -->
+        <div>
+            <label class="block mb-2 text-sm font-semibold">Contraseña</label>
+            <input type="password" class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <!-- Sexo -->
+        <div>
+            <label class="block mb-2 text-sm font-semibold">Sexo</label>
+            <select class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 text-white">
+                <option selected>Masculino</option>
+                <option>Femenino</option>
+                <option>Otro</option>
+            </select>
+        </div>
+
+        <!-- Fecha de nacimiento -->
+        <div>
+            <label class="block mb-2 text-sm font-semibold">Fecha de nacimiento</label>
+            <div class="flex gap-4">
+                <input type="number" min="1" max="31" class="w-1/4 bg-transparent border border-gray-600 rounded px-4 py-2" value="27" />
+                <select class="w-1/2 bg-transparent border border-gray-600 rounded px-4 py-2 text-white">
+                    <option selected>Noviembre</option>
+                    <!-- Agrega más meses aquí -->
+                </select>
+                <input type="number" min="1900" max="2025" class="w-1/4 bg-transparent border border-gray-600 rounded px-4 py-2" value="1991" />
+            </div>
+        </div>
+
+        <!-- País o región -->
+        <div>
+            <label class="block mb-2 text-sm font-semibold">País o región</label>
+            <select disabled class="w-full bg-transparent border border-gray-600 rounded px-4 py-2 text-gray-400 cursor-not-allowed">
+                <option>España</option>
+            </select>
+            <p class="text-xs mt-1">Infórmate sobre lo que supone <a href="#" class="underline text-blue-400">cambiar tu país o región</a>.</p>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-end gap-4 mt-6">
+            <button class="text-gray-400 hover:underline">Cancelar</button>
+            <button class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-full">Guardar perfil</button>
+        </div>
+    </div>
+</div>
 
 @code {
     
