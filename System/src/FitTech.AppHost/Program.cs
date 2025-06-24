@@ -1,8 +1,11 @@
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
+
+var password = builder.AddParameter("password", "fittech2025");
+
 var postgres = builder
-    .AddPostgres("postgres");
+    .AddPostgres("postgres", password: password, port:5432);
 
 var postgresdb = postgres.AddDatabase("fittechdb");
 var fitTechApi = builder.AddProject<FitTech_API>("fittech-api")

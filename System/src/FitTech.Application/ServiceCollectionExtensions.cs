@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
+using AuleTech.Core.System.Host;
 using FitTech.Application.Auth.Configuration;
 using FitTech.Application.Auth.Providers;
 using FitTech.Application.Auth.Services;
@@ -52,7 +53,8 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<ITokenProvider, TokenProvider>();
         services.AddTransient<IUserService, UserService>();
-
+        services.RegisterAfterStartupJobs(typeof(ServiceCollectionExtensions).Assembly);
+        
         services.AddAuthorization();
 
         services.AddEmailService(configuration);

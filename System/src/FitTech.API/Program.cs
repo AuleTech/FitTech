@@ -1,3 +1,4 @@
+using AuleTech.Core.System.Host;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FitTech.API;
@@ -55,6 +56,7 @@ app
     .UseFastEndpoints(x => x.Endpoints.ShortNames = true);
 
 //TODO: Create a migration service triggered by Aspire
-await app.Services.ApplyMigrationsAsync();
+await app.Services.ApplyMigrationsAsync(); //TODO: Move to RunPostStartupActionsAsync
+await app.Services.RunPostStartupActionsAsync(TimeSpan.FromSeconds(30));
 
 app.Run();
