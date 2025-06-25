@@ -12,38 +12,38 @@
     <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
         <div class="w-full h-full px-4">
 
-<EditForm Model="ConfigurationUserModel" FormName="CostumerForm">
+<EditForm Model="configurationUserModel" FormName="CostumerForm">
     <DataAnnotationsValidator/>
     
                 <div class="mb-4">
                     <label for="name" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
-                    <InputText type="text" @bind-Value="ConfigurationUserModel!.Name" id="firstName" placeholder="Nombre del usuario"
+                    <InputText type="text" @bind-Value="configurationUserModel!.Name" id="firstName" 
                                class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                    <ValidationMessage For="@(() => ConfigurationUserModel!.Name)" class="text-red-600 text-sm"/>
+                    <ValidationMessage For="@(() => configurationUserModel!.Name)" class="text-red-600 text-sm"/>
                 </div>
                 <div class="mb-4">
                     <label for="lastName" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Apellidos</label>
-                    <InputText type="text" @bind-Value="ConfigurationUserModel!.LastName" id="lastName" placeholder="Apellidos del usuario"
+                    <InputText type="text" @bind-Value="configurationUserModel!.LastName" id="lastName" 
                                class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                    <ValidationMessage For="@(() => ConfigurationUserModel!.LastName)" class="text-red-600 text-sm"/>
+                    <ValidationMessage For="@(() => configurationUserModel!.LastName)" class="text-red-600 text-sm"/>
                 </div>
                 <div class="mb-4">
                     <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo Electrónico</label>
-                    <InputText type="text" @bind-Value="ConfigurationUserModel!.Email" id="email" placeholder="Email del usuario"
+                    <InputText type="text" @bind-Value="configurationUserModel!.Email" id="email" 
                                class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                    <ValidationMessage For="@(() => ConfigurationUserModel!.Email)" class="text-red-600 text-sm"/>
+                    <ValidationMessage For="@(() => configurationUserModel!.Email)" class="text-red-600 text-sm"/>
                 </div>
                 <div class="mb-4">
                     <label for="birthday" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Fecha de Nacimiento</label>
-                    <InputDate @bind-Value="ConfigurationUserModel!.Birthdate" id="birthday"
+                    <InputDate @bind-Value="configurationUserModel!.Birthdate" id="birthday"
                                class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                    <ValidationMessage For="@(() => ConfigurationUserModel!.Birthdate)" class="text-red-600 text-sm"/>
+                    <ValidationMessage For="@(() => configurationUserModel!.Birthdate)" class="text-red-600 text-sm"/>
                 </div>
                 <div class="mb-4">
                     <label for="phonenumber" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Teléfono</label>
-                    <InputNumber type="text" @bind-Value="ConfigurationUserModel!.PhoneNumber" id="phonenumber" placeholder="Número de teléfono del usuario"
+                    <InputNumber type="text" @bind-Value="configurationUserModel!.PhoneNumber" id="phonenumber" 
                                  class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                    <ValidationMessage For="@(() => ConfigurationUserModel!.PhoneNumber)" class="text-red-600 text-sm"/>
+                    <ValidationMessage For="@(() => configurationUserModel!.PhoneNumber)" class="text-red-600 text-sm"/>
                 </div>
 
                 <div class="mb-6">
@@ -58,17 +58,15 @@
                 {
                     <div class="mb-4">
                         <label for="Password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nueva Contraseña</label>
-                        <InputText type="password" @bind-Value="ConfigurationUserModel!.Password" id="Password"
-                                   placeholder="Escriba su nueva contraseña"
+                        <InputText type="password" @bind-Value="configurationUserModel!.Password" id="Password"
                                    class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                        <ValidationMessage For="@(() => ConfigurationUserModel!.Password)" class="text-red-600 text-sm"/>
+                        <ValidationMessage For="@(() => configurationUserModel!.Password)" class="text-red-600 text-sm"/>
                     </div>
                     <div class="mb-4">
                         <label for="RepeatPassword" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Repita su nueva Contraseña</label>
-                        <InputText type="password" @bind-Value="ConfigurationUserModel!.Password" id="RepeatPassword"
-                                   placeholder="Repita la contraseña"
+                        <InputText type="password" @bind-Value="configurationUserModel!.Password" id="RepeatPassword"
                                    class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
-                        <ValidationMessage For="@(() => ConfigurationUserModel!.Password)" class="text-red-600 text-sm"/>
+                        <ValidationMessage For="@(() => configurationUserModel!.Password)" class="text-red-600 text-sm"/>
                     </div>
                 }
 
@@ -83,7 +81,9 @@
 
 
 @code {
+    private ConfigurationUserModel configurationUserModel { get; set; } = new();
     private bool showPasswordFields = false;
+    
 
     private void TogglePasswordFields()
     {
@@ -95,5 +95,5 @@
         // Lógica de guardado
     }
 
-    private ConfigurationUserModel ConfigurationUserModel { get; set; } = new();
+
 }

@@ -58,6 +58,7 @@ public static class ServiceCollectionExtensions
     {
         service.AddTransient<IEmailRepository, EmailRepository>();
         service.AddTransient<IClientRepository, ClientRepository>();
+        service.AddTransient<ITrainerRepository, TrainerRepository>();
         
         return service;
     }
