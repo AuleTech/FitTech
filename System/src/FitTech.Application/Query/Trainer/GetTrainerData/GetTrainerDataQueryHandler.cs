@@ -24,7 +24,7 @@ internal sealed class GetTrainerDataQueryHandler : IQueryHandler<GetTrainerDataQ
             return Result<TrainerDataDto>.Failure("Trainer not found");
         }
 
-        //TODO: Forma incorrecta, solamente puesto para que compile
+        //TODO: Forma incorrecta, solamente puesto para que compile. Cuando este completado añadir al ServiceCollectionExtensions
         return new Result<TrainerDataDto>();
     }
 }
