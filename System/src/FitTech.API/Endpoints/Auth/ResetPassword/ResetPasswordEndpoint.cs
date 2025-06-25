@@ -23,6 +23,11 @@ public class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
             await _commandHandler.HandleAsync(new ResetPasswordCommand(req.Email, req.NewPassword, req.Token),
                 ct);
 
-        await SendAsync(result, result.Succeeded ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest, ct);
+        if (!result.Succeeded)
+        {
+            ThrowError(result.Errors.First());
+        }
+
+        await SendNoContentAsync(ct);
     }
 }

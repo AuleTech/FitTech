@@ -35,7 +35,7 @@ public class RegisterEndpoint : Endpoint<RegisterRequest>
         {
             ThrowError(registrationResult.Errors.First());
         }
-
-        await SendAsync(null,cancellation: ct);
+        
+        await SendNoContentAsync(ct);
     }
 }

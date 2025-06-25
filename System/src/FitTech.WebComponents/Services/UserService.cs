@@ -115,8 +115,8 @@ internal sealed class UserService : IUserService
         var result = await _fitTechApiClient.AddNewClientAsync(
             new AddClientRequest()
             {
-                NameUser = username,
-                LastNameuser = lastname,
+                Name = username,
+                LastName = lastname,
                 EmailUser = email,
                 Birthdate = birthdate,
                 PhoneNumber = phoneNumber,
