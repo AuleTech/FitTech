@@ -1,6 +1,11 @@
 @page "/ConfigurationUserPage"
+@using System.Net
+@inject HttpClient Http
+@using FitTech.ApiClient
 @using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
 @inject NavigationManager Navigation
+@using System.Net.Http;
+@using System.Net.Http.Json;
 
 
 <div class="h-full w-full ml-80 p-6">
@@ -74,6 +79,22 @@
     private void  SaveChanges()
     {
         // Lógica de guardado
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var data = await Http.GetFromJsonAsync<ConfigurationUserModel>("/Trainer/TrainerSettings");
+            if (data != null)
+            {
+                configurationUserModel = data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al obtener los datos de configuración: {ex.Message}");
+        }
     }
 
 

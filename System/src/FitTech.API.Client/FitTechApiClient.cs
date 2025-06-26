@@ -142,6 +142,19 @@ internal sealed class FitTechApiClient : IFitTechApiClient
             return Result<ClientSettingsDto>.Failure("Something went wrong");
         }
         
-    } 
-    
+    }
+
+    public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _proxy.GetTrainerSettingsEndpointAsync(cancellationToken);
+
+            return Result<TrainerDataDto>.Success(result);
+        }
+        catch (Exception)
+        {
+            return Result<TrainerDataDto>.Failure("Something went wrong");
+        }
+    }
 }

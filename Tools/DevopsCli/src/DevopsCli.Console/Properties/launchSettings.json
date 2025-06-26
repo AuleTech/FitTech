@@ -11,7 +11,7 @@
     },
     "GenerateOpenApiTypedClient": {
       "commandName": "Project",
-      "commandLineArgs": "generate-open-api-typed-client --open-api-json-url \"http://localhost:5165/swagger/v1/swagger.json\" --output-folder \"/Users/jairo/Desktop/workspace/FitTech/System/src/FitTech.API.Client/Generated\" --namespace \"FitTech.ApiClient\""
+      "commandLineArgs": "generate-open-api-typed-client --open-api-json-url \"http://localhost:5165/swagger/v1/swagger.json\" --output-folder \"/Users/yerayblancoaldao/Documents/GitHub/FitTech/System/src/FitTech.API.Client/Generated\" --namespace \"FitTech.ApiClient\""
     },
     "Restore": {
       "commandName": "Project",
