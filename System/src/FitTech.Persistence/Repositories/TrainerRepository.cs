@@ -15,6 +15,6 @@ public class TrainerRepository: ITrainerRepository
 
     public async Task<Trainer?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.UserTable.FindAsync(id, cancellationToken);
+        return await _context.AspNetUser.FindAsync(id, cancellationToken);
     }
 }

@@ -12,6 +12,7 @@ using FitTech.Application.Commands.Auth.RequestPassword;
 using FitTech.Application.Commands.Client.Add;
 using FitTech.Application.Query.Auth.RefreshToken;
 using FitTech.Application.Query.Client.GetSettings;
+using FitTech.Application.Query.Trainer.GetTrainerData;
 using FitTech.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -101,8 +102,8 @@ public static class ServiceCollectionExtensions
     internal static IServiceCollection AddQueries(this IServiceCollection services)
     {
         return services
+            .AddTransient<IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>, GetTrainerDataQueryHandler>()
             .AddTransient<IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>, RefreshTokenQueryHandler>()
-            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>,
-                GetClientSettingsQueryHandler>();
+            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>, GetClientSettingsQueryHandler>();
     }
 }

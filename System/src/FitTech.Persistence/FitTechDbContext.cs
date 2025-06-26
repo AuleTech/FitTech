@@ -12,7 +12,7 @@ public class FitTechDbContext : IdentityDbContext<FitTechUser, FitTechRole, Guid
 
     public DbSet<Email> EmailLog { get; set; }
     public DbSet<Client> ClientTable { get; set; }
-    public DbSet<Trainer> UserTable { get; set; }
+    public DbSet<Trainer> AspNetUser { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

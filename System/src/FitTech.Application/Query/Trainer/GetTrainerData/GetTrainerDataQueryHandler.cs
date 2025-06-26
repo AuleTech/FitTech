@@ -25,6 +25,6 @@ internal sealed class GetTrainerDataQueryHandler : IQueryHandler<GetTrainerDataQ
         }
 
         //TODO: Forma incorrecta, solamente puesto para que compile. Cuando este completado añadir al ServiceCollectionExtensions
-        return new Result<TrainerDataDto>();
+        return new TrainerDataDto(trainer.UserName!, trainer.Email!, trainer.PasswordHash!);
     }
 }
