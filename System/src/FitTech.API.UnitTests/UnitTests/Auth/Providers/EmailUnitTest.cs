@@ -1,5 +1,5 @@
-﻿using FitTech.Application.Auth.Configuration;
-using FitTech.Application.Auth.Services;
+﻿using FitTech.Application.Configuration;
+using FitTech.Application.Services;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Repositories;
 using FitTech.Domain.Templates.EmailsTemplates;

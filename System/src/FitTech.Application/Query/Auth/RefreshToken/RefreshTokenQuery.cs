@@ -1,6 +1,5 @@
 ﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Query.Auth.RefreshToken;

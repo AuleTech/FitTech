@@ -2,14 +2,13 @@
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using AuleTech.Core.System.Host;
-using FitTech.Application.Auth.Configuration;
-using FitTech.Application.Auth.Providers;
-using FitTech.Application.Auth.Services;
 using FitTech.Application.Commands.Auth.ForgotPassword;
 using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.Register;
 using FitTech.Application.Commands.Auth.RequestPassword;
 using FitTech.Application.Commands.Client.Add;
+using FitTech.Application.Configuration;
+using FitTech.Application.Providers;
 using FitTech.Application.Query.Auth.RefreshToken;
 using FitTech.Application.Query.Client.GetSettings;
 using FitTech.Application.Services;

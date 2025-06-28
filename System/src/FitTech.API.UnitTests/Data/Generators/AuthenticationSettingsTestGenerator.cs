@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using FitTech.Application.Auth.Configuration;
+using FitTech.Application.Configuration;
 
 namespace FitTech.API.UnitTests.Data.Generators;
 

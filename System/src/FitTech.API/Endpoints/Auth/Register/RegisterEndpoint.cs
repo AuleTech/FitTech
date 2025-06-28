@@ -3,8 +3,6 @@ using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application;
-using FitTech.Application.Auth.Dtos;
-using FitTech.Application.Auth.Services;
 using FitTech.Application.Commands.Auth.Register;
 using Microsoft.AspNetCore.Authorization;
 

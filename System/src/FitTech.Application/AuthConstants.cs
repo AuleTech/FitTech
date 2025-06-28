@@ -1,4 +1,4 @@
-﻿namespace FitTech.Application.Auth;
+﻿namespace FitTech.Application;
 
 internal class TokenType
 {

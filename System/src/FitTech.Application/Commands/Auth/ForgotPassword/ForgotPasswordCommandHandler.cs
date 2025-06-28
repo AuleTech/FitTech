@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Application.Auth.Services;
+using FitTech.Application.Services;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Templates.EmailsTemplates;
 using Microsoft.AspNetCore.Identity;

@@ -1,4 +1,4 @@
-﻿namespace FitTech.Application.Auth.Configuration;
+﻿namespace FitTech.Application.Configuration;
 
 public class AuthenticationSettings
 {
