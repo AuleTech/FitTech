@@ -1,9 +1,8 @@
-﻿using FitTech.Domain.Entities;
-using FitTech.Domain.Interfaces;
+using FitTech.Domain.Entities;
+using FitTech.Domain.Repositories;
 using FitTech.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FitTech.Persistence;
@@ -55,8 +54,16 @@ public static class ServiceCollectionExtensions
         return serviceCollection;
     }
 
-    private static IServiceCollection AddRepositories(this IServiceCollection service) =>
+    private static IServiceCollection AddRepositories(this IServiceCollection service)
+    {
         service.AddTransient<IEmailRepository, EmailRepository>();
+        service.AddTransient<IClientRepository, ClientRepository>();
+        
+        return service;
+        
+    }
+      
+    
     
     public static async Task ApplyMigrationsAsync(this IServiceProvider serviceProvider)
     {
