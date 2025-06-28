@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Client; 
 
-[HttpGet("/client/settings")]
 [Authorize(AuthenticationSchemes = "Bearer")]
+[HttpGet("/client/settings")]
 public class GetSettingsEndpoint : EndpointWithoutRequest<ClientSettingsDto> //TODO: We shouldn't be returning Application Dtos
 {
     private readonly IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>> _queryHandler;
