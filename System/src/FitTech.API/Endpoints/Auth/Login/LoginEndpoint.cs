@@ -6,9 +6,12 @@ using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 using FitTech.Application.Commands.Auth.Login;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Auth.Login;
 
+[AllowAnonymous]
+[HttpPost("/auth/login")]
 public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
     private readonly IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> _commandHandler;
@@ -16,12 +19,6 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
     public LoginEndpoint(IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> commandHandler)
     {
         _commandHandler = commandHandler;
-    }
-
-    public override void Configure()
-    {
-        Post("/auth/login");
-        AllowAnonymous();
     }
 
     public override async Task HandleAsync(LoginRequest req, CancellationToken ct)

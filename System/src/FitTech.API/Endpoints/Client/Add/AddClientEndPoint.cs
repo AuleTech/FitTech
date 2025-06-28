@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Client.Add;
 
-[Authorize(AuthenticationSchemes = "Bearer")]
 [HttpPost("/user/add-client")]
 public class AddClientEndPoint : Endpoint<AddClientRequest>
 {

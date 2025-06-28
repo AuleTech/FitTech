@@ -6,9 +6,12 @@ using FitTech.Application;
 using FitTech.Application.Auth.Dtos;
 using FitTech.Application.Auth.Services;
 using FitTech.Application.Commands.Auth.Register;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Auth.Register;
 
+[AllowAnonymous]
+[HttpPost("/auth/register")]
 public class RegisterEndpoint : Endpoint<RegisterRequest>
 {
 
@@ -18,13 +21,7 @@ public class RegisterEndpoint : Endpoint<RegisterRequest>
     {
         _commandHandler = commandHandler;
     }
-
-    public override void Configure()
-    {
-        Post("/auth/register");
-        AllowAnonymous();
-    }
-
+    
     public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
     {
         var registrationResult =
@@ -35,7 +32,7 @@ public class RegisterEndpoint : Endpoint<RegisterRequest>
         {
             ThrowError(registrationResult.Errors.First());
         }
-
-        await SendAsync(null,cancellation: ct);
+        
+        await SendNoContentAsync(ct);
     }
 }

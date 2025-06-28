@@ -51,8 +51,8 @@ if (app.Environment.IsDevelopment())
 app
     .UseHttpsRedirection()
     .UseCors("FitTechCorsPolicy")
-    .UseAuthorization()
     .UseAuthentication()
+    .UseAuthorization()
     .UseFastEndpoints(x => x.Endpoints.ShortNames = true);
 
 //TODO: Create a migration service triggered by Aspire
