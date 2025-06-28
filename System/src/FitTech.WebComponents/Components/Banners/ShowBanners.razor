@@ -1,38 +1,10 @@
-﻿
-@if (!string.IsNullOrEmpty(showErrorBanner))
+﻿@if(!string.IsNullOrEmpty(TypeInfoBanner))
 {
-	<div class="flex bg-red-100 rounded-lg p-4 mb-4 text-sm text-red-700" role="alert">
+	<div class="@BannerClass(type:"error")" role="alert">
 		<svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
 		<div>
-			<span class="font-medium">Acceso no autorizado</span>
-			<p>El email o la contraseña son incorrectos.</p>
-		</div>
-	</div>
-}
-@if(!string.IsNullOrEmpty(showWarningBanner))
-{
-	<div class="flex bg-blue-100 rounded-lg p-4 mb-4 text-sm text-blue-700" role="alert">
-		<svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-		<div>
-			<span class="font-medium">Aqui va un disclaimer</span> 
-		</div>
-	</div>
-}
-@if(!string.IsNullOrEmpty(showSuccessBanner))
-{
-	<div class="flex bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
-		<svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-		<div>
-			<span class="font-medium">Proceso realizado con exito</span>
-		</div>
-	</div>
-}
-@if(!string.IsNullOrEmpty(showInfoBanner))
-{
-	<div class="flex bg-yellow-100 rounded-lg p-4 mb-4 text-sm text-yellow-700" role="alert">
-		<svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-		<div>
-			<span class="font-medium">Algo no ha ido como se esperaba</span>
+			<span class="font-medium">@GetTitle(type: "errorLogin")</span>
+			<p>@GetSubTitle(type: "errorLoginParagraph")</p>
 		</div>
 	</div>
 }
@@ -42,12 +14,12 @@
 	[Parameter] public string? showWarningBanner { get; set; }
 	[Parameter] public string? showSuccessBanner { get; set; }
 	[Parameter] public string? showInfoBanner { get; set; }
+
+	[Parameter] public string? TypeInfoBanner { get; set; } 
+
     
-    //Esto no sería necesario, solamente [Parameter] public string? TypeInfoBanner { get; set; }
-    
-    //Puede usar una función que lea lo que viene en el parametro y en función de eso te añada un color y un mensaje, por lo tanto obviamos repetir la estrucutra.
-    
-   /* private string BannerClass(string type) => type switch
+   
+   private string BannerClass(string type) => type switch
     {
         "error" => "flex bg-red-100 rounded-lg p-4 mb-4 text-sm text-red-700",
         "success" => "flex bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700",
@@ -55,26 +27,24 @@
         "warning" => "flex bg-blue-100 rounded-lg p-4 mb-4 text-sm text-blue-700",
         _ => "flex p-4 mb-4 text-sm"
         
-        Entonces en función del contenido de la variable BannerType el estilo será uno u otro
+        
     };
     
-    Y aqui puedes añadirle el título que corresponda. Si trae por ejemplo bannertype = error, pues su título y puede meterle mensaje.
-
+    
     private string GetTitle(string type) => type switch
     {
-        "error" => "Error",
-        "success" => "Éxito",
-        "info" => "Información",
-        "warning" => "Advertencia",
+        "genericError" => "Error",
+        "genericSuccess" => "Éxito",
+        "genericInfo" => "Información",
+        "genericWarning" => "Advertencia",
+		"errorLogin" => "Acceso no autorizado",
         _ => "Aviso"
-    };*/
-   
-   // esta manera de usar switch es una manera nueva que ha salido en C# 8 en adelante, yo tampoco la conocía.
-    
-   
-   //Que te queda? crear un solo componente dinamico que cambia en función de las respuestas:
-   //para ello utiliza este ejemplo para enlazar los valores de las funciones con las etiquetas:
-   //<div class="@BannerClass(Type)" role="alert"> 
-   //<span class="font-medium">@GetTitle(Type)</span>
-   // Eso integrado en tu componente debería de funcionar. No lo he probado,seguramente tengas que hacer ajustes, pero creo que con esto tendras guía de sobra.
+    };
+
+	private string GetSubTitle(string type) => type switch
+	{
+		"errorLoginParagraph" => "El email o la contraseña son incorrectos",
+		"registerErrorParagraph" =>"Ha ocurrido un error durante el proceso de registro, revisa la informacion",
+		_ => "Aviso"
+	};
 }
