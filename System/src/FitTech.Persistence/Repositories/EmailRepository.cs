@@ -1,7 +1,6 @@
 ﻿using FitTech.Domain.Entities;
 using FitTech.Domain.Repositories;
 
-
 namespace FitTech.Persistence.Repositories;
 
 internal sealed class EmailRepository : IEmailRepository
@@ -12,7 +11,7 @@ internal sealed class EmailRepository : IEmailRepository
     {
         _context = context;
     }
-    
+
     public async Task AddAsync(Email email, CancellationToken cancellationToken)
     {
         await _context.EmailLog.AddAsync(email, cancellationToken);

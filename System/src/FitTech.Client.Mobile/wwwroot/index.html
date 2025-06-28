@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+          name="viewport"/>
     <title>FitTech.Client.Mobile</title>
-    <base href="/" />
-    <link rel="stylesheet" href="FitTech.Client.Mobile.styles.css" />
-    <link rel="stylesheet" href="_content/FitTech.WebComponents/styles.css"/>
-    <link rel="icon" href="data:,">
+    <base href="/"/>
+    <link href="FitTech.Client.Mobile.styles.css" rel="stylesheet"/>
+    <link href="_content/FitTech.WebComponents/styles.css" rel="stylesheet"/>
+    <link href="data:," rel="icon">
 </head>
 
 <body>
 
-    <div class="pt-[env(safe-area-inset-top)]"></div>
+<div class="pt-[env(safe-area-inset-top)]"></div>
 
-    <div id="app">Loading...</div>
+<div id="app">Loading...</div>
 
-    <script src="_framework/blazor.webview.js" autostart="false"></script> 
-    <script>
-        function addTouchStartGlobalEvent() {
-            document.addEventListener("touchstart", function () { }, true);
-        }
-    </script>
+<script autostart="false" src="_framework/blazor.webview.js"></script>
+<script>
+    function addTouchStartGlobalEvent() {
+        document.addEventListener("touchstart", function () {
+        }, true);
+    }
+</script>
 </body>
 
 </html>

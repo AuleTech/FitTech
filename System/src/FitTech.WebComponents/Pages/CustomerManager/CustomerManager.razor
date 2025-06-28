@@ -7,6 +7,7 @@
 <h1>Bienvenido a la página de Gestión de tus Clientes</h1>
 
 @code {
+
     protected override void OnInitialized()
     {
         AppHeaderStateHandler.Clear();
@@ -15,7 +16,8 @@
             NavigationManager.NavigateTo("/usermanager/add");
             return Task.CompletedTask;
         }, "Añadir usuario");
-        
+
         base.OnInitialized();
     }
+
 }

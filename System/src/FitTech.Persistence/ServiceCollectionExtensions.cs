@@ -60,10 +60,7 @@ public static class ServiceCollectionExtensions
         service.AddTransient<IClientRepository, ClientRepository>();
         
         return service;
-        
     }
-      
-    
     
     public static async Task ApplyMigrationsAsync(this IServiceProvider serviceProvider)
     {

@@ -1,4 +1,5 @@
 using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using Cocona;
 using DevopsCli.Core.Tools.Dotnet;
 using Microsoft.Extensions.Logging;

@@ -1,5 +1,6 @@
-﻿using FitTech.Application;
-using FitTech.Application.Auth.Services;
+﻿using System.Reflection;
+using AuleTech.Core.System.Host;
+using FitTech.Application;
 using FitTech.Domain.Entities;
 using FitTech.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +12,14 @@ internal static class ServiceCollectionExtensions
     public static WebApplicationBuilder AddFitTechAuth(this WebApplicationBuilder builder)
     {
         builder.Services.AddAuth(builder.Configuration);
-        
-        builder.Services.AddIdentity<FitTechUser, FitTechRole>(options =>
-        {
-            options.Password.RequiredLength = 8;
-        }).AddEntityFrameworkStores<FitTechDbContext>()
-        .AddDefaultTokenProviders();
+
+        builder.Services.AddIdentityCore<FitTechUser>(options =>
+            {
+                options.Password.RequiredLength = 8;
+            })
+            .AddRoles<FitTechRole>()
+            .AddEntityFrameworkStores<FitTechDbContext>()
+            .AddDefaultTokenProviders();
 
         return builder;
     }

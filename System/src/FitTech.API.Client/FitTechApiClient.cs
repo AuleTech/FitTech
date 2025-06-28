@@ -1,7 +1,8 @@
 ﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client.Configuration;
 using FitTech.ApiClient;
-using Result = AuleTech.Core.Patterns.Result;
+using Result = AuleTech.Core.Patterns.Result.Result;
 
 namespace FitTech.API.Client;
 
@@ -24,71 +25,123 @@ internal sealed class FitTechApiClient : IFitTechApiClient
     
     public async Task<Result<LoginResponse>> LoginAsync(LoginRequest loginRequest, CancellationToken cancellationToken)
     {
-        var result = await _proxy.LoginEndpointAsync(loginRequest, cancellationToken);
-
-        return new Result<LoginResponse>()
+        try
         {
-            Succeeded = result.Succeeded!.Value,
-            Value = result.Value,
-            Errors = result.Errors?.ToArray() ?? [] 
-        };
+            var result = await _proxy.LoginEndpointAsync(loginRequest, cancellationToken);
+
+            return Result<LoginResponse>.Success(result);
+        }
+        catch (Exception)
+        {
+            return Result<LoginResponse>.Failure("Login failed");
+        }
     }
 
     public async Task<Result> RegisterAsync(RegisterRequest registerRequest, CancellationToken cancellationToken)
     {
-        var result = await _proxy.RegisterEndpointAsync(registerRequest, cancellationToken);
-
-        return new Result()
+        try
         {
-            Succeeded = result.Succeeded!.Value,
-            Errors = result.Errors?.ToArray() ?? []
-        };
+            await _proxy.RegisterEndpointAsync(registerRequest, cancellationToken);
+
+            return Result.Success;
+        }
+        catch (Exception)
+        {
+            return Result.Failure("Login failed");
+        }
+        
     }
 
     public async Task<Result<string>> RefreshTokenAsync(RefreshTokenRequest refreshTokenRequest,
         CancellationToken cancellationToken)
     {
-        var result = await _proxy.RefreshTokenEndpointAsync(refreshTokenRequest, cancellationToken);
-
-        return new Result<string>()
+        try
         {
-            Succeeded = result.Succeeded!.Value, Errors = result.Errors?.ToArray() ?? [], Value = result.Value
-        };
+            var result = await _proxy.RefreshTokenEndpointAsync(refreshTokenRequest, cancellationToken);
+
+            return Result<string>.Success(result);
+        }
+        catch (Exception)
+        {
+            return Result<string>.Failure("Couldn't not refresh token");
+        }
     }
 
     public async Task<Result<string>> ForgotPasswordAsync(ForgotPasswordRequest forgotPasswordRequest,
         CancellationToken cancellationToken)
     {
-        var result = await _proxy.ForgotPasswordEndpointAsync(forgotPasswordRequest, cancellationToken);
-
-        return new Result<string>()
+        try
         {
-            Succeeded = result.Succeeded!.Value, Errors = result.Errors?.ToArray() ?? [], Value = result.Value
-        };
+            var result = await _proxy.ForgotPasswordEndpointAsync(forgotPasswordRequest, cancellationToken);
+
+            return Result<string>.Success(result);
+        }
+        catch (Exception)
+        {
+            return Result<string>.Failure("Something went wrong");
+        }
+        
     }
 
     public async Task<Result> ResetPasswordAsync(ResetPasswordRequest resetPasswordRequest,
         CancellationToken cancellationToken)
     {
-        var result = await _proxy.ResetPasswordEndpointAsync(resetPasswordRequest, cancellationToken);
+        try
+        {
+            await _proxy.ResetPasswordEndpointAsync(resetPasswordRequest, cancellationToken);
 
-        return new Result() { Succeeded = result.Succeeded!.Value, Errors = result.Errors!.ToArray() ?? [] };
+            return Result.Success;
+        }
+        catch (Exception)
+        {
+            return Result.Failure("Something went wrong");
+        }
     }
 
     public async Task<Result<UserInfoDto>> GetCurrentUserAsync(CancellationToken cancellationToken)
     {
-        var result = await _proxy.GetCurrentUserEndpointAsync(cancellationToken);
+        try
+        {
+            var result = await _proxy.GetCurrentUserEndpointAsync(cancellationToken);
 
-        return new Result<UserInfoDto>() { Errors = result.Errors?.ToArray() ?? [], Succeeded = result.Succeeded!.Value, Value = result.Value};
+            return Result<UserInfoDto>.Success(result);
+        }
+        catch (Exception)
+        {
+            return Result<UserInfoDto>.Failure("Something went wrong");
+        }
     }
 
-    public async Task<Result> AddNewClientAsync(AddNewClientRequest addNewClientRequest,
+    public async Task<Result> AddNewClientAsync(AddClientRequest addNewClientRequest,
         CancellationToken cancellationToken)
     {
-        var result = await _proxy.AddNewClientEndPointAsync(addNewClientRequest, cancellationToken);
+        try
+        {
+            await _proxy.AddClientEndPointAsync(addNewClientRequest, cancellationToken);
+
+            return Result.Success;
+        }
+        catch (Exception)
+        {
+            return Result.Failure("Something went wrong");
+        }
         
-        return new Result(){ Succeeded = result.Succeeded!.Value, Errors = result.Errors!.ToArray() ?? [] };
         
     }
+
+    public async Task<Result<ClientSettingsDto>> GetClientSettings(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _proxy.GetSettingsEndpointAsync(cancellationToken);
+
+            return Result<ClientSettingsDto>.Success(result);
+        }
+        catch (Exception)
+        {
+            return Result<ClientSettingsDto>.Failure("Something went wrong");
+        }
+        
+    } 
     
 }

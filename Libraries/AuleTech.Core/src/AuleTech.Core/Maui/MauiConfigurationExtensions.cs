@@ -10,7 +10,8 @@ namespace AuleTech.Core.Maui;
 
 public static class MauiConfigurationExtensions
 {
-    public static async Task AddAppSettingsAsync(this MauiAppBuilder builder, string projectName, Assembly appSettingsAssemblyLocation)
+    public static async Task AddAppSettingsAsync(this MauiAppBuilder builder, string projectName,
+        Assembly appSettingsAssemblyLocation)
     {
         await using var appsettingsSteam = await GetAppSettingsFile()!.SanitizeAppSettingsAsync();
         await using var environmentAppSettingsStream =
@@ -40,7 +41,7 @@ public static class MauiConfigurationExtensions
         var appSettingsText = await appSettingStream.ReadAllTextAsync();
 
         appSettingsText = appSettingsText.Replace("localhost", "10.0.2.2");
-        
+
         appSettingStream.Close();
         await appSettingStream.DisposeAsync();
 

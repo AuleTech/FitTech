@@ -1,34 +1,33 @@
-﻿using FastEndpoints;
+﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.Result;
+using FastEndpoints;
 using FitTech.Application;
-using FitTech.Application.Auth.Dtos;
-using FitTech.Application.Auth.Services;
+using FitTech.Application.Query.Auth.RefreshToken;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Auth.RefreshToken;
 
 [HttpPost("/auth/refresh-token")]
 [AllowAnonymous]
-public class RefreshTokenEndpoint : Endpoint<RefreshTokenRequest, Result<string>>
+public class RefreshTokenEndpoint : Endpoint<RefreshTokenRequest, string>
 {
-    private readonly IFitTechAuthenticationService _authenticationService;
+    private readonly IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>> _queryHandler;
 
-    public RefreshTokenEndpoint(IFitTechAuthenticationService authenticationService)
+    public RefreshTokenEndpoint(IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>> queryHandler)
     {
-        _authenticationService = authenticationService;
+        _queryHandler = queryHandler;
     }
 
     public override async Task HandleAsync(RefreshTokenRequest req, CancellationToken ct)
     {
         var result =
-            await _authenticationService.RefreshTokenAsync(
-                new RefreshTokenDto(req.RefreshToken, req.ExpiredAccessToken), ct);
+            await _queryHandler.HandleAsync(
+                new RefreshTokenQuery(req.RefreshToken, req.ExpiredAccessToken), ct);
 
         if (!result.Succeeded)
         {
-            await SendAsync(result.MapFailure<string>(),
-                StatusCodes.Status400BadRequest, ct);
-
-            return;
+            ThrowError(result.Errors.First());
         }
 
         if (result.Value!.NeedLoginAgain)
@@ -37,6 +36,6 @@ public class RefreshTokenEndpoint : Endpoint<RefreshTokenRequest, Result<string>
             return;
         }
 
-        await SendAsync(result.Map(x => x?.AccessToken), cancellation: ct);
+        await SendAsync(result.Value!.AccessToken!, cancellation: ct);
     }
 }

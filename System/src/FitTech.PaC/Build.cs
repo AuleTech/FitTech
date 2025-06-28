@@ -1,53 +1,53 @@
-using AuleTech.Core.Patterns;
-using AuleTech.Core.Processing.Runners;
+using AuleTech.Core.Patterns.Result;
 using DevopsCli.Core.Commands;
 using DevopsCli.Core.Commands.Dotnet.Build;
 using DevopsCli.Core.Commands.Dotnet.Restore;
-using DevopsCli.Core.Commands.Dotnet.Tests;
+using DevopsCli.Core.Commands.Dotnet.Test;
 using DevopsCli.Core.Commands.Dotnet.Workloads;
-using DevopsCli.Core.Tools;
 using DevopsCli.Core.Tools.Node;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tools.Npm;
 
 [GitHubActions(
     "Continuous Integration",
     GitHubActionsImage.UbuntuLatest,
     On = new[] { GitHubActionsTrigger.PullRequest })]
-class Build : NukeBuild
+internal class Build : NukeBuild
 {
-    [Solution(GenerateProjects = true)] readonly Solution Solution;
-
-    public static int Main() => Execute<Build>(x => x.UnitTests, x => x.IntegrationTests);
-
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    private readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+
+    [Solution(GenerateProjects = true)] private readonly Solution Solution;
 
     private Target InstallDependencies => _ => _
         .Executes(() =>
         {
             var nodeTool = PacDependencyInjection.Default.Get<INodeTool>();
-            var result = nodeTool.NpmInstallAsync("tailwindcss @tailwindcss/cli", CancellationToken.None).GetAwaiter().GetResult();
+            var result = nodeTool.NpmInstallAsync("tailwindcss @tailwindcss/cli", CancellationToken.None).GetAwaiter()
+                .GetResult();
             result.ThrowIfFailed();
 
-            result = nodeTool.NpmInstallAsync(string.Empty, CancellationToken.None, 
+            result = nodeTool.NpmInstallAsync(string.Empty, CancellationToken.None,
                     workingDir: Solution.src._Presentation.FitTech_WebComponents.Directory, isGlobal: false)
                 .GetAwaiter().GetResult();
-            
+
             result.ThrowIfFailed();
 
             var restoreWorkloadCommand = PacDependencyInjection.Default.Get<ICommand<WorkloadsCommandParams, Result>>();
             result = restoreWorkloadCommand
                 .RunAsync(
-                    new WorkloadsCommandParams { Project = Solution.src._Presentation.Client.FitTech_Client_Mobile, RunAsAdministrator = IsLocalBuild},
+                    new WorkloadsCommandParams
+                    {
+                        Project = Solution.src._Presentation.Client.FitTech_Client_Mobile,
+                        RunAsAdministrator = IsLocalBuild
+                    },
                     CancellationToken.None).GetAwaiter().GetResult();
-            
+
             result.ThrowIfFailed();
         });
-    
-    Target Restore => _ => _
+
+    private Target Restore => _ => _
         .DependsOn(InstallDependencies)
         .Executes(() =>
         {
@@ -56,13 +56,13 @@ class Build : NukeBuild
 
             var result =
                 command.RunAsync(
-                    new RestoreCommandParams() { SolutionPath = Solution },
+                    new RestoreCommandParams { SolutionPath = Solution },
                     cts.Token).GetAwaiter().GetResult();
 
             result.ThrowIfFailed();
         });
 
-    Target Compile => _ => _
+    private Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
@@ -74,7 +74,7 @@ class Build : NukeBuild
             {
                 result =
                     command.RunAsync(
-                            new BuildCommandParams() { SolutionPath = Solution },
+                            new BuildCommandParams { SolutionPath = Solution },
                             cts.Token)
                         .GetAwaiter().GetResult();
             } while (!result.Succeeded);
@@ -89,13 +89,16 @@ class Build : NukeBuild
 
             var result =
                 command.RunAsync(
-                        new RunTestsCommandParams() { ProjectPath = Solution.src._APIs.FitTech.Tests.FitTech_API_UnitTests.Path },
+                        new RunTestsCommandParams
+                        {
+                            ProjectPath = Solution.src._APIs.FitTech.Tests.FitTech_API_UnitTests.Path
+                        },
                         cts.Token)
                     .GetAwaiter().GetResult();
 
             result.ThrowIfFailed();
         });
-    
+
     private Target IntegrationTests => _ => _
         .DependsOn(Compile)
         .Executes(() =>
@@ -105,10 +108,18 @@ class Build : NukeBuild
 
             var result =
                 command.RunAsync(
-                        new RunTestsCommandParams() { ProjectPath = Solution.src._APIs.FitTech.Tests.FitTech_API_IntegrationTests.Path },
+                        new RunTestsCommandParams
+                        {
+                            ProjectPath = Solution.src._APIs.FitTech.Tests.FitTech_API_IntegrationTests.Path
+                        },
                         cts.Token)
                     .GetAwaiter().GetResult();
-            
+
             result.ThrowIfFailed();
         });
+
+    public static int Main()
+    {
+        return Execute<Build>(x => x.UnitTests, x => x.IntegrationTests);
+    }
 }

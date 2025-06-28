@@ -1,34 +1,36 @@
-﻿using FastEndpoints;
+﻿using AuleTech.Core.Patterns;
+using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.Result;
+using FastEndpoints;
 using FitTech.Application;
-using FitTech.Application.Auth.Dtos;
-using FitTech.Application.Auth.Services;
+using FitTech.Application.Commands.Auth.Register;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Auth.Register;
 
-public class RegisterEndpoint : Endpoint<RegisterRequest, Result>
+[AllowAnonymous]
+[HttpPost("/auth/register")]
+public class RegisterEndpoint : Endpoint<RegisterRequest>
 {
-    private readonly IFitTechAuthenticationService _authenticationService;
 
-    public RegisterEndpoint(IFitTechAuthenticationService authenticationService)
+    private readonly IAuleTechCommandHandler<RegisterCommand, Result> _commandHandler;
+
+    public RegisterEndpoint(IAuleTechCommandHandler<RegisterCommand, Result> commandHandler)
     {
-        _authenticationService = authenticationService;
+        _commandHandler = commandHandler;
     }
-
-    public override void Configure()
-    {
-        Post("/auth/register");
-        AllowAnonymous();
-    }
-
+    
     public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
     {
         var registrationResult =
-            await _authenticationService.RegisterAsync(new RegisterUserDto(req.Email, req.Password), ct);
+            await _commandHandler.HandleAsync(new RegisterCommand(req.Email, req.Password), ct);
+
+
+        if (!registrationResult.Succeeded)
+        {
+            ThrowError(registrationResult.Errors.First());
+        }
         
-        
-        await SendAsync(registrationResult,
-            registrationResult.Succeeded ? StatusCodes.Status200OK :
-            registrationResult.Errors.Any() ? StatusCodes.Status400BadRequest :
-            StatusCodes.Status500InternalServerError, ct);
+        await SendNoContentAsync(ct);
     }
 }
