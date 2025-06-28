@@ -132,4 +132,15 @@ internal sealed class UserService : IUserService
         return Result.Success;
     }
 
+    public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
+    {
+        var result = await _fitTechApiClient.GetTrainerDataAsync(cancellationToken);
+        
+        if (!result.Succeeded)
+        {
+            return result.MapFailure<TrainerDataDto>();
+        }
+
+        return result;
+    }
 }

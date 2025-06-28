@@ -6,6 +6,7 @@
 @inject NavigationManager Navigation
 @using System.Net.Http;
 @using System.Net.Http.Json;
+@inject IUserService UserService
 
 
 <div class="h-full w-full ml-80 p-6">
@@ -81,15 +82,12 @@
         // Lógica de guardado
     }
     
-    protected override async Task OnInitializedAsync()
+    protected override Task OnInitializedAsync(CancellationToken cancellationToken)
     {
         try
         {
-            var data = await Http.GetFromJsonAsync<ConfigurationUserModel>("/Trainer/TrainerSettings");
-            if (data != null)
-            {
-                configurationUserModel = data;
-            }
+            var response = await UserService.GetTrainerDataAsync(cancellationToken);
+            Console.WriteLine(response);
         }
         catch (Exception ex)
         {

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace FitTech.API.Endpoints.Trainer;
 
 [HttpGet("/Trainer/TrainerSettings")]
-[Authorize(AuthenticationSchemes = "Bearer")]
 public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto> 
 {
     private readonly IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>> _queryHandler;
