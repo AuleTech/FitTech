@@ -13,7 +13,7 @@ internal static class ServiceCollectionExtensions
     {
         builder.Services.AddAuth(builder.Configuration);
 
-        builder.Services.AddIdentity<FitTechUser, FitTechRole>(options =>
+        builder.Services.AddIdentityCore<FitTechUser>(options =>
             {
                 options.Password.RequiredLength = 8;
             })
