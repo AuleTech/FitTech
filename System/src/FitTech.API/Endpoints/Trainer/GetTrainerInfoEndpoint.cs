@@ -3,7 +3,6 @@ using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application.Query.Trainer.GetTrainerData;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Trainer;
 
@@ -27,13 +26,13 @@ public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto>
             return;
         }
 
-        var clientSettings = await _queryHandler.HandleAsync(new GetTrainerDataQuery(Guid.Parse(userId)), ct);
+        var TrainerSettings = await _queryHandler.HandleAsync(new GetTrainerDataQuery(Guid.Parse(userId)), ct);
 
-        if (!clientSettings.Succeeded)
+        if (!TrainerSettings.Succeeded)
         {
-            ThrowError(clientSettings.Errors.First());
+            ThrowError(TrainerSettings.Errors.First());
         }
         
-        await SendAsync(clientSettings.Value!, cancellation: ct);
+        await SendAsync(TrainerSettings.Value!, cancellation: ct);
     }
 }

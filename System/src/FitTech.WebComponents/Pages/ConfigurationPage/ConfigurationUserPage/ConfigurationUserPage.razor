@@ -1,11 +1,7 @@
 @page "/ConfigurationUserPage"
-@using System.Net
-@inject HttpClient Http
 @using FitTech.ApiClient
 @using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
-@inject NavigationManager Navigation
-@using System.Net.Http;
-@using System.Net.Http.Json;
+@inherits FitTech.WebComponents.Components.CancellableComponent
 @inject IUserService UserService
 
 
@@ -82,17 +78,18 @@
         // Lógica de guardado
     }
     
-    protected override Task OnInitializedAsync(CancellationToken cancellationToken)
+    protected override async Task OnInitializedAsync()
     {
-        try
+        var response = await UserService.GetTrainerDataAsync(_cts.Token);
+
+        response.Map(name => configurationUserModel.Name);
+
+        if (!response!.Succeeded)
         {
-            var response = await UserService.GetTrainerDataAsync(cancellationToken);
-            Console.WriteLine(response);
+            //TODO: Show error
+            return;
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error al obtener los datos de configuración: {ex.Message}");
-        }
+        
     }
 
 
