@@ -10,14 +10,7 @@
 }
 
 @code {
-	[Parameter] public string? showErrorBanner { get; set; }
-	[Parameter] public string? showWarningBanner { get; set; }
-	[Parameter] public string? showSuccessBanner { get; set; }
-	[Parameter] public string? showInfoBanner { get; set; }
-
 	[Parameter] public string? TypeInfoBanner { get; set; } 
-
-    
    
    private string BannerClass(string type) => type switch
     {
@@ -29,7 +22,6 @@
         
         
     };
-    
     
     private string GetTitle(string type) => type switch
     {
