@@ -82,12 +82,15 @@
     {
         var response = await UserService.GetTrainerDataAsync(_cts.Token);
 
-        response.Map(name => configurationUserModel.Name);
-
-        if (!response!.Succeeded)
+        if (response.Succeeded)
         {
-            //TODO: Show error
-            return;
+            configurationUserModel.Name = response.Value!.Name!;
+            configurationUserModel.Email = response.Value!.Email!;
+            configurationUserModel.Password = response.Value!.Password!;
+        }
+        else
+        {
+            Console.WriteLine($"Error: {response.Errors}");
         }
         
     }
