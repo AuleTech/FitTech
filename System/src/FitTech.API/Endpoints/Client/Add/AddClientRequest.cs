@@ -4,9 +4,8 @@ namespace FitTech.API.Endpoints.Client.Add;
 
 public record AddClientRequest(string Name,
     string LastName,
-    string EmailUser,
+    string Email,
     DateTime Birthdate,
-    int PhoneNumber,
     int TrainingHours,
     string TrainingModel,
     DateTime EventDate,
@@ -24,6 +23,7 @@ public static class AddClientRequestExtensions
         TrainingModel = request.TrainingModel,
         EventDate = request.EventDate,
         Center = request.Center,
-        SubscriptionType = request.SubscriptionType
+        SubscriptionType = request.SubscriptionType,
+        Email = request.Email
     };
 }
