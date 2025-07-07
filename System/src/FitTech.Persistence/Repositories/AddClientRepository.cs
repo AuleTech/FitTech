@@ -2,6 +2,7 @@
 using AuleTech.Core.Patterns.Result;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitTech.Persistence.Repositories;
 
@@ -14,11 +15,16 @@ public sealed class ClientRepository : IClientRepository
             _context = context;
         }
     
-        public async Task<Result> AddAsync(Client client, CancellationToken cancellationToken)
+        public async Task<Result<Client>> AddAsync(Client client, CancellationToken cancellationToken)
         {
-            await _context.ClientTable.AddAsync(client, cancellationToken);
+            await _context.Client.AddAsync(client, cancellationToken);
             var rows = await _context.SaveChangesAsync(cancellationToken);
             
-            return rows < 1 ? Result.Failure("Nothing was saved") : Result.Success;
+            return rows < 1 ? Result<Client>.Failure("Nothing was saved") : Result<Client>.Success(client);
+        }
+
+        public async Task<Result<Client>> GetAsync(Guid id, CancellationToken cancellationToken)
+        {
+            return await _context.Client.SingleAsync(x => x.Id == id, cancellationToken);
         }
     }

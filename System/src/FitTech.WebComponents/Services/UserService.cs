@@ -110,26 +110,30 @@ internal sealed class UserService : IUserService
         return Result.Success;
     }
 
-    public async Task<Result> AddNewClientAsync(string username, string lastname, DateTime birthdate, string email, int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTime eventDate, string subscriptionType,  CancellationToken cancellationToken)
+    public async Task<Result> AddClientAsync(string username, string lastname, DateTime birthdate, string email, int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTime eventDate, string subscriptionType,  CancellationToken cancellationToken)
     {
-        var result = await _fitTechApiClient.AddNewClientAsync(
-            new AddClientRequest()
-            {
-                Name = username,
-                LastName = lastname,
-                EmailUser = email,
-                Birthdate = birthdate,
-                PhoneNumber = phoneNumber,
-                TrainingHours = trainingHours,
-                TrainingModel = trainingMode,
-                EventDate = eventDate,
-                Center = center,
-                SubscriptionType = subscriptionType
-                
-                
-            }, cancellationToken);
-
-        return Result.Success;
+        try
+        {
+            var result = await _fitTechApiClient.AddNewClientAsync(
+                new AddClientRequest()
+                {
+                    Name = username,
+                    LastName = lastname,
+                    EmailUser = email,
+                    Birthdate = birthdate,
+                    PhoneNumber = phoneNumber,
+                    TrainingHours = trainingHours,
+                    TrainingModel = trainingMode,
+                    EventDate = eventDate,
+                    Center = center,
+                    SubscriptionType = subscriptionType
+                }, cancellationToken);
+            return Result.Success;
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure(ex.Message);
+        }
     }
 
 }

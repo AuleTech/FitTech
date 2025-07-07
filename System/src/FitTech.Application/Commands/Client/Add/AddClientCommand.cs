@@ -15,10 +15,13 @@ public class AddClientCommand : ICommand, IValidator
     public string SubscriptionType { get; init; } = null!;
     public Guid TrainerId { get; set; }
     
+    public string Email { get; set; } = null!;
+    
     public Result Validate()
     {
         var errors = new List<string>(); //TODO: DateTime.IsOlderThan(Age)
 
+        Email.ValidateStringNullOrEmpty(errors, nameof(Email));
         Name.ValidateStringNullOrEmpty(errors, nameof(Name));
         LastName.ValidateStringNullOrEmpty(errors, nameof(LastName));
         TrainingModel.ValidateStringNullOrEmpty(errors, nameof(TrainingModel));
@@ -43,6 +46,7 @@ public static class AddClientCommandExtensions
         EventDate = command.EventDate,
         Center = command.Center,
         SubscriptionType = command.SubscriptionType,
-        TrainerId = command.TrainerId
+        TrainerId = command.TrainerId,
+        Email = command.Email
     };
 } 

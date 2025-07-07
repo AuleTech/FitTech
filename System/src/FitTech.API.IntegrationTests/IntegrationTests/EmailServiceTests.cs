@@ -1,7 +1,7 @@
 ﻿using FitTech.Application;
 using FitTech.Application.Configuration;
 using FitTech.Application.Services;
-using FitTech.Domain.Templates.EmailsTemplates;
+using FitTech.Domain.Templates.EmailTemplates.ResetPassword;
 using FitTech.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -18,7 +18,7 @@ var fitTechApi = builder
     .WaitFor(rabbitMq)
     .WithExternalHttpEndpoints();
 
-// _ = builder.AddProject<FitTech_Trainer_Wasm>("trainer-web")
-//     .WaitFor(fitTechApi);
+_ = builder.AddProject<FitTech_Trainer_Wasm>("trainer-web")
+    .WaitFor(fitTechApi);
 
 builder.Build().Run();
