@@ -17,4 +17,18 @@ public class TrainerRepository: ITrainerRepository
     {
         return await _context.AspNetUser.FindAsync(id, cancellationToken);
     }
+
+    public async Task<Trainer?> UpdateTrainerAsync(Guid id, string name, string email, string password, CancellationToken cancellationToken)
+    {
+        var trainer = await _context.AspNetUser.FindAsync(id, cancellationToken);
+
+        if (trainer is null)
+            return null;
+
+        trainer.UpdateData(name, email, password); // Método de dominio
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return trainer;
+    }
 }

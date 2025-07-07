@@ -143,4 +143,19 @@ internal sealed class UserService : IUserService
 
         return result;
     }
+
+    public Task<Result> SaveChangesConfiguration(string name, string email, string password, CancellationToken cancellationToken)
+    {
+        var result =  _fitTechApiClient.UpdateUserConfigurationAsync(
+            new TrainerDataDto()
+            {
+                Name = name,
+                Email = email,
+                Password = password,
+                
+            }, cancellationToken);
+
+        return result.Succeeded;
+    }
+    
 }

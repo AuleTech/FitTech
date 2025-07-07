@@ -53,10 +53,16 @@
                     </div>
                 }
 
-                <div class="flex justify-end gap-4 mt-6">
-                    <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="SaveChanges">Guardar Cambios</button>
-                    <button type="button" class="text-gray-400 hover:underline">Cancelar</button>
-                </div>
+    <div class="flex justify-end gap-4 mt-6">
+        <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Guardar Cambios</button>
+        <button type="button" class="text-gray-400 hover:underline">Cancelar</button>
+    </div>
+    @if (!string.IsNullOrEmpty(_message))
+    {
+        <p class="mt-3" style="color: @(_message.Contains("Error") ? "red" : "green")">
+            @(_message)
+        </p>
+    }
                 </EditForm>
             </div>
         </div>
@@ -66,17 +72,14 @@
 @code {
     private ConfigurationUserModel configurationUserModel { get; set; } = new();
     private bool showPasswordFields = false;
+    private string _message = string.Empty;
     
 
     private void TogglePasswordFields()
     {
         showPasswordFields = !showPasswordFields;
     }
-
-    private void  SaveChanges()
-    {
-        // Lógica de guardado
-    }
+    
     
     protected override async Task OnInitializedAsync()
     {
@@ -90,10 +93,25 @@
         }
         else
         {
-            Console.WriteLine($"Error: {response.Errors}");
+            _message = "Hubo un error en la recuperación de los datos del usuario";
         }
         
     }
+
+    /*protected async Task  SaveChanges()
+    {
+        
+      var response = await UserService.SaveChangesConfiguration(configurationUserModel.Name, configurationUserModel.Email, configurationUserModel.Password , _cts.Token);
+
+        if (!response.Succeeded)
+        {
+            _message = "Hubo un error en la recuperación de los datos del usuario";
+            return;
+        }
+        
+        _message = "Los cambios se han guardado correctamente.";
+        StateHasChanged();
+    }*/
 
 
 }

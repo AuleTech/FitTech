@@ -26,8 +26,4 @@
     <ProjectReference Include="..\FitTech.Persistence\FitTech.Persistence.csproj"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Endpoints\Trainer\Update\" />
-  </ItemGroup>
-
 </Project>

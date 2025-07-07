@@ -10,6 +10,7 @@ using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.Register;
 using FitTech.Application.Commands.Auth.RequestPassword;
 using FitTech.Application.Commands.Client.Add;
+using FitTech.Application.Commands.Trainer.Update;
 using FitTech.Application.Query.Auth.RefreshToken;
 using FitTech.Application.Query.Client.GetSettings;
 using FitTech.Application.Query.Trainer.GetTrainerData;
@@ -96,7 +97,9 @@ public static class ServiceCollectionExtensions
             .AddTransient<IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>, LoginCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<RegisterCommand, Result>, RegisterCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<ResetPasswordCommand, Result>, ResetPasswordCommandHandler>()
-            .AddTransient<IAuleTechCommandHandler<AddClientCommand, Result>, AddClientCommandHandler>();
+            .AddTransient<IAuleTechCommandHandler<AddClientCommand, Result>, AddClientCommandHandler>()
+            .AddTransient<IAuleTechCommandHandler<UpdateTrainerCommand, Result>, UpdateTrainerCommandHandler>();
+            
     }
 
     internal static IServiceCollection AddQueries(this IServiceCollection services)
