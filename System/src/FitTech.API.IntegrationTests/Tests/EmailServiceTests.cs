@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Resend;
 
-namespace FitTech.Api.Tests.IntegrationTests;
+namespace FitTech.Api.Tests.Tests;
 
 public class EmailServiceTest
 {
