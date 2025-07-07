@@ -144,10 +144,10 @@ internal sealed class UserService : IUserService
         return result;
     }
 
-    public Task<Result> SaveChangesConfiguration(string name, string email, string password, CancellationToken cancellationToken)
+    public async Task<Result> SaveChangesConfiguration(string name, string email, string password, CancellationToken cancellationToken)
     {
-        var result =  _fitTechApiClient.UpdateUserConfigurationAsync(
-            new TrainerDataDto()
+        var result = await  _fitTechApiClient.UpdateUserConfigurationAsync(
+            new UpdateUSerConfigurationRequest()
             {
                 Name = name,
                 Email = email,
@@ -155,7 +155,7 @@ internal sealed class UserService : IUserService
                 
             }, cancellationToken);
 
-        return result.Succeeded;
+        return Result.Success;
     }
     
 }

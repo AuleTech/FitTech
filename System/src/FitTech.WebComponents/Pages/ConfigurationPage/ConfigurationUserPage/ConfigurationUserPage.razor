@@ -54,7 +54,7 @@
                 }
 
     <div class="flex justify-end gap-4 mt-6">
-        <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Guardar Cambios</button>
+        <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="SaveChanges">Guardar Cambios</button>
         <button type="button" class="text-gray-400 hover:underline">Cancelar</button>
     </div>
     @if (!string.IsNullOrEmpty(_message))
@@ -98,7 +98,7 @@
         
     }
 
-    /*protected async Task  SaveChanges()
+    protected async Task  SaveChanges()
     {
         
       var response = await UserService.SaveChangesConfiguration(configurationUserModel.Name, configurationUserModel.Email, configurationUserModel.Password , _cts.Token);
@@ -111,7 +111,7 @@
         
         _message = "Los cambios se han guardado correctamente.";
         StateHasChanged();
-    }*/
+    }
 
 
 }
