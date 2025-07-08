@@ -35,7 +35,7 @@ public class UpdateUserConfigurationEndPoint: Endpoint<UpdateUSerConfigurationRe
         var command = req.ToCommand();
         command.Id = Guid.Parse(userId);
         
-        var result = await _commandHandler.HandleAsync(req.ToCommand(), ct);
+        var result = await _commandHandler.HandleAsync(command, ct);
 
         if (!result.Succeeded)
         {

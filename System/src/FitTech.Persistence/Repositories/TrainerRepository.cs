@@ -25,7 +25,7 @@ public class TrainerRepository: ITrainerRepository
         if (trainer is null)
             return null;
 
-        trainer.UpdateData(name, email, password); // Método de dominio
+        trainer.UpdateData(name, email, password); 
 
         await _context.SaveChangesAsync(cancellationToken);
 
