@@ -12,3 +12,13 @@ public class UpdateTrainerCommand : ICommand
     public string Password { get; init; } = null!;
 
 }
+
+public static class UpdateTrainerCommandExtensions
+{
+    public static Domain.Entities.Trainer ToEntity(this UpdateTrainerCommand command) => new Domain.Entities.Trainer
+    {
+        Name = command.Name,
+        Email = command.Email,
+        Password = command.Password,
+    };
+} 

@@ -22,18 +22,16 @@ public class UpdateTrainerCommandHandler : IAuleTechCommandHandler<UpdateTrainer
 
     public async Task<Result> HandleAsync(UpdateTrainerCommand command, CancellationToken cancellationToken)
     {
-        
-        var trainer = await _trainerRepository.GetByIdAsync(command.Id, cancellationToken);
+        var trainer  = await _userManager.FindByIdAsync(command.Id.ToString()).WaitAsync(cancellationToken);
 
         if (trainer is null)
         {
-            return Result.Failure("Trainer not found.");
+            return Result<TrainerDataDto>.Failure("Trainer not found");
         }
-
-        trainer.UpdateData(command.Name, command.Email, command.Password);
-
-        var trainerupdate = await _trainerRepository.UpdateTrainerAsync(trainerId:command.Id, name:command.Name, email:command.Email, password:command.Password, cancellationToken);
-
+        var update = await _trainerRepository.UpdateTrainerAsync(command.Id, command.Name, command.Email, command.Password, cancellationToken);
+        
+        update?.UpdateData(command.ToEntity(), cancellationToken);
+        
         return Result.Success;
     } 
 }
