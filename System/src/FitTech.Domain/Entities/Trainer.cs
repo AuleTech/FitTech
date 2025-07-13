@@ -1,4 +1,6 @@
-﻿namespace FitTech.Domain.Entities;
+﻿using System.Data;
+
+namespace FitTech.Domain.Entities;
 
 public class Trainer
 {
@@ -9,10 +11,10 @@ public class Trainer
     public DateTime Birthdate { get; set; }
     public string Password { get; set; } = null!;
     
-    public void UpdateData(Trainer trainer, CancellationToken cancellationToken)
+    public void UpdateData(string name, string email, string password, CancellationToken cancellationToken)
     {
-        Name = trainer.Name;
-        Email = trainer.Email;
-        Password = trainer.Password; // Aquí deberías hashearla si corresponde
+        Name = name;
+        Email = email;
+        Password = password; 
     }
 }
