@@ -23,7 +23,7 @@ public class RegisterEndpoint : Endpoint<RegisterRequest>
     public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
     {
         var registrationResult =
-            await _commandHandler.HandleAsync(new RegisterCommand(req.Email, req.Password), ct);
+            await _commandHandler.HandleAsync(new RegisterCommand(req.Email, req.Password, UserType.Trainer), ct);
 
 
         if (!registrationResult.Succeeded)

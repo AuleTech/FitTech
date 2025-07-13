@@ -3,7 +3,7 @@ using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Services;
 using FitTech.Domain.Entities;
-using FitTech.Domain.Templates.EmailsTemplates;
+using FitTech.Domain.Templates.EmailTemplates.ResetPassword;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 

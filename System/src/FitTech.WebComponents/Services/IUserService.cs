@@ -16,6 +16,6 @@ public interface IUserService
     Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken cancellationToken);
     Task<Result> LogoutAsync(CancellationToken cancellationToken);
     
-    Task<Result> AddNewClientAsync(string username, string lastname, DateTime birthdate, string email, int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTime eventDate, string subscriptionType,  CancellationToken cancellationToken);
+    Task<Result> AddClientAsync(string username, string lastname, DateTime birthdate, string email, int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTime eventDate, string subscriptionType,  CancellationToken cancellationToken);
     
 }

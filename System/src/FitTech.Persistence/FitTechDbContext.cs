@@ -11,7 +11,7 @@ public class FitTechDbContext : IdentityDbContext<FitTechUser, FitTechRole, Guid
     }
 
     public DbSet<Email> EmailLog { get; set; }
-    public DbSet<Client> ClientTable { get; set; }
+    public DbSet<Client> Client { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

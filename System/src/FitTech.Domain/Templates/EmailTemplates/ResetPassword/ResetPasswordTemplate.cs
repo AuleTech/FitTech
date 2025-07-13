@@ -1,4 +1,4 @@
-﻿namespace FitTech.Domain.Templates.EmailsTemplates;
+﻿namespace FitTech.Domain.Templates.EmailTemplates.ResetPassword;
 
 public class ResetPasswordTemplate : IEmailTemplate
 {

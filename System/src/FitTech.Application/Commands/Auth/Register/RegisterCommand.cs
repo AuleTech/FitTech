@@ -3,7 +3,13 @@ using FitTech.Domain.Entities;
 
 namespace FitTech.Application.Commands.Auth.Register;
 
-public record RegisterCommand(string Email, string Password) : ICommand;
+public record RegisterCommand(string Email, string Password, UserType UserType) : ICommand;
+
+public enum UserType
+{
+    Trainer,
+    Client
+}
 
 public static class RegisterCommandMap
 {
