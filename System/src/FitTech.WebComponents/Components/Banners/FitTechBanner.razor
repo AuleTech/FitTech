@@ -1,0 +1,42 @@
+﻿@if(!string.IsNullOrEmpty(TypeInfoBanner))
+{
+	<div class="@BannerClass(type:"error")" role="alert">
+		<svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+		<div>
+			<span class="font-medium">@GetTitle(type: "errorLogin")</span>
+			<p>@GetSubTitle(type: "errorLoginParagraph")</p>
+		</div>
+	</div>
+}
+
+@code {
+	[Parameter] public string? TypeInfoBanner { get; set; } 
+   
+   private string BannerClass(string type) => type switch
+    {
+        "error" => "flex bg-red-100 rounded-lg p-4 mb-4 text-sm text-red-700",
+        "success" => "flex bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700",
+        "info" => "flex bg-yellow-100 rounded-lg p-4 mb-4 text-sm text-yellow-700",
+        "warning" => "flex bg-blue-100 rounded-lg p-4 mb-4 text-sm text-blue-700",
+        _ => "flex p-4 mb-4 text-sm"
+        
+        
+    };
+    
+    private string GetTitle(string type) => type switch
+    {
+        "genericError" => "Error",
+        "genericSuccess" => "Éxito",
+        "genericInfo" => "Información",
+        "genericWarning" => "Advertencia",
+		"errorLogin" => "Acceso no autorizado",
+        _ => "Aviso"
+    };
+
+	private string GetSubTitle(string type) => type switch
+	{
+		"errorLoginParagraph" => "El email o la contraseña son incorrectos",
+		"registerErrorParagraph" =>"Ha ocurrido un error durante el proceso de registro, revisa la informacion",
+		_ => "Aviso"
+	};
+}
