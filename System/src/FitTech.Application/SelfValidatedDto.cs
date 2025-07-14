@@ -1,7 +1,6 @@
-﻿using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.Result;
+﻿using AuleTech.Core.Patterns.Result;
 
-namespace FitTech.Application.Auth.Dtos;
+namespace FitTech.Application;
 
 public abstract record SelfValidatedDto
 {

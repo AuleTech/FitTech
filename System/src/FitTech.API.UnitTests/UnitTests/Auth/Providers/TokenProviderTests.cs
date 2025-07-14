@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using FitTech.API.UnitTests.Data.Generators;
-using FitTech.Application.Auth.Providers;
+using FitTech.Application.Providers;
 
 namespace FitTech.API.UnitTests.UnitTests.Auth.Providers;
 

@@ -1,9 +1,8 @@
 ﻿using System.Security.Claims;
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Application.Auth;
-using FitTech.Application.Auth.Providers;
 using FitTech.Application.Extensions;
+using FitTech.Application.Providers;
 using FitTech.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;

@@ -1,13 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Unicode;
-using FitTech.Application.Auth.Configuration;
+using FitTech.Application.Configuration;
 using FitTech.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
-using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace FitTech.Application.Auth.Providers;
+namespace FitTech.Application.Providers;
 
 internal interface ITokenProvider
 {

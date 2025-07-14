@@ -2,18 +2,15 @@
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using AuleTech.Core.System.Host;
-using FitTech.Application.Auth.Configuration;
-using FitTech.Application.Auth.Providers;
-using FitTech.Application.Auth.Services;
 using FitTech.Application.Commands.Auth.ForgotPassword;
 using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.Register;
 using FitTech.Application.Commands.Auth.RequestPassword;
 using FitTech.Application.Commands.Client.Add;
-using FitTech.Application.Commands.Trainer.Update;
+using FitTech.Application.Configuration;
+using FitTech.Application.Providers;
 using FitTech.Application.Query.Auth.RefreshToken;
 using FitTech.Application.Query.Client.GetSettings;
-using FitTech.Application.Query.Trainer.GetTrainerData;
 using FitTech.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -97,16 +94,14 @@ public static class ServiceCollectionExtensions
             .AddTransient<IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>, LoginCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<RegisterCommand, Result>, RegisterCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<ResetPasswordCommand, Result>, ResetPasswordCommandHandler>()
-            .AddTransient<IAuleTechCommandHandler<AddClientCommand, Result>, AddClientCommandHandler>()
-            .AddTransient<IAuleTechCommandHandler<UpdateTrainerCommand, Result>, UpdateTrainerCommandHandler>();
-            
+            .AddTransient<IAuleTechCommandHandler<AddClientCommand, Result>, AddClientCommandHandler>();
     }
 
     internal static IServiceCollection AddQueries(this IServiceCollection services)
     {
         return services
-            .AddTransient<IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>, GetTrainerDataQueryHandler>()
             .AddTransient<IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>, RefreshTokenQueryHandler>()
-            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>, GetClientSettingsQueryHandler>();
+            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>,
+                GetClientSettingsQueryHandler>();
     }
 }

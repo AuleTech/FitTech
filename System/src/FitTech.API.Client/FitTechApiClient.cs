@@ -121,9 +121,9 @@ internal sealed class FitTechApiClient : IFitTechApiClient
 
             return Result.Success;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return Result.Failure("Something went wrong");
+            return Result.Failure($"Something went wrong: {ex.Message}");
         }
         
         

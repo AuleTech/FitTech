@@ -1,8 +1,8 @@
-﻿using FitTech.Application.Auth.Configuration;
-using FitTech.Application.Auth.Services;
+﻿using FitTech.Application.Configuration;
+using FitTech.Application.Services;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Repositories;
-using FitTech.Domain.Templates.EmailsTemplates;
+using FitTech.Domain.Templates.EmailTemplates.ResetPassword;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Resend;

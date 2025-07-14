@@ -3,8 +3,6 @@ using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application;
-using FitTech.Application.Auth.Dtos;
-using FitTech.Application.Auth.Services;
 using FitTech.Application.Commands.Auth.Register;
 using Microsoft.AspNetCore.Authorization;
 
@@ -25,7 +23,7 @@ public class RegisterEndpoint : Endpoint<RegisterRequest>
     public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
     {
         var registrationResult =
-            await _commandHandler.HandleAsync(new RegisterCommand(req.Email, req.Password), ct);
+            await _commandHandler.HandleAsync(new RegisterCommand(req.Email, req.Password, UserType.Trainer), ct);
 
 
         if (!registrationResult.Succeeded)

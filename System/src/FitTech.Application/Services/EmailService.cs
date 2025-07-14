@@ -1,11 +1,11 @@
-﻿using FitTech.Application.Auth.Configuration;
+﻿using FitTech.Application.Configuration;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Repositories;
 using FitTech.Domain.Templates;
 using Microsoft.Extensions.Logging;
 using Resend;
 
-namespace FitTech.Application.Auth.Services;
+namespace FitTech.Application.Services;
 
 public interface IEmailService
 {
