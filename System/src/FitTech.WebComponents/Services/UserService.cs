@@ -122,7 +122,7 @@ internal sealed class UserService : IUserService
             {
                 Name = username,
                 LastName = lastname,
-                Email = email,
+                //Email = email,
                 Birthdate = birthdate,
                 TrainingHours = trainingHours,
                 TrainingModel = trainingMode,
@@ -131,5 +131,32 @@ internal sealed class UserService : IUserService
                 SubscriptionType = subscriptionType
             }, cancellationToken);
         return result;
+    }
+    
+    
+    public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
+    {
+        var result = await _fitTechApiClient.GetTrainerDataAsync(cancellationToken);
+        
+        if (!result.Succeeded)
+        {
+            return result.MapFailure<TrainerDataDto>();
+        }
+
+        return result;
+    }
+
+    public async Task<Result> SaveChangesConfiguration(string name, string email, string password, CancellationToken cancellationToken)
+    {
+        var result = await  _fitTechApiClient.UpdateUserConfigurationAsync(
+            new UpdateUSerConfigurationRequest()
+            {
+                Name = name,
+                Email = email,
+                Password = password,
+                
+            }, cancellationToken);
+
+        return Result.Success;
     }
 }

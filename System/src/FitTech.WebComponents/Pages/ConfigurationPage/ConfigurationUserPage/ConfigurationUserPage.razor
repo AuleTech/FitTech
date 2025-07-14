@@ -1,0 +1,117 @@
+@page "/ConfigurationUserPage"
+@using FitTech.ApiClient
+@using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
+@inherits FitTech.WebComponents.Components.CancellableComponent
+@inject IUserService UserService
+
+
+<div class="h-full w-full ml-80 p-6">
+    <div class="text-center">
+        <h2 class="text-2xl font-semibold text-green-600 mb-8">
+            Información Personal
+        </h2>
+    </div>
+    <div class="rounded-md border border-gray-300 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none">
+        <div class="w-full h-full px-4">
+
+<EditForm Model="configurationUserModel" FormName="CostumerForm">
+    <DataAnnotationsValidator/>
+    
+                <div class="mb-4">
+                    <label for="name" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre</label>
+                    <InputText type="text" @bind-Value="configurationUserModel!.Name" id="firstName" 
+                               class="placeholder-gray-500 w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                    <ValidationMessage For="@(() => configurationUserModel!.Name)" class="text-red-600 text-sm"/>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Correo Electrónico</label>
+                    <InputText type="text" @bind-Value="configurationUserModel!.Email" id="email" 
+                               class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                    <ValidationMessage For="@(() => configurationUserModel!.Email)" class="text-red-600 text-sm"/>
+                </div>
+                <div class="mb-6">
+                    <button type="button"
+                            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                            @onclick="TogglePasswordFields">
+                        @((showPasswordFields ? "Ocultar" : "Cambiar") + " contraseña")
+                    </button>
+                </div>
+
+                @if (showPasswordFields)
+                {
+                    <div class="mb-4">
+                        <label for="Password" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Nueva Contraseña</label>
+                        <InputText type="password" @bind-Value="configurationUserModel!.Password" id="Password"
+                                   class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                        <ValidationMessage For="@(() => configurationUserModel!.Password)" class="text-red-600 text-sm"/>
+                    </div>
+                    <div class="mb-4">
+                        <label for="RepeatPassword" class="mb-2 block text-sm font-bold text-gray-700 dark:text-gray-300">Repita su nueva Contraseña</label>
+                        <InputText type="password" @bind-Value="configurationUserModel!.Password" id="RepeatPassword"
+                                   class="w-full rounded border border-gray-300 bg-gray-100 px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-white"/>
+                        <ValidationMessage For="@(() => configurationUserModel!.Password)" class="text-red-600 text-sm"/>
+                    </div>
+                }
+
+    <div class="flex justify-end gap-4 mt-6">
+        <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="SaveChanges">Guardar Cambios</button>
+        <button type="button" class="text-gray-400 hover:underline">Cancelar</button>
+    </div>
+    @if (!string.IsNullOrEmpty(_message))
+    {
+        <p class="mt-3" style="color: @(_message.Contains("Error") ? "red" : "green")">
+            @(_message)
+        </p>
+    }
+                </EditForm>
+            </div>
+        </div>
+    </div>
+
+
+@code {
+    private ConfigurationUserModel configurationUserModel { get; set; } = new();
+    private bool showPasswordFields = false;
+    private string _message = string.Empty;
+    
+
+    private void TogglePasswordFields()
+    {
+        showPasswordFields = !showPasswordFields;
+    }
+    
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await UserService.GetTrainerDataAsync(_cts.Token);
+
+        if (response.Succeeded)
+        {
+            configurationUserModel.Name = response.Value!.Name!;
+            configurationUserModel.Email = response.Value!.Email!;
+            configurationUserModel.Password = response.Value!.Password!;
+        }
+        else
+        {
+            _message = "Hubo un error en la recuperación de los datos del usuario";
+        }
+        
+    }
+
+    protected async Task  SaveChanges()
+    {
+        
+      var response = await UserService.SaveChangesConfiguration(configurationUserModel.Name, configurationUserModel.Email, configurationUserModel.Password , _cts.Token);
+
+        if (!response.Succeeded)
+        {
+            _message = "Hubo un error en la recuperación de los datos del usuario";
+            return;
+        }
+        
+        _message = "Los cambios se han guardado correctamente.";
+        StateHasChanged();
+    }
+
+
+}

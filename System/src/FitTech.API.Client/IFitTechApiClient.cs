@@ -15,4 +15,6 @@ public interface IFitTechApiClient
     Task<Result<UserInfoDto>> GetCurrentUserAsync(CancellationToken cancellationToken);
     Task<Result> AddNewClientAsync(AddClientRequest addNewClientRequest, CancellationToken cancellationToken);
     Task<Result<ClientSettingsDto>> GetClientSettings(CancellationToken cancellationToken);
+    Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken);
+    Task<Result> UpdateUserConfigurationAsync(UpdateUSerConfigurationRequest updateUserConfigurationRequest, CancellationToken cancellationToken);
 }

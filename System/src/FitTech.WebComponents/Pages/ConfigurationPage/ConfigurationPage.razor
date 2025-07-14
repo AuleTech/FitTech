@@ -1,0 +1,45 @@
+@page "/configurationpage"
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
+@inject AppHeaderStateHandler AppHeaderStateHandler
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.Routing,
+
+
+<div class="h-full w-full ml-80 p-6 text-green-600 flex items-center justify-center">
+    <div class="grid grid-cols-2 gap-20">
+        <NavLink href="/ConfigurationUserPage" class="no-underline">
+        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
+                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
+                    transition duration-300 cursor-pointer">
+            Información personal
+        </div>
+        </NavLink>
+        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
+                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
+                    transition duration-300 cursor-pointer">
+            Apariencia
+        </div>
+        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
+                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
+                    transition duration-300 cursor-pointer">
+            Ajustes de cuenta
+        </div>
+        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
+                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
+                    transition duration-300 cursor-pointer">
+            Coming soon
+        </div>
+    </div>
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        AppHeaderStateHandler.Clear();
+
+        base.OnInitialized();
+    }
+
+}
