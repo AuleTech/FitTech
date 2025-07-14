@@ -15,15 +15,17 @@ public class TrainerRepository: ITrainerRepository
 
     public async Task<Trainer?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.TrainerTable.FindAsync(id, cancellationToken);
+        return await _context.Trainer.FindAsync([id], cancellationToken);
     }
 
     public async Task<Trainer?> UpdateTrainerAsync(Guid id, string name, string email, string password, CancellationToken cancellationToken)
     {
-        var trainer = await _context.TrainerTable.FindAsync(id, cancellationToken);
+        var trainer = await _context.Trainer.FindAsync([id], cancellationToken);
 
         if (trainer is null)
-            return null;
+        {
+            return null;   
+        }
 
         trainer.UpdateData(name, email,password, cancellationToken); 
 
