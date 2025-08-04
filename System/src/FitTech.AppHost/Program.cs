@@ -16,7 +16,8 @@ var fitTechApi = builder
     .WithReference(rabbitMq)
     .WaitFor(postgresdb)
     .WaitFor(rabbitMq)
-    .WithExternalHttpEndpoints();
+    .WithExternalHttpEndpoints()
+    .WithEnvironment($"RabbitMq__ConnectionString", rabbitMq.Resource.ConnectionStringExpression);
 
 _ = builder.AddProject<FitTech_Trainer_Wasm>("trainer-web")
     .WaitFor(fitTechApi);

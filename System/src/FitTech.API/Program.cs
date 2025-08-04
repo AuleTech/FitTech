@@ -14,16 +14,7 @@ builder.Host.UseDefaultServiceProvider((_, options) =>
     options.ValidateOnBuild = true;
 });
 
-//TODO: If ASPIRE_CONTAINER_RUNTIME not null then we are running in ASPIRE. Create something to map the aspire environment variables to the expected settings.
 var connectionString = builder.Configuration.GetConnectionString("fittechdb");
-
-//TODO: TEMPORAL 
-if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("ASPIRE_CONTAINER_RUNTIME")))
-{
-    var rabbitConnectionString = builder.Configuration.GetConnectionString("messaging");
-    Environment.SetEnvironmentVariable($"{RabbitMqConfiguration.SectionName}__{nameof(RabbitMqConfiguration.ConnectionString)}", rabbitConnectionString);
-    builder.Configuration.AddEnvironmentVariables();
-}
 
 builder.AddFitTechAuth();
 builder.Services
