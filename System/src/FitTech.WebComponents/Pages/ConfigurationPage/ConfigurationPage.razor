@@ -3,34 +3,127 @@
 @using FitTech.WebComponents.Components.AppHeader
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject NavigationManager NavigationManager
-@using Microsoft.AspNetCore.Components.Routing,
+@using Microsoft.AspNetCore.Components.Routing
 
+<div class="min-h-screen bg-white p-8">
+  <div class="max-w-7xl mx-auto space-y-10">
 
-<div class="h-full w-full ml-80 p-6 text-green-600 flex items-center justify-center">
-    <div class="grid grid-cols-2 gap-20">
-        <NavLink href="/ConfigurationUserPage" class="no-underline">
-        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
-                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
-                    transition duration-300 cursor-pointer">
-            Información personal
-        </div>
-        </NavLink>
-        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
-                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
-                    transition duration-300 cursor-pointer">
-            Apariencia
-        </div>
-        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
-                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
-                    transition duration-300 cursor-pointer">
-            Ajustes de cuenta
-        </div>
-        <div class="rounded-3xl border-4 border-green-600 px-16 py-24 text-center text-3xl font-semibold
-                    hover:bg-green-600 hover:text-white hover:shadow-xl transform hover:-translate-y-2
-                    transition duration-300 cursor-pointer">
-            Coming soon
-        </div>
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <a href="#" class="text-purple-600 text-lg">&lt; Volver</a>
+      <button class="text-gray-600 text-lg flex items-center gap-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7"></path>
+        </svg>
+        Cerrar sesión
+      </button>
     </div>
+
+    <!-- Título -->
+    <h1 class="text-4xl font-bold text-gray-800">Área personal</h1>
+
+    <!-- Contenido principal -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 bg-white">
+
+      <!-- Tarjeta principal -->
+      <div class="col-span-2 bg-white p-8 rounded-2xl shadow-xl">
+        <div class="flex flex-col items-center space-y-4">
+          <!-- Icono usuario -->
+          <div class="w-28 h-28 rounded-full border-4 border-purple-300 flex items-center justify-center">
+            <svg class="w-14 h-14 text-purple-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <div class="text-2xl font-semibold text-gray-800">Yeray Blanco</div>
+          <a href="#" class="text-purple-600 text-base">Editar alias</a>
+        </div>
+
+        <!-- Acciones -->
+        <div class="flex justify-around mt-10 text-center">
+          <div>
+            <div class="text-purple-600">
+              <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div class="text-base mt-2 font-medium">Datos personales</div>
+          </div>
+          <div>
+            <div class="text-purple-600">
+              <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m2 6H7a2 2 0 01-2-2V8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="text-base mt-2 font-medium">Documentos y extractos</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas laterales -->
+      <div class="space-y-6">
+
+        <!-- Aprende sobre -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl">
+          <h2 class="text-xl font-semibold mb-4">Configuración de cuenta</h2>
+          <ul class="space-y-4 text-base">
+            <li class="flex justify-between items-center">
+              <div class="flex items-center gap-3 text-orange-600">
+                <span class="text-xl">🛡️</span> Cambiar contraseña
+              </div>
+              <span class="text-orange-600 text-xl">&gt;</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <div class="flex items-center gap-3 text-green-600">
+                <span class="text-xl">🌿</span> Mi Subscripción
+              </div>
+              <span class="text-orange-600 text-xl">&gt;</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <div class="flex items-center gap-3 text-green-600">
+                <span class="text-xl">😊</span> Métodos de Pago
+              </div>
+              <span class="text-orange-600 text-xl">&gt;</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Info legal -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl">
+          <h2 class="text-xl font-semibold mb-4">Info legal y privacidad</h2>
+          <div class="text-base flex justify-between items-center">
+            <span>Documentos y recibos</span>
+            <span class="text-orange-600 text-xl">&gt;</span>
+          </div>
+        </div>
+
+        <!-- Seguridad -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl">
+          <h2 class="text-xl font-semibold mb-4">Configuración de seguridad</h2>
+          <ul class="space-y-4 text-base">
+            <li class="flex justify-between items-center">
+              <div class="flex items-center gap-3 text-orange-600">
+                <span class="text-xl">🔒</span> Clave de seguridad
+              </div>
+              <span class="text-orange-600 text-xl">&gt;</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <div class="flex items-center gap-3 text-orange-600">
+                <span class="text-xl">👤</span> Verificación en dos pasos
+              </div>
+              <span class="text-orange-600 text-xl">&gt;</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <div class="flex items-center gap-3 text-orange-600">
+                <span class="text-xl">📲</span> Establecer PIN
+              </div>
+              <span class="text-orange-600 text-xl">&gt;</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 @code {
