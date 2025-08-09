@@ -1,13 +1,101 @@
 @page "/usermanager"
+@using System.Runtime.InteropServices.JavaScript
 @using Blazor.Heroicons
 @using FitTech.WebComponents.Components.AppHeader
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject NavigationManager NavigationManager
 
-<h1>Bienvenido a la página de Gestión de tus Clientes</h1>
+@page "/gestion-clientes"
+
+<div class="p-6" style="margin-left: 250px;"> 
+    <div class="flex flex-wrap items-center justify-between bg-white rounded-t-lg p-4 shadow-md mb-2">
+        <h2 class="text-2xl font-bold text-gray-900">GESTOR DE CLIENTES</h2>
+        <div class="relative w-64">
+            <input type="text" placeholder="Buscar" class="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-green-700" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="absolute right-3 top-2.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Tabla -->
+    <table class="min-w-full bg-white rounded-b-lg shadow overflow-hidden">
+        <thead class="bg-zinc-900 text-left text-gray-300 font-semibold rounded-t-lg">
+            <tr>
+                <th class="px-6 py-3 border-b border-gray-200 cursor-pointer">Nombre</th>
+                <th class="px-6 py-3 border-b border-gray-200 cursor-pointer">Apellidos</th>
+                <th class="px-6 py-3 border-b border-gray-200 cursor-pointer">Fecha de Nacimiento</th>
+                <th class="px-6 py-3 border-b border-gray-200 cursor-pointer">Email</th>
+                <th class="px-6 py-3 border-b border-gray-200 cursor-pointer">Subscripción</th>
+                <th class="px-6 py-3 border-b border-gray-200 cursor-pointer">Modalidad de Entrenamiento</th>
+                <th class="px-6 py-3 border-b border-gray-200 cursor-pointer">Horas de entrenamiento contratadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in Productos)
+            {
+                <tr class="hover:bg-gray-50 border-b border-gray-200">
+                    <td class="px-6 py-4 text-gray-700">@producto.Nombre</td>
+                    <td class="px-6 py-4 text-gray-700">@producto.Apellidos</td>
+                    <td class="px-6 py-4 text-gray-700">@producto.Cumpleaños</td>
+                    <td class="px-6 py-4 text-gray-700">@producto.Email</td>
+                    <td class="px-6 py-4 text-gray-700">@producto.Subscripcion</td>
+                    <th class="px-6 py-4 text-gray-700">@producto.Modalidad</th>
+                    <th class="px-6 py-4 text-gray-700">@producto.Horas</th>
+                    
+                    <td class="px-6 py-4 text-gray-700 flex space-x-3 justify-center">
+                        <button title="Editar" class="text-gray-600 hover:text-gray-900 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9" />
+                                <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                            </svg>
+                        </button>
+                        <button title="Eliminar" class="text-gray-600 hover:text-gray-900 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 6h18" />
+                                <path d="M8 6v12a2 2 0 002 2h4a2 2 0 002-2V6" />
+                                <path d="M10 11v6" />
+                                <path d="M14 11v6" />
+                                <path d="M5 6l1-2h12l1 2" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr class="bg-gray-100">
+                <td colspan="5" class="px-6 py-3 text-gray-600 text-sm font-medium">
+                    Total de filas: @Productos.Count
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
 
 @code {
+    
+    public class Producto
+    {
+        public string? Nombre { get; set; }
+        public string? Apellidos { get; set; }
+        public string? Cumpleaños { get; set; }
+        public string? Email { get; set; }
+        public string? Subscripcion { get; set; }
+        public string? Modalidad { get; set; }
+        public int? Horas { get; set; }
+    }
 
+    public List<Producto> Productos { get; set; } = new()
+    {
+        new Producto { Nombre = "Yeray", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12},
+        new Producto { Nombre = "Jairo", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com" , Subscripcion ="Aumento masa muscular", Modalidad = "Online",Horas=12},
+        new Producto { Nombre = "Alberto", Apellidos = "Chicharro Diaz", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online",Horas=12},
+        new Producto { Nombre = "Patricia", Apellidos = "Castro Jimenez", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com",Subscripcion = "Aumento masa muscular", Modalidad = "Online", Horas=12},
+        new Producto { Nombre = "Beatriz", Apellidos = "Aldao Alvedro", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion ="Aumento masa muscular", Modalidad = "Online", Horas=12},
+        new Producto { Nombre = "Jaime", Apellidos = "Blanco Barbeito", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12 }
+    };
+    
     protected override void OnInitialized()
     {
         AppHeaderStateHandler.Clear();
@@ -16,8 +104,8 @@
             NavigationManager.NavigateTo("/usermanager/add");
             return Task.CompletedTask;
         }, "Añadir usuario");
-
+        
         base.OnInitialized();
     }
-
+    
 }
