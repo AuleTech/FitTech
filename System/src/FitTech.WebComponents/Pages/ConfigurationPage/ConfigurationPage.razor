@@ -1,9 +1,11 @@
 @page "/configurationpage"
 @using Blazor.Heroicons
 @using FitTech.WebComponents.Components.AppHeader
+@using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject NavigationManager NavigationManager
-@using Microsoft.AspNetCore.Components.Routing
+@inherits FitTech.WebComponents.Components.CancellableComponent
+@inject IUserService UserService
 
 <div class="min-h-screen bg-white p-8 font-sans text-green-700">
     <div class="max-w-7xl mx-auto space-y-10">
@@ -33,7 +35,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </div>
-                    <div class="text-2xl font-semibold">Yeray Blanco</div>
+                    <div class="text-2xl font-semibold">@configurationUserModel.Name</div>
                     <a href="/ConfigurationUserPage" class="hover:text-green-900 transition">Editar alias</a>
                 </div>
 
@@ -122,8 +124,27 @@
 </div>
 
 @code {
-    protected override void OnInitialized()
+    
+    private ConfigurationUserModel configurationUserModel { get; set; } = new();
+    private string _message = string.Empty;
+    
+    
+    protected override async Task OnInitializedAsync()
     {
+        
+        var response = await UserService.GetTrainerDataAsync(_cts.Token);
+
+        if (response.Succeeded)
+        {
+            configurationUserModel.Name = response.Value!.Name!;
+            configurationUserModel.Email = response.Value!.Email!;
+            configurationUserModel.Password = response.Value!.Password!;
+        }
+        else
+        {
+            _message = "Hubo un error en la recuperación de los datos del usuario";
+        }
+        
         AppHeaderStateHandler.Clear();
         base.OnInitialized();
     }
