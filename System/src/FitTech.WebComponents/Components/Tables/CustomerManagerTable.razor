@@ -24,9 +24,12 @@
 
     <!-- Filas en estilo card -->
     <div class="space-y-4">
-        @foreach (var producto in PagedProductos)
+        @for (int i = 0; i < PagedProductos.Count(); i++)
         {
-            <div class="grid grid-cols-8 items-center bg-white rounded-lg shadow-md px-6 py-4 hover:shadow-lg transition">
+            var producto = PagedProductos.ElementAt(i);
+            var rowColor = i % 2 == 0 ? "bg-white" : "bg-gray-100"; <!-- alterna color -->
+
+            <div class=@($"grid grid-cols-8 items-center {rowColor} rounded-lg shadow-md px-6 py-4 hover:shadow-lg transition")>
                 <span class="text-gray-800 font-medium">@producto.Nombre</span>
                 <span class="text-gray-800">@producto.Apellidos</span>
                 <span class="text-gray-600">@producto.Cumpleaños</span>
