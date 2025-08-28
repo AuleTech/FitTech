@@ -11,8 +11,8 @@
 <div class="h-full w-full ml-80 p-6">
     <!-- Título principal -->
     <div class="text-center">
-        <h2 class="text-2xl font-semibold text-green-600 mb-8">
-            Añadir un nuevo Cliente
+        <h2 class="text-4xl font-bold mt-[40px] mb-8">
+            AÑADIR UN NUEVO CLIENTE
         </h2>
     </div>
 
@@ -66,7 +66,7 @@
                 <PersonalInformationForm Model="NewClient"></PersonalInformationForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="ValidateStep1"
-                            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Siguiente
+                            class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg">Siguiente
                     </button>
                 </div>
             }
@@ -79,7 +79,7 @@
                         Anterior
                     </button>
                     <button @onclick="ValidateStep2"
-                            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Siguiente
+                            class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg">Siguiente
                     </button>
                 </div>
             }
@@ -91,7 +91,7 @@
                             class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded">
                         Anterior
                     </button>
-                    <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" @onclick="AddClient">
+                    <button class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg" @onclick="AddClient">
                         Finalizar
                     </button>
                 </div>
