@@ -4,21 +4,23 @@ using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application.Commands.Client.Add;
+using FitTech.Application.Commands.Trainer.Add.Events;
 using Microsoft.AspNetCore.Authorization;
 
-namespace FitTech.API.Endpoints.Client.Add;
+namespace FitTech.API.Endpoints.Trainer.Add;
 
-[HttpPost("/user/add-client")]
-public class AddClientEndPoint : Endpoint<AddClientRequest>
+
+[HttpPost("/user/add-trainer")]
+public class AddTrainerEndPoint : Endpoint<AddTrainerRequest>
 {
-    private readonly IAuleTechCommandHandler<AddClientCommand, Result> _commandHandler;
+    private readonly IAuleTechCommandHandler<AddTrainerCommand, Result> _commandHandler;
 
-    public AddClientEndPoint(IAuleTechCommandHandler<AddClientCommand, Result> commandHandler)
+    public AddTrainerEndPoint(IAuleTechCommandHandler<AddTrainerCommand, Result> commandHandler)
     {
         _commandHandler = commandHandler;
     }
 
-    public override async Task HandleAsync(AddClientRequest req, CancellationToken ct)
+    public override async Task HandleAsync(AddTrainerRequest req, CancellationToken ct)
     {
         //TODO: Probably add Id when created or something 
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -30,7 +32,7 @@ public class AddClientEndPoint : Endpoint<AddClientRequest>
         }
 
         var command = req.ToCommand();
-        command.ClientId = Guid.Parse(userId);
+        command.TrainerId = Guid.Parse(userId);
         
         var result = await _commandHandler.HandleAsync(req.ToCommand(), ct);
 

@@ -11,8 +11,9 @@ public class Trainer
     public DateTime Birthdate { get; set; }
     public string Password { get; set; } = null!;
     
-    public void UpdateData(string name, string email, string password, CancellationToken cancellationToken)
+    public void UpdateData(Guid id, string name, string email, string password, CancellationToken cancellationToken)
     {
+        Id = id;
         Name = name;
         Email = email;
         Password = password; 
