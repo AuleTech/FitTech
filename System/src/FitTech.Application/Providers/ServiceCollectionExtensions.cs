@@ -7,6 +7,7 @@ using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.Register;
 using FitTech.Application.Commands.Auth.RequestPassword;
 using FitTech.Application.Commands.Client.Add;
+using FitTech.Application.Commands.Trainer.Add;
 using FitTech.Application.Commands.Trainer.Add.Events;
 using FitTech.Application.Commands.Trainer.Update;
 using FitTech.Application.Configuration;

@@ -6,7 +6,7 @@ using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Commands.Trainer.Add.Events;
 using FitTech.Domain.Repositories;
 
-namespace FitTech.Application.Commands.Trainer.Add.Events;
+namespace FitTech.Application.Commands.Trainer.Add;
 
 internal sealed class AddTrainerCommandHandler : IAuleTechCommandHandler<AddTrainerCommand, Result>
 {
