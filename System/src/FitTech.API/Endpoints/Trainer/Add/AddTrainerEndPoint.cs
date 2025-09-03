@@ -22,7 +22,6 @@ public class AddTrainerEndPoint : Endpoint<AddTrainerRequest>
 
     public override async Task HandleAsync(AddTrainerRequest req, CancellationToken ct)
     {
-        //TODO: Probably add Id when created or something 
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         
         if (string.IsNullOrWhiteSpace(userId))
@@ -30,9 +29,6 @@ public class AddTrainerEndPoint : Endpoint<AddTrainerRequest>
             await SendUnauthorizedAsync(ct);
             return;
         }
-
-        var command = req.ToCommand();
-        command.TrainerId = Guid.Parse(userId);
         
         var result = await _commandHandler.HandleAsync(req.ToCommand(), ct);
 

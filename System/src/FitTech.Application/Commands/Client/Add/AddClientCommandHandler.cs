@@ -30,7 +30,7 @@ internal sealed class AddClientCommandHandler : IAuleTechCommandHandler<AddClien
 
         if (saveResult.Succeeded)
         {
-            await _publisher.PublishAsync(new ClientAddedEvent(saveResult.Value!.Id), cancellationToken);
+            await _publisher.PublishAsync(new ClientAddedEvent(saveResult.Value!.Email), cancellationToken);
         }
 
         return saveResult;

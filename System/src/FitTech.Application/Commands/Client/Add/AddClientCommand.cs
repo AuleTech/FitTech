@@ -13,10 +13,9 @@ public class AddClientCommand : ICommand, IValidator
     public DateTime EventDate { get; init; } 
     public string Center { get; init; } = null!;
     public string SubscriptionType { get; init; } = null!;
-    
-    public Guid ClientId { get; set; }
-    
     public string Email { get; set; } = null!;
+    
+    public Guid TrainerId { get; init; }
     
     public Result Validate()
     {
@@ -29,7 +28,6 @@ public class AddClientCommand : ICommand, IValidator
         Center.ValidateStringNullOrEmpty(errors, nameof(Center));
         SubscriptionType.ValidateStringNullOrEmpty(errors, nameof(SubscriptionType));
         TrainingHours.ValidateGenericMember(() => TrainingHours > 0, errors, nameof(TrainingHours));
-        ClientId.ValidateGenericMember(() => Guid.Empty == ClientId, errors, nameof(ClientId));
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success;
     }
@@ -47,7 +45,7 @@ public static class AddClientCommandExtensions
         EventDate = command.EventDate,
         Center = command.Center,
         SubscriptionType = command.SubscriptionType,
-        TrainerId = command.ClientId,
+        TrainerId = command.TrainerId,
         Email = command.Email
     };
 } 

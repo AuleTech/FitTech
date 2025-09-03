@@ -13,9 +13,6 @@ public class AddTrainerCommand : ICommand, IValidator
     public string Email { get; init; } = null!;
     
     public string Password { get; init; } = null!;
-   
-    public Guid TrainerId { get; set; }
-    
     
     public Result Validate()
     {
@@ -25,7 +22,6 @@ public class AddTrainerCommand : ICommand, IValidator
         Name.ValidateStringNullOrEmpty(errors, nameof(Name));
         LastName.ValidateStringNullOrEmpty(errors, nameof(LastName));
         Password.ValidateStringNullOrEmpty(errors, nameof(Password));
-        TrainerId.ValidateGenericMember(() => Guid.Empty == TrainerId, errors, nameof(TrainerId));
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success;
     }
@@ -39,7 +35,6 @@ public static class AddClientCommandExtensions
         LastName = command.LastName,
         Email = command.Email,
         Password = command.Password,
-        Id = command.TrainerId,
        
     };
 } 

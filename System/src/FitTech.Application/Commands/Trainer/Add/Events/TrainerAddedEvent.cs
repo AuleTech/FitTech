@@ -1,3 +1,3 @@
 ﻿namespace FitTech.Application.Commands.Trainer.Add.Events;
 
-public record TrainerAddedEvent(Guid Id);
+public record TrainerAddedEvent(string email);
