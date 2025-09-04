@@ -1,6 +1,7 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitTech.Persistence.Repositories;
@@ -16,8 +17,22 @@ public class TrainerRepository: ITrainerRepository
 
     public async Task<Result<Trainer>> AddAsync(Trainer trainer, CancellationToken cancellationToken)
     {
+      
         await _context.Trainer.AddAsync(trainer, cancellationToken);
         var rows = await _context.SaveChangesAsync(cancellationToken);
+        
+        var hasher = new PasswordHasher<Trainer>();
+        var hashedPassword = hasher.HashPassword(trainer, trainer.Password);
+
+        var UserIdentity = new FitTechUser
+        {
+            Id = trainer.Id, Email = trainer.Email, UserName = trainer.Name, PasswordHash = hashedPassword,
+
+        };
+        
+        await _context.Users.AddAsync(UserIdentity, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        
             
         return rows < 1 ? Result<Trainer>.Failure("Nothing was saved") : Result<Trainer>.Success(trainer);
     }

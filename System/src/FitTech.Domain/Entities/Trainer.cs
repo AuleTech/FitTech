@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 
 namespace FitTech.Domain.Entities;
 
@@ -8,7 +9,8 @@ public class Trainer
     public string Name { get; set; } = null!;
     public string LastName { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public DateTime Birthdate { get; set; }
+    
+    [NotMapped] 
     public string Password { get; set; } = null!;
     
     public void UpdateData(Guid id, string name, string email, string password, CancellationToken cancellationToken)
