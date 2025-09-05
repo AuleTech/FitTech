@@ -32,7 +32,7 @@ internal sealed class AddTrainerCommandHandler : IAuleTechCommandHandler<AddTrai
 
         if (saveResult.Succeeded)
         {
-            await _publisher.PublishAsync(new TrainerAddedEvent(saveResult.Value!.Id, saveResult.Value!.Email), cancellationToken);
+            await _publisher.PublishAsync(new TrainerAddedEvent(saveResult.Value!.Id), cancellationToken);
         }
 
         return saveResult;
