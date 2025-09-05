@@ -4,16 +4,15 @@ using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
 using FitTech.Application.Dtos;
 using FitTech.Application.Query.Client.Get;
-using FitTech.Application.Query.Trainer.GetTrainerData;
 
-namespace FitTech.API.Endpoints.Trainer;
+namespace FitTech.API.Endpoints.Client;
 
 [HttpGet("/Client/GetClients")]
-public class GetClientsEndPoint : EndpointWithoutRequest<ClientDto> 
+public class GetClientsEndPoint : EndpointWithoutRequest<ClientDataDto> 
 {
-    private readonly IQueryHandler<GetClientQuery, Result<ClientDto>> _queryHandler;
+    private readonly IQueryHandler<GetClientDataQuery, Result<ClientDataDto>> _queryHandler;
 
-    public GetClientsEndPoint(IQueryHandler<GetClientQuery, Result<ClientDto>> queryHandler)
+    public GetClientsEndPoint(IQueryHandler<GetClientDataQuery, Result<ClientDataDto>> queryHandler)
     {
         _queryHandler = queryHandler;
     }
@@ -28,7 +27,7 @@ public class GetClientsEndPoint : EndpointWithoutRequest<ClientDto>
             return;
         }
 
-        var Client = await _queryHandler.HandleAsync(new GetClientQuery(Guid.Parse(userId)), ct);
+        var Client = await _queryHandler.HandleAsync(new GetClientDataQuery(Guid.Parse(userId)), ct);
 
         if (!Client.Succeeded)
         {

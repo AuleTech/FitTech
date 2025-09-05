@@ -1,30 +1,30 @@
 ﻿
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Application.Query.Trainer.GetTrainerData;
-using FitTech.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
+using FitTech.Domain.Repositories;
+using FitTech.Persistence.Repositories;
+
 
 namespace FitTech.Application.Query.Client.Get;
 
 internal sealed class GetClientDataQueryHandler : IQueryHandler<GetClientDataQuery, Result<ClientDataDto>>
 {
-    private readonly DboContext<Domain.Entities.Client> _userManager;
-
-    public GetClientDataQueryHandler(UserManager<FitTechUser> userManager)
+    
+    private readonly IClientRepository _clientRepository;
+    public GetClientDataQueryHandler(IClientRepository clientRepository)
     {
-        _userManager = userManager;
+        _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
     }
 
     public async Task<Result<ClientDataDto>> HandleAsync(GetClientDataQuery query, CancellationToken cancellationToken)
     {
-        var client  = await _userManager.FindByIdAsync(query.Id.ToString()).WaitAsync(cancellationToken);
+        var client  = await _clientRepository.GetAsync(query.Id , cancellationToken);
 
         if (client is null)
         {
-            return Result<ClientDataDto>.Failure("Trainer not found");
+            return Result<ClientDataDto>.Failure("Clients not found");
         }
         
-        return new ClientDataDto(trainer.UserName!, trainer.Email!, trainer.PasswordHash!);
+        return new ClientDataDto(client.Value!.Name, client.Value!.LastName, client.Value!.Email, client.Value!.Birthdate, client.Value!.TrainingHours, client.Value!.TrainingModel, client.Value!.EventDate, client.Value!.Center, client.Value!.SubscriptionType);
     }
 }

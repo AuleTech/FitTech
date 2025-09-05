@@ -9,8 +9,10 @@ using FitTech.Application.Commands.Auth.RequestPassword;
 using FitTech.Application.Commands.Client.Add;
 using FitTech.Application.Commands.Trainer.Update;
 using FitTech.Application.Configuration;
+using FitTech.Application.Dtos;
 using FitTech.Application.Providers;
 using FitTech.Application.Query.Auth.RefreshToken;
+using FitTech.Application.Query.Client.Get;
 using FitTech.Application.Query.Client.GetSettings;
 using FitTech.Application.Query.Trainer.GetTrainerData;
 using FitTech.Application.Services;
@@ -106,6 +108,7 @@ public static class ServiceCollectionExtensions
             .AddTransient<IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>, RefreshTokenQueryHandler>()
             .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>,
                 GetClientSettingsQueryHandler>()
-            .AddTransient<IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>, GetTrainerDataQueryHandler>();
+            .AddTransient<IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>, GetTrainerDataQueryHandler>()
+            .AddTransient<IQueryHandler<GetClientDataQuery, Result<ClientDataDto>>, GetClientDataQueryHandler>();
     }
 }
