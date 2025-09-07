@@ -1,50 +1,43 @@
-﻿
-using AuleTech.Core.Patterns.CQRS;
+﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Application.Dtos;
 using FitTech.Domain.Repositories;
-using FitTech.Persistence.Repositories;
 
 
-namespace FitTech.Application.Query.Client.Get;
-
-internal sealed class GetClientDataQueryHandler : IQueryHandler<GetClientDataQuery, Result<ClientDataDto>>
+namespace FitTech.Application.Query.Client.Get
 {
-    
-    private readonly IClientRepository _clientRepository;
-    public GetClientDataQueryHandler(IClientRepository clientRepository)
+    internal sealed class GetClientDataQueryHandler : IListQueryHandler<GetClientDataQuery, ClientDataDto>
     {
-        _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
-    }
+        private readonly IClientRepository _clientRepository;
 
-    public async Task<Result<List<ClientDataDto>>> HandleGrupAsync(GetClientDataQuery query, CancellationToken cancellationToken)
-    {
-        var clientResult = await _clientRepository.GetAsync(query.Id, cancellationToken);
-
-        if (!clientResult.Succeeded || clientResult.Value is null)
+        public GetClientDataQueryHandler(IClientRepository clientRepository)
         {
-            return Result<List<ClientDataDto>>.Failure("Client not found");
+            _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
         }
-        
-        var clients = clientResult.Value;
 
-        var dtoList = clientResult.Value
-            .Select(client => new ClientDataDto(
+        public async Task<Result<List<ClientDataDto>>> HandleGroupAsync(GetClientDataQuery query, CancellationToken cancellationToken)
+        {
+            var clientResult = await _clientRepository.GetAsync(query.Id, cancellationToken);
+
+            if (!clientResult.Succeeded || clientResult.Value is null || !clientResult.Value.Any())
             {
-                Name = client.Name,
-                LastName = client.LastName,
-                Birthdate = client.Birthdate,
-                TrainingHours = client.TrainingHours,
-                TrainingModel = client.TrainingModel,
-                EventDate = client.EventDate,
-                Center = client.Center,
-                SubscriptionType = client.SubscriptionType,
-                
-            }).ToList();
-        
+                return Result<List<ClientDataDto>>.Failure("Clients not found");
+            }
 
-        return Result<List<ClientDataDto>>.Success(dtoList);
-        
+            var dtoList = clientResult.Value
+                .Select(client => new ClientDataDto(
+                    client.Name,
+                    client.LastName,
+                    client.Email,
+                    client.Birthdate,
+                    client.TrainingHours,
+                    client.TrainingModel,
+                    client.EventDate,
+                    client.Center,
+                    client.SubscriptionType
+                ))
+                .ToList();
+
+            return Result<List<ClientDataDto>>.Success(dtoList);
+        }
     }
-
 }

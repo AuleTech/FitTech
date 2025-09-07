@@ -93,8 +93,7 @@ public static class ServiceCollectionExtensions
     internal static IServiceCollection AddCommands(this IServiceCollection services)
     {
         return services
-            .AddTransient<IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>,
-                ForgotPasswordCommandHandler>()
+            .AddTransient<IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>, ForgotPasswordCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>, LoginCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<RegisterCommand, Result>, RegisterCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<ResetPasswordCommand, Result>, ResetPasswordCommandHandler>()
@@ -106,9 +105,8 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddTransient<IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>, RefreshTokenQueryHandler>()
-            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>,
-                GetClientSettingsQueryHandler>()
+            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>, GetClientSettingsQueryHandler>()
             .AddTransient<IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>, GetTrainerDataQueryHandler>()
-            .AddTransient<IQueryHandler<GetClientDataQuery, Result<ClientDataDto>>, GetClientDataQueryHandler>();
+            .AddTransient<IListQueryHandler<GetClientDataQuery, ClientDataDto>, GetClientDataQueryHandler>();
     }
 }

@@ -5,14 +5,14 @@ using FastEndpoints;
 using FitTech.Application.Dtos;
 using FitTech.Application.Query.Client.Get;
 
-namespace FitTech.API.Endpoints.Client;
+namespace FitTech.API.Endpoints.Client.Get;
 
 [HttpGet("/Client/GetClients")]
-public class GetClientsEndPoint : EndpointWithoutRequest<ClientDataDto> 
+public class GetClientsEndPoint : EndpointWithoutRequest<List<ClientDataDto>>
 {
-    private readonly IQueryHandler<GetClientDataQuery, Result<ClientDataDto>> _queryHandler;
+    private readonly IListQueryHandler<GetClientDataQuery, ClientDataDto> _queryHandler;
 
-    public GetClientsEndPoint(IQueryHandler<GetClientDataQuery, Result<ClientDataDto>> queryHandler)
+    public GetClientsEndPoint(IListQueryHandler<GetClientDataQuery, ClientDataDto> queryHandler)
     {
         _queryHandler = queryHandler;
     }
@@ -27,7 +27,7 @@ public class GetClientsEndPoint : EndpointWithoutRequest<ClientDataDto>
             return;
         }
 
-        var Client = await _queryHandler.HandleAsync(new GetClientDataQuery(Guid.Parse(userId)), ct);
+        var Client = await _queryHandler.HandleGroupAsync(new GetClientDataQuery(Guid.Parse(userId)), ct);
 
         if (!Client.Succeeded)
         {
