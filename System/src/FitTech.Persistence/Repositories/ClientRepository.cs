@@ -25,7 +25,7 @@ public sealed class ClientRepository : IClientRepository
 
         public async Task<Result<Client>> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            await _context.Client.
+            return await _context.Client.SingleAsync(x => x.Id == id, cancellationToken);
             
         }
 
