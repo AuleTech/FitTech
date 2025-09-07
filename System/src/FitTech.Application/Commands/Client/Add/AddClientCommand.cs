@@ -27,7 +27,7 @@ public class AddClientCommand : ICommand, IValidator
         TrainingModel.ValidateStringNullOrEmpty(errors, nameof(TrainingModel));
         Center.ValidateStringNullOrEmpty(errors, nameof(Center));
         SubscriptionType.ValidateStringNullOrEmpty(errors, nameof(SubscriptionType));
-        TrainingHours.ValidateGenericMember(() => TrainingHours > 0, errors, nameof(TrainingHours));
+        TrainingHours.ValidateGenericMember(() => TrainingHours < 0, errors, nameof(TrainingHours));
         TrainerId.ValidateGenericMember(() => Guid.Empty == TrainerId, errors, nameof(TrainerId));
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success;

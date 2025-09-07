@@ -2,7 +2,7 @@
 
 namespace FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
-public class NewClientModel
+public class ClientModel
 {
     [Required(ErrorMessage = "El nombre es obligatorio.")]
     [StringLength(20, ErrorMessage = "El nombre no puede tener más de 20 caracteres.")]
@@ -26,7 +26,7 @@ public class NewClientModel
 
     [Required(ErrorMessage = "Las horas semanas son obligatorias.")]
     [Range(1,30, ErrorMessage = "No se pueden asignar mas de 99 horas semanales.")]
-    public int? TrainingHours { get; set; } = null;
+    public int? TrainingHours { get; set; } = null!;
     
     [Required(ErrorMessage = "Es obligatorio indicar la modalidad de entrenamiento")]
     public string TrainingModel { get; set; } = null!;

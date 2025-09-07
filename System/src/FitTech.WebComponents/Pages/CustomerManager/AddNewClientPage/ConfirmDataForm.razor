@@ -34,11 +34,11 @@
 </div>
 
 @code {
-    [Parameter] public required NewClientModel Model { get; set; }
+    [Parameter] public required ClientModel Model { get; set; }
 
     protected override void OnInitialized()
     {
-        Model ??= new NewClientModel();
+        Model ??= new ClientModel();
     }
 
     public void Submit()

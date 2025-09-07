@@ -122,7 +122,7 @@ internal sealed class UserService : IUserService
             {
                 Name = username,
                 LastName = lastname,
-                //Email = email,
+                Email = email,
                 Birthdate = birthdate,
                 TrainingHours = trainingHours,
                 TrainingModel = trainingMode,
@@ -159,4 +159,18 @@ internal sealed class UserService : IUserService
 
         return Result.Success;
     }
+
+    public async Task<Result> GetClientsDataAsync(
+        CancellationToken cancellationToken)
+    {
+        var result = await _fitTechApiClient.GetClients(cancellationToken);
+        
+        if (!result.Succeeded)
+        {
+            return result.MapFailure<ClientDataDto>();
+        }
+
+        return result;
+    }
+    
 }

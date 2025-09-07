@@ -19,5 +19,6 @@ public interface IUserService
     Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken);
     Task<Result> SaveChangesConfiguration(string name, string email, string password, CancellationToken cancellationToken);
     Task<Result> AddClientAsync(string username, string lastname, DateTime birthdate, string email, int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTime eventDate, string subscriptionType,  CancellationToken cancellationToken);
+    Task<Result> GetClientsDataAsync(CancellationToken cancellationToken);
     
 }
