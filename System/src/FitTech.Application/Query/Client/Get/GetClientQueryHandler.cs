@@ -1,6 +1,7 @@
 ﻿
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
+using FitTech.Application.Dtos;
 using FitTech.Domain.Repositories;
 using FitTech.Persistence.Repositories;
 
@@ -16,15 +17,34 @@ internal sealed class GetClientDataQueryHandler : IQueryHandler<GetClientDataQue
         _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
     }
 
-    public async Task<Result<ClientDataDto>> HandleAsync(GetClientDataQuery query, CancellationToken cancellationToken)
+    public async Task<Result<List<ClientDataDto>>> HandleGrupAsync(GetClientDataQuery query, CancellationToken cancellationToken)
     {
-        var client  = await _clientRepository.GetAsync(query.Id , cancellationToken);
+        var clientResult = await _clientRepository.GetAsync(query.Id, cancellationToken);
 
-        if (client is null)
+        if (!clientResult.Succeeded || clientResult.Value is null)
         {
-            return Result<ClientDataDto>.Failure("Clients not found");
+            return Result<List<ClientDataDto>>.Failure("Client not found");
         }
         
-        return new ClientDataDto(client.Value!.Name, client.Value!.LastName, client.Value!.Email, client.Value!.Birthdate, client.Value!.TrainingHours, client.Value!.TrainingModel, client.Value!.EventDate, client.Value!.Center, client.Value!.SubscriptionType);
+        var clients = clientResult.Value;
+
+        var dtoList = clientResult.Value
+            .Select(client => new ClientDataDto(
+            {
+                Name = client.Name,
+                LastName = client.LastName,
+                Birthdate = client.Birthdate,
+                TrainingHours = client.TrainingHours,
+                TrainingModel = client.TrainingModel,
+                EventDate = client.EventDate,
+                Center = client.Center,
+                SubscriptionType = client.SubscriptionType,
+                
+            }).ToList();
+        
+
+        return Result<List<ClientDataDto>>.Success(dtoList);
+        
     }
+
 }

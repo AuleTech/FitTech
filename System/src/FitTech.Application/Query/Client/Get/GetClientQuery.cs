@@ -4,7 +4,8 @@ namespace FitTech.Application.Query.Client.Get;
 
 public record GetClientDataQuery(Guid Id) : IQuery;
 
-public record ClientDataDto(string Name,
+public record ClientDataDto(
+    string Name,
     string LastName,
     string Email,
     DateTime Birthdate,

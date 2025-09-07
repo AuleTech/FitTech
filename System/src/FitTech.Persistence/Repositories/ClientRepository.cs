@@ -23,8 +23,12 @@ public sealed class ClientRepository : IClientRepository
             return rows < 1 ? Result<Client>.Failure("Nothing was saved") : Result<Client>.Success(client);
         }
 
-        public async Task<Result<Client>> GetAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Result<List<Client>>> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _context.Client.SingleAsync(x => x.TrainerId == id, cancellationToken);
+            var clients = await _context.Client
+                .Where(x => x.TrainerId == id)
+                .ToListAsync(cancellationToken);
+
+            return Result<List<Client>>.Success(clients);
         }
     }

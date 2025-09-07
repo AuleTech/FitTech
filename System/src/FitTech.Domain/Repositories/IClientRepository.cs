@@ -7,5 +7,5 @@ namespace FitTech.Domain.Repositories;
 public interface IClientRepository
 {
     Task<Result<Client>> AddAsync(Client client, CancellationToken cancellationToken);
-    Task<Result<Client>> GetAsync(Guid id, CancellationToken cancellationToken);
+    Task<Result<List<Client>>> GetAsync(Guid id, CancellationToken cancellationToken);
 }
