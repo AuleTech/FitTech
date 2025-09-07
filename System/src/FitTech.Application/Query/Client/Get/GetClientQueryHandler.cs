@@ -16,7 +16,7 @@ namespace FitTech.Application.Query.Client.Get
 
         public async Task<Result<List<ClientDataDto>>> HandleGroupAsync(GetClientDataQuery query, CancellationToken cancellationToken)
         {
-            var clientResult = await _clientRepository.GetAsync(query.Id, cancellationToken);
+            var clientResult = await _clientRepository.GetClientsAsync(query.Id, cancellationToken);
 
             if (!clientResult.Succeeded || clientResult.Value is null || !clientResult.Value.Any())
             {

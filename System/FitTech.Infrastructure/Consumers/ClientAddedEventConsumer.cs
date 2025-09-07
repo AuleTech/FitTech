@@ -26,7 +26,7 @@ internal sealed class ClientAddedEventConsumer : IAuleTechConsumer<ClientAddedEv
         _logger.LogInformation("Registering client('{Id}')", message!.Id);
         var result = await _clientRepository.GetAsync(message.Id, cancellationToken);
 
-        var registerUserResult = await _commandHandler.HandleAsync(new RegisterCommand(result!.Value.Email, "TemporalPassword1", UserType.Client),
+        var registerUserResult = await _commandHandler.HandleAsync(new RegisterCommand(result.Value!.Email, "TemporalPassword1", UserType.Client),
             cancellationToken);
 
         if (!registerUserResult.Succeeded)
