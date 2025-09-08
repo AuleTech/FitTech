@@ -113,10 +113,11 @@ internal sealed class UserService : IUserService
         return Result.Success;
     }
 
-    public async Task<Result> AddClientAsync(string username, string lastname, DateTime birthdate, string email,
-        int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTime eventDate,
+    public async Task<Result> AddClientAsync(string username, string lastname, DateTimeOffset birthdate, string email,
+        int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTimeOffset eventDate,
         string subscriptionType, CancellationToken cancellationToken)
     {
+        
         var result = await _fitTechApiClient.AddNewClientAsync(
             new AddClientRequest
             {
@@ -130,6 +131,7 @@ internal sealed class UserService : IUserService
                 Center = center,
                 SubscriptionType = subscriptionType
             }, cancellationToken);
+        
         return result;
     }
     
@@ -160,17 +162,19 @@ internal sealed class UserService : IUserService
         return Result.Success;
     }
 
-    public async Task<Result> GetClientsDataAsync(
+    public async Task<Result<ICollection<ClientDataDto>>> GetClientsDataAsync(
         CancellationToken cancellationToken)
     {
         var result = await _fitTechApiClient.GetClients(cancellationToken);
-        
+
         if (!result.Succeeded)
         {
-            return result.MapFailure<ClientDataDto>();
+            return result.MapFailure<ICollection<ClientDataDto>>();
         }
 
-        return result;
+        var clients = result.Value!; 
+        
+        return Result<ICollection<ClientDataDto>>.Success(clients);
     }
     
 }

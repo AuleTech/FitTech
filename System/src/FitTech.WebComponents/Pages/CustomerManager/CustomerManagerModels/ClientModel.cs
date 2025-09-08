@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
@@ -18,7 +19,7 @@ public class ClientModel
     [EmailAddress(ErrorMessage = "Por favor ingresa un correo electrónico válido.")]
     [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Por favor ingresa un correo electrónico sin caracteres no permitidos.")]
     public string Email { get; set; } = null!;
-    public DateTime Birthdate { get; set; } = DateTime.Today;
+    public DateTimeOffset Birthdate { get; set; }
 
     [Required(ErrorMessage = "El número de teléfono es obligatorio.")]
     [Range(100000000, 999999999, ErrorMessage = "El teléfono debe tener exactamente 9 dígitos.")]
@@ -30,7 +31,8 @@ public class ClientModel
     
     [Required(ErrorMessage = "Es obligatorio indicar la modalidad de entrenamiento")]
     public string TrainingModel { get; set; } = null!;
-    public DateTime DateSportEvent { get; set; } = DateTime.Today;
+
+    public DateTimeOffset DateSportEvent { get; set; }
     
     [StringLength(20, ErrorMessage = "El Centro deportivo no puede contener mas de 20 caracteres.")]
     public string Center { get; set; } = string.Empty;

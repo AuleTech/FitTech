@@ -8,9 +8,9 @@ public record ClientDataDto(
     string Name,
     string LastName,
     string Email,
-    DateTime Birthdate,
+    DateTimeOffset Birthdate,
     int TrainingHours,
     string TrainingModel,
-    DateTime EventDate,
+    DateTimeOffset EventDate,
     string Center,
     string SubscriptionType);

@@ -186,10 +186,10 @@
     public async Task AddClient()
     {
         validationErrors.Clear();
+        
+        var response = await UserService.AddClientAsync(_client.Name, _client.LastName, _client.Birthdate.UtcDateTime, _client.Email, _client.PhoneNumber!, _client.TrainingHours!, _client.TrainingModel, _client.Center, _client.DateSportEvent.UtcDateTime, _client.SubscriptionType, _cts.Token);
 
-        var response = await UserService.AddClientAsync(_client.Name, _client.LastName, _client.Birthdate, _client.Email, _client.PhoneNumber!, _client.TrainingHours!, _client.TrainingModel, _client.Center, _client.DateSportEvent, _client.SubscriptionType, _cts.Token);
-
-        if (!response!.Succeeded)
+        if (response!.Succeeded)
         {
             _message = "Hubo un error en al añadir a su cliente. Intentalo de  nuevo.";
             return;
@@ -197,7 +197,7 @@
 
         _message = "El nuevo cliente se ha añadido correctamente";
         StateHasChanged();
-        await Task.Delay(2000);
+        await Task.Delay(1000);
         Navigation.NavigateTo("/usermanager");
     }
 

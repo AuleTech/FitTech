@@ -16,13 +16,13 @@
 
     <!-- Cabecera -->
     <div class="grid grid-cols-8 px-6 py-3 text-xs font-semibold text-green-700 uppercase tracking-wider mb-2">
-        <span>Nombre</span>
-        <span>Apellidos</span>
-        <span>Fecha Nac.</span>
-        <span>Email</span>
-        <span>Subscripción</span>
-        <span>Modalidad</span>
-        <span>Horas</span>
+        <span class="text-center">Nombre</span>
+        <span class="text-center">Apellidos</span>
+        <span class="text-center">Fecha Nac.</span>
+        <span class="text-center">Email</span>
+        <span class="text-center">Subscripción</span>
+        <span class="text-center">Modalidad</span>
+        <span class="text-center">Horas</span>
         <span class="text-center">Acciones</span>
     </div>
 
@@ -34,13 +34,13 @@
             var rowColor = i % 2 == 0 ? "bg-white" : "bg-gray-100"; <!-- alterna color -->
 
             <div class=@($"grid grid-cols-8 items-center {rowColor} rounded-lg shadow-md px-6 py-4 hover:shadow-lg transition")>
-                <span class="text-gray-800 font-medium">@client.Name</span>
-                <span class="text-gray-800">@client.LastName</span>
-                <span class="text-gray-600">@client.Birthdate</span>
-                <span class="text-gray-600">@client.Email</span>
-                <span class="text-gray-600">@client.SubscriptionType</span>
-                <span class="text-gray-600">@client.TrainingModel</span>
-                <span class="text-gray-600">@client.TrainingHours</span>
+                <span class="text-gray-800 font-medium text-center">@client.Name</span>
+                <span class="text-gray-800 font-medium text-center">@client.LastName</span>
+                <span class="text-gray-600 font-medium text-center">@client.Birthdate.ToString("yy-MMM-dd")</span>
+                <span class="text-gray-600 font-medium text-center">@client.Email</span>
+                <span class="text-gray-600 font-medium text-center">@client.SubscriptionType</span>
+                <span class="text-gray-600 font-medium text-center">@client.TrainingModel</span>
+                <span class="text-gray-600 font-medium text-center">@client.TrainingHours</span>
 
                 <!-- Botones -->
                 <div class="flex justify-center space-x-3">
@@ -107,11 +107,20 @@
     
     protected override async Task OnInitializedAsync()
     {
-        var response = await UserService.GetClientsDataAsync( _cts.Token);
+        var result = await UserService.GetClientsDataAsync( _cts.Token);
 
-        if (response.Succeeded)
+        if (result.Succeeded && result.Value is not null)
         {
-            
+            _clients = result.Value.Select(dto => new ClientModel
+            {
+                Name = dto.Name!,
+                LastName = dto.LastName!,
+                Birthdate = dto.Birthdate?.DateTime ?? DateTime.MinValue,
+                Email = dto.Email!,
+                SubscriptionType = dto.SubscriptionType!,
+                TrainingModel = dto.TrainingModel!,
+                TrainingHours = dto.TrainingHours
+            }).ToList();
         }
         else
         {
