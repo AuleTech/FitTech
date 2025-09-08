@@ -63,7 +63,7 @@
             <!-- Contenido dinámico por paso -->
             @if (CurrentStep == 1)
             {
-                <PersonalInformationForm Model="NewClient"></PersonalInformationForm>
+                <PersonalInformationForm Model="_client"></PersonalInformationForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="ValidateStep1"
                             class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg">Siguiente
@@ -72,7 +72,7 @@
             }
             else if (CurrentStep == 2)
             {
-                <DetailForm Model="NewClient"></DetailForm>
+                <DetailForm Model="_client"></DetailForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="PreviousStep"
                             class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded">
@@ -85,7 +85,7 @@
             }
             else if (CurrentStep == 3)
             {
-                <ConfirmDataForm Model="NewClient"></ConfirmDataForm>
+                <ConfirmDataForm Model="_client"></ConfirmDataForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="PreviousStep"
                             class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded">
@@ -120,7 +120,7 @@
 
 @code {
 
-    private NewClientModel NewClient = new();
+    private ClientModel _client = new();
     private string _message = string.Empty;
     private int CurrentStep = 1;
     private readonly int TotalSteps = 3;
@@ -129,14 +129,14 @@
     private void ValidateStep1()
     {
         validationErrors.Clear();
-        var context = new ValidationContext(NewClient);
+        var context = new ValidationContext(_client);
         var results = new List<ValidationResult>();
 
         bool isValid =
-            Validator.TryValidateProperty(NewClient.Name, new ValidationContext(NewClient) { MemberName = nameof(NewClient.Name) }, results) &&
-            Validator.TryValidateProperty(NewClient.LastName, new ValidationContext(NewClient) { MemberName = nameof(NewClient.LastName) }, results) &&
-            Validator.TryValidateProperty(NewClient.PhoneNumber, new ValidationContext(NewClient) { MemberName = nameof(NewClient.PhoneNumber) }, results) &&
-            Validator.TryValidateProperty(NewClient.Email, new ValidationContext(NewClient) { MemberName = nameof(NewClient.Email) }, results);
+            Validator.TryValidateProperty(_client.Name, new ValidationContext(_client) { MemberName = nameof(_client.Name) }, results) &&
+            Validator.TryValidateProperty(_client.LastName, new ValidationContext(_client) { MemberName = nameof(_client.LastName) }, results) &&
+            Validator.TryValidateProperty(_client.PhoneNumber, new ValidationContext(_client) { MemberName = nameof(_client.PhoneNumber) }, results) &&
+            Validator.TryValidateProperty(_client.Email, new ValidationContext(_client) { MemberName = nameof(_client.Email) }, results);
 
         if (isValid)
         {
@@ -151,13 +151,13 @@
     private void ValidateStep2()
     {
         validationErrors.Clear();
-        var context = new ValidationContext(NewClient);
+        var context = new ValidationContext(_client);
         var results = new List<ValidationResult>();
 
         bool isValid =
-            Validator.TryValidateProperty(NewClient.TrainingHours, new ValidationContext(NewClient) { MemberName = nameof(NewClient.TrainingHours) }, results) &&
-            Validator.TryValidateProperty(NewClient.TrainingModel, new ValidationContext(NewClient) { MemberName = nameof(NewClient.TrainingModel) }, results) &&
-            Validator.TryValidateProperty(NewClient.SubscriptionType, new ValidationContext(NewClient) { MemberName = nameof(NewClient.SubscriptionType) }, results);
+            Validator.TryValidateProperty(_client.TrainingHours, new ValidationContext(_client) { MemberName = nameof(_client.TrainingHours) }, results) &&
+            Validator.TryValidateProperty(_client.TrainingModel, new ValidationContext(_client) { MemberName = nameof(_client.TrainingModel) }, results) &&
+            Validator.TryValidateProperty(_client.SubscriptionType, new ValidationContext(_client) { MemberName = nameof(_client.SubscriptionType) }, results);
 
         if (isValid)
         {
@@ -186,10 +186,10 @@
     public async Task AddClient()
     {
         validationErrors.Clear();
+        
+        var response = await UserService.AddClientAsync(_client.Name, _client.LastName, _client.Birthdate.UtcDateTime, _client.Email, _client.PhoneNumber!, _client.TrainingHours!, _client.TrainingModel, _client.Center, _client.DateSportEvent.UtcDateTime, _client.SubscriptionType, _cts.Token);
 
-        var response = await UserService.AddClientAsync(NewClient.Name, NewClient.LastName, NewClient.Birthdate, NewClient.Email, NewClient.PhoneNumber!, NewClient.TrainingHours!, NewClient.TrainingModel, NewClient.Center, NewClient.DateSportEvent, NewClient.SubscriptionType, _cts.Token);
-
-        if (!response!.Succeeded)
+        if (response!.Succeeded)
         {
             _message = "Hubo un error en al añadir a su cliente. Intentalo de  nuevo.";
             return;
@@ -197,7 +197,7 @@
 
         _message = "El nuevo cliente se ha añadido correctamente";
         StateHasChanged();
-        await Task.Delay(2000);
+        await Task.Delay(1000);
         Navigation.NavigateTo("/usermanager");
     }
 

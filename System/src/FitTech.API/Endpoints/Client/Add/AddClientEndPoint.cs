@@ -32,7 +32,8 @@ public class AddClientEndPoint : Endpoint<AddClientRequest>
         var command = req.ToCommand();
         command.TrainerId = Guid.Parse(userId);
         
-        var result = await _commandHandler.HandleAsync(req.ToCommand(), ct);
+        
+        var result = await _commandHandler.HandleAsync(command, ct);
 
         if (!result.Succeeded)
         {

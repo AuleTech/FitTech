@@ -174,4 +174,18 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         
         
     }
+
+    public async Task<Result<ICollection<ClientDataDto>>> GetClients(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _proxy.GetClientsEndPointAsync(cancellationToken);
+
+            return Result<ICollection<ClientDataDto>>.Success(result);
+        }
+        catch (Exception)
+        {
+            return Result<ICollection<ClientDataDto>>.Failure("Something went wrong");
+        }
+    }
 }
