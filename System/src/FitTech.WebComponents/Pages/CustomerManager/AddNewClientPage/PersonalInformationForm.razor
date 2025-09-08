@@ -45,6 +45,7 @@
 
     protected override void OnInitialized()
     {
+        Model.Birthdate= DateTimeOffset.UtcNow;
         Model ??= new();
     }
 

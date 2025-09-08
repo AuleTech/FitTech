@@ -58,9 +58,8 @@
 
     protected override void OnInitialized()
     {
-        Model.Birthdate = DateTimeOffset.UtcNow;
-        Model.DateSportEvent = DateTimeOffset.UtcNow;
         Model ??= new();
+        Model.DateSportEvent = DateTimeOffset.UtcNow;
     }
 
     public void Submit()
