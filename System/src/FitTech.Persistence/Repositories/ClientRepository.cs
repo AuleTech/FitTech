@@ -17,6 +17,7 @@ public sealed class ClientRepository : IClientRepository
     
         public async Task<Result<Client>> AddAsync(Client client, CancellationToken cancellationToken)
         {
+            
             await _context.Client.AddAsync(client, cancellationToken);
             var rows = await _context.SaveChangesAsync(cancellationToken);
             

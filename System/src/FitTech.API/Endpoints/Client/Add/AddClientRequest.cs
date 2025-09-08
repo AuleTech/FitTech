@@ -2,7 +2,8 @@
 
 namespace FitTech.API.Endpoints.Client.Add;
 
-public record AddClientRequest(string Name,
+public record AddClientRequest(
+    string Name,
     string LastName,
     string Email,
     DateTime Birthdate,
@@ -11,10 +12,9 @@ public record AddClientRequest(string Name,
     DateTime EventDate,
     string Center,
     string SubscriptionType);
-
 public static class AddClientRequestExtensions
 {
-    public static AddClientCommand ToCommand(this AddClientRequest request) => new AddClientCommand
+    public static AddClientCommand ToCommand(this AddClientRequest request, Guid trainerId) => new AddClientCommand
     {
         Name = request.Name,
         LastName = request.LastName,
@@ -24,6 +24,7 @@ public static class AddClientRequestExtensions
         EventDate = request.EventDate,
         Center = request.Center,
         SubscriptionType = request.SubscriptionType,
-        Email = request.Email
+        Email = request.Email,
+        TrainerId = trainerId
     };
 }

@@ -5,7 +5,7 @@ namespace FitTech.Domain.Entities;
 
 public class Client
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid TrainerId { get; set; }
     public string Email { get; set; } = null!;
     public string Name { get; set; } = null!;
@@ -17,5 +17,5 @@ public class Client
     public string Center { get; set; } = null!;
     public string SubscriptionType { get; set; } = null!;
     
-    public virtual FitTechUser Trainer { get; set; } = null!;
+  
 }

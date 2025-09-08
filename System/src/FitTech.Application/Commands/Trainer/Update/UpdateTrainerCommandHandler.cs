@@ -30,7 +30,7 @@ public class UpdateTrainerCommandHandler : IAuleTechCommandHandler<UpdateTrainer
         }
         var update = await _trainerRepository.UpdateTrainerAsync(command.Id, command.Name, command.Email, command.Password, cancellationToken);
         
-        update?.UpdateData(command.Name,command.Email, command.Password, cancellationToken);
+        update?.UpdateData(command.Id, command.Name, command.Email, command.Password, cancellationToken);
         
         return Result.Success;
     } 
