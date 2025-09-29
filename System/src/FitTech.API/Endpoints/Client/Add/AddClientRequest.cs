@@ -6,10 +6,10 @@ public record AddClientRequest(
     string Name,
     string LastName,
     string Email,
-    DateTime Birthdate,
+    DateTimeOffset Birthdate,
     int TrainingHours,
     string TrainingModel,
-    DateTime EventDate,
+    DateTimeOffset EventDate,
     string Center,
     string SubscriptionType);
 public static class AddClientRequestExtensions
@@ -24,7 +24,7 @@ public static class AddClientRequestExtensions
         EventDate = request.EventDate,
         Center = request.Center,
         SubscriptionType = request.SubscriptionType,
-        Email = request.Email,
-        TrainerId = trainerId
+        Email = request.Email
+        
     };
 }

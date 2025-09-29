@@ -11,8 +11,10 @@ using FitTech.Application.Commands.Trainer.Add;
 using FitTech.Application.Commands.Trainer.Add.Events;
 using FitTech.Application.Commands.Trainer.Update;
 using FitTech.Application.Configuration;
+using FitTech.Application.Dtos;
 using FitTech.Application.Providers;
 using FitTech.Application.Query.Auth.RefreshToken;
+using FitTech.Application.Query.Client.Get;
 using FitTech.Application.Query.Client.GetSettings;
 using FitTech.Application.Query.Trainer.GetTrainerData;
 using FitTech.Application.Services;
@@ -93,8 +95,7 @@ public static class ServiceCollectionExtensions
     internal static IServiceCollection AddCommands(this IServiceCollection services)
     {
         return services
-            .AddTransient<IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>,
-                ForgotPasswordCommandHandler>()
+            .AddTransient<IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>, ForgotPasswordCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>, LoginCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<RegisterCommand, Result>, RegisterCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<ResetPasswordCommand, Result>, ResetPasswordCommandHandler>()
@@ -107,8 +108,8 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddTransient<IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>, RefreshTokenQueryHandler>()
-            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>,
-                GetClientSettingsQueryHandler>()
-            .AddTransient<IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>, GetTrainerDataQueryHandler>();
+            .AddTransient<IQueryHandler<GetClientSettingsQuery, Result<ClientSettingsDto>>, GetClientSettingsQueryHandler>()
+            .AddTransient<IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>, GetTrainerDataQueryHandler>()
+            .AddTransient<IListQueryHandler<GetClientDataQuery, ClientDataDto>, GetClientDataQueryHandler>();
     }
 }

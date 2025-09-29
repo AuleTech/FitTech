@@ -7,10 +7,10 @@ public class AddClientCommand : ICommand, IValidator
 {
     public string Name { get; init; } = null!;
     public string LastName { get; init; } = null!;
-    public DateTime Birthdate { get; init; }
+    public DateTimeOffset Birthdate { get; init; }
     public int TrainingHours { get; init; }
     public string TrainingModel { get; init; } = null!;
-    public DateTime EventDate { get; init; } 
+    public DateTimeOffset EventDate { get; init; } 
     public string Center { get; init; } = null!;
     public string SubscriptionType { get; init; } = null!;
     public string Email { get; set; } = null!;
@@ -27,7 +27,9 @@ public class AddClientCommand : ICommand, IValidator
         TrainingModel.ValidateStringNullOrEmpty(errors, nameof(TrainingModel));
         Center.ValidateStringNullOrEmpty(errors, nameof(Center));
         SubscriptionType.ValidateStringNullOrEmpty(errors, nameof(SubscriptionType));
-        TrainingHours.ValidateGenericMember(() => TrainingHours > 0, errors, nameof(TrainingHours));
+        TrainingHours.ValidateGenericMember(() => TrainingHours < 0, errors, nameof(TrainingHours));
+        TrainerId.ValidateGenericMember(() => Guid.Empty == TrainerId, errors, nameof(TrainerId));
+
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success;
     }

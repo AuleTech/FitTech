@@ -1,3 +1,7 @@
+@using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels
+@inherits FitTech.WebComponents.Components.CancellableComponent
+@inject IUserService UserService
+
 <div class="p-6" style="margin-left: 250px;"> 
     <!-- Header -->
     <div class="flex flex-wrap items-center justify-between bg-white rounded-t-lg p-4 mb-6">
@@ -12,31 +16,31 @@
 
     <!-- Cabecera -->
     <div class="grid grid-cols-8 px-6 py-3 text-xs font-semibold text-green-700 uppercase tracking-wider mb-2">
-        <span>Nombre</span>
-        <span>Apellidos</span>
-        <span>Fecha Nac.</span>
-        <span>Email</span>
-        <span>Subscripción</span>
-        <span>Modalidad</span>
-        <span>Horas</span>
+        <span class="text-center">Nombre</span>
+        <span class="text-center">Apellidos</span>
+        <span class="text-center">Fecha Nac.</span>
+        <span class="text-center">Email</span>
+        <span class="text-center">Subscripción</span>
+        <span class="text-center">Modalidad</span>
+        <span class="text-center">Horas</span>
         <span class="text-center">Acciones</span>
     </div>
 
     <!-- Filas en estilo card -->
     <div class="space-y-4">
-        @for (int i = 0; i < PagedProductos.Count(); i++)
+        @for (int i = 0; i < PagedClients.Count(); i++)
         {
-            var producto = PagedProductos.ElementAt(i);
+            var client = PagedClients.ElementAt(i);
             var rowColor = i % 2 == 0 ? "bg-white" : "bg-gray-100"; <!-- alterna color -->
 
             <div class=@($"grid grid-cols-8 items-center {rowColor} rounded-lg shadow-md px-6 py-4 hover:shadow-lg transition")>
-                <span class="text-gray-800 font-medium">@producto.Nombre</span>
-                <span class="text-gray-800">@producto.Apellidos</span>
-                <span class="text-gray-600">@producto.Cumpleaños</span>
-                <span class="text-gray-600">@producto.Email</span>
-                <span class="text-gray-600">@producto.Subscripcion</span>
-                <span class="text-gray-600">@producto.Modalidad</span>
-                <span class="text-gray-600">@producto.Horas</span>
+                <span class="text-gray-800 font-medium text-center">@client.Name</span>
+                <span class="text-gray-800 font-medium text-center">@client.LastName</span>
+                <span class="text-gray-600 font-medium text-center">@client.Birthdate.ToString("dd-MMM-yy")</span>
+                <span class="text-gray-600 font-medium text-center">@client.Email</span>
+                <span class="text-gray-600 font-medium text-center">@client.SubscriptionType</span>
+                <span class="text-gray-600 font-medium text-center">@client.TrainingModel</span>
+                <span class="text-gray-600 font-medium text-center">@client.TrainingHours</span>
 
                 <!-- Botones -->
                 <div class="flex justify-center space-x-3">
@@ -59,7 +63,7 @@
     <!-- Footer -->
     <div class="mt-6 flex items-center justify-between">
         <span class="text-sm text-gray-600">
-            Mostrando @PagedProductos.Count() de @Productos.Count registros
+            Mostrando @PagedClients.Count() de  registros
         </span>
 
         <!-- Paginación estilo cards -->
@@ -87,11 +91,13 @@
 @code {
     private int currentPage = 1;
     private int pageSize = 6;
+    private List<ClientModel> _clients = new();
+    private string _message = string.Empty;
 
-    private int TotalPages => (int)Math.Ceiling((double)Productos.Count / pageSize);
+    private int TotalPages => (int)Math.Ceiling((double)_clients.Count / pageSize);
 
-    private IEnumerable<Producto> PagedProductos =>
-        Productos.Skip((currentPage - 1) * pageSize).Take(pageSize);
+    private IEnumerable<ClientModel> PagedClients =>
+        _clients.Skip((currentPage - 1) * pageSize).Take(pageSize);
 
     private void GoToPage(int page)
     {
@@ -99,37 +105,29 @@
             currentPage = page;
     }
     
-    public class Producto
+    protected override async Task OnInitializedAsync()
     {
-        public string? Nombre { get; set; }
-        public string? Apellidos { get; set; }
-        public string? Cumpleaños { get; set; }
-        public string? Email { get; set; }
-        public string? Subscripcion { get; set; }
-        public string? Modalidad { get; set; }
-        public int? Horas { get; set; }
+        var result = await UserService.GetClientsDataAsync( _cts.Token);
+
+        if (result.Succeeded && result.Value is not null)
+        {
+            _clients = result.Value.Select(dto => new ClientModel
+            {
+                Name = dto.Name!,
+                LastName = dto.LastName!,
+                Birthdate = dto.Birthdate?.DateTime ?? DateTime.MinValue,
+                Email = dto.Email!,
+                SubscriptionType = dto.SubscriptionType!,
+                TrainingModel = dto.TrainingModel!,
+                TrainingHours = dto.TrainingHours
+            }).ToList();
+        }
+        else
+        {
+            _message = "Hubo un error en la recuperación de los datos del usuario";
+        }
+        
     }
-
-    public List<Producto> Productos { get; set; } = new()
-    {
-        new Producto { Nombre = "Yeray", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12},
-        new Producto { Nombre = "Jairo", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com" , Subscripcion ="Aumento masa muscular", Modalidad = "Online",Horas=12},
-        new Producto { Nombre = "Alberto", Apellidos = "Chicharro Diaz", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online",Horas=12},
-        new Producto { Nombre = "Patricia", Apellidos = "Castro Jimenez", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com",Subscripcion = "Aumento masa muscular", Modalidad = "Online", Horas=12},
-        new Producto { Nombre = "Beatriz", Apellidos = "Aldao Alvedro", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion ="Aumento masa muscular", Modalidad = "Online", Horas=12},
-        new Producto { Nombre = "Jaime", Apellidos = "Blanco Barbeito", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12 },
-        new Producto { Nombre = "Yeray JR", Apellidos = "Blanco Castro", Cumpleaños = "23-09-2023", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12 },
-        new Producto { Nombre = "Leo", Apellidos = "Blanco Guevara", Cumpleaños = "19-02-2025", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12 },
-        new Producto { Nombre = "Yeray", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12},
-        new Producto { Nombre = "Jairo", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com" , Subscripcion ="Aumento masa muscular", Modalidad = "Online",Horas=12},
-        new Producto { Nombre = "Alberto", Apellidos = "Chicharro Diaz", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online",Horas=12},
-        new Producto { Nombre = "Patricia", Apellidos = "Castro Jimenez", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com",Subscripcion = "Aumento masa muscular", Modalidad = "Online", Horas=12},
-        new Producto { Nombre = "Beatriz", Apellidos = "Aldao Alvedro", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion ="Aumento masa muscular", Modalidad = "Online", Horas=12},
-        new Producto { Nombre = "Jaime", Apellidos = "Blanco Barbeito", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12 },
-        new Producto { Nombre = "Yeray JR", Apellidos = "Blanco Castro", Cumpleaños = "23-09-2023", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12 },
-        new Producto { Nombre = "Leo", Apellidos = "Blanco Guevara", Cumpleaños = "19-02-2025", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas=12 }
-
-    };
     
     
 }

@@ -28,10 +28,8 @@ public class AddClientEndPoint : Endpoint<AddClientRequest>
             await SendUnauthorizedAsync(ct);
             return;
         }
-        
-        var command = req.ToCommand(Guid.Parse(userId));
+   
         var result = await _commandHandler.HandleAsync(command, ct);
-        
 
         if (!result.Succeeded)
         {
