@@ -13,9 +13,9 @@ public class AddClientCommand : ICommand, IValidator
     public DateTimeOffset EventDate { get; init; } 
     public string Center { get; init; } = null!;
     public string SubscriptionType { get; init; } = null!;
-    public Guid TrainerId { get; set; }
-    
     public string Email { get; set; } = null!;
+    
+    public Guid TrainerId { get; init; }
     
     public Result Validate()
     {
@@ -29,6 +29,7 @@ public class AddClientCommand : ICommand, IValidator
         SubscriptionType.ValidateStringNullOrEmpty(errors, nameof(SubscriptionType));
         TrainingHours.ValidateGenericMember(() => TrainingHours < 0, errors, nameof(TrainingHours));
         TrainerId.ValidateGenericMember(() => Guid.Empty == TrainerId, errors, nameof(TrainerId));
+
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success;
     }

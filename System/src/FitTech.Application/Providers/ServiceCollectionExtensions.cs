@@ -7,6 +7,8 @@ using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.Register;
 using FitTech.Application.Commands.Auth.RequestPassword;
 using FitTech.Application.Commands.Client.Add;
+using FitTech.Application.Commands.Trainer.Add;
+using FitTech.Application.Commands.Trainer.Add.Events;
 using FitTech.Application.Commands.Trainer.Update;
 using FitTech.Application.Configuration;
 using FitTech.Application.Dtos;
@@ -98,6 +100,7 @@ public static class ServiceCollectionExtensions
             .AddTransient<IAuleTechCommandHandler<RegisterCommand, Result>, RegisterCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<ResetPasswordCommand, Result>, ResetPasswordCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<AddClientCommand, Result>, AddClientCommandHandler>()
+            .AddTransient<IAuleTechCommandHandler<AddTrainerCommand, Result>, AddTrainerCommandHandler>()
             .AddTransient<IAuleTechCommandHandler<UpdateTrainerCommand, Result>, UpdateTrainerCommandHandler>();
     }
 

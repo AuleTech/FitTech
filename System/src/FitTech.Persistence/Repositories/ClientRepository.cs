@@ -1,4 +1,4 @@
-﻿
+
 using AuleTech.Core.Patterns.Result;
 using FitTech.Domain.Entities;
 using FitTech.Domain.Repositories;

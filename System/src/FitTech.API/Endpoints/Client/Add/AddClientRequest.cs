@@ -12,10 +12,9 @@ public record AddClientRequest(
     DateTimeOffset EventDate,
     string Center,
     string SubscriptionType);
-
 public static class AddClientRequestExtensions
 {
-    public static AddClientCommand ToCommand(this AddClientRequest request) => new AddClientCommand
+    public static AddClientCommand ToCommand(this AddClientRequest request, Guid trainerId) => new AddClientCommand
     {
         Name = request.Name,
         LastName = request.LastName,
