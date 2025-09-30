@@ -24,6 +24,7 @@ public static class AddClientRequestExtensions
         EventDate = request.EventDate,
         Center = request.Center,
         SubscriptionType = request.SubscriptionType,
+        TrainerId = trainerId,
         Email = request.Email
         
     };

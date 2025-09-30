@@ -14,7 +14,7 @@ public class AddClientCommand : ICommand, IValidator
     public string Center { get; init; } = null!;
     public string SubscriptionType { get; init; } = null!;
     public string Email { get; set; } = null!;
-    
+
     public Guid TrainerId { get; init; }
     
     public Result Validate()
