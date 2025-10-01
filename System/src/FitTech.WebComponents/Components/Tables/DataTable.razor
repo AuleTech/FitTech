@@ -1,0 +1,43 @@
+@page "/DataTable"
+
+<!-- Contenedor general -->
+<div class="space-y-4">
+    <div class="flex justify-between items-center">
+        <h1 class="text-xl sm:text-2xl font-semibold">Table</h1>
+        <input
+            type="text"
+            placeholder="Buscar"
+            class="w-32 sm:w-36 border border-[rgba(173,197,57,1)] rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-[rgba(73,73,71,1)]"
+        />
+    </div>
+
+    <div class="overflow-hidden rounded-xl shadow-[0_4px_6px_-4px_rgba(0,0,0,0.3)]">
+        <table class="min-w-full border-collapse">
+            <thead class="bg-[rgba(73,73,71,1)] text-[rgba(173,197,57,1)]">
+            <tr>
+                @foreach (var header in Headers)
+                {
+                    <th class="px-6 py-3 text-left font-medium text-xs">@header</th>
+                }
+            </tr>
+            </thead>
+            <tbody class="bg-gray-100 text-black divide-y divide-[rgba(173,197,57,1)]">
+            @foreach (var item in Items)
+            {
+                <tr>
+                    @foreach (var cell in RowSelector!(item))
+                    {
+                        <td class="px-6 py-4 font-medium text-xs">@cell</td>
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+@typeparam TItem
+@code {
+    [Parameter] public List<TItem> Items { get; set; } = new();
+    [Parameter] public List<string> Headers { get; set; } = new();
+    [Parameter] public Func<TItem, List<string>>?  RowSelector { get; set; }
+}

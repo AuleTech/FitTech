@@ -1,0 +1,28 @@
+@page "/ComponenteCatalog"
+@using FitTech.WebComponents.Components.Tables
+
+
+<DataTable TItem="User"
+           Items="users"
+           Headers="headers"
+           RowSelector="GetUserRow" />
+
+@code {
+    List<User> users = new()
+    {
+        new User { Name = "Yeray", Age = 30, Email = "yeray@example.com" },
+        new User { Name = "Jairo", Age = 25, Email = "jairo@example.com" },
+        new User { Name = "Alberto", Age = 25, Email = "Alberto@example.com" }
+    };
+
+    List<string> headers = new() { "Nombre", "Edad", "Email" };
+
+    List<string> GetUserRow(User user) => new() { user.Name!, user.Age.ToString(), user.Email! };
+
+    public class User
+    {
+        public string? Name { get; set; }
+        public int Age { get; set; }
+        public string? Email { get; set; }
+    }
+}
