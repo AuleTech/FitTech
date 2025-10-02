@@ -700,6 +700,9 @@
   .bg-fittech-secondary {
     background-color: rgba(73,73,71,1);
   }
+  .bg-fittech-tertiary {
+    background-color: rgba(229, 235, 234, 1);
+  }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
   }
@@ -912,6 +915,9 @@
   }
   .text-fittech-primary {
     color: rgba(173,197,57,1);
+  }
+  .text-fittech-secondary {
+    color: rgba(73,73,71,1);
   }
   .text-gray-300 {
     color: var(--color-gray-300);
