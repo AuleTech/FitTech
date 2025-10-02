@@ -3,7 +3,7 @@
 <!-- Contenedor general -->
 <div class="space-y-4">
     <div class="flex justify-between items-center">
-        <h1 class="text-xl sm:text-2xl font-semibold">Table</h1>
+        <h1 class="text-xl sm:text-2xl font-semibold">@Title</h1>
         <input
             type="text"
             placeholder="Buscar"
@@ -37,6 +37,7 @@
 </div>
 @typeparam TItem
 @code {
+    [Parameter] public string Title { get; set; } = "Tabla";
     [Parameter] public List<TItem> Items { get; set; } = new();
     [Parameter] public List<string> Headers { get; set; } = new();
     [Parameter] public Func<TItem, List<string>>?  RowSelector { get; set; }

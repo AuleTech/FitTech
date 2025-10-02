@@ -4,6 +4,7 @@
 
 <DataTable TItem="User"
            Items="users"
+           Title= "@titulo"
            Headers="headers"
            RowSelector="GetUserRow" />
 
@@ -14,6 +15,8 @@
         new User { Name = "Jairo", Age = 25, Email = "jairo@example.com" },
         new User { Name = "Alberto", Age = 25, Email = "Alberto@example.com" }
     };
+
+    public string titulo = "Usuarios";
 
     List<string> headers = new() { "Nombre", "Edad", "Email" };
 
