@@ -1,12 +1,14 @@
 @page "/ComponenteCatalog"
 @using FitTech.WebComponents.Components.Tables
+@using FitTech.WebComponents.Components.Inputs
+    
+    <DataTable TItem="User"
+               Items="FilteredItems"
+               Title="@titulo"
+               ShowSearch="true"
+               Headers="headers"
+               RowSelector="GetUserRow" />
 
-
-<DataTable TItem="User"
-           Items="users"
-           Title= "@titulo"
-           Headers="headers"
-           RowSelector="GetUserRow" />
 
 @code {
     List<User> users = new()
@@ -16,11 +18,18 @@
         new User { Name = "Alberto", Age = 25, Email = "Alberto@example.com" }
     };
 
+    List<User> FilteredItems = new();
+
     public string titulo = "Usuarios";
 
     List<string> headers = new() { "Nombre", "Edad", "Email" };
 
     List<string> GetUserRow(User user) => new() { user.Name!, user.Age.ToString(), user.Email! };
+
+    protected override void OnInitialized()
+    {
+        FilteredItems = users.ToList();
+    }
 
     public class User
     {

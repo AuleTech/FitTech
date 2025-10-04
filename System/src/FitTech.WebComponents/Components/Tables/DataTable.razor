@@ -1,44 +1,62 @@
+@using FitTech.WebComponents.Components.Inputs
+@typeparam TItem
 
-
-<!-- Contenedor general -->
 <div class="space-y-4">
     <div class="flex justify-between items-center">
         <h1 class="text-xl sm:text-2xl font-semibold">@Title</h1>
-        <input
-            type="text"
-            placeholder="Buscar"
-            class="w-32 sm:w-36 border border-fittech-primary rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-fittech-secondary"
-        />
+
+        @if (ShowSearch)
+        {
+            <div @oninput="HandleSearchInput">
+                <FitTechInput placeholder="Buscar" />
+            </div>
+        }
     </div>
 
     <div class="overflow-hidden rounded-xl shadow-[0_4px_6px_-4px_rgba(0,0,0,0.3)]">
         <table class="min-w-full border-collapse">
             <thead class="bg-fittech-secondary text-fittech-primary">
-            <tr>
-                @foreach (var header in Headers)
-                {
-                    <th class="px-6 py-3 text-left font-medium text-xs">@header</th>
-                }
-            </tr>
-            </thead>
-            <tbody class="bg-fittech-tertiary text-fittech-secondary divide-y divide-fittech-primary">
-            @foreach (var item in Items)
-            {
                 <tr>
-                    @foreach (var cell in RowSelector!(item))
+                    @foreach (var header in Headers)
                     {
-                        <td class="px-6 py-4 font-medium text-xs">@cell</td>
+                        <th class="px-6 py-3 text-left font-medium text-xs">@header</th>
                     }
                 </tr>
-            }
+            </thead>
+            <tbody class="bg-gray-100 text-black divide-y divide-fittech-primary">
+                @foreach (var item in FilteredItems)
+                {
+                    var cells = RowSelector!(item);
+                    <tr>
+                        @foreach (var cell in cells)
+                        {
+                            <td class="px-6 py-4 font-medium text-xs">@cell</td>
+                        }
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
 </div>
-@typeparam TItem
+
 @code {
     [Parameter] public string Title { get; set; } = "Tabla";
     [Parameter] public List<TItem> Items { get; set; } = new();
     [Parameter] public List<string> Headers { get; set; } = new();
-    [Parameter] public Func<TItem, List<string>>?  RowSelector { get; set; }
+    [Parameter] public Func<TItem, List<string>>? RowSelector { get; set; }
+    [Parameter] public bool ShowSearch { get; set; } = true;
+
+    private string SearchText { get; set; } = string.Empty;
+
+    private IEnumerable<TItem> FilteredItems =>
+        string.IsNullOrWhiteSpace(SearchText)
+            ? Items
+            : Items.Where(item =>
+                RowSelector!(item)
+                    .Any(cell => cell.Contains(SearchText, StringComparison.OrdinalIgnoreCase)));
+
+    private void HandleSearchInput(ChangeEventArgs e)
+    {
+        SearchText = e.Value?.ToString() ?? string.Empty;
+    }
 }
