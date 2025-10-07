@@ -1,14 +1,17 @@
 @page "/ComponenteCatalog"
 @using FitTech.WebComponents.Components.Tables
-@using FitTech.WebComponents.Components.Inputs
-    
-    <DataTable TItem="User"
-               Items="FilteredItems"
-               Title="@titulo"
-               ShowSearch="true"
-               Headers="headers"
-               RowSelector="GetUserRow" />
+@using FitTech.WebComponents.Components.SideMenu
 
+
+<DataTable TItem="User"
+           Items="FilteredItems"
+           Title="@titulo"
+           ShowSearch="true"
+           Headers="headers"
+           RowSelector="GetUserRow" />
+
+
+<SlideMenuComponent></SlideMenuComponent>
 
 @code {
     List<User> users = new()

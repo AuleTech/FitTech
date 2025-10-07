@@ -1,0 +1,86 @@
+@inherits CancellableComponent;
+@using Blazor.Heroicons
+
+
+<aside class="fixed left-0 top-0 h-full bg-fittech-white 
+              shadow-lg transition-all duration-300 ease-in-out 
+              @(_isExpanded ? "w-64" : "w-20")">
+
+    <!-- Logo -->
+    <div class="flex items-center justify-center h-20 border-b border-fittech-green">
+        <h3 class="text-2xl font-bold text-fittech-dark transition-opacity duration-300 ease-in-out @(_isExpanded ? "opacity-100" : "opacity-0")">
+            FitTech
+        </h3>
+    </div>
+
+    <!-- Menú -->
+    <ul class="mt-6 space-y-1">
+        @foreach (var menuItem in menuItems)
+        {
+            <li>
+                <a href="@menuItem.Link"
+                   class="group flex items-center rounded-lg px-4 py-5 text-fittech-dark hover:text-fittech-dark
+                          hover:bg-fittech-green transition-all duration-300
+                          @(!_isExpanded ? "justify-center" : "")">
+                    
+                    <span class="flex items-center justify-center h-6 w-6">
+                        <Heroicon Name="@menuItem.Icon" Type="HeroiconType.Outline"
+                                  class="h-6 w-6 text-fittech-dark group-hover:text-fittech-dark transition-colors duration-300"/>
+                    </span>
+
+                    <span class="ml-3 text-sm font-medium transition-all duration-300 ease-in-out
+                                 @(_isExpanded ? "opacity-100" : "opacity-0 hidden")">
+                        @menuItem.Text
+                    </span>
+                </a>
+            </li>
+        }
+    </ul>
+
+    <!-- Footer -->
+    <div class="@(_isExpanded ? "absolute bottom-0  left-0 w-full px-4 py-3" : "hidden")">
+        <p class="text-sm text-center text-fittech-grayvibrant">@@FitTech Copyight</p>
+    </div>
+
+    <!-- Botón toggle -->
+    <button @onclick="ToggleSidebar"
+            class="absolute bottom-4 right-4 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-full
+                   focus:outline-none transition-transform duration-300 ease-in-out
+                   @(!_isExpanded ? "rotate-180" : "")">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+</aside>
+
+
+
+@code {
+    private bool _isExpanded = true;
+
+    private void ToggleSidebar()
+    {
+        _isExpanded = !_isExpanded;
+    }
+
+    private class MenuItem
+    {
+        public string Text { get; init; } = null!;
+        public string Link { get; init; } = null!;
+        public string Icon { get; init; } = null!;
+    }
+
+    private readonly List<MenuItem> menuItems = new()
+    {
+        new MenuItem { Text = "Inicio", Link = "/home", Icon = HeroiconName.Home },
+        new MenuItem { Text = "Rutinas de Ejercicio", Link = "/workouts", Icon = HeroiconName.Scale },
+        new MenuItem { Text = "Gestion de Clientes", Link = "/usermanager", Icon = HeroiconName.ClipboardDocumentList },
+        new MenuItem { Text = "Configuración", Link = "/configurationpage", Icon = HeroiconName.Cog8Tooth },
+        new MenuItem { Text = "Catalogo de Componentes", Link = "/ComponenteCatalog", Icon = HeroiconName.ArrowUp },
+        new MenuItem { Text = "Sobre nosotros", Link = "/support", Icon = HeroiconName.QuestionMarkCircle },
+    };
+
+    // private async Task session()
+    // {
+    //     //Necesito una llamada al back para traerme el nombre y los apellidos de la persona que inicia sesión y usarlos en el Avatar.
+    // }
+
+}

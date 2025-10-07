@@ -15,7 +15,7 @@
 
     <div class="overflow-hidden rounded-xl shadow-[0_4px_6px_-4px_rgba(0,0,0,0.3)]">
         <table class="min-w-full border-collapse">
-            <thead class="bg-fittech-secondary text-fittech-primary">
+            <thead class="bg-fittech-gray text-fittech-green">
                 <tr>
                     @foreach (var header in Headers)
                     {
@@ -23,7 +23,7 @@
                     }
                 </tr>
             </thead>
-            <tbody class="bg-gray-100 text-black divide-y divide-fittech-primary">
+            <tbody class="bg-fittech-white text-black divide-y divide-fittech-green">
                 @foreach (var item in FilteredItems)
                 {
                     var cells = RowSelector!(item);
