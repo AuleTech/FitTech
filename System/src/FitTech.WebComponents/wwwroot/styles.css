@@ -416,6 +416,9 @@
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
+  .h-12 {
+    height: calc(var(--spacing) * 12);
+  }
   .h-14 {
     height: calc(var(--spacing) * 14);
   }
@@ -445,6 +448,9 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
+  }
+  .w-12 {
+    width: calc(var(--spacing) * 12);
   }
   .w-14 {
     width: calc(var(--spacing) * 14);
@@ -540,6 +546,9 @@
   }
   .justify-end {
     justify-content: flex-end;
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
   }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
@@ -642,6 +651,10 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
   .border-4 {
     border-style: var(--tw-border-style);
     border-width: 4px;
@@ -658,8 +671,14 @@
     border-left-style: var(--tw-border-style);
     border-left-width: 4px;
   }
+  .border-fittech-gray {
+    border-color: rgba(73,73,71,1);
+  }
   .border-fittech-green {
     border-color: rgba(173,197,57,1);
+  }
+  .border-fittech-red {
+    border-color: rgba(239, 93, 96, 1);
   }
   .border-gray-200 {
     border-color: var(--color-gray-200);
@@ -691,6 +710,12 @@
   .border-zinc-800 {
     border-color: var(--color-zinc-800);
   }
+  .border-b-fittech-gray {
+    border-bottom-color: rgba(73,73,71,1);
+  }
+  .border-b-fittech-green {
+    border-bottom-color: rgba(173,197,57,1);
+  }
   .bg-blue-100 {
     background-color: var(--color-blue-100);
   }
@@ -699,6 +724,12 @@
   }
   .bg-fittech-gray {
     background-color: rgba(73,73,71,1);
+  }
+  .bg-fittech-green {
+    background-color: rgba(173,197,57,1);
+  }
+  .bg-fittech-red {
+    background-color: rgba(239, 93, 96, 1);
   }
   .bg-fittech-white {
     background-color: rgba(229, 235, 234, 1);
@@ -922,6 +953,9 @@
   .text-fittech-green {
     color: rgba(173,197,57,1);
   }
+  .text-fittech-red {
+    color: rgba(239, 93, 96, 1);
+  }
   .text-gray-300 {
     color: var(--color-gray-300);
   }
@@ -1095,6 +1129,16 @@
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         opacity: 100%;
+      }
+    }
+  }
+  .hover\:scale-105 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-scale-x: 105%;
+        --tw-scale-y: 105%;
+        --tw-scale-z: 105%;
+        scale: var(--tw-scale-x) var(--tw-scale-y);
       }
     }
   }

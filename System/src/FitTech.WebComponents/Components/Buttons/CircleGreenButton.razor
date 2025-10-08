@@ -1,0 +1,40 @@
+<!-- GreenCircleButton.razor -->
+<button @onclick="OnClick"
+        aria-label="@AriaLabel"
+        class="@($"rounded-full border-2 border-fittech-gray flex items-center justify-center shadow-md bg-fittech-green hover:scale-105 transition {SizeClasses} {ExtraClasses}")">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+         stroke-width="2" stroke="currentColor" class="w-5 h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+    </svg>
+</button>
+
+@code {
+    /// Acción al hacer click
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    /// Texto accesible para screen readers
+    [Parameter] public string AriaLabel { get; set; } = "Aceptar";
+
+    /// Tamaño del botón: sm, md o lg
+    [Parameter] public string Size { get; set; } = "md";
+
+    /// Clases extra opcionales
+    [Parameter] public string ExtraClasses { get; set; } = "";
+
+    private string SizeClasses =>
+        Size switch
+        {
+            "sm" => "w-12 h-12 p-2",
+            "lg" => "w-20 h-20 p-4",
+            _ => "w-16 h-16 p-3"
+        };
+
+    private string IconSizeClasses =>
+        Size switch
+        {
+            "sm" => "w-6 h-6",
+            "lg" => "w-10 h-10",
+            _ => "w-8 h-8"
+        };
+}

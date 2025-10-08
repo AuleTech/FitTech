@@ -12,6 +12,7 @@ module.exports = {
                 'fittech-dark': 'rgba(0, 0, 0, 1)',
                 'fittech-white': 'rgba(229, 235, 234, 1)',
                 'fittech-grayvibrant': 'rgba(140, 140, 140, 1)',
+                'fittech-red': 'rgba(239, 93, 96, 1)',
             }
         }
     },
