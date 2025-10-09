@@ -25,7 +25,6 @@
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-700: oklch(48.8% 0.243 264.376);
-    --color-pink-500: oklch(65.6% 0.241 354.308);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
@@ -416,9 +415,6 @@
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
-  .h-12 {
-    height: calc(var(--spacing) * 12);
-  }
   .h-14 {
     height: calc(var(--spacing) * 14);
   }
@@ -448,9 +444,6 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
-  }
-  .w-12 {
-    width: calc(var(--spacing) * 12);
   }
   .w-14 {
     width: calc(var(--spacing) * 14);
@@ -547,9 +540,6 @@
   .justify-end {
     justify-content: flex-end;
   }
-  .gap-2 {
-    gap: calc(var(--spacing) * 2);
-  }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
   }
@@ -619,7 +609,7 @@
   }
   .divide-fittech-green {
     :where(& > :not(:last-child)) {
-      border-color: rgba(173,197,57,1);
+      border-color: #ADC539;
     }
   }
   .overflow-hidden {
@@ -651,10 +641,6 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
-  .border-2 {
-    border-style: var(--tw-border-style);
-    border-width: 2px;
-  }
   .border-4 {
     border-style: var(--tw-border-style);
     border-width: 4px;
@@ -671,14 +657,8 @@
     border-left-style: var(--tw-border-style);
     border-left-width: 4px;
   }
-  .border-fittech-gray {
-    border-color: rgba(73,73,71,1);
-  }
   .border-fittech-green {
-    border-color: rgba(173,197,57,1);
-  }
-  .border-fittech-red {
-    border-color: rgba(239, 93, 96, 1);
+    border-color: #ADC539;
   }
   .border-gray-200 {
     border-color: var(--color-gray-200);
@@ -710,12 +690,6 @@
   .border-zinc-800 {
     border-color: var(--color-zinc-800);
   }
-  .border-b-fittech-gray {
-    border-bottom-color: rgba(73,73,71,1);
-  }
-  .border-b-fittech-green {
-    border-bottom-color: rgba(173,197,57,1);
-  }
   .bg-blue-100 {
     background-color: var(--color-blue-100);
   }
@@ -723,16 +697,10 @@
     background-color: var(--color-cyan-300);
   }
   .bg-fittech-gray {
-    background-color: rgba(73,73,71,1);
-  }
-  .bg-fittech-green {
-    background-color: rgba(173,197,57,1);
-  }
-  .bg-fittech-red {
-    background-color: rgba(239, 93, 96, 1);
+    background-color: #494947;
   }
   .bg-fittech-white {
-    background-color: rgba(229, 235, 234, 1);
+    background-color: #E5EBEA;
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
@@ -760,9 +728,6 @@
   }
   .bg-green-600 {
     background-color: var(--color-green-600);
-  }
-  .bg-pink-500 {
-    background-color: var(--color-pink-500);
   }
   .bg-red-100 {
     background-color: var(--color-red-100);
@@ -945,16 +910,13 @@
     color: var(--color-blue-700);
   }
   .text-fittech-dark {
-    color: rgba(0, 0, 0, 1);
+    color: #000000;
   }
   .text-fittech-grayvibrant {
-    color: rgba(140, 140, 140, 1);
+    color: #8C8C8C;
   }
   .text-fittech-green {
-    color: rgba(173,197,57,1);
-  }
-  .text-fittech-red {
-    color: rgba(239, 93, 96, 1);
+    color: #ADC539;
   }
   .text-gray-300 {
     color: var(--color-gray-300);
@@ -1114,7 +1076,7 @@
   .group-hover\:text-fittech-dark {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
-        color: rgba(0, 0, 0, 1);
+        color: #000000;
       }
     }
   }
@@ -1129,16 +1091,6 @@
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         opacity: 100%;
-      }
-    }
-  }
-  .hover\:scale-105 {
-    &:hover {
-      @media (hover: hover) {
-        --tw-scale-x: 105%;
-        --tw-scale-y: 105%;
-        --tw-scale-z: 105%;
-        scale: var(--tw-scale-x) var(--tw-scale-y);
       }
     }
   }
@@ -1159,7 +1111,7 @@
   .hover\:bg-fittech-green {
     &:hover {
       @media (hover: hover) {
-        background-color: rgba(173,197,57,1);
+        background-color: #ADC539;
       }
     }
   }
@@ -1187,7 +1139,7 @@
   .hover\:text-fittech-dark {
     &:hover {
       @media (hover: hover) {
-        color: rgba(0, 0, 0, 1);
+        color: #000000;
       }
     }
   }
@@ -1247,7 +1199,7 @@
   }
   .focus\:ring-fittech-gray {
     &:focus {
-      --tw-ring-color: rgba(73,73,71,1);
+      --tw-ring-color: #494947;
     }
   }
   .focus\:ring-green-700 {

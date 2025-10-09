@@ -1,15 +1,8 @@
 @page "/ComponenteCatalog"
-@using FitTech.WebComponents.Components.Buttons
+@using Blazor.Heroicons
 @using FitTech.WebComponents.Components.Tables
 @using FitTech.WebComponents.Components.SideMenu
 
-<GreenSquareButton></GreenSquareButton>
-<DarkGreenButton></DarkGreenButton>
-<GreenButton></GreenButton>
-<DarkRedButton></DarkRedButton>
-<LightButton></LightButton>
-<RedButton></RedButton>
-<CircleGreenButton></CircleGreenButton>
 <DataTable TItem="User"
            Items="FilteredItems"
            Title="@titulo"
@@ -18,7 +11,7 @@
            RowSelector="GetUserRow" />
 
 
-<SlideMenuComponent></SlideMenuComponent>
+<SlideMenuComponent MenuItems="@MyMenuItems" />
 
 @code {
     List<User> users = new()
@@ -47,4 +40,12 @@
         public int Age { get; set; }
         public string? Email { get; set; }
     }
+    
+    private readonly List<SlideMenuComponent.MenuItem> MyMenuItems = new()
+    {
+        new() { Text = "Inicio", Link = "/home", Icon = HeroiconName.Home },
+        new() { Text = "Rutinas", Link = "/workouts", Icon = HeroiconName.Scale },
+        new() { Text = "Clientes", Link = "/usermanager", Icon = HeroiconName.ClipboardDocumentList },
+        new() { Text = "Configuración", Link = "/configurationpage", Icon = HeroiconName.Cog8Tooth },
+    };
 }
