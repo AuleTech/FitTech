@@ -7,9 +7,12 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'fittech-primary': 'rgba(173,197,57,1)',
-                'fittech-secondary': 'rgba(73,73,71,1)',
-                'fittech-tertiary': 'rgba(229, 235, 234, 1)'
+                'fittech-green': '#ADC539',
+                'fittech-gray': '#494947',
+                'fittech-dark': '#000000',
+                'fittech-white': '#E5EBEA',
+                'fittech-grayvibrant': '#8C8C8C',
+                'fittech-red': '#EF5D60',
             }
         }
     },

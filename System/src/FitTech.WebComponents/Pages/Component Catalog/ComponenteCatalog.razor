@@ -1,14 +1,17 @@
 @page "/ComponenteCatalog"
+@using Blazor.Heroicons
 @using FitTech.WebComponents.Components.Tables
-@using FitTech.WebComponents.Components.Inputs
-    
-    <DataTable TItem="User"
-               Items="FilteredItems"
-               Title="@titulo"
-               ShowSearch="true"
-               Headers="headers"
-               RowSelector="GetUserRow" />
+@using FitTech.WebComponents.Components.SideMenu
 
+<DataTable TItem="User"
+           Items="FilteredItems"
+           Title="@titulo"
+           ShowSearch="true"
+           Headers="headers"
+           RowSelector="GetUserRow" />
+
+
+<SlideMenuComponent MenuItems="@MyMenuItems" />
 
 @code {
     List<User> users = new()
@@ -37,4 +40,12 @@
         public int Age { get; set; }
         public string? Email { get; set; }
     }
+    
+    private readonly List<SlideMenuComponent.MenuItem> MyMenuItems = new()
+    {
+        new() { Text = "Inicio", Link = "/ComponenteCatalog", Icon = HeroiconName.Home },
+        new() { Text = "Rutinas", Link = "/ComponenteCatalog", Icon = HeroiconName.Scale },
+        new() { Text = "Clientes", Link = "/ComponenteCatalog", Icon = HeroiconName.ClipboardDocumentList },
+        new() { Text = "Configuración", Link = "/ComponenteCatalog", Icon = HeroiconName.Cog8Tooth },
+    };
 }

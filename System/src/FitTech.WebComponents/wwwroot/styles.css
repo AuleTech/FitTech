@@ -25,7 +25,6 @@
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-700: oklch(48.8% 0.243 264.376);
-    --color-pink-500: oklch(65.6% 0.241 354.308);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-200: oklch(92.8% 0.006 264.531);
@@ -608,9 +607,9 @@
       border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
     }
   }
-  .divide-fittech-primary {
+  .divide-fittech-green {
     :where(& > :not(:last-child)) {
-      border-color: rgba(173,197,57,1);
+      border-color: #ADC539;
     }
   }
   .overflow-hidden {
@@ -658,8 +657,8 @@
     border-left-style: var(--tw-border-style);
     border-left-width: 4px;
   }
-  .border-fittech-primary {
-    border-color: rgba(173,197,57,1);
+  .border-fittech-green {
+    border-color: #ADC539;
   }
   .border-gray-200 {
     border-color: var(--color-gray-200);
@@ -697,8 +696,11 @@
   .bg-cyan-300 {
     background-color: var(--color-cyan-300);
   }
-  .bg-fittech-secondary {
-    background-color: rgba(73,73,71,1);
+  .bg-fittech-gray {
+    background-color: #494947;
+  }
+  .bg-fittech-white {
+    background-color: #E5EBEA;
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
@@ -726,9 +728,6 @@
   }
   .bg-green-600 {
     background-color: var(--color-green-600);
-  }
-  .bg-pink-500 {
-    background-color: var(--color-pink-500);
   }
   .bg-red-100 {
     background-color: var(--color-red-100);
@@ -910,8 +909,14 @@
   .text-blue-700 {
     color: var(--color-blue-700);
   }
-  .text-fittech-primary {
-    color: rgba(173,197,57,1);
+  .text-fittech-dark {
+    color: #000000;
+  }
+  .text-fittech-grayvibrant {
+    color: #8C8C8C;
+  }
+  .text-fittech-green {
+    color: #ADC539;
   }
   .text-gray-300 {
     color: var(--color-gray-300);
@@ -1068,6 +1073,13 @@
       }
     }
   }
+  .group-hover\:text-fittech-dark {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: #000000;
+      }
+    }
+  }
   .group-hover\:text-white {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
@@ -1096,6 +1108,13 @@
       }
     }
   }
+  .hover\:bg-fittech-green {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #ADC539;
+      }
+    }
+  }
   .hover\:bg-gray-100 {
     &:hover {
       @media (hover: hover) {
@@ -1114,6 +1133,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-green-700);
+      }
+    }
+  }
+  .hover\:text-fittech-dark {
+    &:hover {
+      @media (hover: hover) {
+        color: #000000;
       }
     }
   }
@@ -1171,9 +1197,9 @@
       --tw-ring-color: var(--color-blue-500);
     }
   }
-  .focus\:ring-fittech-secondary {
+  .focus\:ring-fittech-gray {
     &:focus {
-      --tw-ring-color: rgba(73,73,71,1);
+      --tw-ring-color: #494947;
     }
   }
   .focus\:ring-green-700 {
