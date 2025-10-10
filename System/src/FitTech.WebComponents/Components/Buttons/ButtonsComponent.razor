@@ -1,0 +1,45 @@
+@using Blazor.Heroicons
+@inherits ComponentBase
+
+
+<button class="@GetButtonClasses()">
+    @if (!string.IsNullOrWhiteSpace(Label))// Condicional necesario para evitar que renderice <span> y quede desplazado el icono.
+    {
+        <span class="font-semibold">@Label</span>
+    }
+
+    <Heroicon Name="@ButtonIcon" Solid="false" class="@GetIconClass()" />
+</button>
+
+
+@code {
+    [Parameter] public string ButtonType { get; set; } = null!;
+    [Parameter] public string? Label { get; set; } = null;
+    [Parameter] public string ButtonIcon { get; set; } = null!;
+
+    private string GetButtonClasses()
+    {
+        var baseClass = "flex items-center justify-center gap-2 rounded-2xl border-2 px-6 py-2 text-lg transition-all";
+
+        return ButtonType.ToLower() switch
+        {
+            "green" => $"{baseClass} bg-fittech-green text-fittech-dark border-fittech-dark hover:opacity-90",
+            "green-dark" => $"{baseClass} bg-fittech-gray text-fittech-green border-fittech-green hover:opacity-90",
+            "white" => $"{baseClass} bg-fittech-white text-fittech-dark border-fittech-green hover:opacity-90",
+            "red-dark" => $"{baseClass} bg-fittech-gray text-fittech-red border-fittech-red hover:opacity-90",
+            "red" => $"{baseClass} bg-fittech-red text-fittech-dark border-fittech-dark hover:opacity-90",
+            "icon-green-square" => "p-4 rounded-2xl bg-fittech-green border-2 border-fittech-dark text-fittech-dark hover:opacity-90",
+            "icon-green-circle" => "p-4 rounded-full bg-fittech-green border-2 border-fittech-dark text-fittech-dark hover:opacity-90",
+            _ => $"{baseClass} bg-fittech-gray text-fittech-dark border-fittech-dark"
+        };
+    }
+    
+    private string GetIconClass()
+    {
+        // Si hay texto, añade margen izquierdo; si no, deja solo el tamaño. Evitamos desplazamiento derecho.
+        return string.IsNullOrWhiteSpace(Label)
+            ? "w-6 h-6"
+            : "w-6 h-6 ml-2";
+    }
+    
+}
