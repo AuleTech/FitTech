@@ -19,21 +19,28 @@
 
     private string GetButtonClasses()
     {
-        var baseClass = "flex items-center justify-center gap-2 rounded-2xl border-2 px-6 py-2 text-lg transition-all";
+        var baseClass = "flex items-center justify-center gap-2 rounded-2xl border-2 px-6 py-2 text-lg transition-all duration-300";
 
         return ButtonType.ToLower() switch
         {
-            "green" => $"{baseClass} bg-fittech-green text-fittech-dark border-fittech-dark hover:opacity-90",
-            "green-dark" => $"{baseClass} bg-fittech-gray text-fittech-green border-fittech-green hover:opacity-90",
-            "white" => $"{baseClass} bg-fittech-white text-fittech-dark border-fittech-green hover:opacity-90",
-            "red-dark" => $"{baseClass} bg-fittech-gray text-fittech-red border-fittech-red hover:opacity-90",
-            "red" => $"{baseClass} bg-fittech-red text-fittech-dark border-fittech-dark hover:opacity-90",
-            "icon-green-square" => "p-4 rounded-2xl bg-fittech-green border-2 border-fittech-dark text-fittech-dark hover:opacity-90",
-            "icon-green-circle" => "p-4 rounded-full bg-fittech-green border-2 border-fittech-dark text-fittech-dark hover:opacity-90",
-            _ => $"{baseClass} bg-fittech-gray text-fittech-dark border-fittech-dark"
+            
+            "green" => $"{baseClass} bg-fittech-green text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+            
+            "green-dark" => $"{baseClass} bg-fittech-gray text-fittech-green border-fittech-green hover:bg-fittech-green hover:text-fittech-dark hover:border-fittech-dark",
+            
+            "white" => $"{baseClass} bg-fittech-white text-fittech-dark border-fittech-green hover:bg-fittech-green hover:text-fittech-white hover:border-fittech-dark",
+            
+            "red-dark" => $"{baseClass} bg-fittech-gray text-fittech-red border-fittech-red hover:bg-fittech-red hover:text-fittech-gray hover:border-fittech-dark",
+            
+            "red" => $"{baseClass} bg-fittech-red text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-red hover:border-fittech-red",
+            
+            "icon-green-square" => "p-4 rounded-2xl bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+            
+            "icon-green-circle" => "p-4 rounded-full bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+
+            _ => $"{baseClass} bg-fittech-gray text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-gray hover:border-fittech-gray"
         };
     }
-    
     private string GetIconClass()
     {
         // Si hay texto, añade margen izquierdo; si no, deja solo el tamaño. Evitamos desplazamiento derecho.
