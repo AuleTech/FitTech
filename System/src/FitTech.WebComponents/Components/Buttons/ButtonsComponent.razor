@@ -34,13 +34,15 @@
             
             "red" => $"{baseClass} bg-fittech-red text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-red hover:border-fittech-red",
             
-            "icon-green-square" => "p-4 rounded-2xl bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+            "button-green-square" => "p-4 rounded-2xl bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
             
-            "icon-green-circle" => "p-4 rounded-full bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+            "button-green-circle" => "p-4 rounded-full bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
 
+            //default case
             _ => $"{baseClass} bg-fittech-gray text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-gray hover:border-fittech-gray"
         };
     }
+    
     private string GetIconClass()
     {
         // Si hay texto, añade margen izquierdo; si no, deja solo el tamaño. Evitamos desplazamiento derecho.
