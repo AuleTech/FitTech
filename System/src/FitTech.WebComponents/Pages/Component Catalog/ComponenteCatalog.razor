@@ -5,13 +5,12 @@
 @using FitTech.WebComponents.Components.Buttons
 
 
-<ButtonsComponent ButtonType="button-green-square" ButtonIcon="Check"/>
-<ButtonsComponent ButtonType="green" ButtonIcon="Check" />
-<ButtonsComponent ButtonType="green-dark"  ButtonIcon="Check" />
-<ButtonsComponent ButtonType="green-dark" Label="Button" ButtonIcon="Check" />
-<ButtonsComponent ButtonType="white" Label="Button" ButtonIcon="Check" />
-<ButtonsComponent ButtonType="red-dark" Label="Button"/>
-<ButtonsComponent ButtonType="red" Label="Button" ButtonIcon="Check"/>
+<ButtonsComponent Type="ButtonsComponent.ButtonType.Green" Label="Button" ButtonIcon="Check"/>
+<ButtonsComponent Type= "ButtonsComponent.ButtonType.GreenDark" Label="Button" ButtonIcon="Check" />
+<ButtonsComponent Type="ButtonsComponent.ButtonType.Red" Label="Button" ButtonIcon="Check"/>
+<ButtonsComponent Type="ButtonsComponent.ButtonType.White" Label="Button" ButtonIcon="Check" />
+<ButtonsComponent Type="ButtonsComponent.ButtonType.RedDark" Label="Button" ButtonIcon="Check"/>
+<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare"  ButtonIcon="Check"/>
 
 <DataTable TItem="User"
            Items="FilteredItems"
