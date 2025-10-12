@@ -1,0 +1,66 @@
+@using Blazor.Heroicons
+@inherits ComponentBase
+
+
+<button class="@GetButtonClasses()">
+    @if (!string.IsNullOrWhiteSpace(Label))// Condicional necesario para evitar que renderice <span> y quede desplazado el icono.
+    {
+        <span class="font-semibold">@Label</span>
+    }
+
+    <Heroicon Name="@ButtonIcon" Solid="false" class="@GetIconClass()" />
+</button>
+
+
+@code {
+    [Parameter] public string? Label { get; set; } = null;
+    [Parameter] public string ButtonIcon { get; set; } = null!;
+   
+    
+    public enum ButtonType
+    {
+        Green,
+        GreenDark,
+        White,
+        RedDark,
+        Red,
+        GreenSquare,
+        GreenCircle
+    }
+    
+    [Parameter] public ButtonType Type { get; set; }
+
+        private string GetButtonClasses()
+        {
+            var baseClass = "flex items-center justify-center gap-2 rounded-2xl border-2 px-6 py-2 text-lg transition-all duration-300";
+
+            return Type switch
+            {
+                ButtonType.Green => $"{baseClass} bg-fittech-green text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+
+                ButtonType.GreenDark => $"{baseClass} bg-fittech-gray text-fittech-green border-fittech-green hover:bg-fittech-green hover:text-fittech-dark hover:border-fittech-dark",
+
+                ButtonType.White => $"{baseClass} bg-fittech-white text-fittech-dark border-fittech-green hover:bg-fittech-gray hover:text-fittech-white hover:border-fittech-dark",
+
+                ButtonType.RedDark => $"{baseClass} bg-fittech-gray text-fittech-red border-fittech-red hover:bg-fittech-red hover:text-fittech-gray hover:border-fittech-dark",
+
+                ButtonType.Red => $"{baseClass} bg-fittech-red text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-red hover:border-fittech-red",
+
+                ButtonType.GreenSquare => "p-4 rounded-2xl bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+
+                ButtonType.GreenCircle => "p-4 rounded-full bg-fittech-green border-2 border-fittech-dark text-fittech-dark transition-all duration-300 hover:bg-fittech-gray hover:text-fittech-green hover:border-fittech-green",
+                    
+                _ => $"{baseClass} bg-fittech-gray text-fittech-dark border-fittech-dark hover:bg-fittech-gray hover:text-fittech-gray hover:border-fittech-gray"    
+            };  
+            
+        }
+    
+    private string GetIconClass()
+    {
+        // Si hay texto, añade margen izquierdo; si no, deja solo el tamaño. Evitamos desplazamiento derecho.
+        return string.IsNullOrWhiteSpace(Label)
+            ? "w-6 h-6"
+            : "w-6 h-6 ml-2";
+    }
+    
+}

@@ -2,6 +2,15 @@
 @using Blazor.Heroicons
 @using FitTech.WebComponents.Components.Tables
 @using FitTech.WebComponents.Components.SideMenu
+@using FitTech.WebComponents.Components.Buttons
+
+
+<ButtonsComponent Type="ButtonsComponent.ButtonType.Green" Label="Button" ButtonIcon="Check"/>
+<ButtonsComponent Type= "ButtonsComponent.ButtonType.GreenDark" Label="Button" ButtonIcon="Check" />
+<ButtonsComponent Type="ButtonsComponent.ButtonType.Red" Label="Button" ButtonIcon="Check"/>
+<ButtonsComponent Type="ButtonsComponent.ButtonType.White" Label="Button" ButtonIcon="Check" />
+<ButtonsComponent Type="ButtonsComponent.ButtonType.RedDark" Label="Button" ButtonIcon="Check"/>
+<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare"  ButtonIcon="Check"/>
 
 <DataTable TItem="User"
            Items="FilteredItems"

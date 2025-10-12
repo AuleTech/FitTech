@@ -369,6 +369,9 @@
   .mb-8 {
     margin-bottom: calc(var(--spacing) * 8);
   }
+  .ml-2 {
+    margin-left: calc(var(--spacing) * 2);
+  }
   .ml-3 {
     margin-left: calc(var(--spacing) * 3);
   }
@@ -540,6 +543,9 @@
   .justify-end {
     justify-content: flex-end;
   }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
   }
@@ -641,6 +647,10 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
   .border-4 {
     border-style: var(--tw-border-style);
     border-width: 4px;
@@ -657,8 +667,14 @@
     border-left-style: var(--tw-border-style);
     border-left-width: 4px;
   }
+  .border-fittech-dark {
+    border-color: #000000;
+  }
   .border-fittech-green {
     border-color: #ADC539;
+  }
+  .border-fittech-red {
+    border-color: #EF5D60;
   }
   .border-gray-200 {
     border-color: var(--color-gray-200);
@@ -698,6 +714,12 @@
   }
   .bg-fittech-gray {
     background-color: #494947;
+  }
+  .bg-fittech-green {
+    background-color: #ADC539;
+  }
+  .bg-fittech-red {
+    background-color: #EF5D60;
   }
   .bg-fittech-white {
     background-color: #E5EBEA;
@@ -918,6 +940,9 @@
   .text-fittech-green {
     color: #ADC539;
   }
+  .text-fittech-red {
+    color: #EF5D60;
+  }
   .text-gray-300 {
     color: var(--color-gray-300);
   }
@@ -1094,6 +1119,34 @@
       }
     }
   }
+  .hover\:border-fittech-dark {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #000000;
+      }
+    }
+  }
+  .hover\:border-fittech-gray {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #494947;
+      }
+    }
+  }
+  .hover\:border-fittech-green {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #ADC539;
+      }
+    }
+  }
+  .hover\:border-fittech-red {
+    &:hover {
+      @media (hover: hover) {
+        border-color: #EF5D60;
+      }
+    }
+  }
   .hover\:border-lime-300 {
     &:hover {
       @media (hover: hover) {
@@ -1108,10 +1161,24 @@
       }
     }
   }
+  .hover\:bg-fittech-gray {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #494947;
+      }
+    }
+  }
   .hover\:bg-fittech-green {
     &:hover {
       @media (hover: hover) {
         background-color: #ADC539;
+      }
+    }
+  }
+  .hover\:bg-fittech-red {
+    &:hover {
+      @media (hover: hover) {
+        background-color: #EF5D60;
       }
     }
   }
@@ -1140,6 +1207,34 @@
     &:hover {
       @media (hover: hover) {
         color: #000000;
+      }
+    }
+  }
+  .hover\:text-fittech-gray {
+    &:hover {
+      @media (hover: hover) {
+        color: #494947;
+      }
+    }
+  }
+  .hover\:text-fittech-green {
+    &:hover {
+      @media (hover: hover) {
+        color: #ADC539;
+      }
+    }
+  }
+  .hover\:text-fittech-red {
+    &:hover {
+      @media (hover: hover) {
+        color: #EF5D60;
+      }
+    }
+  }
+  .hover\:text-fittech-white {
+    &:hover {
+      @media (hover: hover) {
+        color: #E5EBEA;
       }
     }
   }
