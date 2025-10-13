@@ -30,6 +30,9 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: Build Web Components
+        run: dotnet build System/src/FitTech.WebComponents/FitTech.WebComponents.csproj
+
       - name: Build
         run: dotnet build --no-restore
 
