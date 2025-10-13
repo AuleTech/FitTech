@@ -1,6 +1,9 @@
 name: build
 on:
   push
+defaults:
+  run: 
+    working-directory: ./System
 
 jobs:
   build-and-test:
