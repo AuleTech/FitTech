@@ -31,7 +31,8 @@ jobs:
         run: dotnet restore
 
       - name: Build Web Components
-        run: dotnet build System/src/FitTech.WebComponents/FitTech.WebComponents.csproj
+        run: dotnet build
+        working-directory: ./System/src/FitTech.WebComponents
 
       - name: Build
         run: dotnet build --no-restore
