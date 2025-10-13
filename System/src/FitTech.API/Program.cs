@@ -1,12 +1,11 @@
 using AuleTech.Core.Messaging;
-using AuleTech.Core.Messaging.Rabbit.Configuration;
 using AuleTech.Core.System.Host;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FitTech.API;
 using FitTech.Application;
 using FitTech.Persistence;
-    
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseDefaultServiceProvider((_, options) =>
 {
@@ -30,10 +29,9 @@ builder.Services
     })
     .AddLogging()
     .AddOpenApi()
-    .AddCors( c => c.AddPolicy("FitTechCorsPolicy", policyBuilder =>
+    .AddCors(c => c.AddPolicy("FitTechCorsPolicy", policyBuilder =>
     {
         policyBuilder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-
     }))
     .AddPersistence(connectionString)
     .AddCQRS();

@@ -1,18 +1,17 @@
-﻿using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.Result;
+﻿using AuleTech.Core.Patterns.Result;
 using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.Application.Extensions;
 
 internal static class ResultExtensions
 {
-    public static Result ToResult(this IdentityResult result) => new Result()
+    public static Result ToResult(this IdentityResult result)
     {
-        Succeeded = result.Succeeded, Errors = result.Errors.Select(x => x.Description).ToArray()
-    };
-    
-    public static Result<T> ToTypedResult<T>(this Result result) => new ()
+        return new Result { Succeeded = result.Succeeded, Errors = result.Errors.Select(x => x.Description).ToArray() };
+    }
+
+    public static Result<T> ToTypedResult<T>(this Result result)
     {
-        Errors = result.Errors, Succeeded = result.Succeeded
-    };
+        return new Result<T> { Errors = result.Errors, Succeeded = result.Succeeded };
+    }
 }

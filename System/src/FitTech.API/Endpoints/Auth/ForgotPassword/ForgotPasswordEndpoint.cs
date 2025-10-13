@@ -29,6 +29,6 @@ public class ForgotPasswordEndpoint : Endpoint<ForgotPasswordRequest, string>
             ThrowError(result.Errors.First()); //TODO: Just for now
         }
 
-        await SendAsync(result.Value!, cancellation: ct);
+        await Send.OkAsync(result.Value!, ct);
     }
 }

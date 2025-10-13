@@ -1,6 +1,6 @@
 ﻿namespace FitTech.Application.Dtos;
 
-public record ClientDto (
+public record ClientDto(
     string? Name,
     string? LastName,
     string? Email,

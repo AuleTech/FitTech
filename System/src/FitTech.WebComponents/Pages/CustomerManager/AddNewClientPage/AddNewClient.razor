@@ -1,8 +1,8 @@
 @page "/usermanager/add"
 @inject IUserService UserService
+@inject NavigationManager Navigation
 @using System.ComponentModel.DataAnnotations
 @using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels
-@inject NavigationManager Navigation
 @inherits FitTech.WebComponents.Components.CancellableComponent
 
 
@@ -22,7 +22,7 @@
             <!-- Barra de pasos con líneas dinámicas -->
             <div class="flex items-center justify-between mb-6 relative mt-4">
 
-                @for (int step = 1; step <= TotalSteps; step++)
+                @for (var step = 1; step <= TotalSteps; step++)
                 {
                     var isActive = step == CurrentStep;
                     var isCompleted = step < CurrentStep;
@@ -33,7 +33,7 @@
                             ? "w-10 h-10 flex items-center justify-center rounded-full border-4 text-white bg-green-600 font-bold"
                             : "w-10 h-10 flex items-center justify-center rounded-full border-4 border-gray-400 text-gray-400 bg-white dark:bg-gray-800 font-bold";
 
-                    string titulo = step switch
+                    var titulo = step switch
                     {
                         1 => "Datos del Cliente",
                         2 => "Detalles del Entrenamiento",
@@ -66,7 +66,8 @@
                 <PersonalInformationForm Model="_client"></PersonalInformationForm>
                 <div class="mt-6 flex justify-between">
                     <button @onclick="ValidateStep1"
-                            class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg">Siguiente
+                            class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg">
+                        Siguiente
                     </button>
                 </div>
             }
@@ -79,7 +80,8 @@
                         Anterior
                     </button>
                     <button @onclick="ValidateStep2"
-                            class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg">Siguiente
+                            class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg">
+                        Siguiente
                     </button>
                 </div>
             }
@@ -91,7 +93,9 @@
                             class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-white rounded">
                         Anterior
                     </button>
-                    <button class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg" @onclick="AddClient">
+                    <button
+                        class="px-4 py-2 bg-gray-400 hover:bg-green-700 text-white font-bold uppercase transition duration-200 rounded-lg"
+                        @onclick="AddClient">
                         Finalizar
                     </button>
                 </div>
@@ -120,7 +124,7 @@
 
 @code {
 
-    private ClientModel _client = new();
+    private readonly ClientModel _client = new();
     private string _message = string.Empty;
     private int CurrentStep = 1;
     private readonly int TotalSteps = 3;
@@ -132,7 +136,7 @@
         var context = new ValidationContext(_client);
         var results = new List<ValidationResult>();
 
-        bool isValid =
+        var isValid =
             Validator.TryValidateProperty(_client.Name, new ValidationContext(_client) { MemberName = nameof(_client.Name) }, results) &&
             Validator.TryValidateProperty(_client.LastName, new ValidationContext(_client) { MemberName = nameof(_client.LastName) }, results) &&
             Validator.TryValidateProperty(_client.PhoneNumber, new ValidationContext(_client) { MemberName = nameof(_client.PhoneNumber) }, results) &&
@@ -154,7 +158,7 @@
         var context = new ValidationContext(_client);
         var results = new List<ValidationResult>();
 
-        bool isValid =
+        var isValid =
             Validator.TryValidateProperty(_client.TrainingHours, new ValidationContext(_client) { MemberName = nameof(_client.TrainingHours) }, results) &&
             Validator.TryValidateProperty(_client.TrainingModel, new ValidationContext(_client) { MemberName = nameof(_client.TrainingModel) }, results) &&
             Validator.TryValidateProperty(_client.SubscriptionType, new ValidationContext(_client) { MemberName = nameof(_client.SubscriptionType) }, results);
@@ -186,7 +190,7 @@
     public async Task AddClient()
     {
         validationErrors.Clear();
-        
+
         var response = await UserService.AddClientAsync(_client.Name, _client.LastName, _client.Birthdate.UtcDateTime, _client.Email, _client.PhoneNumber!, _client.TrainingHours!, _client.TrainingModel, _client.Center, _client.DateSportEvent.UtcDateTime, _client.SubscriptionType, _cts.Token);
 
         if (response!.Succeeded)

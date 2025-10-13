@@ -2,14 +2,16 @@
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Services;
-using FitTech.Domain.Entities;
+using FitTech.Domain.Aggregates.AuthAggregate;
 using FitTech.Domain.Templates.EmailTemplates.ResetPassword;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Commands.Auth.ForgotPassword;
 
-internal sealed class ForgotPasswordCommandHandler : IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>
+public interface IForgotPasswordCommandHandler : IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>;
+
+internal sealed class ForgotPasswordCommandHandler : IForgotPasswordCommandHandler 
 {
     private readonly IEmailService _emailService;
     private readonly ILogger<ForgotPasswordCommandHandler> _logger;

@@ -6,5 +6,4 @@ public interface IStorage
     Task SetItemAsync<T>(string key, T value, CancellationToken cancellationToken);
     Task<T?> GetItemAsync<T>(string key, CancellationToken cancellationToken) where T : class;
     Task<bool> ContainsKeyAsync(string key, CancellationToken cancellationToken);
-
 }

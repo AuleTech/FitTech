@@ -2,6 +2,13 @@
 
 internal static class RabbitExtensions
 {
-    public static string GetQueueName<TMessage>() => $"{typeof(TMessage).Name}Queue";
-    public static string GetDlQueueName<T>() => $"{GetQueueName<T>()}_dlq";
+    public static string GetQueueName<TMessage>()
+    {
+        return $"{typeof(TMessage).Name}Queue";
+    }
+
+    public static string GetDlQueueName<T>()
+    {
+        return $"{GetQueueName<T>()}_dlq";
+    }
 }

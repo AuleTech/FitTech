@@ -1,5 +1,4 @@
-﻿
-using AuleTech.Core.Patterns.Result;
+﻿using AuleTech.Core.Patterns.Result;
 
 namespace AuleTech.Core.Patterns.CQRS;
 
@@ -12,6 +11,3 @@ public interface IListQueryHandler<in TQuery, TItem>
 {
     Task<Result<List<TItem>>> HandleGroupAsync(TQuery query, CancellationToken cancellationToken);
 }
-
-
-

@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
-using Blazored.LocalStorage;
 using FitTech.API.Client;
 using FitTech.ApiClient;
 using FitTech.WebComponents.Models;
@@ -11,8 +10,8 @@ namespace FitTech.WebComponents.Authentication;
 //TODO: Hacky, we need to refactor.
 public class FitTechDelegationHandler : DelegatingHandler
 {
-    private readonly IStorage _storage;
     private readonly IFitTechApiClient _apiClient;
+    private readonly IStorage _storage;
 
     public FitTechDelegationHandler(IStorage storage, IFitTechApiClientFactory apiClientFactory)
     {
@@ -20,7 +19,8 @@ public class FitTechDelegationHandler : DelegatingHandler
         _apiClient = apiClientFactory.Create();
     }
 
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        CancellationToken cancellationToken)
     {
         var user = await _storage.GetItemAsync<FitTechUser>(FitTechUser.StorageKey, cancellationToken);
 
@@ -46,11 +46,9 @@ public class FitTechDelegationHandler : DelegatingHandler
             try
             {
                 var refreshedToken = await _apiClient.RefreshTokenAsync(
-                    new RefreshTokenRequest()
-                    {
-                        RefreshToken = user.RefreshToken, ExpiredAccessToken = user.AccessToken
-                    }, cancellationToken);
-                
+                    new RefreshTokenRequest { RefreshToken = user.RefreshToken, ExpiredAccessToken = user.AccessToken },
+                    cancellationToken);
+
                 if (!refreshedToken.Succeeded)
                 {
                     return response;

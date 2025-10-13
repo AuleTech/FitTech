@@ -8,7 +8,7 @@
         @if (ShowSearch)
         {
             <div @oninput="HandleSearchInput">
-                <FitTechInput placeholder="Buscar" />
+                <FitTechInput placeholder="Buscar"/>
             </div>
         }
     </div>
@@ -16,24 +16,24 @@
     <div class="overflow-hidden rounded-xl shadow-[0_4px_6px_-4px_rgba(0,0,0,0.3)]">
         <table class="min-w-full border-collapse">
             <thead class="bg-fittech-gray text-fittech-green">
-                <tr>
-                    @foreach (var header in Headers)
-                    {
-                        <th class="px-6 py-3 text-left font-medium text-xs">@header</th>
-                    }
-                </tr>
+            <tr>
+                @foreach (var header in Headers)
+                {
+                    <th class="px-6 py-3 text-left font-medium text-xs">@header</th>
+                }
+            </tr>
             </thead>
             <tbody class="bg-fittech-white text-black divide-y divide-fittech-green">
-                @foreach (var item in FilteredItems)
-                {
-                    var cells = RowSelector!(item);
-                    <tr>
-                        @foreach (var cell in cells)
-                        {
-                            <td class="px-6 py-4 font-medium text-xs">@cell</td>
-                        }
-                    </tr>
-                }
+            @foreach (var item in FilteredItems)
+            {
+                var cells = RowSelector!(item);
+                <tr>
+                    @foreach (var cell in cells)
+                    {
+                        <td class="px-6 py-4 font-medium text-xs">@cell</td>
+                    }
+                </tr>
+            }
             </tbody>
         </table>
     </div>
@@ -59,4 +59,5 @@
     {
         SearchText = e.Value?.ToString() ?? string.Empty;
     }
+
 }

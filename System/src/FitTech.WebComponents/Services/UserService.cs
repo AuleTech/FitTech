@@ -117,7 +117,6 @@ internal sealed class UserService : IUserService
         int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTimeOffset eventDate,
         string subscriptionType, CancellationToken cancellationToken)
     {
-        
         var result = await _fitTechApiClient.AddNewClientAsync(
             new AddClientRequest
             {
@@ -131,15 +130,15 @@ internal sealed class UserService : IUserService
                 Center = center,
                 SubscriptionType = subscriptionType
             }, cancellationToken);
-        
+
         return result;
     }
-    
-    
+
+
     public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
     {
         var result = await _fitTechApiClient.GetTrainerDataAsync(cancellationToken);
-        
+
         if (!result.Succeeded)
         {
             return result.MapFailure<TrainerDataDto>();
@@ -148,16 +147,11 @@ internal sealed class UserService : IUserService
         return result;
     }
 
-    public async Task<Result> SaveChangesConfiguration(string name, string email, string password, CancellationToken cancellationToken)
+    public async Task<Result> SaveChangesConfiguration(string name, string email, string password,
+        CancellationToken cancellationToken)
     {
-        var result = await  _fitTechApiClient.UpdateUserConfigurationAsync(
-            new UpdateUSerConfigurationRequest()
-            {
-                Name = name,
-                Email = email,
-                Password = password,
-                
-            }, cancellationToken);
+        var result = await _fitTechApiClient.UpdateUserConfigurationAsync(
+            new UpdateUSerConfigurationRequest { Name = name, Email = email, Password = password }, cancellationToken);
 
         return Result.Success;
     }
@@ -172,9 +166,8 @@ internal sealed class UserService : IUserService
             return result.MapFailure<ICollection<ClientDataDto>>();
         }
 
-        var clients = result.Value!; 
-        
+        var clients = result.Value!;
+
         return Result<ICollection<ClientDataDto>>.Success(clients);
     }
-    
 }

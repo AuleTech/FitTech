@@ -7,7 +7,8 @@
 
 <div class="relative min-h-screen w-full">
     <!-- Franja superior naranja -->
-    <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-gray-800 to-zinc-900 z-0 flex items-center justify-center">
+    <div
+        class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-gray-800 to-zinc-900 z-0 flex items-center justify-center">
         <h1 class="text-white text-4xl font-black uppercase tracking-widest">Registrate en FitTech</h1>
 
         <!-- Puzzle decorativo arriba derecha -->
@@ -25,47 +26,48 @@
     <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
         <div class="w-full max-w-md bg-white p-8 rounded-lg">
             <EditForm Model="RegisterModel" OnValidSubmit="RegisterFuncion" FormName="RegisterForm">
-                <DataAnnotationsValidator />
+                <DataAnnotationsValidator/>
 
                 <div class="mb-4">
                     <InputText type="text" @bind-Value="RegisterModel!.FirstName" placeholder="Nombre"
-                        class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg" />
-                    <ValidationMessage For="@(() => RegisterModel.FirstName)" class="text-red-600 text-sm mt-1" />
+                               class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg"/>
+                    <ValidationMessage For="@(() => RegisterModel.FirstName)" class="text-red-600 text-sm mt-1"/>
                 </div>
 
                 <div class="mb-4">
                     <InputText type="text" @bind-Value="RegisterModel!.LastName" placeholder="Apellidos"
-                        class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg" />
-                    <ValidationMessage For="@(() => RegisterModel.LastName)" class="text-red-600 text-sm mt-1" />
+                               class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg"/>
+                    <ValidationMessage For="@(() => RegisterModel.LastName)" class="text-red-600 text-sm mt-1"/>
                 </div>
 
                 <div class="mb-4">
                     <InputText type="email" @bind-Value="RegisterModel!.Email" placeholder="Correo electrónico"
-                        class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg" />
-                    <ValidationMessage For="@(() => RegisterModel.Email)" class="text-red-600 text-sm mt-1" />
+                               class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg"/>
+                    <ValidationMessage For="@(() => RegisterModel.Email)" class="text-red-600 text-sm mt-1"/>
                 </div>
 
                 <div class="mb-4">
                     <InputText type="password" @bind-Value="RegisterModel!.Password" placeholder="Contraseña"
-                        class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg" />
-                    <ValidationMessage For="@(() => RegisterModel.Password)" class="text-red-600 text-sm mt-1" />
+                               class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-green-700 rounded-lg"/>
+                    <ValidationMessage For="@(() => RegisterModel.Password)" class="text-red-600 text-sm mt-1"/>
                 </div>
 
                 <div class="mb-6">
-                    <InputText type="password" @bind-Value="RegisterModel!.ConfirmPassword" placeholder="Repetir contraseña"
-                        class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-2 focus:ring-green-700 rounded-lg" />
-                    <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" class="text-red-600 text-sm mt-1" />
+                    <InputText type="password" @bind-Value="RegisterModel!.ConfirmPassword"
+                               placeholder="Repetir contraseña"
+                               class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-2 focus:ring-green-700 rounded-lg"/>
+                    <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" class="text-red-600 text-sm mt-1"/>
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-gray-400 hover:bg-green-700 focus:ring-green-700 rounded-lg text-white font-bold uppercase py-2 transition duration-200">
+                        class="w-full bg-gray-400 hover:bg-green-700 focus:ring-green-700 rounded-lg text-white font-bold uppercase py-2 transition duration-200">
                     Registrarme
                 </button>
 
                 @if (!string.IsNullOrEmpty(_message))
                 {
                     <p class="mt-4 text-center text-sm font-semibold"
-                        style="color: @(_message.Contains("Error") ? "red" : "green")">
+                       style="color: @(_message.Contains("Error") ? "red" : "green")">
                         @_message
                     </p>
                 }
@@ -73,6 +75,7 @@
         </div>
     </div>
 </div>
+
 @code
 {
     [SupplyParameterFromForm] private RegisterModel? RegisterModel { get; set; }

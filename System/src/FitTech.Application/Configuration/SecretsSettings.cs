@@ -2,5 +2,5 @@
 
 public class SecretsSettings
 {
-    public string EmailFitTech { get; set; } = String.Empty;
+    public string EmailFitTech { get; set; } = string.Empty;
 }

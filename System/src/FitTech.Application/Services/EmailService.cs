@@ -1,5 +1,5 @@
 ﻿using FitTech.Application.Configuration;
-using FitTech.Domain.Entities;
+using FitTech.Domain.Aggregates.EmailAggregate;
 using FitTech.Domain.Repositories;
 using FitTech.Domain.Templates;
 using Microsoft.Extensions.Logging;
@@ -9,14 +9,14 @@ namespace FitTech.Application.Services;
 
 public interface IEmailService
 {
-    Task SendEmailAsync(string to,IEmailTemplate template, CancellationToken cancellationToken);
+    Task SendEmailAsync(string to, IEmailTemplate template, CancellationToken cancellationToken);
 }
 
 internal sealed class EmailService : IEmailService
 {
-    private readonly IResend _resend;
-    private readonly ILogger<EmailService> _logger;
     private readonly IEmailRepository _emailRepository;
+    private readonly ILogger<EmailService> _logger;
+    private readonly IResend _resend;
     private readonly SecretsSettings _settings;
 
     public EmailService(IResend resend, ILogger<EmailService> logger, IEmailRepository emailRepository,
@@ -31,7 +31,7 @@ internal sealed class EmailService : IEmailService
     public async Task SendEmailAsync(string to, IEmailTemplate template, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(to);
-        
+
         var message = new EmailMessage
         {
             From = _settings.EmailFitTech!, To = { to }, Subject = template.Subject, HtmlBody = template.GetBody()
@@ -39,10 +39,11 @@ internal sealed class EmailService : IEmailService
         var response = await _resend.EmailSendAsync(message, cancellationToken);
 
         await CreateLogEmailResetAsync();
-        
+
         async Task CreateLogEmailResetAsync()
         {
-            var emailLog = new Email(response.Content, to, template.MessageType, response.Success ? nameof(EmailStatus.Delivered) : "Failed");
+            var emailLog = new Email(response.Content, to, template.MessageType,
+                response.Success ? nameof(EmailStatus.Delivered) : "Failed");
             await _emailRepository.AddAsync(emailLog, cancellationToken);
         }
     }

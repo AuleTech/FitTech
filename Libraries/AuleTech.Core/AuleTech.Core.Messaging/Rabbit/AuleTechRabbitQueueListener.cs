@@ -10,21 +10,42 @@ namespace AuleTech.Core.Messaging.Rabbit;
 public class AuleTechRabbitQueueListener<TMessage> : IAuleTechQueueListener, IAsyncDisposable
 {
     private readonly RabbitMqConfiguration _configuration;
+    private readonly IConnectionFactory _connectionFactory;
     private readonly IEnumerable<IAuleTechConsumer<TMessage>> _consumers;
     private readonly ILogger<AuleTechRabbitQueueListener<TMessage>> _logger;
-    private readonly IConnectionFactory _connectionFactory;
-    private IConnection? _connection;
     private IChannel? _channel;
+    private IConnection? _connection;
     private IChannel? _dlqChannel;
-    
+
 
     public AuleTechRabbitQueueListener(IEnumerable<IAuleTechConsumer<TMessage>> consumers,
-        RabbitMqConfiguration configuration, ILogger<AuleTechRabbitQueueListener<TMessage>> logger, IConnectionFactory connectionFactory)
+        RabbitMqConfiguration configuration, ILogger<AuleTechRabbitQueueListener<TMessage>> logger,
+        IConnectionFactory connectionFactory)
     {
         _consumers = consumers;
         _configuration = configuration;
         _logger = logger;
         _connectionFactory = connectionFactory;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_channel is not null)
+        {
+            await _channel.DisposeAsync();
+        }
+
+        if (_dlqChannel is not null)
+        {
+            await _dlqChannel.DisposeAsync();
+        }
+
+        if (_connection is not null)
+        {
+            await _connection.DisposeAsync();
+        }
+
+        GC.SuppressFinalize(this);
     }
 
     public async Task StartAsync(CancellationToken cancellationToken)
@@ -33,17 +54,19 @@ public class AuleTechRabbitQueueListener<TMessage> : IAuleTechQueueListener, IAs
         _connection = await _connectionFactory.CreateConnectionAsync(cancellationToken);
         _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
         _dlqChannel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
-        
+
         await ConsumeQueueAsync();
         await ConsumeDlQueueAsync();
+
         async Task ConsumeQueueAsync()
         {
             await _channel.QueueDeclareAsync(RabbitExtensions.GetQueueName<TMessage>(), true, false, false,
-                null, cancellationToken: cancellationToken);
-        
+                cancellationToken: cancellationToken);
+
             var rabbitConsumer = new AsyncEventingBasicConsumer(_channel);
             rabbitConsumer.ReceivedAsync += HandleReceivedAsync;
-            await _channel.BasicConsumeAsync(RabbitExtensions.GetQueueName<TMessage>(), false, rabbitConsumer, cancellationToken: cancellationToken);
+            await _channel.BasicConsumeAsync(RabbitExtensions.GetQueueName<TMessage>(), false, rabbitConsumer,
+                cancellationToken);
 
             async Task HandleReceivedAsync(object sender, BasicDeliverEventArgs eventArgs)
             {
@@ -56,9 +79,9 @@ public class AuleTechRabbitQueueListener<TMessage> : IAuleTechQueueListener, IAs
                     _logger.LogDebug("Discarded message: {Message}", Encoding.UTF8.GetString(body));
                     await _channel.BasicRejectAsync(eventArgs.DeliveryTag, false, cancellationToken);
                 }
-            
+
                 var failed = new List<string>();
-            
+
                 foreach (var consumer in _consumers)
                 {
                     try
@@ -76,15 +99,16 @@ public class AuleTechRabbitQueueListener<TMessage> : IAuleTechQueueListener, IAs
                 await _channel.BasicAckAsync(eventArgs.DeliveryTag, false, cancellationToken);
             }
         }
-        
+
         async Task ConsumeDlQueueAsync()
         {
             await _dlqChannel!.QueueDeclareAsync(RabbitExtensions.GetDlQueueName<TMessage>(), true, false, false,
-                null, cancellationToken: cancellationToken);
-        
+                cancellationToken: cancellationToken);
+
             var rabbitConsumer = new AsyncEventingBasicConsumer(_dlqChannel);
             rabbitConsumer.ReceivedAsync += HandleDlqReceivedAsync;
-            await _channel.BasicConsumeAsync(RabbitExtensions.GetDlQueueName<TMessage>(), false, rabbitConsumer, cancellationToken);
+            await _channel.BasicConsumeAsync(RabbitExtensions.GetDlQueueName<TMessage>(), false, rabbitConsumer,
+                cancellationToken);
 
             async Task HandleDlqReceivedAsync(object sender, BasicDeliverEventArgs eventArgs)
             {
@@ -98,9 +122,9 @@ public class AuleTechRabbitQueueListener<TMessage> : IAuleTechQueueListener, IAs
                     _logger.LogDebug("Discarded message: {Message}", Encoding.UTF8.GetString(body));
                     await _dlqChannel.BasicRejectAsync(eventArgs.DeliveryTag, false, cancellationToken);
                 }
-                
+
                 var failed = new List<string>();
-            
+
                 foreach (var consumer in _consumers)
                 {
                     try
@@ -128,26 +152,6 @@ public class AuleTechRabbitQueueListener<TMessage> : IAuleTechQueueListener, IAs
         }
     }
 
-    public async ValueTask DisposeAsync()
-    {
-        if (_channel is not null)
-        {
-            await _channel.DisposeAsync();   
-        }
-
-        if (_dlqChannel is not null)
-        {
-            await _dlqChannel.DisposeAsync();
-        }
-
-        if (_connection is not null)
-        {
-            await _connection.DisposeAsync();
-        }
-        
-        GC.SuppressFinalize(this);
-    }
-    
     ~AuleTechRabbitQueueListener()
     {
         DisposeAsync().GetAwaiter().GetResult();

@@ -8,7 +8,8 @@ public class AuleTechListenerInitializer : BackgroundService
     private readonly IEnumerable<IAuleTechQueueListener> _listeners;
     private readonly ILogger<AuleTechListenerInitializer> _logger;
 
-    public AuleTechListenerInitializer(IEnumerable<IAuleTechQueueListener> listeners, ILogger<AuleTechListenerInitializer> logger)
+    public AuleTechListenerInitializer(IEnumerable<IAuleTechQueueListener> listeners,
+        ILogger<AuleTechListenerInitializer> logger)
     {
         _listeners = listeners;
         _logger = logger;

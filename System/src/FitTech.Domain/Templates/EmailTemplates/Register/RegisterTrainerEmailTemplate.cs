@@ -2,19 +2,17 @@
 
 public class RegisterTrainerEmailTemplate : IEmailTemplate
 {
-    public static RegisterTrainerEmailTemplate Create() => new RegisterTrainerEmailTemplate();
-
-    public string Subject { get; } = "¡Bienvenido a FitTech!";
-    public string MessageType { get; } = "Register Trainer";
-    
     private RegisterTrainerEmailTemplate()
     {
     }
-    
-    
+
+    public string Subject { get; } = "¡Bienvenido a FitTech!";
+    public string MessageType { get; } = "Register Trainer";
+
+
     public string GetBody()
     {
-        return $@"
+        return @"
         <html>
         <head>
             <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
@@ -28,5 +26,10 @@ public class RegisterTrainerEmailTemplate : IEmailTemplate
             </div>
         </body>
         </html>";
+    }
+
+    public static RegisterTrainerEmailTemplate Create()
+    {
+        return new RegisterTrainerEmailTemplate();
     }
 }

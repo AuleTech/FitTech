@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using AuleTech.Core.System.Host;
-using FitTech.Application;
-using FitTech.Domain.Entities;
+﻿using FitTech.Application;
+using FitTech.Domain.Aggregates.AuthAggregate;
 using FitTech.Persistence;
 using Microsoft.AspNetCore.Identity;
 

@@ -2,19 +2,19 @@
 
 public class RegisterClientEmailTemplate : IEmailTemplate
 {
-    public static RegisterClientEmailTemplate Create(string email, string password) => new RegisterClientEmailTemplate(email, password);
-
-    public string Subject { get; } = "¡Bienvenido a FitTech!";
-    public string MessageType { get; } = "Register Client";
     private readonly string _email;
     private readonly string _password;
+
     private RegisterClientEmailTemplate(string email, string password)
     {
         _email = email;
         _password = password;
     }
-    
-    
+
+    public string Subject { get; } = "¡Bienvenido a FitTech!";
+    public string MessageType { get; } = "Register Client";
+
+
     public string GetBody()
     {
         return $@"
@@ -33,5 +33,10 @@ public class RegisterClientEmailTemplate : IEmailTemplate
             </div>
         </body>
         </html>";
+    }
+
+    public static RegisterClientEmailTemplate Create(string email, string password)
+    {
+        return new RegisterClientEmailTemplate(email, password);
     }
 }
