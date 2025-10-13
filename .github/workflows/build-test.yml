@@ -38,11 +38,8 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Test
-        run: |
-          for testProject in src/*.*Tests/*.csproj; do
-            testFileName=$(basename "$testProject" .csproj)
-            dotnet test "$testProject" --no-restore --logger:"console;verbosity=normal"
-          done
+        run: dotnet test --no-restore --logger:"console;verbosity=normal"
+        working-directory: ./System
 
       - name: Publish Test Results
         uses: actions/upload-artifact@v4
