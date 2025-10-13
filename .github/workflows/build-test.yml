@@ -39,7 +39,7 @@ jobs:
 
       - name: Test
         run: |
-          for testProject in src/*.*Tests.csproj; do
+          for testProject in src/*.*Tests/*.csproj; do
             testFileName=$(basename "$testProject" .csproj)
             dotnet test "$testProject" --no-restore --logger:"junit;LogFilePath=$PWD/Results/$testFileName.xml" || true
           done
