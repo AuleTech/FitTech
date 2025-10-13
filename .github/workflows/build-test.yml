@@ -37,6 +37,9 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
+      - name: Install SSL Certificates
+        run: dotnet dev-certs https --trust  
+
       - name: Test
         run: dotnet test --no-restore --logger:"console;verbosity=normal"
         working-directory: ./System
