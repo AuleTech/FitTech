@@ -11,8 +11,9 @@ public static class HostExtensions
         await using var scope = hostServiceProvider.CreateAsyncScope();
         await scope.ServiceProvider.RunAfterStartupJobsAsync(cts.Token);
     }
-    
-    internal static async Task RunAfterStartupJobsAsync(this IServiceProvider serviceProvider, CancellationToken cancellationToken)
+
+    internal static async Task RunAfterStartupJobsAsync(this IServiceProvider serviceProvider,
+        CancellationToken cancellationToken)
     {
         var jobs = serviceProvider.GetRequiredService<IEnumerable<IAfterStartupJob>>();
 
@@ -27,7 +28,7 @@ public static class HostExtensions
         foreach (var afterStartupJob in assembly.GetTypes().Where(x =>
                      x is { IsInterface: false, IsAbstract: false } && typeof(IAfterStartupJob).IsAssignableFrom(x)))
         {
-            serviceCollection.AddTransient(typeof(IAfterStartupJob),afterStartupJob);
+            serviceCollection.AddTransient(typeof(IAfterStartupJob), afterStartupJob);
         }
     }
 }

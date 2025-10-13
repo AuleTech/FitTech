@@ -1,9 +1,7 @@
 ﻿using AuleTech.Core.Messaging;
-using AuleTech.Core.Patterns;
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
-using FitTech.Application;
 using FitTech.Application.Commands.Auth.Login;
 using Microsoft.AspNetCore.Authorization;
 
@@ -16,7 +14,8 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
     private readonly IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> _commandHandler;
     private readonly IAuleTechQueuePublisher _publisher;
 
-    public LoginEndpoint(IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> commandHandler, IAuleTechQueuePublisher publisher)
+    public LoginEndpoint(IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> commandHandler,
+        IAuleTechQueuePublisher publisher)
     {
         _commandHandler = commandHandler;
         _publisher = publisher;
@@ -29,10 +28,10 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 
         if (!result.Succeeded)
         {
-            await SendUnauthorizedAsync(ct);
+            await Send.UnauthorizedAsync(ct);
             return;
         }
 
-        await SendAsync(new LoginResponse(result.Value!.AccessToken!, result.Value.RefreshToken), cancellation: ct);
+        await Send.OkAsync(new LoginResponse(result.Value!.AccessToken!, result.Value.RefreshToken), ct);
     }
 }

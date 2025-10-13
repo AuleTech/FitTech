@@ -1,29 +1,30 @@
 @page "/ComponenteCatalog"
 @using Blazor.Heroicons
-@using FitTech.WebComponents.Components.Tables
-@using FitTech.WebComponents.Components.SideMenu
 @using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.SideMenu
+@using FitTech.WebComponents.Components.Tables
 
 
 <ButtonsComponent Type="ButtonsComponent.ButtonType.Green" Label="Button" ButtonIcon="Check"/>
-<ButtonsComponent Type= "ButtonsComponent.ButtonType.GreenDark" Label="Button" ButtonIcon="Check" />
+<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenDark" Label="Button" ButtonIcon="Check"/>
 <ButtonsComponent Type="ButtonsComponent.ButtonType.Red" Label="Button" ButtonIcon="Check"/>
-<ButtonsComponent Type="ButtonsComponent.ButtonType.White" Label="Button" ButtonIcon="Check" />
+<ButtonsComponent Type="ButtonsComponent.ButtonType.White" Label="Button" ButtonIcon="Check"/>
 <ButtonsComponent Type="ButtonsComponent.ButtonType.RedDark" Label="Button" ButtonIcon="Check"/>
-<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare"  ButtonIcon="Check"/>
+<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare" ButtonIcon="Check"/>
 
 <DataTable TItem="User"
            Items="FilteredItems"
            Title="@titulo"
            ShowSearch="true"
            Headers="headers"
-           RowSelector="GetUserRow" />
+           RowSelector="GetUserRow"/>
 
 
-<SlideMenuComponent MenuItems="@MyMenuItems" />
+<SlideMenuComponent MenuItems="@MyMenuItems"/>
 
 @code {
-    List<User> users = new()
+
+    readonly List<User> users = new()
     {
         new User { Name = "Yeray", Age = 30, Email = "yeray@example.com" },
         new User { Name = "Jairo", Age = 25, Email = "jairo@example.com" },
@@ -34,9 +35,12 @@
 
     public string titulo = "Usuarios";
 
-    List<string> headers = new() { "Nombre", "Edad", "Email" };
+    readonly List<string> headers = new() { "Nombre", "Edad", "Email" };
 
-    List<string> GetUserRow(User user) => new() { user.Name!, user.Age.ToString(), user.Email! };
+    List<string> GetUserRow(User user)
+    {
+        return new List<string> { user.Name!, user.Age.ToString(), user.Email! };
+    }
 
     protected override void OnInitialized()
     {
@@ -49,12 +53,13 @@
         public int Age { get; set; }
         public string? Email { get; set; }
     }
-    
+
     private readonly List<SlideMenuComponent.MenuItem> MyMenuItems = new()
     {
-        new() { Text = "Inicio", Link = "/ComponenteCatalog", Icon = HeroiconName.Home },
-        new() { Text = "Rutinas", Link = "/ComponenteCatalog", Icon = HeroiconName.Scale },
-        new() { Text = "Clientes", Link = "/ComponenteCatalog", Icon = HeroiconName.ClipboardDocumentList },
-        new() { Text = "Configuración", Link = "/ComponenteCatalog", Icon = HeroiconName.Cog8Tooth },
+        new SlideMenuComponent.MenuItem { Text = "Inicio", Link = "/ComponenteCatalog", Icon = HeroiconName.Home },
+        new SlideMenuComponent.MenuItem { Text = "Rutinas", Link = "/ComponenteCatalog", Icon = HeroiconName.Scale },
+        new SlideMenuComponent.MenuItem { Text = "Clientes", Link = "/ComponenteCatalog", Icon = HeroiconName.ClipboardDocumentList },
+        new SlideMenuComponent.MenuItem { Text = "Configuración", Link = "/ComponenteCatalog", Icon = HeroiconName.Cog8Tooth }
     };
+
 }

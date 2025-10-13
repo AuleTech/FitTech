@@ -4,9 +4,8 @@ namespace FitTech.WebComponents.Components.AppHeader;
 
 public class AppHeaderStateHandler
 {
+    public List<RenderFragment> HeaderButtons { get; } = new();
     public event Action? OnChange;
-
-    public List<RenderFragment> HeaderButtons { get; } = new ();
 
     public void AddButton(string iconName, Func<Task> onClickAsync, string? tooltip = null)
     {
@@ -18,7 +17,7 @@ public class AppHeaderStateHandler
             builder.AddAttribute(3, nameof(AppHeaderButton.Delegate), onClickAsync);
             builder.CloseElement();
         });
-        
+
         OnChange?.Invoke();
     }
 

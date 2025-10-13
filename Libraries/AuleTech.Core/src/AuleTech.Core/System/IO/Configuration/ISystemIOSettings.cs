@@ -2,5 +2,5 @@
 
 public interface ISystemIOSettings
 {
-    public string StorageLocation { get; }
+    string StorageLocation { get; }
 }

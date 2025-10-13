@@ -1,10 +1,6 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.Result;
-using Blazor.Heroicons.Solid;
+﻿using AuleTech.Core.Patterns.Result;
 using FitTech.ApiClient;
 using FitTech.WebComponents.Models;
-using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
 
 namespace FitTech.WebComponents.Services;
 
@@ -14,11 +10,19 @@ public interface IUserService
     Task<Result<FitTechUser>> LoginAsync(string email, string password, CancellationToken cancellationToken);
     Task<Result> RegisterAsync(string email, string password, CancellationToken cancellationToken);
     Task<Result<string>> ForgotPasswordAsync(string email, CancellationToken cancellationToken);
-    Task<Result> ResetPasswordAsync(string email, string token, string newPassword, CancellationToken cancellationToken);
+
+    Task<Result> ResetPasswordAsync(string email, string token, string newPassword,
+        CancellationToken cancellationToken);
+
     Task<Result> LogoutAsync(CancellationToken cancellationToken);
     Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken);
-    Task<Result> SaveChangesConfiguration(string name, string email, string password, CancellationToken cancellationToken);
-    Task<Result> AddClientAsync(string username, string lastname, DateTimeOffset birthdate, string email, int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTimeOffset eventDate, string subscriptionType,  CancellationToken cancellationToken);
+
+    Task<Result> SaveChangesConfiguration(string name, string email, string password,
+        CancellationToken cancellationToken);
+
+    Task<Result> AddClientAsync(string username, string lastname, DateTimeOffset birthdate, string email,
+        int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTimeOffset eventDate,
+        string subscriptionType, CancellationToken cancellationToken);
+
     Task<Result<ICollection<ClientDataDto>>> GetClientsDataAsync(CancellationToken cancellationToken);
-    
 }

@@ -13,5 +13,4 @@ public interface IProcessRunner
     Task<ProcessResult> RunGitBashAsync(AuleTechProcessStartInfo startInfo
         , CancellationToken cancellationToken = default
         , bool appendOutputPrefix = true);
-    
 }

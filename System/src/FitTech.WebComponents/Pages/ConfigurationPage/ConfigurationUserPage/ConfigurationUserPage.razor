@@ -1,5 +1,4 @@
 @page "/ConfigurationUserPage"
-@using FitTech.ApiClient
 @using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
 @inherits FitTech.WebComponents.Components.CancellableComponent
 @inject IUserService UserService
@@ -18,19 +17,23 @@
                 <DataAnnotationsValidator/>
 
                 <div class="mb-4">
-                    <InputText type="text" @bind-Value="configurationUserModel!.Name" id="firstName" placeholder="Nombre"
+                    <InputText type="text" @bind-Value="configurationUserModel!.Name" id="firstName"
+                               placeholder="Nombre"
                                class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-2 focus:ring-green-700 rounded-lg"/>
                     <ValidationMessage For="@(() => configurationUserModel!.Name)" class="text-red-600 text-sm"/>
                 </div>
 
                 <div class="mb-4">
-                    <InputText type="text" @bind-Value="configurationUserModel!.Email" id="email" placeholder="Correo Electrónico"
+                    <InputText type="text" @bind-Value="configurationUserModel!.Email" id="email"
+                               placeholder="Correo Electrónico"
                                class="w-full px-4 py-2 bg-gray-100 text-sm text-black focus:outline-none focus:ring-2 focus:ring-green-700 rounded-lg"/>
                     <ValidationMessage For="@(() => configurationUserModel!.Email)" class="text-red-600 text-sm"/>
                 </div>
 
                 <div class="flex justify-end gap-4 mt-6">
-                    <button class="w-full bg-gray-400 hover:bg-green-700 text-white font-bold uppercase py-2 transition duration-200 rounded-lg" @onclick="SaveChanges">
+                    <button
+                        class="w-full bg-gray-400 hover:bg-green-700 text-white font-bold uppercase py-2 transition duration-200 rounded-lg"
+                        @onclick="SaveChanges">
                         Guardar Cambios
                     </button>
                     <button type="button" class="text-gray-400 hover:underline">Cancelar</button>
@@ -47,13 +50,11 @@
     </div>
 </div>
 
-    @code {
-    private ConfigurationUserModel configurationUserModel { get; set; } = new();
+@code {
+    private ConfigurationUserModel configurationUserModel { get; } = new();
     private string _message = string.Empty;
-    
 
-   
-    
+
     protected override async Task OnInitializedAsync()
     {
         var response = await UserService.GetTrainerDataAsync(_cts.Token);
@@ -67,20 +68,18 @@
         {
             _message = "Hubo un error en la recuperación de los datos del usuario";
         }
-        
     }
 
-    protected async Task  SaveChanges()
+    protected async Task SaveChanges()
     {
-        
-      var response = await UserService.SaveChangesConfiguration(configurationUserModel.Name, configurationUserModel.Email, configurationUserModel.Password , _cts.Token);
+        var response = await UserService.SaveChangesConfiguration(configurationUserModel.Name, configurationUserModel.Email, configurationUserModel.Password, _cts.Token);
 
         if (!response.Succeeded)
         {
             _message = "Hubo un error en la recuperación de los datos del usuario";
             return;
         }
-        
+
         _message = "Los cambios se han guardado correctamente.";
         StateHasChanged();
     }

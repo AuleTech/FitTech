@@ -2,19 +2,17 @@
 
 public class ResetPasswordTemplate : IEmailTemplate
 {
-    public static ResetPasswordTemplate Create(string callbackUrl) => new ResetPasswordTemplate(callbackUrl);
-
-    public string Subject { get; } = "Reestablece tu contraseña";
-    public string MessageType { get; } = "Reset Password";
-    
     private readonly string _callBackUrl;
-    
+
     private ResetPasswordTemplate(string callbackUrl)
     {
         _callBackUrl = callbackUrl;
     }
-    
-    
+
+    public string Subject { get; } = "Reestablece tu contraseña";
+    public string MessageType { get; } = "Reset Password";
+
+
     public string GetBody()
     {
         return $@"
@@ -34,5 +32,10 @@ public class ResetPasswordTemplate : IEmailTemplate
             </div>
         </body>
         </html>";
+    }
+
+    public static ResetPasswordTemplate Create(string callbackUrl)
+    {
+        return new ResetPasswordTemplate(callbackUrl);
     }
 }

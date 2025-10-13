@@ -1,11 +1,7 @@
 ﻿using System.Security.Claims;
-using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
-using FitTech.Application;
 using FitTech.Application.Dtos;
 using FitTech.Application.Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.User.GetCurrent;
 
@@ -25,7 +21,7 @@ public class GetCurrentUserEndpoint : EndpointWithoutRequest<UserInfoDto>
 
         if (string.IsNullOrWhiteSpace(userId))
         {
-            await SendUnauthorizedAsync(ct);
+            await Send.UnauthorizedAsync(ct);
             return;
         }
 
@@ -35,7 +31,7 @@ public class GetCurrentUserEndpoint : EndpointWithoutRequest<UserInfoDto>
         {
             ThrowError(userInfo.Errors.First());
         }
-        
-        await SendAsync(userInfo.Value!, cancellation: ct);
+
+        await Send.OkAsync(userInfo.Value!, ct);
     }
 }

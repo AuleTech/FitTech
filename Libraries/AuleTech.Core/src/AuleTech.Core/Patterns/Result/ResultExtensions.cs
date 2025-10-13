@@ -10,9 +10,12 @@ public static class ResultExtensions
         {
             return Result.Failure(result.Output);
         }
-        
+
         return Result.Success;
     }
 
-    public static int ToCliExitCode(this Result result) => result.Succeeded ? 0 : 255;
+    public static int ToCliExitCode(this Result result)
+    {
+        return result.Succeeded ? 0 : 255;
+    }
 }

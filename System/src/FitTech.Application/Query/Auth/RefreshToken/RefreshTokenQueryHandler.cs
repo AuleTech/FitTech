@@ -3,34 +3,36 @@ using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Extensions;
 using FitTech.Application.Providers;
-using FitTech.Domain.Entities;
+using FitTech.Domain.Aggregates.AuthAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Query.Auth.RefreshToken;
 
-internal sealed class RefreshTokenQueryHandler : IQueryHandler<RefreshTokenQuery , Result<RefreshTokenResultDto>>
+internal sealed class RefreshTokenQueryHandler : IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>
 {
     private readonly ILogger<RefreshTokenQuery> _logger;
-    private readonly UserManager<FitTechUser> _userManager;
     private readonly ITokenProvider _tokenProvider;
+    private readonly UserManager<FitTechUser> _userManager;
 
-    public RefreshTokenQueryHandler(UserManager<FitTechUser> userManager, ILogger<RefreshTokenQuery> logger, ITokenProvider tokenProvider)
+    public RefreshTokenQueryHandler(UserManager<FitTechUser> userManager, ILogger<RefreshTokenQuery> logger,
+        ITokenProvider tokenProvider)
     {
         _userManager = userManager;
         _logger = logger;
         _tokenProvider = tokenProvider;
     }
 
-    public async Task<Result<RefreshTokenResultDto>> HandleAsync(RefreshTokenQuery query, CancellationToken cancellationToken)
+    public async Task<Result<RefreshTokenResultDto>> HandleAsync(RefreshTokenQuery query,
+        CancellationToken cancellationToken)
     {
-        var validationResult =  query.Validate();
+        var validationResult = query.Validate();
 
         if (!validationResult.Succeeded)
         {
             return validationResult.ToTypedResult<RefreshTokenResultDto>();
         }
-        
+
         var claimsPrincipal = _tokenProvider.GetClaimsPrincipalFromAccessToken(query.ExpiredAccessToken);
 
         var userEmail = claimsPrincipal.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Email);
@@ -44,7 +46,8 @@ internal sealed class RefreshTokenQueryHandler : IQueryHandler<RefreshTokenQuery
 
         if (user is null)
         {
-            _logger.LogWarning("Token was provided and validated but the user doesn't exists. Needs to be investigated!");
+            _logger.LogWarning(
+                "Token was provided and validated but the user doesn't exists. Needs to be investigated!");
             return Result<RefreshTokenResultDto>.Failure();
         }
 

@@ -1,4 +1,4 @@
-﻿using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.CQRS;
 
 namespace FitTech.Application.Commands.Auth.ForgotPassword;
 

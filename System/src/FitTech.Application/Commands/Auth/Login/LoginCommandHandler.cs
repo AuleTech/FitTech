@@ -1,19 +1,22 @@
 ﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Providers;
-using FitTech.Domain.Entities;
+using FitTech.Domain.Aggregates.AuthAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Commands.Auth.Login;
 
-internal sealed class LoginCommandHandler : IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>
+public interface ILoginCommandHandler : IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>>;
+
+internal sealed class LoginCommandHandler : ILoginCommandHandler
 {
-    private readonly UserManager<FitTechUser> _userManager;
     private readonly ILogger<LoginCommandHandler> _logger;
     private readonly ITokenProvider _tokenProvider;
+    private readonly UserManager<FitTechUser> _userManager;
 
-    public LoginCommandHandler(UserManager<FitTechUser> userManager, ILogger<LoginCommandHandler> logger, ITokenProvider tokenProvider)
+    public LoginCommandHandler(UserManager<FitTechUser> userManager, ILogger<LoginCommandHandler> logger,
+        ITokenProvider tokenProvider)
     {
         _userManager = userManager;
         _logger = logger;
@@ -46,7 +49,8 @@ internal sealed class LoginCommandHandler : IAuleTechCommandHandler<LoginCommand
         async Task<string> GetRefreshTokenAsync()
         {
             var existingRefreshToken = await _userManager
-                .GetAuthenticationTokenAsync(user, TokenOptions.DefaultProvider, TokenType.Refresh).WaitAsync(cancellationToken);
+                .GetAuthenticationTokenAsync(user, TokenOptions.DefaultProvider, TokenType.Refresh)
+                .WaitAsync(cancellationToken);
 
             if (string.IsNullOrWhiteSpace(existingRefreshToken))
             {
@@ -59,7 +63,8 @@ internal sealed class LoginCommandHandler : IAuleTechCommandHandler<LoginCommand
 
             if (!isValid)
             {
-                await _userManager.RemoveAuthenticationTokenAsync(user, TokenOptions.DefaultProvider, TokenType.Refresh);
+                await _userManager.RemoveAuthenticationTokenAsync(user, TokenOptions.DefaultProvider,
+                    TokenType.Refresh);
                 return await GenerateAndCreateRefreshTokenAsync();
             }
 

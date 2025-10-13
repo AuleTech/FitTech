@@ -1,5 +1,6 @@
-using FitTech.Domain.Entities;
+using FitTech.Domain.Aggregates.AuthAggregate;
 using FitTech.Domain.Repositories;
+using FitTech.Domain.Seedwork;
 using FitTech.Persistence.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ public static class ServiceCollectionExtensions
                 var passwordHasher = new PasswordHasher<FitTechUser>();
 
                 var email = "admin@fittech.es";
-                
+
                 var fitTechAdminUser = new FitTechUser
                 {
                     Id = Guid.CreateVersion7(),
@@ -43,9 +44,9 @@ public static class ServiceCollectionExtensions
     }
 
     public static IServiceCollection AddInMemorydb(this IServiceCollection serviceCollection, string dbName)
-    { 
+    {
         serviceCollection.AddRepositories();
-        
+
         serviceCollection.AddDbContext<FitTechDbContext>(options =>
         {
             options.UseInMemoryDatabase(dbName);
@@ -56,13 +57,13 @@ public static class ServiceCollectionExtensions
 
     private static IServiceCollection AddRepositories(this IServiceCollection service)
     {
-        service.AddTransient<IEmailRepository, EmailRepository>();
-        service.AddTransient<IClientRepository, ClientRepository>();
-        service.AddTransient<ITrainerRepository, TrainerRepository>();
-        
+        service.AddScoped<IUnitOfWork, UnitOfWork>()
+            .AddTransient<IEmailRepository, EmailRepository>()
+            .AddTransient<ITrainerRepository, TrainerRepository>();
+
         return service;
     }
-    
+
     public static async Task ApplyMigrationsAsync(this IServiceProvider serviceProvider)
     {
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));

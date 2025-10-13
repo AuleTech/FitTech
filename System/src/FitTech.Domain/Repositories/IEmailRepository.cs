@@ -1,8 +1,9 @@
-﻿using FitTech.Domain.Entities;
+﻿using FitTech.Domain.Aggregates.EmailAggregate;
+using FitTech.Domain.Seedwork;
 
 namespace FitTech.Domain.Repositories;
 
-public interface IEmailRepository
+public interface IEmailRepository : IRepository<Email>
 {
-  Task AddAsync(Email email, CancellationToken cancellationToken);
+    Task AddAsync(Email email, CancellationToken cancellationToken);
 }

@@ -21,7 +21,7 @@ internal sealed class MauiStorage : IStorage
     public Task SetItemAsync<T>(string key, T value, CancellationToken cancellationToken)
     {
         _preferences.Set(key, JsonConvert.SerializeObject(value));
-        
+
         return Task.CompletedTask;
     }
 
@@ -33,6 +33,8 @@ internal sealed class MauiStorage : IStorage
         return Task.FromResult(string.IsNullOrWhiteSpace(value) ? null : JsonConvert.DeserializeObject<T>(value));
     }
 
-    public Task<bool> ContainsKeyAsync(string key, CancellationToken cancellationToken) =>
-        Task.FromResult(_preferences.ContainsKey(key));
+    public Task<bool> ContainsKeyAsync(string key, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(_preferences.ContainsKey(key));
+    }
 }

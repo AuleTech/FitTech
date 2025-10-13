@@ -1,5 +1,4 @@
-﻿using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.Result;
+﻿using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client.Configuration;
 using FitTech.ApiClient;
 using Result = AuleTech.Core.Patterns.Result.Result;
@@ -14,7 +13,7 @@ internal sealed class FitTechApiClient : IFitTechApiClient
     {
         var httpClient = httpClientFactory.CreateClient(nameof(Proxy));
         httpClient.BaseAddress = new Uri(configuration.Url);
-        
+
         _proxy = new Proxy(httpClient);
     }
 
@@ -22,7 +21,7 @@ internal sealed class FitTechApiClient : IFitTechApiClient
     {
         _proxy = new Proxy(client);
     }
-    
+
     public async Task<Result<LoginResponse>> LoginAsync(LoginRequest loginRequest, CancellationToken cancellationToken)
     {
         try
@@ -49,7 +48,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         {
             return Result.Failure("Login failed");
         }
-        
     }
 
     public async Task<Result<string>> RefreshTokenAsync(RefreshTokenRequest refreshTokenRequest,
@@ -80,7 +78,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         {
             return Result<string>.Failure("Something went wrong");
         }
-        
     }
 
     public async Task<Result> ResetPasswordAsync(ResetPasswordRequest resetPasswordRequest,
@@ -125,8 +122,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         {
             return Result.Failure($"Something went wrong: {ex.Message}");
         }
-        
-        
     }
 
     public async Task<Result<ClientSettingsDto>> GetClientSettings(CancellationToken cancellationToken)
@@ -141,7 +136,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         {
             return Result<ClientSettingsDto>.Failure("Something went wrong");
         }
-        
     }
 
     public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
@@ -157,8 +151,9 @@ internal sealed class FitTechApiClient : IFitTechApiClient
             return Result<TrainerDataDto>.Failure("Something went wrong");
         }
     }
-    
-    public async Task<Result> UpdateUserConfigurationAsync(UpdateUSerConfigurationRequest updateUserConfigurationRequest,
+
+    public async Task<Result> UpdateUserConfigurationAsync(
+        UpdateUSerConfigurationRequest updateUserConfigurationRequest,
         CancellationToken cancellationToken)
     {
         try
@@ -171,8 +166,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         {
             return Result.Failure("Something went wrong");
         }
-        
-        
     }
 
     public async Task<Result<ICollection<ClientDataDto>>> GetClients(CancellationToken cancellationToken)

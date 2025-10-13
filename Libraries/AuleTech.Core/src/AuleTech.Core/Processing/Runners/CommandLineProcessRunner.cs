@@ -32,7 +32,7 @@ internal class CommandLineProcessRunner : IProcessRunner
         {
             return await RunGitBashAsync(startInfo, cancellationToken);
         }
-        
+
         return await ExecuteAsync(
             new AuleTechProcessStartInfo("/bin/bash"
                 , $"-l -c \"{(startInfo.RunAsAdministrator ? "sudo " : string.Empty)}{startInfo.FilePath} {startInfo.Arguments}\""
@@ -52,9 +52,10 @@ internal class CommandLineProcessRunner : IProcessRunner
         {
             throw new InvalidOperationException("Only supported for Windows");
         }
-        
+
         return await ExecuteAsync(
-            new AuleTechProcessStartInfo($@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\Git\bin\bash.exe"
+            new AuleTechProcessStartInfo(
+                $@"{Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)}\Git\bin\bash.exe"
                 , $"-l -c \"{startInfo.FilePath} {startInfo.Arguments}\""
                 , startInfo.WorkingDirectory
                 , startInfo.Timeout
@@ -72,7 +73,7 @@ internal class CommandLineProcessRunner : IProcessRunner
         {
             return await RunBashAsync(startInfo, cancellationToken);
         }
-        
+
         return await ExecuteAsync(startInfo, cancellationToken, appendOutputPrefix);
     }
 

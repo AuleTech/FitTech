@@ -1,7 +1,6 @@
-﻿using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.Result;
+﻿using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Dtos;
-using FitTech.Domain.Entities;
+using FitTech.Domain.Aggregates.AuthAggregate;
 using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.Application.Services;
@@ -12,7 +11,6 @@ public interface IUserService
 {
     Task<Result<UserInfoDto>> GetUserInfoAsync(Guid userId, CancellationToken cancellation);
 }
-
 
 internal sealed class UserService : IUserService
 {
@@ -31,7 +29,7 @@ internal sealed class UserService : IUserService
         {
             return Result<UserInfoDto>.Failure("UserInfo not found");
         }
-        
+
         return Result<UserInfoDto>.Success(new UserInfoDto(user.UserName!));
     }
 }

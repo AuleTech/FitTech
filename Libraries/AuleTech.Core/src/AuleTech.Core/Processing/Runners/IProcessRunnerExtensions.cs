@@ -1,5 +1,4 @@
-﻿using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.Result;
+﻿using AuleTech.Core.Patterns.Result;
 
 namespace AuleTech.Core.Processing.Runners;
 

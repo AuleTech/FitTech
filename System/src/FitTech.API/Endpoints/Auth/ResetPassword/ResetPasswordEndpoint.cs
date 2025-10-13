@@ -1,7 +1,7 @@
 ﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
-using FitTech.Application.Commands.Auth.RequestPassword;
+using FitTech.Application.Commands.Auth.ResetPassword;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Auth.ResetPassword;
@@ -28,6 +28,6 @@ public class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
             ThrowError(result.Errors.First());
         }
 
-        await SendNoContentAsync(ct);
+        await Send.NoContentAsync(ct);
     }
 }

@@ -39,10 +39,10 @@ public interface ISystemIoDirectory
         , bool forceUnlock = false
     );
 
-    public void Clone(string sourceDir
+    void Clone(string sourceDir
         , string destinationDir);
 
-    public string CloneToTemp(string sourceDir);
+    string CloneToTemp(string sourceDir);
 
     DirectoryInfo GetParent(string path);
 

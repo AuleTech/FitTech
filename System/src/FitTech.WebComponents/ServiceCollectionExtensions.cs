@@ -1,4 +1,3 @@
-using Blazored.LocalStorage;
 using FitTech.API.Client;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Components.AppHeader;
@@ -16,7 +15,7 @@ public static class ServiceCollectionExtensions
     {
         serviceCollection.AddScoped<FitTechDelegationHandler>();
         serviceCollection.AddSingleton<AppHeaderStateHandler>();
-        
+
         return serviceCollection
             .AddFitTechApiClient(configuration, provider => provider.GetRequiredService<FitTechDelegationHandler>())
             .AddTransient<IUserService, UserService>()

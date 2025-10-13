@@ -1,8 +1,6 @@
-﻿using AuleTech.Core.Patterns;
-using AuleTech.Core.Patterns.CQRS;
+﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FastEndpoints;
-using FitTech.Application;
 using FitTech.Application.Query.Auth.RefreshToken;
 using Microsoft.AspNetCore.Authorization;
 
@@ -32,10 +30,10 @@ public class RefreshTokenEndpoint : Endpoint<RefreshTokenRequest, string>
 
         if (result.Value!.NeedLoginAgain)
         {
-            await SendUnauthorizedAsync(ct);
+            await Send.UnauthorizedAsync(ct);
             return;
         }
 
-        await SendAsync(result.Value!.AccessToken!, cancellation: ct);
+        await Send.OkAsync(result.Value!.AccessToken!, ct);
     }
 }

@@ -1,5 +1,5 @@
-@inherits CancellableComponent
 @using Blazor.Heroicons
+@inherits CancellableComponent
 
 <aside class="fixed left-0 top-0 h-full bg-fittech-white 
               shadow-lg transition-all duration-300 ease-in-out 
@@ -26,7 +26,7 @@
                               @(!_isExpanded ? "justify-center" : "")">
                         
                         <span class="flex items-center justify-center h-6 w-6">
-                            <Heroicon Name="@menuItem.Icon!.ToString()" Type="HeroiconType.Outline"
+                            <Heroicon Name="@menuItem.Icon" Type="HeroiconType.Outline"
                                       class="h-6 w-6 text-fittech-dark group-hover:text-fittech-dark transition-colors duration-300"/>
                         </span>
 
@@ -62,8 +62,7 @@
         _isExpanded = !_isExpanded;
     }
 
-    [Parameter, EditorRequired]
-    public List<MenuItem> MenuItems { get; set; } = [];
+    [Parameter][EditorRequired] public List<MenuItem> MenuItems { get; set; } = [];
 
     public class MenuItem
     {
@@ -71,4 +70,5 @@
         public string Link { get; init; } = null!;
         public string Icon { get; init; } = null!;
     }
+
 }

@@ -4,8 +4,8 @@ namespace FitTech.API.Client;
 
 public class FitTechApiClientFactory : IFitTechApiClientFactory
 {
-    private readonly IHttpClientFactory _httpClientFactory;
     private readonly FitTechApiConfiguration _configuration;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     public FitTechApiClientFactory(IHttpClientFactory httpClientFactory, FitTechApiConfiguration configuration)
     {

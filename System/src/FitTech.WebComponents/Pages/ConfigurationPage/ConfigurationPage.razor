@@ -1,15 +1,14 @@
 @page "/configurationpage"
-@using Blazor.Heroicons
-@using FitTech.WebComponents.Components.AppHeader
-@using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject NavigationManager NavigationManager
+@using FitTech.WebComponents.Components.AppHeader
+@using FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels
 @inherits FitTech.WebComponents.Components.CancellableComponent
 @inject IUserService UserService
 
 <div class="min-h-screen bg-white p-8 font-sans text-zinc-900">
     <div class="max-w-7xl mx-auto space-y-10">
-        
+
         <!-- Título -->
         <h1 class="text-4xl font-bold mt-[40px]">Área personal</h1>
 
@@ -21,26 +20,31 @@
                 <div class="flex flex-col items-center space-y-4">
                     <div class="w-28 h-28 rounded-full border-4 border-zinc-800 flex items-center justify-center">
                         <svg class="w-14 h-14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
                     <div class="text-2xl font-semibold">@configurationUserModel.Name</div>
                     <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
                         <a href="/ConfigurationUserPage" class="mt-2 font-medium">Editar alias</a>
-                        </div>
+                    </div>
                 </div>
 
                 <!-- Acciones -->
                 <div class="flex justify-around mt-10 text-center">
                     <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                         <div class="mt-2 font-medium">Datos personales</div>
                     </div>
                     <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m2 6H7a2 2 0 01-2-2V8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2z" />
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M9 12h6m2 6H7a2 2 0 01-2-2V8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2z"/>
                         </svg>
                         <div class="mt-2 font-medium">Documentos y extractos</div>
                     </div>
@@ -78,7 +82,8 @@
                 <!-- Info legal -->
                 <div class="bg-white p-6 rounded-2xl shadow-xl">
                     <h2 class="text-xl font-semibold mb-4">Info legal y privacidad</h2>
-                    <div class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                    <div
+                        class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
                         <span>Documentos y recibos</span>
                         <span class="text-xl">&gt;</span>
                     </div>
@@ -115,14 +120,13 @@
 </div>
 
 @code {
-    
-    private ConfigurationUserModel configurationUserModel { get; set; } = new();
+
+    private ConfigurationUserModel configurationUserModel { get; } = new();
     private string _message = string.Empty;
-    
-    
+
+
     protected override async Task OnInitializedAsync()
     {
-        
         var response = await UserService.GetTrainerDataAsync(_cts.Token);
 
         if (response.Succeeded)
@@ -135,8 +139,9 @@
         {
             _message = "Hubo un error en la recuperación de los datos del usuario";
         }
-        
+
         AppHeaderStateHandler.Clear();
         base.OnInitialized();
     }
+
 }

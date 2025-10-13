@@ -4,7 +4,7 @@ using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Query.Auth.RefreshToken;
 
-public record RefreshTokenQuery(string RefreshToken, string ExpiredAccessToken) : SelfValidatedDto, IQuery 
+public record RefreshTokenQuery(string RefreshToken, string ExpiredAccessToken) : SelfValidatedDto, IQuery
 {
     public override Result Validate()
     {
@@ -17,7 +17,7 @@ public record RefreshTokenQuery(string RefreshToken, string ExpiredAccessToken) 
         {
             return Result.Failure(ExpiredAccessToken.RequiredErrorMessage());
         }
-        
+
         return Result.Success;
     }
 }

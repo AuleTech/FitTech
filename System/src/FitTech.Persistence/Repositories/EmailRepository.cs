@@ -1,4 +1,4 @@
-﻿using FitTech.Domain.Entities;
+﻿using FitTech.Domain.Aggregates.EmailAggregate;
 using FitTech.Domain.Repositories;
 
 namespace FitTech.Persistence.Repositories;

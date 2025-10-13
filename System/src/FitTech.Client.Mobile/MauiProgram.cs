@@ -1,12 +1,8 @@
 ﻿using System.Reflection;
-using System.Text;
 using AuleTech.Core.Maui;
-using AuleTech.Core.System.IO;
 using FitTech.Client.Mobile.Persistence;
 using FitTech.WebComponents;
 using FitTech.WebComponents.Persistence;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace FitTech.Client.Mobile;
@@ -23,7 +19,7 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             });
-        
+
         builder.Services.AddMauiBlazorWebView();
         await builder.AddAppSettingsAsync("FitTech.Client.Mobile", Assembly.GetExecutingAssembly());
         builder.Services

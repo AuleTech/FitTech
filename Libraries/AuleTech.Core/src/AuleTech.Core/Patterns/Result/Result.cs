@@ -29,7 +29,7 @@ public class Result
     {
         if (!Succeeded)
         {
-            logger.LogError("Execution exited with errors: [{Errors}]", ToErrorString());   
+            logger.LogError("Execution exited with errors: [{Errors}]", ToErrorString());
         }
     }
 
@@ -41,7 +41,10 @@ public class Result
         }
     }
 
-    private string ToErrorString() => string.Join(',', Errors.Select(x => $"'{x}'"));
+    private string ToErrorString()
+    {
+        return string.Join(',', Errors.Select(x => $"'{x}'"));
+    }
 }
 
 public class Result<T> : Result
@@ -70,11 +73,7 @@ public class Result<T> : Result
 
     public static new Result<T> Failure(string[] errors)
     {
-        return new Result<T>()
-        {
-            Succeeded = false,
-            Errors = errors
-        };
+        return new Result<T> { Succeeded = false, Errors = errors };
     }
 
     public static new Result<T> Failure()

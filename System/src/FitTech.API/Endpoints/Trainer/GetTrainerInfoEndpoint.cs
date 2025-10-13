@@ -7,7 +7,7 @@ using FitTech.Application.Query.Trainer.GetTrainerData;
 namespace FitTech.API.Endpoints.Trainer;
 
 [HttpGet("/Trainer/TrainerSettings")]
-public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto> 
+public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto>
 {
     private readonly IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>> _queryHandler;
 
@@ -22,7 +22,7 @@ public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto>
 
         if (string.IsNullOrWhiteSpace(userId))
         {
-            await SendUnauthorizedAsync(ct);
+            await Send.UnauthorizedAsync(ct);
             return;
         }
 
@@ -32,7 +32,7 @@ public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto>
         {
             ThrowError(TrainerSettings.Errors.First());
         }
-        
-        await SendAsync(TrainerSettings.Value!, cancellation: ct);
+
+        await Send.OkAsync(TrainerSettings.Value!, ct);
     }
 }

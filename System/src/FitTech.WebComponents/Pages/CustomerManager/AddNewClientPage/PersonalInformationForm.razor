@@ -1,5 +1,4 @@
-@using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
-
+@using FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels
 <EditForm Model="Model" OnInvalidSubmit="Submit" FormName="CostumerForm">
 
     <DataAnnotationsValidator/>
@@ -45,8 +44,8 @@
 
     protected override void OnInitialized()
     {
-        Model.Birthdate= DateTimeOffset.UtcNow;
-        Model ??= new();
+        Model.Birthdate = DateTimeOffset.UtcNow;
+        Model ??= new ClientModel();
     }
 
     public static void Submit()
