@@ -1,6 +1,8 @@
-﻿namespace FitTech.Application.Configuration;
+﻿using Resend;
 
-public class SecretsSettings
+namespace FitTech.Application.Configuration;
+
+public class ResendSettings : ResendClientOptions
 {
     public string EmailFitTech { get; set; } = string.Empty;
 }

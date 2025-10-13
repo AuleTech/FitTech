@@ -4,6 +4,7 @@ using AuleTech.Core.System.Http;
 using AwesomeAssertions;
 using FitTech.API.Endpoints.Auth.Login;
 using FitTech.API.Endpoints.Trainer.Register;
+using FitTech.Application.Services;
 using Newtonsoft.Json;
 
 namespace FitTech.IntegrationTests.e2e.Endpoints.Trainer;

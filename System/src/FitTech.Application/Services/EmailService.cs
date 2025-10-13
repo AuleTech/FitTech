@@ -17,10 +17,10 @@ internal sealed class EmailService : IEmailService
     private readonly IEmailRepository _emailRepository;
     private readonly ILogger<EmailService> _logger;
     private readonly IResend _resend;
-    private readonly SecretsSettings _settings;
+    private readonly ResendSettings _settings;
 
     public EmailService(IResend resend, ILogger<EmailService> logger, IEmailRepository emailRepository,
-        SecretsSettings settings)
+        ResendSettings settings)
     {
         _resend = resend;
         _logger = logger;
@@ -37,7 +37,7 @@ internal sealed class EmailService : IEmailService
             From = _settings.EmailFitTech!, To = { to }, Subject = template.Subject, HtmlBody = template.GetBody()
         };
         var response = await _resend.EmailSendAsync(message, cancellationToken);
-
+        
         await CreateLogEmailResetAsync();
 
         async Task CreateLogEmailResetAsync()

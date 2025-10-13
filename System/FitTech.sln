@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.IntegrationTests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.UnitTests", "src\FitTech.UnitTests\FitTech.UnitTests.csproj", "{BE34C009-A387-4F05-B2AA-C76BE2FA9501}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTech.TestingSupport", "src\FitTech.TestingSupport\FitTech.TestingSupport.csproj", "{BCB505BF-8EE2-44FA-9A06-11B1D4C6C657}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +118,10 @@ Global
 		{BE34C009-A387-4F05-B2AA-C76BE2FA9501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE34C009-A387-4F05-B2AA-C76BE2FA9501}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE34C009-A387-4F05-B2AA-C76BE2FA9501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCB505BF-8EE2-44FA-9A06-11B1D4C6C657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB505BF-8EE2-44FA-9A06-11B1D4C6C657}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB505BF-8EE2-44FA-9A06-11B1D4C6C657}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB505BF-8EE2-44FA-9A06-11B1D4C6C657}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,5 +147,6 @@ Global
 		{40A3E01D-ACD7-4FA0-A44F-7020CA6F0B3F} = {DFC6EC63-512B-4AEC-B852-03F1A7618D3B}
 		{95F76AB5-BEC8-445B-A848-8C7B9CC17068} = {903A2168-15A4-4B98-9122-2E7A18BADFDB}
 		{BE34C009-A387-4F05-B2AA-C76BE2FA9501} = {903A2168-15A4-4B98-9122-2E7A18BADFDB}
+		{BCB505BF-8EE2-44FA-9A06-11B1D4C6C657} = {2BAE76B1-236F-410B-A134-5BB23E8BC484}
 	EndGlobalSection
 EndGlobal
