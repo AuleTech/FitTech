@@ -30,7 +30,7 @@ public class AuthFeatureTests
         response.StatusCode.IsSuccess().Should().BeTrue();
         
         var dbContext = await Host.GetFitTechApiDbContextAsync(CancellationToken.None);
-        var emailLog = await dbContext.EmailLog.FirstAsync(CancellationToken.None);
+        var emailLog = await dbContext.EmailLog.FirstAsync(x => x.TypeMessage == "Reset Password", CancellationToken.None);
         
         var resendClient = FitTechTestingSupport.GetResendTestClient();
 
