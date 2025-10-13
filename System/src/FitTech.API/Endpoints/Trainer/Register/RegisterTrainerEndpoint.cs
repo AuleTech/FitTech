@@ -11,9 +11,9 @@ namespace FitTech.API.Endpoints.Trainer.Register;
 [HttpPost("/trainer/register")]
 public class RegisterTrainerEndpoint : Endpoint<RegisterTrainerRequest>
 {
-    private readonly IAuleTechCommandHandler<RegisterTrainerCommand, Result> _commandHandler;
+    private readonly IRegisterTrainerCommandHandler _commandHandler;
 
-    public RegisterTrainerEndpoint(IAuleTechCommandHandler<RegisterTrainerCommand, Result> commandHandler)
+    public RegisterTrainerEndpoint(IRegisterTrainerCommandHandler commandHandler)
     {
         _commandHandler = commandHandler;
     }

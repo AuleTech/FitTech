@@ -4,21 +4,15 @@ using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Query.Auth.RefreshToken;
 
-public record RefreshTokenQuery(string RefreshToken, string ExpiredAccessToken) : SelfValidatedDto, IQuery
+public record RefreshTokenQuery(string RefreshToken, string ExpiredAccessToken) : IValidator, IQuery
 {
-    public override Result Validate()
+    public Result Validate()
     {
-        if (string.IsNullOrWhiteSpace(RefreshToken))
-        {
-            return Result.Failure(RefreshToken.RequiredErrorMessage());
-        }
+        var errors = new List<string>();
+        RefreshToken.ValidateStringNullOrEmpty(errors, nameof(RefreshToken));
+        ExpiredAccessToken.ValidateStringNullOrEmpty(errors, nameof(ExpiredAccessToken));
 
-        if (string.IsNullOrWhiteSpace(ExpiredAccessToken))
-        {
-            return Result.Failure(ExpiredAccessToken.RequiredErrorMessage());
-        }
-
-        return Result.Success;
+        return errors.Any() ? Result.Failure(errors) : Result.Success;
     }
 }
 

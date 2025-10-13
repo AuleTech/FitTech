@@ -14,6 +14,6 @@ public record RegisterTrainerCommand(string Name, string LastName, string Email,
         LastName.ValidateStringNullOrEmpty(errors, nameof(LastName));
         Password.ValidateStringNullOrEmpty(errors, nameof(Password));
 
-        return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success;
+        return errors.Any() ? Result.Failure(errors) : Result.Success;
     }
 }

@@ -9,7 +9,8 @@ using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Query.Auth.RefreshToken;
 
-internal sealed class RefreshTokenQueryHandler : IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>
+public interface IRefreshTokenQueryHandler : IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>>;
+internal sealed class RefreshTokenQueryHandler : IRefreshTokenQueryHandler
 {
     private readonly ILogger<RefreshTokenQuery> _logger;
     private readonly ITokenProvider _tokenProvider;

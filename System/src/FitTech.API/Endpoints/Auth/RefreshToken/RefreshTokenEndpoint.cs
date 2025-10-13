@@ -10,9 +10,9 @@ namespace FitTech.API.Endpoints.Auth.RefreshToken;
 [AllowAnonymous]
 public class RefreshTokenEndpoint : Endpoint<RefreshTokenRequest, string>
 {
-    private readonly IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>> _queryHandler;
+    private readonly IRefreshTokenQueryHandler _queryHandler;
 
-    public RefreshTokenEndpoint(IQueryHandler<RefreshTokenQuery, Result<RefreshTokenResultDto>> queryHandler)
+    public RefreshTokenEndpoint(IRefreshTokenQueryHandler queryHandler)
     {
         _queryHandler = queryHandler;
     }

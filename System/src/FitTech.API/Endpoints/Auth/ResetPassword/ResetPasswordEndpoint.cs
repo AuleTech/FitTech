@@ -10,9 +10,9 @@ namespace FitTech.API.Endpoints.Auth.ResetPassword;
 [AllowAnonymous]
 public class ResetPasswordEndpoint : Endpoint<ResetPasswordRequest>
 {
-    private readonly IAuleTechCommandHandler<ResetPasswordCommand, Result> _commandHandler;
+    private readonly IResetPasswordCommandHandler _commandHandler;
 
-    public ResetPasswordEndpoint(IAuleTechCommandHandler<ResetPasswordCommand, Result> commandHandler)
+    public ResetPasswordEndpoint(IResetPasswordCommandHandler commandHandler)
     {
         _commandHandler = commandHandler;
     }

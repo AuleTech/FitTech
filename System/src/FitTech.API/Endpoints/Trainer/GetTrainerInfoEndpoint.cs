@@ -9,9 +9,9 @@ namespace FitTech.API.Endpoints.Trainer;
 [HttpGet("/Trainer/TrainerSettings")]
 public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto>
 {
-    private readonly IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>> _queryHandler;
+    private readonly IGetTrainerDataQueryHandler _queryHandler;
 
-    public GetTrainerSettingsEndpoint(IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>> queryHandler)
+    public GetTrainerSettingsEndpoint(IGetTrainerDataQueryHandler queryHandler)
     {
         _queryHandler = queryHandler;
     }

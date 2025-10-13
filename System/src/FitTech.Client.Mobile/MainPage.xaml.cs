@@ -1,4 +1,6 @@
-﻿namespace FitTech.Client.Mobile;
+﻿using Microsoft.Maui.Controls;
+
+namespace FitTech.Client.Mobile;
 
 public partial class MainPage : ContentPage
 {

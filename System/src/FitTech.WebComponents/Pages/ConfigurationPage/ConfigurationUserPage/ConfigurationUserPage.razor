@@ -32,8 +32,7 @@
 
                 <div class="flex justify-end gap-4 mt-6">
                     <button
-                        class="w-full bg-gray-400 hover:bg-green-700 text-white font-bold uppercase py-2 transition duration-200 rounded-lg"
-                        @onclick="SaveChanges">
+                        class="w-full bg-gray-400 hover:bg-green-700 text-white font-bold uppercase py-2 transition duration-200 rounded-lg">
                         Guardar Cambios
                     </button>
                     <button type="button" class="text-gray-400 hover:underline">Cancelar</button>
@@ -68,20 +67,6 @@
         {
             _message = "Hubo un error en la recuperación de los datos del usuario";
         }
-    }
-
-    protected async Task SaveChanges()
-    {
-        var response = await UserService.SaveChangesConfiguration(configurationUserModel.Name, configurationUserModel.Email, configurationUserModel.Password, _cts.Token);
-
-        if (!response.Succeeded)
-        {
-            _message = "Hubo un error en la recuperación de los datos del usuario";
-            return;
-        }
-
-        _message = "Los cambios se han guardado correctamente.";
-        StateHasChanged();
     }
 
 
