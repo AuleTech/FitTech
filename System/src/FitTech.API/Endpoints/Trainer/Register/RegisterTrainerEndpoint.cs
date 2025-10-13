@@ -27,6 +27,6 @@ public class RegisterTrainerEndpoint : Endpoint<RegisterTrainerRequest>
             ThrowError(result.Errors.First());
         }
 
-        await Send.OkAsync(null, ct);
+        await Send.NoContentAsync(ct);
     }
 }

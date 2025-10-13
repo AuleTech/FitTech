@@ -1,5 +1,6 @@
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
+using FitTech.API.Client;
 using FitTech.Persistence;
 using Microsoft.EntityFrameworkCore;
 using TUnit.Core.Interfaces;
@@ -10,9 +11,10 @@ public class TestHost : IAsyncInitializer, IAsyncDisposable
 {
     private DistributedApplication? _app;
 
-    public HttpClient GetClient(string name = "fittech-api")
+    internal FitTechApiClient GetClientApiClient(string name = "fittech-api")
     {
-        return _app!.CreateHttpClient(name);
+        return new FitTechApiClient(_app!.CreateHttpClient(name));
+
     }
     
     public async Task<FitTechDbContext> GetFitTechApiDbContextAsync(CancellationToken cancellationToken)
