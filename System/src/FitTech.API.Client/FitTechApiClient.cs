@@ -36,20 +36,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         }
     }
 
-    public async Task<Result> RegisterAsync(RegisterRequest registerRequest, CancellationToken cancellationToken)
-    {
-        try
-        {
-            await _proxy.RegisterEndpointAsync(registerRequest, cancellationToken);
-
-            return Result.Success;
-        }
-        catch (Exception)
-        {
-            return Result.Failure("Login failed");
-        }
-    }
-
     public async Task<Result<string>> RefreshTokenAsync(RefreshTokenRequest refreshTokenRequest,
         CancellationToken cancellationToken)
     {
@@ -109,35 +95,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         }
     }
 
-    public async Task<Result> AddNewClientAsync(AddClientRequest addNewClientRequest,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            await _proxy.AddClientEndPointAsync(addNewClientRequest, cancellationToken);
-
-            return Result.Success;
-        }
-        catch (Exception ex)
-        {
-            return Result.Failure($"Something went wrong: {ex.Message}");
-        }
-    }
-
-    public async Task<Result<ClientSettingsDto>> GetClientSettings(CancellationToken cancellationToken)
-    {
-        try
-        {
-            var result = await _proxy.GetSettingsEndpointAsync(cancellationToken);
-
-            return Result<ClientSettingsDto>.Success(result);
-        }
-        catch (Exception)
-        {
-            return Result<ClientSettingsDto>.Failure("Something went wrong");
-        }
-    }
-
     public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
     {
         try
@@ -149,36 +106,6 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         catch (Exception)
         {
             return Result<TrainerDataDto>.Failure("Something went wrong");
-        }
-    }
-
-    public async Task<Result> UpdateUserConfigurationAsync(
-        UpdateUSerConfigurationRequest updateUserConfigurationRequest,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            await _proxy.UpdateUserConfigurationEndPointAsync(updateUserConfigurationRequest, cancellationToken);
-
-            return Result.Success;
-        }
-        catch (Exception)
-        {
-            return Result.Failure("Something went wrong");
-        }
-    }
-
-    public async Task<Result<ICollection<ClientDataDto>>> GetClients(CancellationToken cancellationToken)
-    {
-        try
-        {
-            var result = await _proxy.GetClientsEndPointAsync(cancellationToken);
-
-            return Result<ICollection<ClientDataDto>>.Success(result);
-        }
-        catch (Exception)
-        {
-            return Result<ICollection<ClientDataDto>>.Failure("Something went wrong");
         }
     }
 }

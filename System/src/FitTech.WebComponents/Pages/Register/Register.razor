@@ -25,7 +25,7 @@
     <!-- Formulario centrado sobre la división -->
     <div class="relative z-10 flex items-center justify-center min-h-screen px-4">
         <div class="w-full max-w-md bg-white p-8 rounded-lg">
-            <EditForm Model="RegisterModel" OnValidSubmit="RegisterFuncion" FormName="RegisterForm">
+            <EditForm Model="RegisterModel" FormName="RegisterForm">
                 <DataAnnotationsValidator/>
 
                 <div class="mb-4">
@@ -86,24 +86,6 @@
     {
         RegisterModel ??= new RegisterModel();
     }
-
-
-    private async Task RegisterFuncion()
-    {
-        var response = await UserService.RegisterAsync(RegisterModel!.Email, RegisterModel.Password, _cts.Token);
-
-        if (!response!.Succeeded)
-        {
-            _message = "Hubo un error en el registro. Intentalo de  nuevo.";
-            return;
-        }
-
-        _message = "Te has registrado con éxito. ¡Bienvenido a FitTech!";
-        StateHasChanged();
-        await Task.Delay(2000);
-        Navigation.NavigateTo("/login");
-    }
-
 }
 
    

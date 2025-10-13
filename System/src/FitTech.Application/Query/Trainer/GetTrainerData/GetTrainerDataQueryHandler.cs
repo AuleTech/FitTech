@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FitTech.Application.Query.Trainer.GetTrainerData;
 
-internal sealed class GetTrainerDataQueryHandler : IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>
+public interface IGetTrainerDataQueryHandler : IQueryHandler<GetTrainerDataQuery, Result<TrainerDataDto>>;
+
+internal sealed class GetTrainerDataQueryHandler : IGetTrainerDataQueryHandler
 {
     private readonly UserManager<FitTechUser> _userManager;
 

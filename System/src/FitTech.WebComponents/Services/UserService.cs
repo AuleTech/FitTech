@@ -67,19 +67,6 @@ internal sealed class UserService : IUserService
         }
     }
 
-    public async Task<Result> RegisterAsync(string email, string password, CancellationToken cancellationToken)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(email);
-        ArgumentException.ThrowIfNullOrWhiteSpace(password);
-
-        var result = await _fitTechApiClient.RegisterAsync(
-            new RegisterRequest { Email = email, Password = password }, cancellationToken);
-
-        return result.Succeeded
-            ? Result.Success
-            : Result.Failure(result.Errors.Select(x => x).ToArray());
-    }
-
     public async Task<Result<string>> ForgotPasswordAsync(string to, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(to);
@@ -113,28 +100,6 @@ internal sealed class UserService : IUserService
         return Result.Success;
     }
 
-    public async Task<Result> AddClientAsync(string username, string lastname, DateTimeOffset birthdate, string email,
-        int? phoneNumber, int? trainingHours, string trainingMode, string center, DateTimeOffset eventDate,
-        string subscriptionType, CancellationToken cancellationToken)
-    {
-        var result = await _fitTechApiClient.AddNewClientAsync(
-            new AddClientRequest
-            {
-                Name = username,
-                LastName = lastname,
-                Email = email,
-                Birthdate = birthdate,
-                TrainingHours = trainingHours,
-                TrainingModel = trainingMode,
-                EventDate = eventDate,
-                Center = center,
-                SubscriptionType = subscriptionType
-            }, cancellationToken);
-
-        return result;
-    }
-
-
     public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
     {
         var result = await _fitTechApiClient.GetTrainerDataAsync(cancellationToken);
@@ -145,29 +110,5 @@ internal sealed class UserService : IUserService
         }
 
         return result;
-    }
-
-    public async Task<Result> SaveChangesConfiguration(string name, string email, string password,
-        CancellationToken cancellationToken)
-    {
-        var result = await _fitTechApiClient.UpdateUserConfigurationAsync(
-            new UpdateUSerConfigurationRequest { Name = name, Email = email, Password = password }, cancellationToken);
-
-        return Result.Success;
-    }
-
-    public async Task<Result<ICollection<ClientDataDto>>> GetClientsDataAsync(
-        CancellationToken cancellationToken)
-    {
-        var result = await _fitTechApiClient.GetClients(cancellationToken);
-
-        if (!result.Succeeded)
-        {
-            return result.MapFailure<ICollection<ClientDataDto>>();
-        }
-
-        var clients = result.Value!;
-
-        return Result<ICollection<ClientDataDto>>.Success(clients);
     }
 }

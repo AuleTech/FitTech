@@ -10,10 +10,10 @@ namespace FitTech.API.Endpoints.Auth.ForgotPassword;
 [HttpPost("/auth/forgot-password")]
 public class ForgotPasswordEndpoint : Endpoint<ForgotPasswordRequest, string>
 {
-    private readonly IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>
+    private readonly IForgotPasswordCommandHandler
         _auleTechCommandHandler;
 
-    public ForgotPasswordEndpoint(IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>> auleTechCommandHandler)
+    public ForgotPasswordEndpoint(IForgotPasswordCommandHandler auleTechCommandHandler)
     {
         _auleTechCommandHandler = auleTechCommandHandler;
     }

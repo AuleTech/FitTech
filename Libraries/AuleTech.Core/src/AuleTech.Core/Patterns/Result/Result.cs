@@ -14,9 +14,9 @@ public class Result
         return Failure([error]);
     }
 
-    public static Result Failure(string[] errors)
+    public static Result Failure(IEnumerable<string> errors)
     {
-        return new Result { Errors = errors };
+        return new Result { Errors = errors.ToArray() };
     }
 
     public static Result Failure()
@@ -71,9 +71,9 @@ public class Result<T> : Result
         return Failure([error]);
     }
 
-    public static new Result<T> Failure(string[] errors)
+    public static new Result<T> Failure(IEnumerable<string> errors)
     {
-        return new Result<T> { Succeeded = false, Errors = errors };
+        return new Result<T> { Succeeded = false, Errors = errors.ToArray() };
     }
 
     public static new Result<T> Failure()

@@ -11,10 +11,10 @@ namespace FitTech.API.Endpoints.Auth.Login;
 [HttpPost("/auth/login")]
 public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
-    private readonly IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> _commandHandler;
+    private readonly ILoginCommandHandler _commandHandler;
     private readonly IAuleTechQueuePublisher _publisher;
 
-    public LoginEndpoint(IAuleTechCommandHandler<LoginCommand, Result<LoginResultDto>> commandHandler,
+    public LoginEndpoint(ILoginCommandHandler commandHandler,
         IAuleTechQueuePublisher publisher)
     {
         _commandHandler = commandHandler;
