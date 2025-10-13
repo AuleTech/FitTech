@@ -2,4 +2,4 @@
 
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 [assembly: InternalsVisibleTo("FitTech.API.IntegrationTests")]
-[assembly: InternalsVisibleTo("FitTech.API.UnitTests")]
+[assembly: InternalsVisibleTo("FitTech.UnitTests")]
