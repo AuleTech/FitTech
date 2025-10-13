@@ -13,6 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\FitTech.API\FitTech.API.csproj" />
       <ProjectReference Include="..\FitTech.AppHost\FitTech.AppHost.csproj" />
+      <ProjectReference Include="..\FitTech.TestingSupport\FitTech.TestingSupport.csproj" />
     </ItemGroup>
 
 </Project>

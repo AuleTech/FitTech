@@ -25,7 +25,7 @@ public class EmailServiceTests
             resend.EmailRetrieveAsync(Arg.Any<Guid>())
                 .Returns(_ => Task.FromResult(new ResendResponse<EmailReceipt>(new EmailReceipt(), new ResendRateLimit())));
 
-            var service = new EmailService(resend, logger, repo, new SecretsSettings());
+            var service = new EmailService(resend, logger, repo, new ResendSettings());
             
             await service.SendEmailAsync("user@test.com", ResetPasswordTemplate.Create("test"), CancellationToken.None);
        
@@ -46,7 +46,7 @@ public class EmailServiceTests
         resend.EmailRetrieveAsync(Arg.Any<Guid>())
             .Returns(_ => Task.FromResult(new ResendResponse<EmailReceipt>(new EmailReceipt(), new ResendRateLimit())));
 
-        var service = new EmailService(resend, logger, repo, new SecretsSettings());
+        var service = new EmailService(resend, logger, repo, new ResendSettings());
 
         await Assert.ThrowsAsync<ArgumentException>(async () => await service.SendEmailAsync(string.Empty,
             ResetPasswordTemplate.Create("test"),

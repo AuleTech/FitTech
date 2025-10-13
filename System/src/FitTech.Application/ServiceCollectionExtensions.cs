@@ -63,19 +63,18 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddEmailService(this IServiceCollection services, IConfiguration configuration)
     {
         //TODO: Extended to be part of ResendClientOptions -> ResendSettings : ResendClientOptions
-        var secretsSettings = configuration
-            .GetSection("SecretsSettings")
-            .Get<SecretsSettings>();
+        var resendSettings = configuration
+            .GetSection("ResendSettings")
+            .Get<ResendSettings>();
 
-        ArgumentNullException.ThrowIfNull(secretsSettings);
-
-        services.AddSingleton(secretsSettings);
-
-
+        ArgumentNullException.ThrowIfNull(resendSettings);
+        
+        services.AddSingleton(resendSettings!);
         services.AddHttpClient<ResendClient>();
-        services.Configure<ResendClientOptions>(configuration.GetSection("Resend"));
+        services.Configure<ResendClientOptions>(configuration.GetSection("ResendSettings"));
         services.AddTransient<IResend, ResendClient>();
         services.AddTransient<IEmailService, EmailService>();
+        
         return services;
     }
 

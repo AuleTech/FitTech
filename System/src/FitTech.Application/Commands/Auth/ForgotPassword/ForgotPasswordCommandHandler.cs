@@ -47,8 +47,7 @@ internal sealed class ForgotPasswordCommandHandler : IForgotPasswordCommandHandl
 
         var encodedToken = HttpUtility.UrlEncode(resetPasswordToken);
         var callbackUrl = $"{command.CallbackUrl}?email={command.Email}&token={encodedToken}";
-
-        //TODO: do this async.
+        
         await _emailService.SendEmailAsync(
             command.Email,
             ResetPasswordTemplate.Create(callbackUrl),
