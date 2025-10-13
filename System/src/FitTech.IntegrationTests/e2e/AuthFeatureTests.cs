@@ -39,7 +39,7 @@ public class AuthFeatureTests
             var email = await resendClient.EmailRetrieveAsync(emailLog.ExternalId, CancellationToken.None);
 
             return email;
-        }, waitBetweenAttempts: TimeSpan.FromMilliseconds(100),
+        }, waitBetweenAttempts: TimeSpan.FromMilliseconds(400),
             maxAttempts: 5);
         
         email.Content.HtmlBody.Should().Contain("token=");
