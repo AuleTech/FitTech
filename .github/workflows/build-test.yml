@@ -40,24 +40,3 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --logger:"console;verbosity=normal"
         working-directory: ./System
-
-      - name: Publish Test Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: Test Results
-          path: '**/Results/*.xml'
-
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: Test Report
-          path: "**/Results/*.xml"
-          reporter: java-junit
-          fail-on-error: true
-
-      - name: Test Summary
-        uses: test-summary/action@v2
-        if: always()
-        with:
-          paths: "**/Results/*.xml"
