@@ -5,19 +5,18 @@ using FitTech.Application.Services;
 using FitTech.Domain.Aggregates.AuthAggregate;
 using FitTech.UnitTests.Data.Generators;
 using FitTech.UnitTests.Data.Mocks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
 namespace FitTech.UnitTests.Commands;
 
-public class ForgotPasswordCommandTests
+internal class ForgotPasswordCommandTests : BaseCqrsUnitTest<ForgotPasswordCommand, ForgotPasswordCommandHandler>
 {
     private readonly IEmailService _emailService = Substitute.For<IEmailService>();
-    private readonly ILogger<ForgotPasswordCommandHandler> _logger = Substitute.For<ILogger<ForgotPasswordCommandHandler>>();
     private readonly UserManagerMockBuilder _managerMockBuilder = new UserManagerMockBuilder();
-    private ForgotPasswordCommandHandler CreateSut() => new (_logger, _managerMockBuilder.Build(), _emailService);
-    
+    protected override ForgotPasswordCommandHandler CreateSut() => new (NullLogger<ForgotPasswordCommandHandler>.Instance, _managerMockBuilder.Build(), _emailService);
+    protected override ForgotPasswordCommand CreateRequest() => new (Faker.Internet.Email(), Faker.Internet.Url());
+
     [Test]
     [Arguments("","",2)]
     [Arguments("email", "",2)]
@@ -36,12 +35,12 @@ public class ForgotPasswordCommandTests
     [Test]
     public async Task ForgotPasswordCommand_WhenUserEmailDoesNotExists_ReturnsOk()
     {
-        _managerMockBuilder.ConfigureUserMailStore((userStore) =>
+        _managerMockBuilder.ConfigureUserStore((userStore) =>
             userStore.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns((FitTechUser?)null));
 
         var sut = CreateSut();
 
-        var result = await sut.HandleAsync(CreateCommand(), CancellationToken.None);
+        var result = await sut.HandleAsync(CreateRequest(), CancellationToken.None);
         result.Succeeded.Should().BeTrue();
         result.Value.Should().BeNullOrWhiteSpace();
     }
@@ -49,22 +48,15 @@ public class ForgotPasswordCommandTests
     [Test]
     public async Task ForgotPasswordCommand_WhenEmailExists_ReturnsToken()
     {
-        _managerMockBuilder.ConfigureUserMailStore(x =>
+        _managerMockBuilder.ConfigureUserStore(x =>
             x.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(new FitTechUserTestGenerator()));
 
         var sut = CreateSut();
 
-        var result = await sut.HandleAsync(CreateCommand(), CancellationToken.None);
+        var result = await sut.HandleAsync(CreateRequest(), CancellationToken.None);
 
         result.Succeeded.Should().BeTrue();
         result.Value.Should().NotBeNullOrWhiteSpace();
-    }
-
-    private ForgotPasswordCommand CreateCommand()
-    {
-        var faker = new Faker();
-        
-        return new ForgotPasswordCommand(faker.Internet.Email(), faker.Internet.Url());
     }
 }

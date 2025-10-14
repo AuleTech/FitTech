@@ -1,5 +1,6 @@
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
+using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Commands.Auth.ForgotPassword;
 
@@ -12,6 +13,6 @@ public record ForgotPasswordCommand(string Email, string CallbackUrl) : ICommand
         Email.ValidateEmail(errors, nameof(Email));
         CallbackUrl.ValidateUrl(errors, nameof(CallbackUrl));
 
-        return errors.Any() ? Result.Failure(errors) : Result.Success;
+        return errors.ToResult();
     }
 }

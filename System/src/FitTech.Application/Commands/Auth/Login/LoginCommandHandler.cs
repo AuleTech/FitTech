@@ -1,5 +1,6 @@
 ﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
+using FitTech.Application.Extensions;
 using FitTech.Application.Providers;
 using FitTech.Domain.Aggregates.AuthAggregate;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +26,13 @@ internal sealed class LoginCommandHandler : ILoginCommandHandler
 
     public async Task<Result<LoginResultDto>> HandleAsync(LoginCommand command, CancellationToken cancellationToken)
     {
+        var validationResult = command.Validate();
+
+        if (!validationResult.Succeeded)
+        {
+            return validationResult.ToTypedResult<LoginResultDto>();
+        }
+        
         var user = await _userManager.FindByEmailAsync(command.Email).WaitAsync(cancellationToken);
 
         if (user is null)
