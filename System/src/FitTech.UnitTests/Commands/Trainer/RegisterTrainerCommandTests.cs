@@ -38,4 +38,28 @@ internal class RegisterTrainerCommandTests : BaseCqrsUnitTest<RegisterTrainerCom
         
         result.Errors.Length.Should().Be(expectedErrorCount);
     }
+
+    [Test]
+    public async Task RegisterTrainerCommandTests_WhenErrorOnRegister_ReturnError()
+    {
+        _managerMockBuilder.ConfigureUserStore(x =>
+            x.CreateAsync(Arg.Any<FitTechUser>(), Arg.Any<CancellationToken>()).Returns(IdentityResult.Failed()));
+        var sut = CreateSut();
+
+        var result = await sut.HandleAsync(CreateRequest(), CancellationToken.None);
+        result.Succeeded.Should().BeFalse();
+    }
+    
+    [Test]
+    public async Task RegisterTrainerCommandTests_WhenHappyPath_ReturnOk()
+    {
+        _managerMockBuilder.ConfigureUserStore(x =>
+            x.CreateAsync(Arg.Any<FitTechUser>(), Arg.Any<CancellationToken>()).Returns(IdentityResult.Success));
+        var sut = CreateSut();
+
+        var result = await sut.HandleAsync(CreateRequest(), CancellationToken.None);
+        result.Succeeded.Should().BeTrue();
+        _emailService.Received(1);
+        _unitOfWork.Received(1);
+    }
 }
