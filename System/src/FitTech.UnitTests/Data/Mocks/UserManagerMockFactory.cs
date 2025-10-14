@@ -4,7 +4,7 @@ using NSubstitute;
 
 namespace FitTech.UnitTests.Data.Mocks;
 
-public interface ISuperUserStore<TUser> : IUserEmailStore<TUser>, IUserAuthenticationTokenStore<TUser>
+public interface ISuperUserStore<TUser> : IUserEmailStore<TUser>, IUserAuthenticationTokenStore<TUser>, IUserPasswordStore<TUser>
     where TUser : class;
 
 public class UserManagerMockBuilder
@@ -45,5 +45,7 @@ public class UserManagerMockBuilder
             
             userManager.RegisterTokenProvider("Default", _defaultTokenProvider);
         }
-    } 
+    }
+
+    public static implicit operator UserManager<FitTechUser>(UserManagerMockBuilder builder) => builder.Build();
 }

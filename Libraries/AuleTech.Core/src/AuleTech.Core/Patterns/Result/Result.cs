@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.Extensions.Logging;
 
 namespace AuleTech.Core.Patterns.Result;
@@ -45,6 +46,13 @@ public class Result
     {
         return string.Join(',', Errors.Select(x => $"'{x}'"));
     }
+    
+    public override string ToString()
+    {
+        return Succeeded ?
+            "Succeeded" :
+            string.Format(CultureInfo.InvariantCulture, "{0} : {1}", "Failed", string.Join(",", Errors.Select(x => x).ToList()));
+    }
 }
 
 public class Result<T> : Result
@@ -85,4 +93,5 @@ public class Result<T> : Result
     {
         return Success(result);
     }
+    
 }

@@ -24,7 +24,13 @@ internal sealed class ResetPasswordCommandHandler : IResetPasswordCommandHandler
 
     public async Task<Result> HandleAsync(ResetPasswordCommand command, CancellationToken cancellationToken)
     {
-        //TODO: DtoValidation
+        var validationResult = command.Validate();
+
+        if (!validationResult.Succeeded)
+        {
+            return validationResult;
+        }
+        
         var user = await _userManager.FindByEmailAsync(command.Email).WaitAsync(cancellationToken);
 
         if (user is null)
