@@ -12,18 +12,15 @@ namespace FitTech.API.Endpoints.Auth.Login;
 public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
     private readonly ILoginCommandHandler _commandHandler;
-    private readonly IAuleTechQueuePublisher _publisher;
 
     public LoginEndpoint(ILoginCommandHandler commandHandler,
         IAuleTechQueuePublisher publisher)
     {
         _commandHandler = commandHandler;
-        _publisher = publisher;
     }
 
     public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
-        await _publisher.PublishAsync("Comemela Gerardo", ct);
         var result = await _commandHandler.HandleAsync(new LoginCommand(req.Email, req.Password), ct);
 
         if (!result.Succeeded)

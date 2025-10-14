@@ -2,7 +2,7 @@
 using FitTech.Application.Providers;
 using FitTech.UnitTests.Data.Generators;
 
-namespace FitTech.UnitTests.Auth.Providers;
+namespace FitTech.UnitTests.Providers;
 
 public class TokenProviderTests
 {

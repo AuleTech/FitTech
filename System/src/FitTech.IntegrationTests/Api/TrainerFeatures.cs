@@ -1,8 +1,9 @@
 using AwesomeAssertions;
+using FitTech.TestingSupport;
 
-namespace FitTech.IntegrationTests.Api.Endpoints.Trainer;
+namespace FitTech.IntegrationTests.Api;
 
-public class RegisterTrainerEndpointTests
+public class TrainerFeatures
 {
     [ClassDataSource<TestHost>(Shared = SharedType.PerTestSession)]
     public required TestHost Host { get; init; }
