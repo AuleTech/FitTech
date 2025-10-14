@@ -14,4 +14,7 @@ internal static class ResultExtensions
     {
         return new Result<T> { Errors = result.Errors, Succeeded = result.Succeeded };
     }
+
+    public static Result ToResult(this List<string> errors) =>
+        errors.Any() ? Result.Failure(errors) : Result.Success;
 }

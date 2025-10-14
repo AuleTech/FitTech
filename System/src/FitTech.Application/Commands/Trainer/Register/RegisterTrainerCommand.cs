@@ -1,5 +1,6 @@
 ﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
+using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Commands.Trainer.Register;
 
@@ -14,6 +15,6 @@ public record RegisterTrainerCommand(string Name, string LastName, string Email,
         LastName.ValidateStringNullOrEmpty(errors, nameof(LastName));
         Password.ValidateStringNullOrEmpty(errors, nameof(Password));
 
-        return errors.Any() ? Result.Failure(errors) : Result.Success;
+        return errors.ToResult();
     }
 }

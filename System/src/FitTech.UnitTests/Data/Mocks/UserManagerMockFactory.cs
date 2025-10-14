@@ -4,14 +4,17 @@ using NSubstitute;
 
 namespace FitTech.UnitTests.Data.Mocks;
 
+public interface ISuperUserStore<TUser> : IUserEmailStore<TUser>, IUserAuthenticationTokenStore<TUser>
+    where TUser : class;
+
 public class UserManagerMockBuilder
 {
-    private readonly IUserEmailStore<FitTechUser> _emailStore = Substitute.For<IUserEmailStore<FitTechUser>>();
+    private readonly ISuperUserStore<FitTechUser> _emailStore = Substitute.For<ISuperUserStore<FitTechUser>>();
     private readonly IPasswordHasher<FitTechUser> _passwordHasher = Substitute.For<IPasswordHasher<FitTechUser>>();
 
     private readonly IUserTwoFactorTokenProvider<FitTechUser> _defaultTokenProvider =
         Substitute.For<IUserTwoFactorTokenProvider<FitTechUser>>();
-    public UserManagerMockBuilder ConfigureUserMailStore(Action<IUserEmailStore<FitTechUser>> action)
+    public UserManagerMockBuilder ConfigureUserStore(Action<ISuperUserStore<FitTechUser>> action)
     {
         action(_emailStore);
         return this;
