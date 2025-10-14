@@ -2,9 +2,9 @@
 using AwesomeAssertions;
 using FitTech.ApiClient;
 
-namespace FitTech.IntegrationTests;
+namespace FitTech.TestingSupport;
 
-internal static class FitTechApiClientAssertionExtensions
+public static class FitTechApiClientAssertionExtensions
 {
     public static void Assert(this Result<LoginResponse> response)
     {

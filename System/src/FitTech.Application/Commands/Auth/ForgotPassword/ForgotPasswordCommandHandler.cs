@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
+using FitTech.Application.Extensions;
 using FitTech.Application.Services;
 using FitTech.Domain.Aggregates.AuthAggregate;
 using FitTech.Domain.Templates.EmailTemplates.ResetPassword;
@@ -27,10 +28,11 @@ internal sealed class ForgotPasswordCommandHandler : IForgotPasswordCommandHandl
 
     public async Task<Result<string>> HandleAsync(ForgotPasswordCommand command, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(command.Email))
+        var validationResult = command.Validate();
+
+        if (!validationResult.Succeeded)
         {
-            _logger.LogError("Email is required to recover password");
-            return Result<string>.Failure("Email is required to recover password");
+            return validationResult.ToTypedResult<string>();
         }
 
         var user = await _userManager.FindByEmailAsync(command.Email).WaitAsync(cancellationToken);

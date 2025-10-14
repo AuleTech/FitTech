@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Resend;
 
-namespace FitTech.UnitTests.Auth.Providers;
+namespace FitTech.UnitTests.Providers;
 
 public class EmailServiceTests
 {

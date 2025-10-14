@@ -4,6 +4,12 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
       <PackageReference Include="Microsoft.Extensions.Http" />
       <PackageReference Include="Resend" />
+      <PackageReference Include="AwesomeAssertions" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Libraries\AuleTech.Core\src\AuleTech.Core\AuleTech.Core.csproj" />
+      <ProjectReference Include="..\FitTech.API.Client\FitTech.API.Client.csproj" />
     </ItemGroup>
 
 </Project>
