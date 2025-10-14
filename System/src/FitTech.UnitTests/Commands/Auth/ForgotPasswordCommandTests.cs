@@ -1,5 +1,4 @@
 ﻿using AwesomeAssertions;
-using Bogus;
 using FitTech.Application.Commands.Auth.ForgotPassword;
 using FitTech.Application.Services;
 using FitTech.Domain.Aggregates.AuthAggregate;
@@ -8,13 +7,13 @@ using FitTech.UnitTests.Data.Mocks;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
-namespace FitTech.UnitTests.Commands;
+namespace FitTech.UnitTests.Commands.Auth;
 
 internal class ForgotPasswordCommandTests : BaseCqrsUnitTest<ForgotPasswordCommand, ForgotPasswordCommandHandler>
 {
     private readonly IEmailService _emailService = Substitute.For<IEmailService>();
     private readonly UserManagerMockBuilder _managerMockBuilder = new UserManagerMockBuilder();
-    protected override ForgotPasswordCommandHandler CreateSut() => new (NullLogger<ForgotPasswordCommandHandler>.Instance, _managerMockBuilder.Build(), _emailService);
+    protected override ForgotPasswordCommandHandler CreateSut() => new (NullLogger<ForgotPasswordCommandHandler>.Instance, _managerMockBuilder, _emailService);
     protected override ForgotPasswordCommand CreateRequest() => new (Faker.Internet.Email(), Faker.Internet.Url());
 
     [Test]

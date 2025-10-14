@@ -10,7 +10,7 @@ public record RegisterTrainerCommand(string Name, string LastName, string Email,
     {
         var errors = new List<string>(); //TODO: DateTime.IsOlderThan(Age)
 
-        Email.ValidateStringNullOrEmpty(errors, nameof(Email));
+        Email.ValidateEmail(errors, nameof(Email));
         Name.ValidateStringNullOrEmpty(errors, nameof(Name));
         LastName.ValidateStringNullOrEmpty(errors, nameof(LastName));
         Password.ValidateStringNullOrEmpty(errors, nameof(Password));

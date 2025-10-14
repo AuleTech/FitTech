@@ -1,4 +1,6 @@
-﻿using Bogus;
+﻿using AuleTech.Core.Patterns.CQRS;
+using Bogus;
+using ICommand = System.Windows.Input.ICommand;
 
 namespace FitTech.UnitTests;
 

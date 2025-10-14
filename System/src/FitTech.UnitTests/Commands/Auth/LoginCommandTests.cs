@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
-namespace FitTech.UnitTests.Commands;
+namespace FitTech.UnitTests.Commands.Auth;
 
 internal class LoginCommandTests : BaseCqrsUnitTest<LoginCommand, LoginCommandHandler>
 {
@@ -17,7 +17,7 @@ internal class LoginCommandTests : BaseCqrsUnitTest<LoginCommand, LoginCommandHa
 
     protected override LoginCommandHandler CreateSut()
     {
-        return new LoginCommandHandler(_managerMockBuilder.Build(),
+        return new LoginCommandHandler(_managerMockBuilder,
             NullLogger<LoginCommandHandler>.Instance, _tokenProvider);
     }
 
