@@ -7,12 +7,12 @@ public static class ValidatorExtensions
 {
     public static void ValidateStringNullOrEmpty(this string value, List<string> errors, string memberName)
     {
-        value.ValidateGenericMember(() => string.IsNullOrWhiteSpace(value), errors, $"{memberName} is required");
+        value.ValidateGenericMember(string.IsNullOrWhiteSpace, errors, $"{memberName} is required");
     }
 
-    public static void ValidateGenericMember<T>(this T value, Func<bool> condition, List<string> errors, string message)
+    public static void ValidateGenericMember<T>(this T value, Func<T,bool> condition, List<string> errors, string message)
     {
-        if (condition())
+        if (condition(value))
         {
             errors.Add(message);
         }
@@ -26,11 +26,11 @@ public static class ValidatorExtensions
             return;
         }
         
-        value.ValidateGenericMember(() =>
+        value.ValidateGenericMember(x =>
             {
                 try
                 {
-                    _ = new MailAddress(value).Address;
+                    _ = new MailAddress(x).Address;
                     return false;
                 }
                 catch (Exception)
@@ -49,6 +49,11 @@ public static class ValidatorExtensions
         }
         
         
-        value.ValidateGenericMember(() => !(Uri.IsWellFormedUriString(value, UriKind.RelativeOrAbsolute) && value.Contains('.')), errors, $"{memberName} invalid format");
+        value.ValidateGenericMember(x => !(Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute) && value.Contains('.')), errors, $"{memberName} invalid format");
+    }
+
+    public static void ValidateNotEmpty(this Guid value, List<string> errors, string memberName)
+    {
+        value.ValidateGenericMember(x => x == Guid.Empty, errors, $"{memberName} is required");
     }
 }

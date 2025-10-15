@@ -52,7 +52,7 @@ public class AuthFeatureTests
         async Task<string> GetTokenFromEmailAsync()
         {
             var dbContext = await Host.GetFitTechApiDbContextAsync(CancellationToken.None);
-            var emailLog = await dbContext.EmailLog.FirstAsync(x => x.TypeMessage == "Reset Password", CancellationToken.None);
+            var emailLog = await dbContext.EmailLogs.FirstAsync(x => x.TypeMessage == "Reset Password", CancellationToken.None);
         
             var resendClient = FitTechTestingSupport.GetResendTestClient();
 

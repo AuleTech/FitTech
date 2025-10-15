@@ -12,9 +12,10 @@ public class FitTechDbContext : IdentityDbContext<FitTechUser, FitTechRole, Guid
     {
     }
 
-    public DbSet<Email> EmailLog { get; set; }
-    public DbSet<Client> Client { get; set; }
-    public DbSet<Trainer> Trainer { get; set; }
+    public DbSet<Email> EmailLogs { get; set; }
+    public DbSet<Client> Clients { get; set; }
+    public DbSet<Trainer> Trainers { get; set; }
+    public DbSet<Invitation> Invitations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

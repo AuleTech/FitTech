@@ -5,7 +5,7 @@ namespace FitTech.Domain.Aggregates.TrainerAggregate;
 
 public class Trainer : Entity, IAggregateRoot
 {
-    private Trainer()
+    internal Trainer()
     {
     }
 
@@ -13,7 +13,8 @@ public class Trainer : Entity, IAggregateRoot
     public string LastName { get; set; } = null!;
     public string Email { get; set; } = null!;
 
-    public virtual IEnumerable<Client> Clients { get; set; } = [];
+    public virtual List<Client> Clients { get; set; } = [];
+    public virtual List<Invitation> Invitations { get; set; } = [];
 
     public static Result<Trainer> Create(string name, string lastName, string email)
     {
@@ -38,6 +39,19 @@ public class Trainer : Entity, IAggregateRoot
         };
     }
 
+    public Result<Invitation> InviteClient(string clientEmail)
+    {
+        var invitationResult = Invitation.Create(Id, clientEmail);
+
+        if (!invitationResult.Succeeded)
+        {
+            return invitationResult;
+        }
+        
+        Invitations.Add(invitationResult.Value!);
+        
+        return Result<Invitation>.Success(invitationResult.Value!);
+    }
 
     public void UpdateData(string name, string email)
     {

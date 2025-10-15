@@ -49,7 +49,7 @@ internal sealed class RegisterTrainerCommandHandler : IRegisterTrainerCommandHan
         var identityResult = await _userManager.CreateAsync(
                 new FitTechUser
                 {
-                    Id = Guid.CreateVersion7(),
+                    Id = createTrainerResult.Value!.Id,
                     Email = createTrainerResult.Value!.Email,
                     UserName = createTrainerResult.Value!.Email,
                     NormalizedUserName = createTrainerResult.Value!.Email
