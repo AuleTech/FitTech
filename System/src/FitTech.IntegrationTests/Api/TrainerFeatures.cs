@@ -15,7 +15,7 @@ public class TrainerFeatures
     {
         var client = Host.GetClientApiClient();
 
-        var email = $"{TestContext.Current!.Id.ToString()[..4]}test@email.com";
+        var email = FitTechEmailTestExtensions.GetTestEmail(Guid.NewGuid().ToString()[..4]);
         var password = "TestPassword1234!";
         
         var request = new ApiClient.RegisterTrainerRequest()

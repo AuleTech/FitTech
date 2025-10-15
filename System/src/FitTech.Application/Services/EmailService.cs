@@ -1,4 +1,5 @@
-﻿using FitTech.Application.Configuration;
+﻿using AuleTech.Core.Resiliency;
+using FitTech.Application.Configuration;
 using FitTech.Domain.Aggregates.EmailAggregate;
 using FitTech.Domain.Repositories;
 using FitTech.Domain.Templates;
@@ -12,6 +13,7 @@ public interface IEmailService
     Task SendEmailAsync(string to, IEmailTemplate template, CancellationToken cancellationToken);
 }
 
+//TODO: Resend has a very constrained rate limit. We need to reimplement this service.
 internal sealed class EmailService : IEmailService
 {
     private readonly IEmailRepository _emailRepository;
@@ -36,8 +38,11 @@ internal sealed class EmailService : IEmailService
         {
             From = _settings.EmailFitTech!, To = { to }, Subject = template.Subject, HtmlBody = template.GetBody()
         };
-        var response = await _resend.EmailSendAsync(message, cancellationToken);
         
+        var response = await ResilientOperations.Default.RetryIfNeededAsync(
+            async _ => await _resend.EmailSendAsync(message, cancellationToken), 5, TimeSpan.FromMilliseconds(500),
+            cancellationToken: cancellationToken);
+
         await CreateLogEmailResetAsync();
 
         async Task CreateLogEmailResetAsync()
