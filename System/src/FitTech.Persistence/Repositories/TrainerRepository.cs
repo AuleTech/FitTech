@@ -15,18 +15,28 @@ internal class TrainerRepository : ITrainerRepository
 
     public async Task<Trainer> AddAsync(Trainer trainer, CancellationToken cancellationToken)
     {
-        await _context.Trainer.AddAsync(trainer, cancellationToken);
+        await _context.Trainers.AddAsync(trainer, cancellationToken);
 
         return trainer;
     }
 
+    public async Task<Invitation> AddInvitationAsync(Invitation invitation, CancellationToken cancellationToken)
+    {
+        await _context.Invitations.AddAsync(invitation, cancellationToken);
+
+        return invitation;
+    }
+
     public async Task<Trainer?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _context.Trainer.FindAsync([id], cancellationToken);
+        return await _context.Trainers.FindAsync([id], cancellationToken);
     }
 
     public async Task<Trainer?> GetAsync(Guid trainerId, CancellationToken cancellationToken)
     {
-        return await _context.Trainer.SingleAsync(x => x.Id == trainerId, cancellationToken);
+        return await _context.Trainers
+            .Include(x => x.Invitations)
+            .Include(x => x.Clients)
+            .SingleOrDefaultAsync(x => x.Id == trainerId, cancellationToken);
     }
 }
