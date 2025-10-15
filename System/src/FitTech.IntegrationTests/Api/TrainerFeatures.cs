@@ -1,4 +1,6 @@
 using AwesomeAssertions;
+using FitTech.ApiClient;
+using FitTech.Domain.Enums;
 using FitTech.TestingSupport;
 
 namespace FitTech.IntegrationTests.Api;
@@ -35,5 +37,29 @@ public class TrainerFeatures
 
         var loginResult = await client.LoginAsync(loginRequest, CancellationToken.None);
         loginResult.Assert();
+    }
+
+    [Test]
+    public async Task ClientRegistrationFlow_CanInviteAndRetrieveInvitation()
+    {
+        var client = Host.GetClientApiClient();
+        var token = await client.GetTestApiTokenAsync(CancellationToken.None);
+        
+        var authenticatedClient = Host.GetClientApiClient(token);
+        var invitationRequest = new InviteClientRequest()
+        {
+            ClientEmail = FitTechEmailTestExtensions.GetTestEmail(TestContext.Current!.Id.ToString()[..4])
+        };
+        
+        var invitationResult = await authenticatedClient.SendInvitationAsync(invitationRequest, CancellationToken.None);
+
+        invitationResult.Succeeded.Should().BeTrue(invitationResult.ToString());
+
+        var invitationsResult = await authenticatedClient.GetInvitationsAsync(CancellationToken.None);
+        invitationsResult.Succeeded.Should().BeTrue();
+
+        var invitation = invitationsResult.Value!.Invitations!.Single();
+        invitation.ClientEmail.Should().Be(invitationRequest.ClientEmail);
+        invitation.Status.Should().Be(nameof(InvitationStatus.Pending));
     }
 }

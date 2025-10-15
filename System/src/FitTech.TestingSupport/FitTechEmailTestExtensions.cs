@@ -3,8 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace FitTech.TestingSupport;
 
-public static class FitTechEmailExtensions
+public static class FitTechEmailTestExtensions
 {
+    public static string GetTestEmail(string username) => $"delivered+{username}@resend.dev";
     public static string? GetForgotPasswordTokenFromEmailBody(string emailBody)
     {
         string pattern = @"token=([^&""]+)";
