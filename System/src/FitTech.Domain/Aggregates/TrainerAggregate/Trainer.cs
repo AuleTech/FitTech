@@ -52,10 +52,4 @@ public class Trainer : Entity, IAggregateRoot
         
         return Result<Invitation>.Success(invitationResult.Value!);
     }
-
-    public void UpdateData(string name, string email)
-    {
-        Name = name;
-        Email = email;
-    }
 }

@@ -5,10 +5,12 @@ using AuleTech.Core.System.Host;
 using FitTech.Application.Commands.Auth.ForgotPassword;
 using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.ResetPassword;
+using FitTech.Application.Commands.Trainer.InviteClient;
 using FitTech.Application.Commands.Trainer.Register;
 using FitTech.Application.Configuration;
 using FitTech.Application.Providers;
 using FitTech.Application.Query.Auth.RefreshToken;
+using FitTech.Application.Query.Trainer.GetInvitations;
 using FitTech.Application.Query.Trainer.GetTrainerData;
 using FitTech.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -90,13 +92,15 @@ public static class ServiceCollectionExtensions
             .AddTransient<IForgotPasswordCommandHandler, ForgotPasswordCommandHandler>()
             .AddTransient<ILoginCommandHandler, LoginCommandHandler>()
             .AddTransient<IResetPasswordCommandHandler, ResetPasswordCommandHandler>()
-            .AddTransient<IRegisterTrainerCommandHandler, RegisterTrainerCommandHandler>();
+            .AddTransient<IRegisterTrainerCommandHandler, RegisterTrainerCommandHandler>()
+            .AddTransient<IInviteClientCommandHandler, InviteClientCommandHandler>();
     }
 
     internal static IServiceCollection AddQueries(this IServiceCollection services)
     {
         return services
             .AddTransient<IRefreshTokenQueryHandler, RefreshTokenQueryHandler>()
-            .AddTransient<IGetTrainerDataQueryHandler, GetTrainerDataQueryHandler>();
+            .AddTransient<IGetTrainerDataQueryHandler, GetTrainerDataQueryHandler>()
+            .AddTransient<IGetInvitationQueryHandler, GetInvitationsQueryHandler>();
     }
 }

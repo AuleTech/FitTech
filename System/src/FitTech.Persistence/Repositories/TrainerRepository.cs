@@ -27,11 +27,6 @@ internal class TrainerRepository : ITrainerRepository
         return invitation;
     }
 
-    public async Task<Trainer?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        return await _context.Trainers.FindAsync([id], cancellationToken);
-    }
-
     public async Task<Trainer?> GetAsync(Guid trainerId, CancellationToken cancellationToken)
     {
         return await _context.Trainers
