@@ -27,7 +27,7 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         try
         {
             var result = await _proxy.LoginEndpointAsync(loginRequest, cancellationToken);
-
+            
             return Result<LoginResponse>.Success(result);
         }
         catch (Exception)
@@ -119,6 +119,32 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         catch (Exception ex)
         {
             return Result.Failure($"Something went wrong: ${ex.Message}");
+        }
+    }
+
+    public async Task<Result> SendInvitationAsync(InviteClientRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _proxy.InviteClientEndpointAsync(request, cancellationToken);
+            return Result.Success;
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure($"Something went wrong: ${ex.Message}");
+        }
+    }
+    
+    public async Task<Result<GetInvitationsResponse>> GetInvitationsAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _proxy.GetInvitationsEndpointAsync(cancellationToken);
+            return Result<GetInvitationsResponse>.Success(result);
+        }
+        catch (Exception ex)
+        {
+            return Result<GetInvitationsResponse>.Failure($"Something went wrong: ${ex.Message}");
         }
     }
 }

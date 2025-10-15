@@ -66,7 +66,7 @@ public class AuthFeatureTests
         
             email.Content.HtmlBody.Should().Contain("token=");
         
-            var s = FitTechEmailExtensions.GetForgotPasswordTokenFromEmailBody(email.Content.HtmlBody);
+            var s = FitTechEmailTestExtensions.GetForgotPasswordTokenFromEmailBody(email.Content.HtmlBody);
             s.Should().NotBeNullOrWhiteSpace();
             return s;
         }

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
+      <PackageReference Include="Bogus" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
       <PackageReference Include="Microsoft.Extensions.Http" />
       <PackageReference Include="Resend" />

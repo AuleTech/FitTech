@@ -9,10 +9,11 @@ namespace FitTech.API.Endpoints.User.GetCurrent;
 public class GetCurrentUserEndpoint : EndpointWithoutRequest<UserInfoDto>
 {
     private readonly IUserService _userService;
-
-    public GetCurrentUserEndpoint(IUserService userService)
+    private readonly ILogger<GetCurrentUserEndpoint> _logger;
+    public GetCurrentUserEndpoint(IUserService userService, ILogger<GetCurrentUserEndpoint> logger)
     {
         _userService = userService;
+        _logger = logger;
     }
 
     public override async Task HandleAsync(CancellationToken ct)

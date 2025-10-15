@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
 using FitTech.API.Client;
@@ -11,10 +12,16 @@ public class TestHost : IAsyncInitializer, IAsyncDisposable
 {
     private DistributedApplication? _app;
 
-    internal FitTechApiClient GetClientApiClient(string name = "fittech-api")
+    internal IFitTechApiClient GetClientApiClient(string? authenticationToken = null, string name = "fittech-api")
     {
-        return new FitTechApiClient(_app!.CreateHttpClient(name));
+        var client = _app!.CreateHttpClient(name);
 
+        if (!string.IsNullOrWhiteSpace(authenticationToken))
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authenticationToken);
+        }
+        
+        return new FitTechApiClient(client);
     }
     
     public async Task<FitTechDbContext> GetFitTechApiDbContextAsync(CancellationToken cancellationToken)
@@ -30,9 +37,7 @@ public class TestHost : IAsyncInitializer, IAsyncDisposable
     
     public async Task InitializeAsync()
     {
-        var builder = await DistributedApplicationTestingBuilder.CreateAsync<Projects.FitTech_AppHost>(["--environment=Testing"]);
-
-        var resource = builder.Resources.First(x => x.Name == "fittech-api");
+        var builder = await DistributedApplicationTestingBuilder.CreateAsync<Projects.FitTech_AppHost>(["--environment=Testing","DOTNET_LAUNCH_PROFILE=http"]);
         
         _app = await builder.BuildAsync();
         await _app.StartAsync();
