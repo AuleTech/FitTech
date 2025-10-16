@@ -10,28 +10,8 @@
 <h1>En construcción</h1>
 
 @code {
-
-    public class Producto
-    {
-        public string? Nombre { get; set; }
-        public string? Apellidos { get; set; }
-        public string? Cumpleaños { get; set; }
-        public string? Email { get; set; }
-        public string? Subscripcion { get; set; }
-        public string? Modalidad { get; set; }
-        public int? Horas { get; set; }
-    }
-
-    public List<Producto> Productos { get; set; } = new()
-    {
-        new Producto { Nombre = "Yeray", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas = 12 },
-        new Producto { Nombre = "Jairo", Apellidos = "Blanco Aldao", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Aumento masa muscular", Modalidad = "Online", Horas = 12 },
-        new Producto { Nombre = "Alberto", Apellidos = "Chicharro Diaz", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas = 12 },
-        new Producto { Nombre = "Patricia", Apellidos = "Castro Jimenez", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Aumento masa muscular", Modalidad = "Online", Horas = 12 },
-        new Producto { Nombre = "Beatriz", Apellidos = "Aldao Alvedro", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Aumento masa muscular", Modalidad = "Online", Horas = 12 },
-        new Producto { Nombre = "Jaime", Apellidos = "Blanco Barbeito", Cumpleaños = "27-11-1991", Email = "fitTech@hotmail.com", Subscripcion = "Perdida de peso", Modalidad = "Online", Horas = 12 }
-    };
-
+    
+    
     protected override void OnInitialized()
     {
         AppHeaderStateHandler.Clear();
