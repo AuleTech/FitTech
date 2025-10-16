@@ -1,11 +1,10 @@
-@using Blazor.Heroicons
+
+@using FitTech.WebComponents.Components.Buttons
 <div class="relative group">
     <!-- Button -->
     <div
-        class="border border-gray-400 hover:border-white px-2 py-1 rounded flex items-center justify-center transition-transform active:scale-95 active:shadow-inner">
-        <button class="text-gray-400 group-hover:text-white" onclick="@Delegate">
-            <Heroicon Name="@IconName" Type="HeroiconType.Outline" class="h-5 w-5"/>
-        </button>
+        class="hover:border-white px-2 py-1 rounded flex items-center justify-center transition-transform active:scale-95 active:shadow-inner">
+        <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare" ButtonIcon="@IconName"/>
     </div>
 
     @if (!string.IsNullOrWhiteSpace(Tooltip))
