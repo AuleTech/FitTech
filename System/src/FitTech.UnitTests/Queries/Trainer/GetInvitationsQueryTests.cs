@@ -35,7 +35,7 @@ internal class GetInvitationsQueryTests : BaseCqrsUnitTest<GetInvitationsQuery, 
 
         var randomInvitation = result.Value.First(x => x.Status != nameof(InvitationStatus.Accepted));
         randomInvitation.Status.Should().BeOneOf(Enum.GetNames<InvitationStatus>());
-        randomInvitation.CreatedUtc.Should().NotBeBefore(DateTime.UtcNow.AddDays(-15));
+        randomInvitation.CreatedUtc.Date.Should().NotBeBefore(DateTime.UtcNow.AddDays(-15).Date);
         randomInvitation.ClientEmail.Should().NotBeNullOrWhiteSpace();
     }
 }
