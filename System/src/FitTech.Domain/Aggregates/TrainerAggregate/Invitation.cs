@@ -1,4 +1,5 @@
 ﻿using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.CQRS.Validations;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Domain.Enums;
 using FitTech.Domain.Seedwork;
@@ -20,7 +21,7 @@ public class Invitation : Entity
     internal static Result<Invitation> Create(Guid trainerId, string email)
     {
         var errors = new List<string>();
-        trainerId.ValidateGenericMember(x => x == Guid.Empty, errors, "TrainerId cannot be empty");
+        trainerId.ValidateGenericMember(x => x != Guid.Empty, errors, "TrainerId cannot be empty");
         email.ValidateEmail(errors, nameof(email));
 
         if (errors.Any())

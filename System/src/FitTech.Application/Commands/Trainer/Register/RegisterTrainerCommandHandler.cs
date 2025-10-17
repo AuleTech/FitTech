@@ -7,28 +7,31 @@ using FitTech.Domain.Repositories;
 using FitTech.Domain.Seedwork;
 using FitTech.Domain.Templates.EmailTemplates.Register;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace FitTech.Application.Commands.Trainer.Register;
 
 public interface IRegisterTrainerCommandHandler : IAuleTechCommandHandler<RegisterTrainerCommand, Result>;
 
-internal sealed class RegisterTrainerCommandHandler : IRegisterTrainerCommandHandler
+internal sealed class RegisterTrainerCommandHandler : TransactionCommandHandler<RegisterTrainerCommand, Result>,IRegisterTrainerCommandHandler
 {
     private readonly ITrainerRepository _trainerRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IEmailService _emailService;
     private readonly UserManager<FitTechUser> _userManager;
+    private readonly ILogger<RegisterTrainerCommandHandler> _logger;
 
     public RegisterTrainerCommandHandler(ITrainerRepository trainerRepository, UserManager<FitTechUser> userManager,
-        IUnitOfWork unitOfWork, IEmailService emailService)
+        IUnitOfWork unitOfWork, IEmailService emailService, ILogger<RegisterTrainerCommandHandler> logger) : base(unitOfWork, logger)
     {
         _trainerRepository = trainerRepository;
         _userManager = userManager;
         _unitOfWork = unitOfWork;
         _emailService = emailService;
+        _logger = logger;
     }
 
-    public async Task<Result> HandleAsync(RegisterTrainerCommand command, CancellationToken cancellationToken)
+    protected override async Task<Result> HandleTransactionAsync(RegisterTrainerCommand command, CancellationToken cancellationToken)
     {
         var result = command.Validate();
 
@@ -60,8 +63,6 @@ internal sealed class RegisterTrainerCommandHandler : IRegisterTrainerCommandHan
         {
             return identityResult.ToResult();
         }
-
-        await _unitOfWork.SaveAsync(cancellationToken);
 
         await _emailService.SendEmailAsync(createTrainerResult.Value!.Email, RegisterTrainerEmailTemplate.Create(),
             cancellationToken);

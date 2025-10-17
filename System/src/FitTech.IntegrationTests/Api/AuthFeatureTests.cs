@@ -18,10 +18,12 @@ public class AuthFeatureTests
     {
         var client = Host.GetClientApiClient();
 
+        var testCredentials = await client.GetTestCredentialsAsync(CancellationToken.None);
+        
         var forgotPasswordRequest = new ApiClient.ForgotPasswordRequest()
         {
-          Email  = "admin@fittech.es",
-          CallbackUrl = "www.thisisatest.com"
+          Email  = testCredentials.Email,
+          CallbackUrl = "www.url.com"
         };
 
         var response = await client.ForgotPasswordAsync(forgotPasswordRequest, CancellationToken.None); 
@@ -52,7 +54,7 @@ public class AuthFeatureTests
         async Task<string> GetTokenFromEmailAsync()
         {
             var dbContext = await Host.GetFitTechApiDbContextAsync(CancellationToken.None);
-            var emailLog = await dbContext.EmailLogs.FirstAsync(x => x.TypeMessage == "Reset Password", CancellationToken.None);
+            var emailLog = await dbContext.Emails.FirstAsync(x => x.TypeMessage == "Reset Password", CancellationToken.None);
         
             var resendClient = FitTechTestingSupport.GetResendTestClient();
 

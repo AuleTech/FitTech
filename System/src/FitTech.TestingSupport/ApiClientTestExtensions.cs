@@ -2,6 +2,7 @@
 using Bogus;
 using FitTech.API.Client;
 using FitTech.ApiClient;
+using FitTech.TestingSupport.Models;
 
 namespace FitTech.TestingSupport;
 
@@ -9,7 +10,7 @@ public static class ApiClientTestExtensions
 {
     private static readonly Faker Faker = new Faker();
     
-    public static async Task<string> GetTestApiTokenAsync(this IFitTechApiClient apiClient, CancellationToken cancellationToken)
+    public static async Task<TestCredentials> GetTestCredentialsAsync(this IFitTechApiClient apiClient, CancellationToken cancellationToken)
     {
         var request = new RegisterTrainerRequest()
         {
@@ -34,6 +35,6 @@ public static class ApiClientTestExtensions
 
         var loginResult = await apiClient.LoginAsync(loginRequest, CancellationToken.None);
 
-        return loginResult.Value!.AccessToken!;
+        return new TestCredentials(request.Email, request.Password, loginResult.Value!.AccessToken!);
     }
 }

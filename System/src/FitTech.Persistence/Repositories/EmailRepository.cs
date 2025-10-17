@@ -14,7 +14,6 @@ internal sealed class EmailRepository : IEmailRepository
 
     public async Task AddAsync(Email email, CancellationToken cancellationToken)
     {
-        await _context.EmailLogs.AddAsync(email, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.AddAsync(email, cancellationToken);
     }
 }

@@ -43,9 +43,9 @@ public class TrainerFeatures
     public async Task ClientRegistrationFlow_CanInviteAndRetrieveInvitation()
     {
         var client = Host.GetClientApiClient();
-        var token = await client.GetTestApiTokenAsync(CancellationToken.None);
+        var testCredentials = await client.GetTestCredentialsAsync(CancellationToken.None);
         
-        var authenticatedClient = Host.GetClientApiClient(token);
+        var authenticatedClient = Host.GetClientApiClient(testCredentials.Token);
         var invitationRequest = new InviteClientRequest()
         {
             ClientEmail = FitTechEmailTestExtensions.GetTestEmail(TestContext.Current!.Id.ToString()[..4])

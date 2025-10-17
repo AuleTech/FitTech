@@ -2,7 +2,7 @@
 
 namespace FitTech.Domain.Aggregates.EmailAggregate;
 
-public class Email : IAggregateRoot
+public class Email : Entity, IAggregateRoot
 {
     public Email(Guid externalId, string toEmail, string typeMessage, string emailStatus)
     {
@@ -11,8 +11,7 @@ public class Email : IAggregateRoot
         TypeMessage = typeMessage;
         EmailStatus = emailStatus;
     }
-
-    public Guid Id { get; set; }
+    
     public Guid ExternalId { get; set; }
     public string ToEmail { get; set; }
     public string TypeMessage { get; set; }

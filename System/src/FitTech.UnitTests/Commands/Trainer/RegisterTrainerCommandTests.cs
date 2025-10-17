@@ -6,6 +6,7 @@ using FitTech.Domain.Repositories;
 using FitTech.Domain.Seedwork;
 using FitTech.UnitTests.Data.Mocks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 
 namespace FitTech.UnitTests.Commands.Trainer;
@@ -18,7 +19,7 @@ internal class RegisterTrainerCommandTests : BaseCqrsUnitTest<RegisterTrainerCom
     private readonly UserManagerMockBuilder _managerMockBuilder = new ();
 
     protected override RegisterTrainerCommandHandler CreateSut() =>
-        new (_trainerRepository, _managerMockBuilder, _unitOfWork, _emailService);
+        new (_trainerRepository, _managerMockBuilder, _unitOfWork, _emailService, NullLogger<RegisterTrainerCommandHandler>.Instance);
 
     protected override RegisterTrainerCommand CreateRequest() => new (Faker.Person.FirstName,
         Faker.Person.LastName, Faker.Person.Email, Faker.Internet.Password());

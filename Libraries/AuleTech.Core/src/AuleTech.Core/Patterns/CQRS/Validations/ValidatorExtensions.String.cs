@@ -1,23 +1,14 @@
-using System.Net.Mail;
-using System.Text.RegularExpressions;
+﻿using System.Net.Mail;
 
-namespace AuleTech.Core.Patterns.CQRS;
+namespace AuleTech.Core.Patterns.CQRS.Validations;
 
-public static class ValidatorExtensions
+public static partial class ValidatorExtensions
 {
     public static void ValidateStringNullOrEmpty(this string value, List<string> errors, string memberName)
     {
-        value.ValidateGenericMember(string.IsNullOrWhiteSpace, errors, $"{memberName} is required");
+        value.ValidateGenericMember(x => !string.IsNullOrWhiteSpace(x), errors, $"{memberName} is required");
     }
-
-    public static void ValidateGenericMember<T>(this T value, Func<T,bool> condition, List<string> errors, string message)
-    {
-        if (condition(value))
-        {
-            errors.Add(message);
-        }
-    }
-
+    
     public static void ValidateEmail(this string value, List<string> errors, string memberName)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -31,11 +22,11 @@ public static class ValidatorExtensions
                 try
                 {
                     _ = new MailAddress(x).Address;
-                    return false;
+                    return true;
                 }
                 catch (Exception)
                 {
-                    return true;
+                    return false;
                 }
             }, errors, $"{memberName} invalid");
     }
@@ -49,11 +40,6 @@ public static class ValidatorExtensions
         }
         
         
-        value.ValidateGenericMember(x => !(Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute) && value.Contains('.')), errors, $"{memberName} invalid format");
-    }
-
-    public static void ValidateNotEmpty(this Guid value, List<string> errors, string memberName)
-    {
-        value.ValidateGenericMember(x => x == Guid.Empty, errors, $"{memberName} is required");
+        value.ValidateGenericMember(x => Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute) && value.Contains('.'), errors, $"{memberName} invalid format");
     }
 }

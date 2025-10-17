@@ -36,6 +36,6 @@ public class GetInvitationsEndpoint : EndpointWithoutRequest<GetInvitationsRespo
         
         ThrowIfAnyErrors();
 
-        await Send.OkAsync(new GetInvitationsResponse(result.Value!.Select(x => x.FromDto()).ToArray()), ct);
+        await Send.OkAsync(new GetInvitationsResponse(result.Value!), ct);
     }
 }

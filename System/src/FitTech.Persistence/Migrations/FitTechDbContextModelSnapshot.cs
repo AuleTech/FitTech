@@ -114,37 +114,57 @@ namespace FitTech.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("FitTech.Domain.Aggregates.EmailAggregate.Email", b =>
+            modelBuilder.Entity("FitTech.Domain.Aggregates.ClientAggregate.BodyMeasurement", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("EmailStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<decimal>("Biceps")
+                        .HasColumnType("numeric");
 
-                    b.Property<Guid>("ExternalId")
+                    b.Property<decimal>("Chest")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ToEmail")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("TypeMessage")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<decimal>("Height")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Hip")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("MaxThigh")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("XShoulders")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailLogs");
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("BodyMeasurements");
                 });
 
-            modelBuilder.Entity("FitTech.Domain.Aggregates.TrainerAggregate.Client", b =>
+            modelBuilder.Entity("FitTech.Domain.Aggregates.ClientAggregate.Client", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateOnly>("BirthDate")
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnType("timestamp with time zone");
@@ -161,6 +181,16 @@ namespace FitTech.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("SettingsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SettingsId1")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("TrainerId")
                         .HasColumnType("uuid");
 
@@ -169,9 +199,73 @@ namespace FitTech.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SettingsId1");
+
                     b.HasIndex("TrainerId");
 
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("FitTech.Domain.Aggregates.ClientAggregate.ClientSettings", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.PrimitiveCollection<Guid[]>("FavouriteExercises")
+                        .IsRequired()
+                        .HasColumnType("uuid[]");
+
+                    b.Property<int>("Goal")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TrainingDaysPerWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ClientSettings");
+                });
+
+            modelBuilder.Entity("FitTech.Domain.Aggregates.EmailAggregate.Email", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EmailStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ExternalId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ToEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TypeMessage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("FitTech.Domain.Aggregates.TrainerAggregate.Invitation", b =>
@@ -338,13 +432,54 @@ namespace FitTech.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("FitTech.Domain.Aggregates.TrainerAggregate.Client", b =>
+            modelBuilder.Entity("FitTech.Domain.Aggregates.ClientAggregate.BodyMeasurement", b =>
                 {
+                    b.HasOne("FitTech.Domain.Aggregates.ClientAggregate.Client", null)
+                        .WithMany("BodyMeasurements")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FitTech.Domain.Aggregates.ClientAggregate.Client", b =>
+                {
+                    b.HasOne("FitTech.Domain.Aggregates.ClientAggregate.ClientSettings", "Settings")
+                        .WithMany()
+                        .HasForeignKey("SettingsId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FitTech.Domain.Aggregates.TrainerAggregate.Trainer", null)
                         .WithMany("Clients")
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsOne("FitTech.Domain.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("ClientId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("ClientId");
+
+                            b1.ToTable("Clients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClientId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Settings");
                 });
 
             modelBuilder.Entity("FitTech.Domain.Aggregates.TrainerAggregate.Invitation", b =>
@@ -405,6 +540,11 @@ namespace FitTech.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FitTech.Domain.Aggregates.ClientAggregate.Client", b =>
+                {
+                    b.Navigation("BodyMeasurements");
                 });
 
             modelBuilder.Entity("FitTech.Domain.Aggregates.TrainerAggregate.Trainer", b =>

@@ -59,7 +59,8 @@ public static class ServiceCollectionExtensions
     {
         service.AddScoped<IUnitOfWork, UnitOfWork>()
             .AddTransient<IEmailRepository, EmailRepository>()
-            .AddTransient<ITrainerRepository, TrainerRepository>();
+            .AddTransient<ITrainerRepository, TrainerRepository>()
+            .AddTransient<IClientRepository, ClientRepository>();
 
         return service;
     }
