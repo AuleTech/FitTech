@@ -52,18 +52,37 @@ namespace FitTech.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmailLogs",
+                name: "ClientSettings",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClientId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TrainingDaysPerWeek = table.Column<int>(type: "integer", nullable: false),
+                    FavouriteExercises = table.Column<Guid[]>(type: "uuid[]", nullable: false),
+                    Goal = table.Column<int>(type: "integer", nullable: false),
+                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientSettings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Emails",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
                     ToEmail = table.Column<string>(type: "text", nullable: false),
                     TypeMessage = table.Column<string>(type: "text", nullable: false),
-                    EmailStatus = table.Column<string>(type: "text", nullable: false)
+                    EmailStatus = table.Column<string>(type: "text", nullable: false),
+                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmailLogs", x => x.Id);
+                    table.PrimaryKey("PK_Emails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,15 +213,27 @@ namespace FitTech.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TrainerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SettingsId = table.Column<Guid>(type: "uuid", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: false),
+                    BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    Address_City = table.Column<string>(type: "text", nullable: false),
+                    Address_Country = table.Column<string>(type: "text", nullable: false),
+                    SettingsId1 = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Clients_ClientSettings_SettingsId1",
+                        column: x => x.SettingsId1,
+                        principalTable: "ClientSettings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Clients_Trainers_TrainerId",
                         column: x => x.TrainerId,
@@ -230,6 +261,33 @@ namespace FitTech.Persistence.Migrations
                         name: "FK_Invitations_Trainers_TrainerId",
                         column: x => x.TrainerId,
                         principalTable: "Trainers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BodyMeasurements",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ClientId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Hip = table.Column<decimal>(type: "numeric", nullable: false),
+                    MaxThigh = table.Column<decimal>(type: "numeric", nullable: false),
+                    Biceps = table.Column<decimal>(type: "numeric", nullable: false),
+                    XShoulders = table.Column<decimal>(type: "numeric", nullable: false),
+                    Chest = table.Column<decimal>(type: "numeric", nullable: false),
+                    Height = table.Column<decimal>(type: "numeric", nullable: false),
+                    Weight = table.Column<decimal>(type: "numeric", nullable: false),
+                    CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BodyMeasurements", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BodyMeasurements_Clients_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -272,6 +330,16 @@ namespace FitTech.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_BodyMeasurements_ClientId",
+                table: "BodyMeasurements",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clients_SettingsId1",
+                table: "Clients",
+                column: "SettingsId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Clients_TrainerId",
                 table: "Clients",
                 column: "TrainerId");
@@ -301,10 +369,10 @@ namespace FitTech.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "BodyMeasurements");
 
             migrationBuilder.DropTable(
-                name: "EmailLogs");
+                name: "Emails");
 
             migrationBuilder.DropTable(
                 name: "Invitations");
@@ -314,6 +382,12 @@ namespace FitTech.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "ClientSettings");
 
             migrationBuilder.DropTable(
                 name: "Trainers");

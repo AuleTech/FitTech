@@ -1,4 +1,4 @@
-namespace AuleTech.Core.Patterns.CQRS;
+namespace AuleTech.Core.Patterns.CQRS.Validations;
 
 public interface IValidator
 {

@@ -1,4 +1,5 @@
 using AuleTech.Core.Patterns.CQRS;
+using AuleTech.Core.Patterns.CQRS.Validations;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Extensions;
 

@@ -2,6 +2,7 @@
 using FitTech.Application.Commands.Auth.ForgotPassword;
 using FitTech.Application.Services;
 using FitTech.Domain.Aggregates.AuthAggregate;
+using FitTech.Domain.Seedwork;
 using FitTech.UnitTests.Data.Generators;
 using FitTech.UnitTests.Data.Mocks;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -12,8 +13,9 @@ namespace FitTech.UnitTests.Commands.Auth;
 internal class ForgotPasswordCommandTests : BaseCqrsUnitTest<ForgotPasswordCommand, ForgotPasswordCommandHandler>
 {
     private readonly IEmailService _emailService = Substitute.For<IEmailService>();
-    private readonly UserManagerMockBuilder _managerMockBuilder = new UserManagerMockBuilder();
-    protected override ForgotPasswordCommandHandler CreateSut() => new (NullLogger<ForgotPasswordCommandHandler>.Instance, _managerMockBuilder, _emailService);
+    private readonly UserManagerMockBuilder _managerMockBuilder = new ();
+    private readonly IUnitOfWork _unitOfWork = Substitute.For<IUnitOfWork>();
+    protected override ForgotPasswordCommandHandler CreateSut() => new (NullLogger<ForgotPasswordCommandHandler>.Instance, _managerMockBuilder, _emailService, _unitOfWork);
     protected override ForgotPasswordCommand CreateRequest() => new (Faker.Internet.Email(), Faker.Internet.Url());
 
     [Test]

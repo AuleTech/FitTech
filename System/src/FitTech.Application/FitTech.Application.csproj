@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\AuleTech.Core\AuleTech.Core.Messaging\AuleTech.Core.Messaging.csproj"/>
+    <ProjectReference Include="..\FitTech.Abstranctions\FitTech.Abstranctions.csproj" />
     <ProjectReference Include="..\FitTech.Domain\FitTech.Domain.csproj"/>
     <ProjectReference Include="..\FitTech.Persistence\FitTech.Persistence.csproj"/>
   </ItemGroup>

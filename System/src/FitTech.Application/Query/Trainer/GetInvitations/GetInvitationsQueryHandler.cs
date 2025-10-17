@@ -1,7 +1,8 @@
 ﻿using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Application.Dtos;
+using FitTech.Abstranctions.Dtos;
 using FitTech.Application.Extensions;
+using FitTech.Application.Mappers;
 using FitTech.Domain.Enums;
 using FitTech.Domain.Repositories;
 

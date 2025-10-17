@@ -4,6 +4,7 @@ using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Extensions;
 using FitTech.Application.Services;
 using FitTech.Domain.Aggregates.AuthAggregate;
+using FitTech.Domain.Seedwork;
 using FitTech.Domain.Templates.EmailTemplates.ResetPassword;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -12,21 +13,19 @@ namespace FitTech.Application.Commands.Auth.ForgotPassword;
 
 public interface IForgotPasswordCommandHandler : IAuleTechCommandHandler<ForgotPasswordCommand, Result<string>>;
 
-internal sealed class ForgotPasswordCommandHandler : IForgotPasswordCommandHandler 
+internal sealed class ForgotPasswordCommandHandler : TransactionCommandHandler<ForgotPasswordCommand, Result<string>>,IForgotPasswordCommandHandler
 {
     private readonly IEmailService _emailService;
-    private readonly ILogger<ForgotPasswordCommandHandler> _logger;
     private readonly UserManager<FitTechUser> _userManager;
 
     public ForgotPasswordCommandHandler(ILogger<ForgotPasswordCommandHandler> logger,
-        UserManager<FitTechUser> userManager, IEmailService emailService)
+        UserManager<FitTechUser> userManager, IEmailService emailService, IUnitOfWork unitOfWork) : base(unitOfWork, logger)
     {
-        _logger = logger;
         _userManager = userManager;
         _emailService = emailService;
     }
 
-    public async Task<Result<string>> HandleAsync(ForgotPasswordCommand command, CancellationToken cancellationToken)
+    protected override async Task<Result<string>> HandleTransactionAsync(ForgotPasswordCommand command, CancellationToken cancellationToken)
     {
         var validationResult = command.Validate();
 
@@ -39,7 +38,7 @@ internal sealed class ForgotPasswordCommandHandler : IForgotPasswordCommandHandl
 
         if (user is null)
         {
-            _logger.LogError("User not found, returning Ok to avoid getting mail register information");
+            Logger.LogError("User not found, returning Ok to avoid getting mail register information");
             return Result<string>.Success(string.Empty);
         }
 
@@ -55,7 +54,7 @@ internal sealed class ForgotPasswordCommandHandler : IForgotPasswordCommandHandl
             ResetPasswordTemplate.Create(callbackUrl),
             cancellationToken
         );
-
+        
         return Result<string>.Success(HttpUtility.UrlEncode(resetPasswordToken));
     }
 }

@@ -3,6 +3,7 @@ using AuleTech.Core.System.Host;
 using FitTech.Application.Commands.Auth.ForgotPassword;
 using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.ResetPassword;
+using FitTech.Application.Commands.Client.Register;
 using FitTech.Application.Commands.Trainer.InviteClient;
 using FitTech.Application.Commands.Trainer.Register;
 using FitTech.Application.Configuration;
@@ -91,7 +92,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<ILoginCommandHandler, LoginCommandHandler>()
             .AddTransient<IResetPasswordCommandHandler, ResetPasswordCommandHandler>()
             .AddTransient<IRegisterTrainerCommandHandler, RegisterTrainerCommandHandler>()
-            .AddTransient<IInviteClientCommandHandler, InviteClientCommandHandler>();
+            .AddTransient<IInviteClientCommandHandler, InviteClientCommandHandler>()
+            .AddTransient<IRegisterClientCommandHandler, RegisterClientCommandHandler>();
     }
 
     internal static IServiceCollection AddQueries(this IServiceCollection services)
@@ -100,18 +102,6 @@ public static class ServiceCollectionExtensions
             .AddTransient<IRefreshTokenQueryHandler, RefreshTokenQueryHandler>()
             .AddTransient<IGetTrainerDataQueryHandler, GetTrainerDataQueryHandler>()
             .AddTransient<IGetInvitationQueryHandler, GetInvitationsQueryHandler>();
-    }
-    
-    public static string FlattenException(Exception? exception)
-    {
-        var stringBuilder = new StringBuilder();
-        while (exception != null)
-        {
-            stringBuilder.AppendLine(exception.Message);
-            stringBuilder.AppendLine(exception.StackTrace);
-            exception = exception.InnerException!;
-        }
-        return stringBuilder.ToString();
     }
 }
 

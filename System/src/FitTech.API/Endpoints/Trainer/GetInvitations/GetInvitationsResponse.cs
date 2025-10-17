@@ -1,12 +1,5 @@
-﻿using FitTech.Application.Dtos;
+﻿using FitTech.Abstranctions.Dtos;
 
 namespace FitTech.API.Endpoints.Trainer.GetInvitations;
 
-public record GetInvitationsResponse(InvitationInfo[] Invitations);
-
-public record InvitationInfo(string ClientEmail, string Status, DateTime CreatedUtc);
-
-public static class GetInvitationEndpointExtensions
-{
-    public static InvitationInfo FromDto(this InvitationDto dto) => new(dto.ClientEmail, dto.Status, dto.CreatedUtc);
-}
+public record GetInvitationsResponse(InvitationDto[] Invitations);

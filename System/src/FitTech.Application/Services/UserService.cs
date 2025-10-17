@@ -1,5 +1,5 @@
 ﻿using AuleTech.Core.Patterns.Result;
-using FitTech.Application.Dtos;
+using FitTech.Abstranctions.Dtos;
 using FitTech.Domain.Aggregates.AuthAggregate;
 using Microsoft.AspNetCore.Identity;
 

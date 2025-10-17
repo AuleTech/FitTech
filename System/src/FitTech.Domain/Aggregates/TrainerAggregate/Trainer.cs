@@ -1,4 +1,5 @@
 ﻿using AuleTech.Core.Patterns.Result;
+using FitTech.Domain.Aggregates.ClientAggregate;
 using FitTech.Domain.Seedwork;
 
 namespace FitTech.Domain.Aggregates.TrainerAggregate;

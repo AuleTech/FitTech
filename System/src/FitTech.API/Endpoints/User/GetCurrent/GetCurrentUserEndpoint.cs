@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using FastEndpoints;
-using FitTech.Application.Dtos;
+using FitTech.Abstranctions.Dtos;
 using FitTech.Application.Services;
 
 namespace FitTech.API.Endpoints.User.GetCurrent;
