@@ -5,7 +5,7 @@ namespace FitTech.TestingSupport;
 
 public static class FitTechEmailTestExtensions
 {
-    public static string GetTestEmail(string username) => $"delivered+{username}@resend.dev";
+    public static string GetTestEmail(string? username = null) => $"delivered+{username ?? Guid.CreateVersion7().ToString()[..4]}@resend.dev";
     public static string? GetForgotPasswordTokenFromEmailBody(string emailBody)
     {
         string pattern = @"token=([^&""]+)";

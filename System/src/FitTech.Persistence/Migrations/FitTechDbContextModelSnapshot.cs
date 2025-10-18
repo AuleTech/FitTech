@@ -245,18 +245,17 @@ namespace FitTech.Persistence.Migrations
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("EmailStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<Guid>("ExternalId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ToEmail")
+                    b.Property<int>("MessageType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Receiver")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("TypeMessage")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
 

@@ -31,13 +31,8 @@ internal class GetInvitationsQueryHandler : IGetInvitationQueryHandler
 
         var trainer = await _trainerRepository.GetAsync(query.TrainerId, cancellationToken);
 
-        if (trainer is null)
-        {
-            return Result<InvitationDto[]>.Failure("Trainer not found");
-        }
-
         return trainer!.Invitations.Where(x =>
-                !(x.Status == InvitationStatus.Accepted && x.CreatedUtc < DateTime.UtcNow.AddDays(-15)))
+                !(x.Status == InvitationStatus.Completed && x.CreatedUtc < DateTime.UtcNow.AddDays(-15)))
             .Select(x => x.ToDto())
             .ToArray();
     }

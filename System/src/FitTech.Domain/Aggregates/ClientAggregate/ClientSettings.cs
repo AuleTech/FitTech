@@ -18,7 +18,7 @@ public class ClientSettings : Entity
         var errors = new List<string>();
         
         clientId.ValidateNotEmpty(errors, nameof(clientId));
-        trainingDaysPerWeek.ValidateAge(errors, nameof(trainingDaysPerWeek));
+        trainingDaysPerWeek.ValidateBetween(0,7, errors, nameof(trainingDaysPerWeek));
 
         if (errors.Any())
         {

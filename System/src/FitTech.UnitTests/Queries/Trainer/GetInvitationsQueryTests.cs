@@ -33,7 +33,7 @@ internal class GetInvitationsQueryTests : BaseCqrsUnitTest<GetInvitationsQuery, 
         result.Succeeded.Should().BeTrue();
         result.Value.Should().NotBeEmpty();
 
-        var randomInvitation = result.Value.First(x => x.Status != nameof(InvitationStatus.Accepted));
+        var randomInvitation = result.Value.First(x => x.Status != nameof(InvitationStatus.Completed));
         randomInvitation.Status.Should().BeOneOf(Enum.GetNames<InvitationStatus>());
         randomInvitation.CreatedUtc.Date.Should().NotBeBefore(DateTime.UtcNow.AddDays(-16).Date);
         randomInvitation.ClientEmail.Should().NotBeNullOrWhiteSpace();

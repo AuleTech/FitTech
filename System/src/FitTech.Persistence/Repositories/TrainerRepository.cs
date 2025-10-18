@@ -13,6 +13,13 @@ internal class TrainerRepository : ITrainerRepository
         _context = context;
     }
 
+    public async Task<Trainer> GetByInvitationId(Guid invitationId, CancellationToken cancellationToken)
+    {
+        var invitation = await _context.Invitations.SingleAsync(x => x.Id == invitationId, cancellationToken);
+
+        return await GetAsync(invitation.TrainerId, cancellationToken);
+    }
+
     public async Task<Trainer> AddAsync(Trainer trainer, CancellationToken cancellationToken)
     {
         await _context.Trainers.AddAsync(trainer, cancellationToken);
@@ -27,11 +34,11 @@ internal class TrainerRepository : ITrainerRepository
         return invitation;
     }
 
-    public async Task<Trainer?> GetAsync(Guid trainerId, CancellationToken cancellationToken)
+    public async Task<Trainer> GetAsync(Guid trainerId, CancellationToken cancellationToken)
     {
         return await _context.Trainers
             .Include(x => x.Invitations)
             .Include(x => x.Clients)
-            .SingleOrDefaultAsync(x => x.Id == trainerId, cancellationToken);
+            .SingleAsync(x => x.Id == trainerId, cancellationToken);
     }
 }

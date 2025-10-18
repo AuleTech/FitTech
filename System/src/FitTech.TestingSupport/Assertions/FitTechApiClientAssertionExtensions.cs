@@ -8,7 +8,7 @@ public static class FitTechApiClientAssertionExtensions
 {
     public static void Assert(this Result<LoginResponse> response)
     {
-        response.Succeeded.Should().BeTrue();
+        response.Succeeded.Should().BeTrue(response.ToString());
         response.Value.Should().NotBeNull();
         response.Value.AccessToken.Should().NotBeNullOrWhiteSpace();
         response.Value.RefreshToken.Should().NotBeNullOrWhiteSpace();

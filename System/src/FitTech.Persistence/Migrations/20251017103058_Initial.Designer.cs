@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FitTech.Persistence.Migrations
 {
     [DbContext(typeof(FitTechDbContext))]
-    [Migration("20251017090645_Initial")]
+    [Migration("20251017103058_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -248,18 +248,17 @@ namespace FitTech.Persistence.Migrations
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("EmailStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<Guid>("ExternalId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ToEmail")
+                    b.Property<int>("MessageType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Receiver")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("TypeMessage")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
 
