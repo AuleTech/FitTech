@@ -49,7 +49,7 @@ public static class ApiClientTestExtensions
                 PhoneNumber = Faker.Person.Phone,
                 BirthDate = Faker.Date.Between(DateTime.UtcNow.AddYears(-50), DateTime.UtcNow.AddYears(-17))
             },
-        Credentials = new CredentialsDto { Email = email, Password = $"{Faker.Internet.Password()}1!" },
+        Credentials = new CredentialsDto { Email = email, Password = $"{Faker.Internet.Password()}A1!" },
         Address = new AddressDto { City = Faker.Address.City(), Country = Faker.Address.Country() },
         TrainingSettings =
             new TrainingSettingsDto
