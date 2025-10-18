@@ -1,10 +1,8 @@
-﻿using System.Net.Http.Headers;
-using AuleTech.Core.Resiliency;
+﻿using AuleTech.Core.Resiliency;
 using AwesomeAssertions;
-using FitTech.API.Endpoints.Auth.Login;
+using FitTech.Domain.Enums;
 using FitTech.TestingSupport;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace FitTech.IntegrationTests.Api;
 
@@ -54,7 +52,7 @@ public class AuthFeatureTests
         async Task<string> GetTokenFromEmailAsync()
         {
             var dbContext = await Host.GetFitTechApiDbContextAsync(CancellationToken.None);
-            var emailLog = await dbContext.Emails.FirstAsync(x => x.TypeMessage == "Reset Password", CancellationToken.None);
+            var emailLog = await dbContext.Emails.FirstAsync(x => x.MessageType == MessageType.ResetPassword, CancellationToken.None);
         
             var resendClient = FitTechTestingSupport.GetResendTestClient();
 

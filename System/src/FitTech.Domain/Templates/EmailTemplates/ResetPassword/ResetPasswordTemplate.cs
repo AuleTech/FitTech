@@ -1,4 +1,6 @@
-﻿namespace FitTech.Domain.Templates.EmailTemplates.ResetPassword;
+﻿using FitTech.Domain.Enums;
+
+namespace FitTech.Domain.Templates.EmailTemplates.ResetPassword;
 
 public class ResetPasswordTemplate : IEmailTemplate
 {
@@ -10,7 +12,7 @@ public class ResetPasswordTemplate : IEmailTemplate
     }
 
     public string Subject { get; } = "Reestablece tu contraseña";
-    public string MessageType { get; } = "Reset Password";
+    public MessageType MessageType { get; } = MessageType.ResetPassword;
 
 
     public string GetBody()

@@ -74,9 +74,9 @@ namespace FitTech.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ToEmail = table.Column<string>(type: "text", nullable: false),
-                    TypeMessage = table.Column<string>(type: "text", nullable: false),
-                    EmailStatus = table.Column<string>(type: "text", nullable: false),
+                    Receiver = table.Column<string>(type: "text", nullable: false),
+                    MessageType = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
                     CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },

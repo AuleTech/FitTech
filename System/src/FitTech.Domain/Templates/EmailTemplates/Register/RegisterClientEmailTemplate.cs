@@ -1,4 +1,6 @@
-﻿namespace FitTech.Domain.Templates.EmailTemplates.Register;
+﻿using FitTech.Domain.Enums;
+
+namespace FitTech.Domain.Templates.EmailTemplates.Register;
 
 public class RegisterClientEmailTemplate : IEmailTemplate
 {
@@ -12,7 +14,7 @@ public class RegisterClientEmailTemplate : IEmailTemplate
     }
 
     public string Subject { get; } = "¡Bienvenido a FitTech!";
-    public string MessageType { get; } = "Register Client";
+    public MessageType MessageType { get; } = MessageType.ClientRegister;
 
 
     public string GetBody()

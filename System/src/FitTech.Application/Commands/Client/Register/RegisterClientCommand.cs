@@ -6,7 +6,7 @@ using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Commands.Client.Register;
 
-public record RegisterClientCommand(Guid TrainerId, PersonInfoDto Information, CredentialsDto Credentials, AddressDto Address, TrainingSettingsDto TrainingSettings, BodyMeasurementDto BodyMeasurement) : ICommand , IValidator
+public record RegisterClientCommand(Guid InvitationId ,PersonInfoDto Information, CredentialsDto Credentials, AddressDto Address, TrainingSettingsDto TrainingSettings, BodyMeasurementDto BodyMeasurement) : ICommand , IValidator
 {
     public Result Validate()
     {

@@ -9,10 +9,10 @@ namespace FitTech.Domain.Aggregates.TrainerAggregate;
 
 public class Invitation : Entity
 {
-    public Guid TrainerId { get; set; }
-    public string Email { get; set; } = null!;
-    public InvitationStatus Status { get; set; }
-    public int Code { get; set; }
+    public Guid TrainerId { get; private set; }
+    public string Email { get; private set; } = null!;
+    public InvitationStatus Status { get; private set; }
+    public int Code { get; private set; }
     
     internal Invitation()
     {
@@ -36,5 +36,29 @@ public class Invitation : Entity
             Status = InvitationStatus.Pending,
             Code = InvitationCodeGenerator.Instance.Generate()
         };
+    }
+
+    internal Result SetInProgress()
+    {
+        if (Status is InvitationStatus.Completed or InvitationStatus.Expired)
+        {
+            return Result.Failure("The invitation is on a terminal status");
+        }
+
+        Status = InvitationStatus.InProgress;
+        
+        return Result.Success;
+    }
+
+    internal Result SetCompleted()
+    {
+        if (Status is InvitationStatus.Pending or InvitationStatus.Expired)
+        {
+            return Result.Failure("The invitation should be InProgress to complete it");
+        }
+
+        Status = InvitationStatus.Completed;
+        
+        return Result.Success;
     }
 }

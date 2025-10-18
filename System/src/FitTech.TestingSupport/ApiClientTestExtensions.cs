@@ -37,4 +37,34 @@ public static class ApiClientTestExtensions
 
         return new TestCredentials(request.Email, request.Password, loginResult.Value!.AccessToken!);
     }
+
+    public static RegisterClientRequest GenerateRegisterClientTestRequest(string email, Guid invitationId) => new ()
+    {
+        InvitationId = invitationId,
+        Information =
+            new PersonInfoDto
+            {
+                Name = Faker.Person.FirstName,
+                LastName = Faker.Person.LastName,
+                PhoneNumber = Faker.Person.Phone,
+                BirthDate = Faker.Date.Between(DateTime.UtcNow.AddYears(-50), DateTime.UtcNow.AddYears(-17))
+            },
+        Credentials = new CredentialsDto { Email = email, Password = $"{Faker.Internet.Password()}1!" },
+        Address = new AddressDto { City = Faker.Address.City(), Country = Faker.Address.Country() },
+        TrainingSettings =
+            new TrainingSettingsDto
+            {
+                TotalDaysPerWeek = 4, Goal = TrainingGoalEnumDto.Recovery, FavouriteExercises = []
+            },
+        BodyMeasurement = new BodyMeasurementDto
+        {
+            Hip = Faker.Random.Number(10, 50),
+            MaxThigh = Faker.Random.Number(10, 50),
+            Biceps = Faker.Random.Number(10, 50),
+            XShoulders = Faker.Random.Number(10, 50),
+            Chest = Faker.Random.Number(10, 50),
+            Height = Faker.Random.Number(10, 50),
+            Weight = Faker.Random.Number(10, 50)
+        }
+    };
 }

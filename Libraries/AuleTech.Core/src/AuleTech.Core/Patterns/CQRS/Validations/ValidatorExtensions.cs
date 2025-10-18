@@ -24,6 +24,6 @@ public static partial class ValidatorExtensions
 
     public static void ValidateIsAdult(this DateOnly birth, List<string> errors)
     {
-        birth.ValidateGenericMember(x => x >= DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-16)), errors, $"You need to be older than 16");
+        birth.ValidateGenericMember(x => x <= DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-16)), errors, $"You need to be older than 16");
     }
 }
