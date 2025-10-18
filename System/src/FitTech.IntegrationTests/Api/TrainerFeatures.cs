@@ -2,6 +2,7 @@ using AwesomeAssertions;
 using FitTech.ApiClient;
 using FitTech.Domain.Enums;
 using FitTech.TestingSupport;
+using FitTech.TestingSupport.Assertions;
 
 namespace FitTech.IntegrationTests.Api;
 

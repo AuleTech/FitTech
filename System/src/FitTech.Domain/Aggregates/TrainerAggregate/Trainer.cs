@@ -1,6 +1,7 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using FitTech.Domain.Aggregates.ClientAggregate;
 using FitTech.Domain.Enums;
+using FitTech.Domain.Exceptions;
 using FitTech.Domain.Seedwork;
 
 namespace FitTech.Domain.Aggregates.TrainerAggregate;
@@ -97,7 +98,17 @@ public class Trainer : Entity, IAggregateRoot
 
         if (invitation.Email != email)
         {
-            return Result.Failure("Email doesn't match. You need to use the same email where you got the invitation");
+            return Result.Failure(TrainerExceptionMessages.InvitationEmailDifferent);
+        }
+
+        if (invitation.Status != InvitationStatus.InProgress)
+        {
+            return Result.Failure(TrainerExceptionMessages.InvitationNoInProgress);
+        }
+
+        if (Clients.Any(x => x.Email == email))
+        {
+            return Result.Failure(TrainerExceptionMessages.UserAlreadyInTeam);
         }
         
         return Result.Success;

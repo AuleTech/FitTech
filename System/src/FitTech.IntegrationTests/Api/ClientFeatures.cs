@@ -3,6 +3,7 @@ using Bogus;
 using FitTech.ApiClient;
 using FitTech.Domain.Aggregates.TrainerAggregate;
 using FitTech.TestingSupport;
+using FitTech.TestingSupport.Assertions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitTech.IntegrationTests.Api;

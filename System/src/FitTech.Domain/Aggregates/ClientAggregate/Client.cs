@@ -9,32 +9,32 @@ namespace FitTech.Domain.Aggregates.ClientAggregate;
 
 public class Client : Entity, IAggregateRoot
 {
-    private Client()
+    internal Client()
     {
     }
 
-    public Guid TrainerId { get; set; }
-    public Guid? SettingsId { get; set; }
-    public string Email { get; set; } = null!;
-    public string Name { get; set; } = null!;
-    public string LastName { get; set; } = null!;
-    public string PhoneNumber { get; set; } = null!;
-    public DateOnly BirthDate { get; set; }
-    public Address Address { get; set; } = null!;
+    public Guid TrainerId { get; private set; }
+    public Guid? SettingsId { get; private set; }
+    public string Email { get; private set; } = null!;
+    public string Name { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
+    public string PhoneNumber { get; private set; } = null!;
+    public DateOnly BirthDate { get; private set; }
+    public Address Address { get; private set; } = null!;
 
     public virtual ClientSettings Settings { get; set; } = null!;
     public virtual List<BodyMeasurement> BodyMeasurements { get; set; } = [];
 
     //TODO: Too many params
-    public static Result<Client> Create(Guid trainerId, PersonInfoDto information, CredentialsDto credentials, AddressDto address)
+    public static Result<Client> Create(Guid trainerId, PersonInfoDto information, CredentialsDto credentials)
     {
         var errors = new List<string>();
         trainerId.ValidateNotEmpty(errors, nameof(trainerId));
         credentials.Email.ValidateEmail(errors, nameof(credentials.Email));
         information.Name.ValidateStringNullOrEmpty(errors, nameof(information.Name));
         information.LastName.ValidateStringNullOrEmpty(errors, nameof(information.LastName));
-        address.City.ValidateStringNullOrEmpty(errors, nameof(address.City));
-        address.Country.ValidateStringNullOrEmpty(errors, nameof(address.Country));
+        information.Address.City.ValidateStringNullOrEmpty(errors, nameof(information.Address.City));
+        information.Address.Country.ValidateStringNullOrEmpty(errors, nameof(information.Address.Country));
         information.PhoneNumber.ValidateStringNullOrEmpty(errors, nameof(information.PhoneNumber));
         information.BirthDate.ValidateIsAdult(errors);
 
@@ -50,7 +50,7 @@ public class Client : Entity, IAggregateRoot
             Email = credentials.Email,
             Name = information.Name,
             LastName = information.LastName,
-            Address = new Address { City = address.City, Country = address.Country },
+            Address = new Address { City = information.Address.City, Country = information.Address.Country },
             BirthDate = information.BirthDate,
             PhoneNumber = information.PhoneNumber
         };

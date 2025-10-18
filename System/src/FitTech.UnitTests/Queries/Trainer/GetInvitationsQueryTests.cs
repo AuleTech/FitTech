@@ -17,7 +17,7 @@ internal class GetInvitationsQueryTests : BaseCqrsUnitTest<GetInvitationsQuery, 
     [Test]
     public async Task GetInvitationsQuery_WhenExistOldInvitations_ReturnsLast15DaysInvitations()
     {
-        var trainer = new TrainerTestGenerator().WithInvitations().Generate();
+        var trainer = new TrainerFakeGenerator().WithInvitations().Generate();
         _trainerRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(trainer);
         
         var sut = CreateSut();

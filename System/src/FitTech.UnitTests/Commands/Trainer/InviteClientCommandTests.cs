@@ -56,7 +56,7 @@ internal class InviteClientCommandTests : BaseCqrsUnitTest<InviteClientCommand, 
     [Test]
     public async Task InviteClientCommand_WhenHappyPath_ReturnsOk()
     {
-        var trainer = new TrainerTestGenerator().Generate();
+        var trainer = new TrainerFakeGenerator().Generate();
         _trainerRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(trainer);
         var sut = CreateSut();
         var result = await sut.HandleAsync(CreateRequest(), CancellationToken.None);

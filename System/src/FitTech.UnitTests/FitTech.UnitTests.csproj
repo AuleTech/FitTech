@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FitTech.Application\FitTech.Application.csproj"/>
+    <ProjectReference Include="..\FitTech.TestingSupport\FitTech.TestingSupport.csproj" />
   </ItemGroup>
 
 </Project>

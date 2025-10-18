@@ -3,9 +3,9 @@ using FitTech.Application.Configuration;
 
 namespace FitTech.UnitTests.Data.Generators;
 
-public sealed class AuthenticationSettingsTestGenerator : Faker<AuthenticationSettings>
+public sealed class AuthenticationSettingsFakeGenerator : Faker<AuthenticationSettings>
 {
-    public AuthenticationSettingsTestGenerator()
+    public AuthenticationSettingsFakeGenerator()
     {
         RuleFor(x => x.Audience, faker => faker.Random.String());
         RuleFor(x => x.SigningKey, faker => faker.Random.String());

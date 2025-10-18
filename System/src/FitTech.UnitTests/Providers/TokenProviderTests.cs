@@ -10,14 +10,14 @@ public class TokenProviderTests
     [Before(Class)]
     public static void SetUp()
     {
-        var authSettingFaker = new AuthenticationSettingsTestGenerator();
+        var authSettingFaker = new AuthenticationSettingsFakeGenerator();
         _sut = new TokenProvider(authSettingFaker);
     }
     
     [Test]
     public async Task GenerateAccessToken_WhenUserIsNotEmpty_GeneratesAJwtToken()
     {
-        var fitTechUserFaker = new FitTechUserTestGenerator();
+        var fitTechUserFaker = new FitTechUserFakeGenerator();
         var result = _sut!.GenerateAccessToken(fitTechUserFaker);
 
         var tokenClaims = _sut.GetClaimsPrincipalFromAccessToken(result);
