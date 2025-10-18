@@ -46,7 +46,7 @@ internal class ResetPasswordCommandTests : BaseCqrsUnitTest<ResetPasswordCommand
         _managerMockBuilder.ConfigureUserStore(x =>
         {
             x.UpdateAsync(Arg.Any<FitTechUser>(), Arg.Any<CancellationToken>()).Returns(IdentityResult.Success);
-            x.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(new FitTechUserTestGenerator());
+            x.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(new FitTechUserFakeGenerator());
         });
 
         var sut = CreateSut();

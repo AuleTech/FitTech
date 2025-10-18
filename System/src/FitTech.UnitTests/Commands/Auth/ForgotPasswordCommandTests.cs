@@ -51,7 +51,7 @@ internal class ForgotPasswordCommandTests : BaseCqrsUnitTest<ForgotPasswordComma
     {
         _managerMockBuilder.ConfigureUserStore(x =>
             x.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-                .Returns(new FitTechUserTestGenerator()));
+                .Returns(new FitTechUserFakeGenerator()));
 
         var sut = CreateSut();
 

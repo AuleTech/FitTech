@@ -61,7 +61,7 @@ internal class LoginCommandTests : BaseCqrsUnitTest<LoginCommand, LoginCommandHa
     {
         _managerMockBuilder.ConfigureUserStore(x =>
                 x.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-                    .Returns(new FitTechUserTestGenerator()))
+                    .Returns(new FitTechUserFakeGenerator()))
             .ConfigurePasswordHasher(x =>
                 x.VerifyHashedPassword(Arg.Any<FitTechUser>(), Arg.Any<string>(), Arg.Any<string>())
                     .Returns(PasswordVerificationResult.Failed));
@@ -79,7 +79,7 @@ internal class LoginCommandTests : BaseCqrsUnitTest<LoginCommand, LoginCommandHa
         _tokenProvider.GenerateAccessToken(Arg.Any<FitTechUser>()).Returns("Token123456789");
         _managerMockBuilder.ConfigureUserStore(x =>
                 x.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-                    .Returns(new FitTechUserTestGenerator()))
+                    .Returns(new FitTechUserFakeGenerator()))
             .ConfigurePasswordHasher(x =>
                 x.VerifyHashedPassword(Arg.Any<FitTechUser>(), Arg.Any<string>(), Arg.Any<string>())
                     .Returns(PasswordVerificationResult.Success))
@@ -101,7 +101,7 @@ internal class LoginCommandTests : BaseCqrsUnitTest<LoginCommand, LoginCommandHa
         _tokenProvider.GenerateAccessToken(Arg.Any<FitTechUser>()).Returns("Token123456789");
         _managerMockBuilder.ConfigureUserStore(x =>
                 x.FindByEmailAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
-                    .Returns(new FitTechUserTestGenerator()))
+                    .Returns(new FitTechUserFakeGenerator()))
             .ConfigurePasswordHasher(x =>
                 x.VerifyHashedPassword(Arg.Any<FitTechUser>(), Arg.Any<string>(), Arg.Any<string>())
                     .Returns(PasswordVerificationResult.Success))

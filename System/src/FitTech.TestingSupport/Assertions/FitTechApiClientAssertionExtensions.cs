@@ -2,7 +2,7 @@
 using AwesomeAssertions;
 using FitTech.ApiClient;
 
-namespace FitTech.TestingSupport;
+namespace FitTech.TestingSupport.Assertions;
 
 public static class FitTechApiClientAssertionExtensions
 {

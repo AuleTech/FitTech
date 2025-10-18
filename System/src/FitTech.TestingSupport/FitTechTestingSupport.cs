@@ -1,10 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Bogus;
+using Microsoft.Extensions.DependencyInjection;
 using Resend;
 
 namespace FitTech.TestingSupport;
 
 public static class FitTechTestingSupport
 {
+    public static string GetTestValidPassword() => $"{new Bogus.Faker().Internet.Password()}A1!"; 
+    
     public static IResend GetResendTestClient()
     {
         IServiceCollection serviceCollection = new ServiceCollection();

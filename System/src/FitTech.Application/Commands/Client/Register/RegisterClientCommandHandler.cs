@@ -47,7 +47,7 @@ internal class RegisterClientCommandHandler : TransactionCommandHandler<Register
         }
         
         var createClientResult = Domain.Aggregates.ClientAggregate.
-            Client.Create(trainer.Id, command.Information, command.Credentials, command.Address);
+            Client.Create(trainer.Id, command.Information, command.Credentials);
 
         if (!createClientResult.Succeeded)
         {

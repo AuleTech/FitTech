@@ -8,7 +8,7 @@ namespace FitTech.TestingSupport;
 
 public static class ApiClientTestExtensions
 {
-    private static readonly Faker Faker = new Faker();
+    private static readonly Bogus.Faker Faker = new Bogus.Faker();
     
     public static async Task<TestCredentials> GetTestCredentialsAsync(this IFitTechApiClient apiClient, CancellationToken cancellationToken)
     {
@@ -47,10 +47,10 @@ public static class ApiClientTestExtensions
                 Name = Faker.Person.FirstName,
                 LastName = Faker.Person.LastName,
                 PhoneNumber = Faker.Person.Phone,
-                BirthDate = Faker.Date.Between(DateTime.UtcNow.AddYears(-50), DateTime.UtcNow.AddYears(-17))
+                BirthDate = Faker.Date.Between(DateTime.UtcNow.AddYears(-17), DateTime.UtcNow.AddYears(-50)),
+                Address = new AddressDto { City = Faker.Address.City(), Country = Faker.Address.Country() }
             },
         Credentials = new CredentialsDto { Email = email, Password = $"{Faker.Internet.Password()}A1!" },
-        Address = new AddressDto { City = Faker.Address.City(), Country = Faker.Address.Country() },
         TrainingSettings =
             new TrainingSettingsDto
             {
