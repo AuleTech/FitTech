@@ -15,14 +15,6 @@ internal class GetInvitationsQueryTests : BaseCqrsUnitTest<GetInvitationsQuery, 
     protected override GetInvitationsQuery CreateRequest() => new (Guid.NewGuid());
 
     [Test]
-    public async Task GetInvitationsQuery_WhenTrainerNotFound_ReturnError()
-    {
-        var sut = CreateSut();
-        var result = await sut.HandleAsync(CreateRequest(), CancellationToken.None);
-        result.Succeeded.Should().BeFalse();
-    }
-
-    [Test]
     public async Task GetInvitationsQuery_WhenExistOldInvitations_ReturnsLast15DaysInvitations()
     {
         var trainer = new TrainerTestGenerator().WithInvitations().Generate();

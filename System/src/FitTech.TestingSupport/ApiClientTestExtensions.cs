@@ -17,7 +17,7 @@ public static class ApiClientTestExtensions
             FirstName  = Faker.Person.FirstName,
             LastName = Faker.Person.LastName,
             Email = FitTechEmailTestExtensions.GetTestEmail(Guid.NewGuid().ToString()[..4]),
-            Password = $"{Faker.Internet.Password()}1!"
+            Password = $"{Faker.Internet.Password()}A1!"
         };
         
         var result = await apiClient.RegisterTrainerAsync(request, CancellationToken.None);
