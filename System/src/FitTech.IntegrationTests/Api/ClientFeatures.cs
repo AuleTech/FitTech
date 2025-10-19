@@ -17,7 +17,7 @@ public class ClientFeatures
     public async Task ClientFeatures_RegistrationFlow()
     {
         var client = Host.GetClientApiClient();
-        var trainerCredentials = await client.GetTestCredentialsAsync(CancellationToken.None);
+        var trainerCredentials = await client.GetTestTrainerCredentialsAsync(CancellationToken.None);
 
         var authClient = Host.GetClientApiClient(trainerCredentials.Token);
 

@@ -10,7 +10,7 @@ public static class ApiClientTestExtensions
 {
     private static readonly Bogus.Faker Faker = new Bogus.Faker();
     
-    public static async Task<TestCredentials> GetTestCredentialsAsync(this IFitTechApiClient apiClient, CancellationToken cancellationToken)
+    public static async Task<TestCredentials> GetTestTrainerCredentialsAsync(this IFitTechApiClient apiClient, CancellationToken cancellationToken)
     {
         var request = new RegisterTrainerRequest()
         {
