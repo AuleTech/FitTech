@@ -5,7 +5,7 @@ using FitTech.Domain.Repositories;
 using FitTech.Domain.Seedwork;
 using Microsoft.Extensions.Logging;
 
-namespace FitTech.Application.Commands.Trainer.ValidateInvitationCode;
+namespace FitTech.Application.Commands.Trainer.ValidateInvitation;
 
 public interface IValidateInvitationCommandHandler : IAuleTechCommandHandler<ValidateInvitationCommand, Result<Guid>>;
 
