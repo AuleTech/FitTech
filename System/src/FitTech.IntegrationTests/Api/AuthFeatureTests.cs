@@ -17,7 +17,7 @@ public class AuthFeatureTests
     {
         var client = Host.GetClientApiClient();
 
-        var testCredentials = await client.GetTestCredentialsAsync(CancellationToken.None);
+        var testCredentials = await client.GetTestTrainerCredentialsAsync(CancellationToken.None);
         
         var forgotPasswordRequest = new ApiClient.ForgotPasswordRequest()
         {

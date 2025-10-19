@@ -44,7 +44,7 @@ public class TrainerFeatures
     public async Task ClientRegistrationFlow_CanInviteAndRetrieveInvitation()
     {
         var client = Host.GetClientApiClient();
-        var testCredentials = await client.GetTestCredentialsAsync(CancellationToken.None);
+        var testCredentials = await client.GetTestTrainerCredentialsAsync(CancellationToken.None);
         
         var authenticatedClient = Host.GetClientApiClient(testCredentials.Token);
         var invitationRequest = new InviteClientRequest()
