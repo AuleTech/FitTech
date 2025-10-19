@@ -6,7 +6,7 @@ using FitTech.Application.Commands.Auth.ResetPassword;
 using FitTech.Application.Commands.Client.Register;
 using FitTech.Application.Commands.Trainer.InviteClient;
 using FitTech.Application.Commands.Trainer.Register;
-using FitTech.Application.Commands.Trainer.ValidateInvitationCode;
+using FitTech.Application.Commands.Trainer.ValidateInvitation;
 using FitTech.Application.Configuration;
 using FitTech.Application.Providers;
 using FitTech.Application.Query.Auth.RefreshToken;

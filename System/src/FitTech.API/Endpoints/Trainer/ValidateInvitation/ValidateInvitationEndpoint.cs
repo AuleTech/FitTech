@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using FastEndpoints;
-using FitTech.Application.Commands.Trainer.ValidateInvitationCode;
+using FitTech.Application.Commands.Trainer.ValidateInvitation;
 
 namespace FitTech.API.Endpoints.Trainer.ValidateInvitation;
 
