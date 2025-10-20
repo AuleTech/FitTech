@@ -41,7 +41,7 @@ builder.Services.AddQueues(builder.Configuration, typeof(Program).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Testing")
 {
     app.MapOpenApi();
     app.UseSwaggerGen();

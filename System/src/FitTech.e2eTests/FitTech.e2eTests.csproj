@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>       
+        <PackageReference Include="Aspire.Hosting.Testing" />
+        <PackageReference Include="TUnit.Playwright" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FitTech.AppHost\FitTech.AppHost.csproj" />
+      <ProjectReference Include="..\FitTech.API.Client\FitTech.API.Client.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -16,6 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- 🟡 Aspire -->
+    <PackageVersion Include="Aspire.Hosting" Version="9.5.1" />
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Hosting.Azure.CognitiveServices" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="$(AspireVersion)" />
@@ -74,6 +75,7 @@
     <PackageVersion Include="Resend" Version="0.1.6" />
     <PackageVersion Include="Scalar.AspNetCore" Version="2.9.0" />
     <PackageVersion Include="TUnit" Version="0.71.4" />
+    <PackageVersion Include="TUnit.Playwright" Version="0.71.4" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageVersion Include="Bogus" Version="35.6.4" />

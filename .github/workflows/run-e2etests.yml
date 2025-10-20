@@ -38,12 +38,12 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Install SSL Certificates
-        run: dotnet dev-certs https --trust  
+        run: dotnet dev-certs https --trust
 
-      - name: Execute UnitTests
-        run: dotnet test --no-build --no-restore --logger:"console;verbosity=normal"
-        working-directory: ./System/src/FitTech.UnitTests
+      - name: Run FitTech
+        run: dotnet run -- --environment=Testing DOTNET_LAUNCH_PROFILE=http
+        working-directory: ./System/src/FitTech.AppHost
 
-      - name: Execute IntegrationTests
-        run: dotnet test --no-build --no-restore --logger:"console;verbosity=normal"
-        working-directory: ./System/src/FitTech.IntegrationTests
+      - name: Test
+        run: dotnet test --no-restore --logger:"console;verbosity=normal"
+        working-directory: ./System/src/FitTech.e2eTests

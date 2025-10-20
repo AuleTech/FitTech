@@ -37,7 +37,11 @@ public class TestHost : IAsyncInitializer, IAsyncDisposable
     
     public async Task InitializeAsync()
     {
-        var builder = await DistributedApplicationTestingBuilder.CreateAsync<Projects.FitTech_AppHost>(["--environment=Testing","DOTNET_LAUNCH_PROFILE=http"]);
+        var builder = await DistributedApplicationTestingBuilder.CreateAsync<Projects.FitTech_AppHost>(["--environment=Testing","DOTNET_LAUNCH_PROFILE=http","ASPIRE_ALLOW_UNSECURED_TRANSPORT=true"],
+            (options, settings) =>
+            {
+                options.DisableDashboard = false;
+            });
         
         _app = await builder.BuildAsync();
         await _app.StartAsync();
