@@ -1,6 +1,6 @@
 name: build
 on:
-  pullrequest
+  pull_request
 defaults:
   run: 
     working-directory: ./System
