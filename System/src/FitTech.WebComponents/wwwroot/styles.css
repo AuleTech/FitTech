@@ -291,6 +291,9 @@
   .z-10 {
     z-index: 10;
   }
+  .z-40 {
+    z-index: 40;
+  }
   .z-50 {
     z-index: 50;
   }
@@ -1180,13 +1183,6 @@
     &:hover {
       @media (hover: hover) {
         border-color: var(--color-white);
-      }
-    }
-  }
-  .hover\:bg-fittech-dark {
-    &:hover {
-      @media (hover: hover) {
-        background-color: #000000;
       }
     }
   }

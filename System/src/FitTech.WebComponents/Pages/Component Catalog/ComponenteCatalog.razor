@@ -77,16 +77,10 @@
             IsVisibleChanged="@((bool value) => showModal = value)"
             Title=@title
             Body=@body>
-    
             <FooterContent>
-                <button class="bg-fittech-green text-white px-6 py-2 rounded-xl hover:bg-fittech-dark transition"
-                        @onclick="()=> showModal = false">
-                    Aceptar
-                </button>
+                <!--<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenDark" Label="Aceptar"/> -->
             </FooterContent>
         </ModalComponent>
-
-      
         
     </section>
 
@@ -94,8 +88,8 @@
 
 @code {
     private bool showModal = false;
-    private string? title = "Modal FitTech";
-    private string? body = "Cuerpo serrano de FitTech";
+    private string? title = "";
+    private string? body = "";
 
     readonly List<User> users = new()
     {
