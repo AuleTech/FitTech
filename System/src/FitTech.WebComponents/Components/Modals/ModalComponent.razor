@@ -2,14 +2,11 @@
 
 @if (IsVisible)
 {
-    <!-- Fondo difuminado -->
+    
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300"
          @onclick="HandleBackgroundClick">
-
-        <!-- Contenedor del modal -->
-        <div class="relative max-w-lg w-full mx-4" @onclick:stopPropagation>
-
-            <!-- Botón cerrar -->
+        
+        <div class="relative max-w-lg w-full mx-4 justify-center" @onclick:stopPropagation>
             <FittechCard>
                 <button class="absolute top-3 right-3 text-gray-500 hover:text-fittech-green transition z-10"
                         @onclick="Close">
