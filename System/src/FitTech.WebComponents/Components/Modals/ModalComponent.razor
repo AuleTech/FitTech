@@ -1,0 +1,62 @@
+@using FitTech.WebComponents.Components.Cards
+
+@if (IsVisible)
+{
+    <!-- Fondo difuminado -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300"
+         @onclick="HandleBackgroundClick">
+
+        <!-- Contenedor del modal -->
+        <div class="relative max-w-lg w-full mx-4" @onclick:stopPropagation>
+
+            <!-- Botón cerrar -->
+            <FittechCard>
+                <button class="absolute top-3 right-3 text-gray-500 hover:text-fittech-green transition z-10"
+                        @onclick="Close">
+                    ✕
+                </button>
+                <FittechCardHeader>
+                    @if (!string.IsNullOrWhiteSpace(Title))
+                    {
+                        <h2 class="text-2xl font-bold text-fittech-dark text-center">@Title</h2>
+                    }
+                </FittechCardHeader>
+
+                <FittechCardBody>
+                    @if (!string.IsNullOrWhiteSpace(Body))
+                    {
+                        <p class="text-gray-600 text-center">@Body</p>
+                    }
+                </FittechCardBody>
+
+                <FittechCardFooter>
+                    @if (FooterContent is not null)
+                    {
+                        <div class="flex justify-center">
+                            @FooterContent
+                        </div>
+                    }
+                </FittechCardFooter>
+            </FittechCard>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Body { get; set; }
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+
+    private async Task Close()
+    {
+        await IsVisibleChanged.InvokeAsync(false);
+    }
+
+    private async Task HandleBackgroundClick()
+    {
+        await IsVisibleChanged.InvokeAsync(false);
+    }
+}

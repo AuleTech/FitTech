@@ -1,34 +1,107 @@
 @page "/ComponenteCatalog"
 @using Blazor.Heroicons
 @using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.Cards
+@using FitTech.WebComponents.Components.Modals
 @using FitTech.WebComponents.Components.SideMenu
 @using FitTech.WebComponents.Components.Tables
 
 
-<ButtonsComponent Type="ButtonsComponent.ButtonType.Green" Label="Button" ButtonIcon="Check"/>
-<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenDark" Label="Login"/>
-<ButtonsComponent Type="ButtonsComponent.ButtonType.Red" Label="Button" ButtonIcon="Check"/>
-<ButtonsComponent Type="ButtonsComponent.ButtonType.White" Label="Button" ButtonIcon="Check"/>
-<ButtonsComponent Type="ButtonsComponent.ButtonType.RedDark" Label="Button" ButtonIcon="Check"/>
-<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare" ButtonIcon="Check"/>
+<div class="pt-20 p-8 bg-white min-h-screen space-y-12">
 
-<DataTable TItem="User"
-           Items="FilteredItems"
-           Title="@titulo"
-           ShowSearch="true"
-           Headers="headers"
-           RowSelector="GetUserRow"/>
+    <!-- 🟢 SECCIÓN BOTONES -->
+    <section>
+        <h2 class="text-2xl font-bold text-fittech-dark mb-6 border-b border-fittech-green pb-2">
+            Botones
+        </h2>
 
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.Green" Label="Button" ButtonIcon="Check" />
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenDark" Label="Login" />
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.Red" Label="Button" ButtonIcon="Check" />
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.White" Label="Button" ButtonIcon="Check" />
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.RedDark" Label="Button" ButtonIcon="Check" />
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare" ButtonIcon="Check" />
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenCircle" ButtonIcon="Check" />
+            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare" ButtonIcon="Check" />
+        </div>
+    </section>
 
-<SlideMenuComponent MenuItems="@MyMenuItems"/>
+    <!-- 🧾 SECCIÓN TABLAS -->
+    <section>
+        <h2 class="text-2xl font-bold text-fittech-dark mb-6 border-b border-fittech-green pb-2">
+            Tablas
+        </h2>
+
+        <div class="bg-fittech-white border-2 border-fittech-green rounded-2xl shadow-md p-6">
+            <DataTable TItem="User"
+                       Items="FilteredItems"
+                       Title="@titulo"
+                       ShowSearch="true"
+                       Headers="headers"
+                       RowSelector="GetUserRow" />
+        </div>
+    </section>
+
+    <!-- 🃏 SECCIÓN CARDS -->
+    <section>
+        <h2 class="text-2xl font-bold text-fittech-dark mb-6 border-b border-fittech-green pb-2">
+            Cards
+        </h2>
+
+         <FittechCard>
+                <FittechCardHeader>
+                </FittechCardHeader>
+                <FittechCardBody>
+                </FittechCardBody>
+                <FittechCardFooter>
+                </FittechCardFooter>
+            </FittechCard>
+        
+    </section>
+
+    <!-- 📋 SECCIÓN MENÚ LATERAL (ahora parte del escaparate) -->
+    <section>
+        <h2 class="text-2xl font-bold text-fittech-dark mb-6 border-b border-fittech-green pb-2">
+            Modals
+        </h2>
+        
+        @page "/modal-test"
+
+        <button class="bg-fittech-green text-fittech-dark px-4 py-2 rounded-xl" @onclick="()=> showModal = true">
+            Abrir modal
+        </button>
+
+        <ModalComponent 
+            IsVisible="@showModal"
+            IsVisibleChanged="@((bool value) => showModal = value)"
+            Title=@title
+            Body=@body>
+    
+            <FooterContent>
+                <button class="bg-fittech-green text-white px-6 py-2 rounded-xl hover:bg-fittech-dark transition"
+                        @onclick="()=> showModal = false">
+                    Aceptar
+                </button>
+            </FooterContent>
+        </ModalComponent>
+
+      
+        
+    </section>
+
+</div>
 
 @code {
+    private bool showModal = false;
+    private string? title = "Modal FitTech";
+    private string? body = "Cuerpo serrano de FitTech";
 
     readonly List<User> users = new()
     {
         new User { Name = "Yeray", Age = 30, Email = "yeray@example.com" },
         new User { Name = "Jairo", Age = 25, Email = "jairo@example.com" },
-        new User { Name = "Alberto", Age = 25, Email = "Alberto@example.com" }
+        new User { Name = "Alberto", Age = 25, Email = "alberto@example.com" }
     };
 
     List<User> FilteredItems = new();
@@ -37,15 +110,11 @@
 
     readonly List<string> headers = new() { "Nombre", "Edad", "Email" };
 
-    List<string> GetUserRow(User user)
-    {
-        return new List<string> { user.Name!, user.Age.ToString(), user.Email! };
-    }
+    List<string> GetUserRow(User user) =>
+        new() { user.Name!, user.Age.ToString(), user.Email! };
 
-    protected override void OnInitialized()
-    {
+    protected override void OnInitialized() =>
         FilteredItems = users.ToList();
-    }
 
     public class User
     {
@@ -56,10 +125,9 @@
 
     private readonly List<SlideMenuComponent.MenuItem> MyMenuItems = new()
     {
-        new SlideMenuComponent.MenuItem { Text = "Inicio", Link = "/ComponenteCatalog", Icon = HeroiconName.Home },
-        new SlideMenuComponent.MenuItem { Text = "Rutinas", Link = "/ComponenteCatalog", Icon = HeroiconName.Scale },
-        new SlideMenuComponent.MenuItem { Text = "Clientes", Link = "/ComponenteCatalog", Icon = HeroiconName.ClipboardDocumentList },
-        new SlideMenuComponent.MenuItem { Text = "Configuración", Link = "/ComponenteCatalog", Icon = HeroiconName.Cog8Tooth }
+        new() { Text = "Inicio", Link = "/ComponenteCatalog", Icon = HeroiconName.Home },
+        new() { Text = "Rutinas", Link = "/ComponenteCatalog", Icon = HeroiconName.Scale },
+        new() { Text = "Clientes", Link = "/ComponenteCatalog", Icon = HeroiconName.ClipboardDocumentList },
+        new() { Text = "Configuración", Link = "/ComponenteCatalog", Icon = HeroiconName.Cog8Tooth }
     };
-
 }
