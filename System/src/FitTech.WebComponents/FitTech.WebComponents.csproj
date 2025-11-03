@@ -23,6 +23,12 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Components\IconsSVG\IconsSVG.razor"/>
+    <UpToDateCheckInput Remove="Pages\Component Catalog\ComponenteCatalog.razor" />
+    <UpToDateCheckInput Remove="Pages\CustomerManager\AddNewClientPage\AddNewClient.razor" />
+    <UpToDateCheckInput Remove="Pages\CustomerManager\AddNewClientPage\ConfirmDataForm.razor" />
+    <UpToDateCheckInput Remove="Pages\CustomerManager\AddNewClientPage\DetailForm.razor" />
+    <UpToDateCheckInput Remove="Pages\CustomerManager\AddNewClientPage\PersonalInformationForm.razor" />
+    <UpToDateCheckInput Remove="Pages\CustomerManager\CustomerManager.razor" />
   </ItemGroup>
 
   <!--Just for now, this may cause a lot of merge conflicts. styles.css should be generated on deploy-->

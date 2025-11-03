@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FitTech.WebComponents.Pages.ConfigurationPage.ConfigurationModels;
+namespace FitTech.Trainer.Wasm.Pages.ConfigurationPage.ConfigurationModels;
 
 public class ConfigurationUserModel
 {

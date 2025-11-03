@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FitTech.WebComponents.Pages.CustomerManager.CustomerManagerModels;
+namespace FitTech.Trainer.Wasm.Pages.CustomerManager.CustomerManagerModels;
 
 public class ClientModel
 {

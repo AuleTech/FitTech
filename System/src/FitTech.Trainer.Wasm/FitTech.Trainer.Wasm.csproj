@@ -24,4 +24,15 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Component Catalog\ComponenteCatalog.razor" />
+    <AdditionalFiles Include="Pages\ConfigurationPage\ConfigurationPage.razor" />
+    <AdditionalFiles Include="Pages\ConfigurationPage\ConfigurationUserPage\ConfigurationUserPage.razor" />
+    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\AddNewClient.razor" />
+    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\ConfirmDataForm.razor" />
+    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\DetailForm.razor" />
+    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\PersonalInformationForm.razor" />
+    <AdditionalFiles Include="Pages\CustomerManager\CustomerManager.razor" />
+  </ItemGroup>
+
 </Project>
