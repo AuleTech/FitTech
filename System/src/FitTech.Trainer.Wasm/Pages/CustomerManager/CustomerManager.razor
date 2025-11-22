@@ -1,19 +1,37 @@
 @page "/usermanager"
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject NavigationManager NavigationManager
-
-@page "/gestion-clientes"
 @using Blazor.Heroicons
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.Tables
 
-<h1>En construcción</h1>
+
+<DataTable TItem="TableCell"
+               Items="FilteredItems"
+               Title="@titulo"
+               ShowSearch="true"
+               Headers="headers"
+               RowSelector="GetTableCellRow" />
+
 
 @code {
+    List<TableCell> FilteredItems = new();  
+    public string titulo = "Clients";
+    readonly List<string> headers = new() { "Table Cell", "Table Cell", "Table Cell", "Table Cell", "Table Cell" };
     
+    List<string> GetTableCellRow(TableCell tableCell) => new() { tableCell.TableCell1!, tableCell.TableCell2!, tableCell.TableCell3!, tableCell.TableCell4!, tableCell.TableCell5! };
     
+    readonly List<TableCell> tablecell = new()
+    {
+        new TableCell { TableCell1 = "Table Cell",TableCell2 = "Table Cell" , TableCell3 = "Table Cell", TableCell4 = "Table Cell", TableCell5 = "Table Cell"},
+        new TableCell { TableCell1 = "Table Cell",TableCell2 = "Table Cell" , TableCell3 = "Table Cell", TableCell4 = "Table Cell", TableCell5 = "Table Cell"},
+        new TableCell { TableCell1 = "Table Cell",TableCell2 = "Table Cell" , TableCell3 = "Table Cell", TableCell4 = "Table Cell", TableCell5 = "Table Cell"},
+        new TableCell { TableCell1 = "Table Cell",TableCell2 = "Table Cell" , TableCell3 = "Table Cell", TableCell4 = "Table Cell", TableCell5 = "Table Cell"},
+        new TableCell { TableCell1 = "Table Cell",TableCell2 = "Table Cell" , TableCell3 = "Table Cell", TableCell4 = "Table Cell", TableCell5 = "Table Cell"},
+    };
     protected override void OnInitialized()
     {
+        FilteredItems = tablecell.ToList();
         AppHeaderStateHandler.Clear();
         AppHeaderStateHandler.AddButton(HeroiconName.Plus, () =>
         {
@@ -23,5 +41,15 @@
 
         base.OnInitialized();
     }
+    
+    public class TableCell
+    {
+        public string? TableCell1 { get; set; }
+        public string? TableCell2 { get; set; }
+        public string? TableCell3 { get; set; }
+        public string? TableCell4 { get; set; }
+        public string? TableCell5 { get; set; }
+    }
+
 
 }

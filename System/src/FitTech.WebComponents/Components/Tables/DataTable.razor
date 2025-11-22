@@ -24,15 +24,26 @@
             </tr>
             </thead>
             <tbody class="bg-fittech-white text-black divide-y divide-fittech-green">
-            @foreach (var item in FilteredItems)
+            @if (!FilteredItems.Any())
             {
-                var cells = RowSelector!(item);
                 <tr>
-                    @foreach (var cell in cells)
-                    {
-                        <td class="px-6 py-4 font-medium text-xs">@cell</td>
-                    }
+                    <td colspan="99" class="text-center fw-bold">
+                        No hay resultados
+                    </td>
                 </tr>
+            }
+            else
+            {
+                @foreach (var item in FilteredItems)
+                {
+                    var cells = RowSelector!(item);
+                    <tr>
+                        @foreach (var cell in cells)
+                        {
+                            <td class="px-6 py-4 font-medium text-xs">@cell</td>
+                        }
+                    </tr>
+                }
             }
             </tbody>
         </table>
