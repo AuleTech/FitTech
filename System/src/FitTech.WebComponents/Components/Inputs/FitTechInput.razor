@@ -1,9 +1,18 @@
-<input
-    type="text"
-    placeholder="@Placeholder"
-    class="w-32 sm:w-36 border border-fittech-green rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-fittech-gray"
-/>
+@using System.Diagnostics.CodeAnalysis
+@inherits InputBase<string?>
+
+<input @bind="CurrentValue" id="@Id" class="@CssClass @DefaultCssClass" @oninput="OnInput" />
 
 @code {
-    [Parameter] public string Placeholder { get; set; } = string.Empty;
+    private const string DefaultCssClass = "w-32 sm:w-36 border border-fittech-green rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-fittech-dark";
+    public string? Id { get; set; }
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+
+    protected override bool TryParseValueFromString(string? value, out string? result, [NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        result = value;
+        validationErrorMessage = null;
+        return true;
+    }
 }

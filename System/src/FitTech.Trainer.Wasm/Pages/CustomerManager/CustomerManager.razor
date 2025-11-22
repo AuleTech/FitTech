@@ -5,19 +5,31 @@
 @page "/gestion-clientes"
 @using Blazor.Heroicons
 @using FitTech.WebComponents.Components.AppHeader
-@using FitTech.WebComponents.Components.Tables
+@using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.Inputs
+@using FitTech.WebComponents.Components.Modals
+@using FitTech.WebComponents.Styles.Enums
 
-<h1>En construcción</h1>
+<FitTechModal @ref="_modal">
+    <FitTechModalHeader>
+        Prueba
+    </FitTechModalHeader>
+    <FitTechModalBody>
+        <FitTechInput placeholder="Soy jisus" bind-Value="@InputValue" ></FitTechInput>
+        <FitTechButton Color="Color.Error" Icon="@HeroiconName.ArrowDownRight"></FitTechButton>
+    </FitTechModalBody>
+</FitTechModal>
 
 @code {
-    
+    private FitTechModal _modal = null!;
+    private string? InputValue { get; set; }
     
     protected override void OnInitialized()
     {
         AppHeaderStateHandler.Clear();
         AppHeaderStateHandler.AddButton(HeroiconName.Plus, () =>
         {
-            NavigationManager.NavigateTo("/usermanager/add");
+            _modal.Open();
             return Task.CompletedTask;
         }, "Añadir usuario");
 

@@ -5,6 +5,7 @@
 @using FitTech.WebComponents.Components.Modals
 @using FitTech.WebComponents.Components.SideMenu
 @using FitTech.WebComponents.Components.Tables
+@using FitTech.WebComponents.Styles.Enums
 
 
 <div class="pt-20 p-8 bg-white min-h-screen space-y-12">
@@ -15,15 +16,13 @@
             Botones
         </h2>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.Green" Label="Button" ButtonIcon="Check" />
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenDark" Label="Login" />
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.Red" Label="Button" ButtonIcon="Check" />
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.White" Label="Button" ButtonIcon="Check" />
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.RedDark" Label="Button" ButtonIcon="Check" />
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare" ButtonIcon="Check" />
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenCircle" ButtonIcon="Check" />
-            <ButtonsComponent Type="ButtonsComponent.ButtonType.GreenSquare" ButtonIcon="Check" />
+        <div class="lex flex-wrap gap-6 justify-center">
+            <FitTechButton Color="Color.Primary" Size="Size.Small" Label="Button" Icon="@HeroiconName.Check" />
+            <FitTechButton Color="Color.Secondary" Size="Size.Medium" Label="Login" />
+            <FitTechButton Color="Color.Error" Size="Size.Large" Label="Button" Icon="Check" />
+            <FitTechButton Color="Color.Primary" Shape="Shape.Circle" Icon="Check" />
+            <FitTechButton Color="Color.Secondary" Shape="Shape.Circle" Icon="Check" />
+            <FitTechButton Color="Color.Primary" Shape="Shape.Square" Icon="Check" />
         </div>
     </section>
 
@@ -34,7 +33,7 @@
         </h2>
 
         <div class="bg-fittech-white border-2 border-fittech-green rounded-2xl shadow-md p-6">
-            <DataTable TItem="User"
+            <FitTechTable TItem="User"
                        Items="FilteredItems"
                        Title="@titulo"
                        ShowSearch="true"
@@ -49,14 +48,11 @@
             Cards
         </h2>
 
-         <FittechCard>
-                <FittechCardHeader>
-                </FittechCardHeader>
-                <FittechCardBody>
-                </FittechCardBody>
-                <FittechCardFooter>
-                </FittechCardFooter>
-            </FittechCard>
+        <FittechCard>
+            <FitTechCardHeader/>
+            <FitTechCardBody/>
+            <FitTechCardFooter/>
+        </FittechCard>
         
     </section>
 
@@ -68,29 +64,27 @@
         
         @page "/modal-test"
 
-        <button class="bg-fittech-green text-fittech-dark px-4 py-2 rounded-xl" @onclick="()=> showModal = true">
+        <button class="bg-fittech-green text-fittech-dark px-4 py-2 rounded-xl" @onclick="() => _modal.Open()" >
             Abrir modal
         </button>
-
-        <ModalComponent 
-            IsVisible="@showModal"
-            IsVisibleChanged="@((bool value) => showModal = value)"
-            Title=@title
-            Body=@body>
-            <FooterContent>
-                <!--<ButtonsComponent Type="ButtonsComponent.ButtonType.GreenDark" Label="Aceptar"/> -->
-            </FooterContent>
-        </ModalComponent>
         
+        <FitTechModal @ref="_modal">
+            <FitTechModalHeader>
+                Test Modal
+            </FitTechModalHeader>
+            <FitTechModalBody>
+                This is just an example
+            </FitTechModalBody>
+            <FitTechModalFooter>
+                <FitTechButton Color="Color.Primary" Label="Button" Icon="Check" />               
+            </FitTechModalFooter>
+        </FitTechModal>
     </section>
-
 </div>
 
 @code {
-    private bool showModal = false;
-    private string? title = "";
-    private string? body = "";
-
+    private FitTechModal _modal = null!;
+    
     readonly List<User> users = new()
     {
         new User { Name = "Yeray", Age = 30, Email = "yeray@example.com" },
