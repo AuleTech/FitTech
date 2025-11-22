@@ -1,0 +1,12 @@
+@using Blazor.Heroicons
+@inherits ComponentBase
+
+
+<button class="@Css" @onclick="OnClick">
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <span class="font-light @_labelCss">@Label</span>
+    }
+
+    <Heroicon Name="@Icon" Solid="false" class="w-4 h-4"/>
+</button>

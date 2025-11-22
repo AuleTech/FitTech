@@ -8,10 +8,10 @@ module.exports = {
         extend: {
             colors: {
                 'fittech-green': '#ADC539',
-                'fittech-gray': '#494947',
-                'fittech-dark': '#000000',
+                'fittech-gray': '#DBD9DB',
+                'fittech-dark': '#494947',
                 'fittech-white': '#E5EBEA',
-                'fittech-grayvibrant': '#8C8C8C',
+                'fittech-gray-secondary': '#979797',
                 'fittech-red': '#EF5D60',
             }
         }

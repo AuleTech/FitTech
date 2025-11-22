@@ -7,15 +7,13 @@
 
         @if (ShowSearch)
         {
-            <div @oninput="HandleSearchInput">
-                <FitTechInput placeholder="Buscar"/>
-            </div>
+            <FitTechInput placeholder="Buscar" @bind-Value="SearchText" OnInput="@OnInput"/>
         }
     </div>
 
     <div class="overflow-hidden rounded-xl shadow-[0_4px_6px_-4px_rgba(0,0,0,0.3)]">
         <table class="min-w-full border-collapse">
-            <thead class="bg-fittech-gray text-fittech-green">
+            <thead class="bg-fittech-dark text-fittech-green">
             <tr>
                 @foreach (var header in Headers)
                 {
@@ -55,9 +53,8 @@
                 RowSelector!(item)
                     .Any(cell => cell.Contains(SearchText, StringComparison.OrdinalIgnoreCase)));
 
-    private void HandleSearchInput(ChangeEventArgs e)
+    private void OnInput(ChangeEventArgs e)
     {
         SearchText = e.Value?.ToString() ?? string.Empty;
     }
-
 }

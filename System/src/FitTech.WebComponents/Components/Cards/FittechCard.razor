@@ -1,9 +1,22 @@
-<card class="relative bg-fittech-white border-2 border-fittech-green rounded-2xl shadow-md p-6 flex flex-col gap-4 w-[400px] h-[300px]">
-    @ChildContent
-</card>
+<div class="relative bg-fittech-white border-2 border-fittech-green rounded-2xl shadow-md p-6 flex flex-col gap-4 w-[400px] h-[300px]">
+    <div class="text-xl font-semibold text-fittech-dark  pb-2">
+        @FitTechCardHeader
+    </div>
+    <div class="text-base text-fittech-dark flex-1">
+        @FitTechCardBody
+    </div>
+    
+    @if (FitTechCardFooter is not null)
+    {
+        <div class="pt-2 flex justify-end">
+            @FitTechCardFooter
+        </div>
+    }
+</div>
 
 @code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    
     [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public required RenderFragment FitTechCardBody { get; set; }
+    [Parameter] public required RenderFragment FitTechCardHeader { get; set; }
+    [Parameter] public RenderFragment? FitTechCardFooter { get; set; }
 }

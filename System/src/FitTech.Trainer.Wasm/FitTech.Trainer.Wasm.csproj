@@ -7,6 +7,10 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\app.css"/>
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\AddNewClient.razor" />
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\ConfirmDataForm.razor" />
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\DetailForm.razor" />
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\PersonalInformationForm.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,17 +26,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>appsettings.json</DependentUpon>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="Pages\Component Catalog\ComponenteCatalog.razor" />
-    <AdditionalFiles Include="Pages\ConfigurationPage\ConfigurationPage.razor" />
-    <AdditionalFiles Include="Pages\ConfigurationPage\ConfigurationUserPage\ConfigurationUserPage.razor" />
-    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\AddNewClient.razor" />
-    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\ConfirmDataForm.razor" />
-    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\DetailForm.razor" />
-    <AdditionalFiles Include="Pages\CustomerManager\AddNewClientPage\PersonalInformationForm.razor" />
-    <AdditionalFiles Include="Pages\CustomerManager\CustomerManager.razor" />
   </ItemGroup>
 
 </Project>
