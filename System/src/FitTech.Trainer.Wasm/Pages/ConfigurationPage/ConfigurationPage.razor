@@ -1,145 +1,69 @@
 @page "/configurationpage"
 @inject AppHeaderStateHandler AppHeaderStateHandler
-@inject NavigationManager NavigationManager
-@using FitTech.Trainer.Wasm.Pages.ConfigurationPage.ConfigurationModels
 @using FitTech.WebComponents.Components.AppHeader
-@using FitTech.WebComponents.Services
 @inherits FitTech.WebComponents.Components.CancellableComponent
-@inject IUserService UserService
 
-<div class="min-h-screen bg-white p-8 font-sans text-zinc-900">
-    <div class="max-w-7xl mx-auto space-y-10">
+@layout ConfigurationLayout
 
-        <!-- Título -->
-        <h1 class="text-4xl font-bold mt-[40px]">Área personal</h1>
+<div class="flex flex-col gap-4">
 
-        <!-- Contenido principal -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <!-- TÍTULO -->
+    <h1 class="text-4xl font-bold text-gray-800">Invitaciones enviadas</h1>
+    <p class="text-gray-400 mb-2">
+        Las invitaciones Rechazadas o Aceptadas dejarán de mostrarse pasados 15 días
+    </p>
 
-            <!-- Tarjeta principal -->
-            <div class="col-span-2 bg-white p-8 rounded-2xl shadow-xl">
-                <div class="flex flex-col items-center space-y-4">
-                    <div class="w-28 h-28 rounded-full border-4 border-zinc-800 flex items-center justify-center">
-                        <svg class="w-14 h-14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                    </div>
-                    <div class="text-2xl font-semibold">@configurationUserModel.Name</div>
-                    <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                        <a href="/ConfigurationUserPage" class="mt-2 font-medium">Editar alias</a>
-                    </div>
-                </div>
+    <!-- TARJETA -->
+    <div class="w-full max-w-3xl bg-white rounded-xl border-2 border-lime-300 mx-auto shadow-sm">
+        
+        <!-- FILA 1 -->
+        <div class="flex items-center justify-between p-4 border-b border-lime-200">
+            <span class="text-lg text-gray-700 font-semibold">Email@Test.com</span>
 
-                <!-- Acciones -->
-                <div class="flex justify-around mt-10 text-center">
-                    <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2"
-                             viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <div class="mt-2 font-medium">Datos personales</div>
-                    </div>
-                    <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2"
-                             viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M9 12h6m2 6H7a2 2 0 01-2-2V8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2z"/>
-                        </svg>
-                        <div class="mt-2 font-medium">Documentos y extractos</div>
-                    </div>
-                </div>
-            </div>
+            <div class="flex items-center gap-4">
+                <span class="px-3 py-1 rounded-full border border-yellow-700 text-yellow-700 bg-yellow-100 text-sm font-semibold">
+                    Pendiente
+                </span>
 
-            <!-- Tarjetas laterales -->
-            <div class="space-y-6">
-
-                <!-- Configuración de cuenta -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl">
-                    <h2 class="text-xl font-semibold mb-4">Configuración de cuenta</h2>
-                    <ul class="space-y-2">
-                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl">🛡️</span> Cambiar contraseña
-                            </div>
-                            <span class="text-xl">&gt;</span>
-                        </li>
-                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl">🌿</span> Mi Subscripción
-                            </div>
-                            <span class="text-xl">&gt;</span>
-                        </li>
-                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl">😊</span> Métodos de Pago
-                            </div>
-                            <span class="text-xl">&gt;</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Info legal -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl">
-                    <h2 class="text-xl font-semibold mb-4">Info legal y privacidad</h2>
-                    <div
-                        class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                        <span>Documentos y recibos</span>
-                        <span class="text-xl">&gt;</span>
-                    </div>
-                </div>
-
-                <!-- Seguridad -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl">
-                    <h2 class="text-xl font-semibold mb-4">Configuración de seguridad</h2>
-                    <ul class="space-y-2">
-                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl">🔒</span> Clave de seguridad
-                            </div>
-                            <span class="text-xl">&gt;</span>
-                        </li>
-                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl">👤</span> Verificación en dos pasos
-                            </div>
-                            <span class="text-xl">&gt;</span>
-                        </li>
-                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
-                            <div class="flex items-center gap-3">
-                                <span class="text-xl">📲</span> Establecer PIN
-                            </div>
-                            <span class="text-xl">&gt;</span>
-                        </li>
-                    </ul>
-                </div>
-
+                <button class="px-4 py-2 bg-red-400 hover:bg-red-500 text-white rounded-full font-semibold shadow">
+                    Cancel
+                </button>
             </div>
         </div>
+
+        <!-- FILA 2 -->
+        <div class="flex items-center justify-between p-4 border-b border-lime-200">
+            <span class="text-lg text-gray-700 font-semibold">Email@Test.com</span>
+
+            <div class="flex items-center gap-4">
+                <span class="px-3 py-1 rounded-full border border-red-500 text-red-600 bg-red-100 text-sm font-semibold">
+                    No respondida
+                </span>
+
+                <button class="px-4 py-2 bg-yellow-300 hover:bg-yellow-400 text-gray-800 rounded-full font-semibold shadow">
+                    Reenviar
+                </button>
+            </div>
+        </div>
+
+        <!-- FILA 3 -->
+        <div class="flex items-center justify-between p-4">
+            <span class="text-lg text-gray-700 font-semibold">Email@Test.com</span>
+
+            <span class="px-3 py-1 rounded-full border border-green-500 text-green-600 bg-green-100 text-sm font-semibold">
+                Aceptada
+            </span>
+        </div>
+
     </div>
 </div>
 
+
 @code {
-
-    private ConfigurationUserModel configurationUserModel { get; } = new();
-    private string _message = string.Empty;
-
-
-    protected override async Task OnInitializedAsync()
+   //TODO: cuando entramos en esta página el menu debe de cambiar sus opciones y saltar 3 submenús.  
+    
+    protected override void OnInitialized()
     {
-        var response = await UserService.GetTrainerDataAsync(_cts.Token);
-
-        if (response.Succeeded)
-        {
-            configurationUserModel.Name = response.Value!.Name!;
-            configurationUserModel.Email = response.Value!.Email!;
-            configurationUserModel.Password = response.Value!.Password!;
-        }
-        else
-        {
-            _message = "Hubo un error en la recuperación de los datos del usuario";
-        }
 
         AppHeaderStateHandler.Clear();
         base.OnInitialized();

@@ -1,0 +1,21 @@
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
+@using FitTech.WebComponents.Components.SideMenu
+@inherits LayoutComponentBase
+
+<body class="bg-white dark:bg-gray-900 flex items-center justify-center min-h-screen transition-colors duration-300">
+<AppHeader></AppHeader>
+<SlideMenuComponent MenuItems="@MyMenuItems"/>
+@Body
+</body>
+
+@code {
+    
+    private readonly List<SlideMenuComponent.MenuItem> MyMenuItems = new()
+    { 
+        new SlideMenuComponent.MenuItem { Text = "Clientes", Link = "/home", Icon = HeroiconName.Home },
+        new SlideMenuComponent.MenuItem { Text = "Formularios", Link = "/workouts", Icon = HeroiconName.Scale },
+        new SlideMenuComponent.MenuItem { Text = "Otras opciones", Link = "/usermanager", Icon = HeroiconName.ClipboardDocumentList },
+       
+    };
+}
