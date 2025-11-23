@@ -12,49 +12,42 @@
     <p class="text-gray-400 mb-2">
         Las invitaciones Rechazadas o Aceptadas dejarán de mostrarse pasados 15 días
     </p>
-
-    <!-- TARJETA -->
+    
     <div class="w-full max-w-3xl bg-white rounded-xl border-2 border-lime-300 mx-auto shadow-sm">
-        
-        <!-- FILA 1 -->
+    @if (items is not null)
+    {
+        @foreach (var item in items)
+        {
+            
+            //TODO: si el estado es pendiente, debe renderizarse que sea boton de cancelar, si es no respondido debe rendizarse el boton de reenviar.
+            <div class="flex items-center justify-between p-4 border-b border-lime-200">
+                <span class="text-lg text-gray-700 font-semibold">Email@Test.com</span>
+
+                <div class="flex items-center gap-4">
+                    <span class="px-3 py-1 rounded-full border border-yellow-700 text-yellow-700 bg-yellow-100 text-sm font-semibold">
+                        Pendiente
+                    </span>
+
+                    <button class="px-4 py-2 bg-red-400 hover:bg-red-500 text-white rounded-full font-semibold shadow">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
         <div class="flex items-center justify-between p-4 border-b border-lime-200">
             <span class="text-lg text-gray-700 font-semibold">Email@Test.com</span>
 
             <div class="flex items-center gap-4">
-                <span class="px-3 py-1 rounded-full border border-yellow-700 text-yellow-700 bg-yellow-100 text-sm font-semibold">
-                    Pendiente
-                </span>
-
-                <button class="px-4 py-2 bg-red-400 hover:bg-red-500 text-white rounded-full font-semibold shadow">
-                    Cancel
-                </button>
-            </div>
-        </div>
-
-        <!-- FILA 2 -->
-        <div class="flex items-center justify-between p-4 border-b border-lime-200">
-            <span class="text-lg text-gray-700 font-semibold">Email@Test.com</span>
-
-            <div class="flex items-center gap-4">
-                <span class="px-3 py-1 rounded-full border border-red-500 text-red-600 bg-red-100 text-sm font-semibold">
-                    No respondida
-                </span>
-
-                <button class="px-4 py-2 bg-yellow-300 hover:bg-yellow-400 text-gray-800 rounded-full font-semibold shadow">
-                    Reenviar
-                </button>
-            </div>
-        </div>
-
-        <!-- FILA 3 -->
-        <div class="flex items-center justify-between p-4">
-            <span class="text-lg text-gray-700 font-semibold">Email@Test.com</span>
-
-            <span class="px-3 py-1 rounded-full border border-green-500 text-green-600 bg-green-100 text-sm font-semibold">
-                Aceptada
+            <span class="px-3 py-1 rounded-full border border-yellow-700 text-yellow-700 bg-yellow-100 text-sm font-semibold">
+             No hay resultados
             </span>
-        </div>
-
+            
+            </div>
+            </div>
+    }
     </div>
 </div>
 
