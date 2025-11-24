@@ -111,4 +111,17 @@ internal sealed class UserService : IUserService
 
         return result;
     }
+    
+    public async Task<Result<GetInvitationsResponse>> GetInvitationsTrainer(CancellationToken cancellationToken)
+    {
+        var result = await _fitTechApiClient.GetInvitationsAsync(cancellationToken);
+
+        if (!result.Succeeded)
+        {
+            return result.MapFailure<GetInvitationsResponse>();
+        }
+        
+        return result;
+
+    }
 }

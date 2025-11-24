@@ -15,4 +15,5 @@ public interface IUserService
 
     Task<Result> LogoutAsync(CancellationToken cancellationToken);
     Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken);
+    Task<Result<GetInvitationsResponse>> GetInvitationsTrainer(CancellationToken cancellationToken);
 }
