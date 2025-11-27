@@ -1,5 +1,6 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using FitTech.WebComponents.Models;
 
 namespace FitTech.WebComponents.Services;

@@ -1,5 +1,6 @@
 using AwesomeAssertions;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using FitTech.Domain.Enums;
 using FitTech.TestingSupport;
 using FitTech.TestingSupport.Assertions;
@@ -19,7 +20,7 @@ public class TrainerFeatures
         var email = FitTechEmailTestExtensions.GetTestEmail(Guid.NewGuid().ToString()[..4]);
         var password = "TestPassword1234!";
         
-        var request = new ApiClient.RegisterTrainerRequest()
+        var request = new RegisterTrainerRequest()
         {
           FirstName  = "Test",
           LastName = "Test1",
@@ -30,7 +31,7 @@ public class TrainerFeatures
         var result = await client.RegisterTrainerAsync(request, CancellationToken.None);
         result.Succeeded.Should().BeTrue();
         
-        var loginRequest = new ApiClient.LoginRequest()
+        var loginRequest = new LoginRequest()
         {
             Email = email,
             Password = password

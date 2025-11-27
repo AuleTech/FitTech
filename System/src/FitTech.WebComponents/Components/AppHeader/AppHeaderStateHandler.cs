@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace FitTech.WebComponents.Components.AppHeader;
 
@@ -7,7 +8,7 @@ public class AppHeaderStateHandler
     public List<RenderFragment> HeaderButtons { get; } = new();
     public event Action? OnChange;
 
-    public void AddButton(string iconName, Func<Task> onClickAsync, string? tooltip = null)
+    public void AddButton(string iconName, EventCallback<MouseEventArgs> onClickAsync, string? tooltip = null)
     {
         HeaderButtons.Add(builder =>
         {

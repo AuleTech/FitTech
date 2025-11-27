@@ -1,39 +1,79 @@
 @page "/usermanager"
 @inject AppHeaderStateHandler AppHeaderStateHandler
-@inject NavigationManager NavigationManager
+@inject IFitTechApiClient ApiClient
+@inject ILogger<CustomerManager> Logger
 
 @page "/gestion-clientes"
+@using System.ComponentModel.DataAnnotations
 @using Blazor.Heroicons
+@using FitTech.API.Client
+@using FitTech.ApiClient
+@using FitTech.ApiClient.Generated
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Components.Inputs
 @using FitTech.WebComponents.Components.Modals
 @using FitTech.WebComponents.Styles.Enums
 
-<FitTechModal @ref="_modal">
-    <FitTechModalHeader>
-        Prueba
-    </FitTechModalHeader>
-    <FitTechModalBody>
-        <FitTechInput placeholder="Soy jisus" bind-Value="@InputValue" ></FitTechInput>
-        <FitTechButton Color="Color.Error" Icon="@HeroiconName.ArrowDownRight"></FitTechButton>
-    </FitTechModalBody>
-</FitTechModal>
+<EditForm Model="Model" OnValidSubmit="SubmitAsync" FormName="ClientInvitation">
+    <DataAnnotationsValidator/>
+    <FitTechModal @ref="_modal">
+        <FitTechModalHeader>
+            Invitar Cliente
+            <p class="text-xs font-light text-fittech-gray-secondary text-wrap max-w-sm pt-[6px]">Envía una invitación a
+                un cliente para poder iniciar el seguimiento</p>
+        </FitTechModalHeader>
+        <FitTechModalBody>
+            <FitTechInput class="w-2/3" Placeholder="Email" @bind-Value="@Model!.Email"/>
+            <ValidationMessage For="@(() => Model!.Email)" class="pt-[4px] text-fittech-red text-xs"/>
+        </FitTechModalBody>
+        <FitTechModalFooter>
+            <FitTechButton Type="ButtonType.Submit" Color="Color.Primary" Label="Enviar"
+                           Icon="@HeroiconName.InboxArrowDown"/>
+        </FitTechModalFooter>
+    </FitTechModal>
+</EditForm>
 
 @code {
     private FitTechModal _modal = null!;
-    private string? InputValue { get; set; }
-    
+    [SupplyParameterFromForm] public ClientInvitationModel? Model { get; set; }
+
     protected override void OnInitialized()
     {
+        Model ??= new();
+
         AppHeaderStateHandler.Clear();
-        AppHeaderStateHandler.AddButton(HeroiconName.Plus, () =>
-        {
-            _modal.Open();
-            return Task.CompletedTask;
-        }, "Añadir usuario");
+        AppHeaderStateHandler.AddButton(HeroiconName.Plus, EventCallback.Factory.Create<MouseEventArgs>(this, HandleClick), "Añadir usuario");
 
         base.OnInitialized();
+    }
+
+    private void HandleClick(MouseEventArgs e)
+    {
+        _modal.Open();
+    }
+
+    public async Task SubmitAsync()
+    {
+        var result = await ApiClient.SendInvitationAsync(new InviteClientRequest()
+        {
+            ClientEmail = Model!.Email
+        }, CancellationToken.None);
+
+        if (!result.Succeeded)
+        {
+            Logger.LogError($"Error sending invitation: {result}");
+        }
+
+        Model = new();
+        //Show Toast or Snack bar: Invitación enviada
+    }
+
+    public class ClientInvitationModel
+    {
+        [Required(ErrorMessage = "El email es obligatorio")]
+        [EmailAddress(ErrorMessage = "El email no es válido")]
+        public string Email { get; set; } = null!;
     }
 
 }

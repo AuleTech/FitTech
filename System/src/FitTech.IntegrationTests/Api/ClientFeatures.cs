@@ -1,6 +1,7 @@
 ﻿using AwesomeAssertions;
 using Bogus;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using FitTech.Domain.Aggregates.TrainerAggregate;
 using FitTech.TestingSupport;
 using FitTech.TestingSupport.Assertions;

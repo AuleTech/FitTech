@@ -39,6 +39,11 @@ internal class RegisterClientCommandHandler : TransactionCommandHandler<Register
 
         var trainer = await _trainerRepository.GetByInvitationId(command.InvitationId, cancellationToken);
 
+        if (trainer is null)
+        {
+            return Result.Failure("Trainer not found");
+        }
+        
         var canRegisterClient = trainer.CanRegisterClient(command.InvitationId, command.Credentials.Email);
 
         if (!canRegisterClient.Succeeded)

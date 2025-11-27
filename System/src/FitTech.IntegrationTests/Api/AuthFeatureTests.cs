@@ -1,5 +1,6 @@
 ﻿using AuleTech.Core.Resiliency;
 using AwesomeAssertions;
+using FitTech.ApiClient.Generated;
 using FitTech.Domain.Enums;
 using FitTech.TestingSupport;
 using FitTech.TestingSupport.Assertions;
@@ -19,7 +20,7 @@ public class AuthFeatureTests
 
         var testCredentials = await client.GetTestTrainerCredentialsAsync(CancellationToken.None);
         
-        var forgotPasswordRequest = new ApiClient.ForgotPasswordRequest()
+        var forgotPasswordRequest = new ForgotPasswordRequest()
         {
           Email  = testCredentials.Email,
           CallbackUrl = "www.url.com"
@@ -30,7 +31,7 @@ public class AuthFeatureTests
         
         var token = await GetTokenFromEmailAsync();
 
-        var resetPasswordRequest = new ApiClient.ResetPasswordRequest()
+        var resetPasswordRequest = new ResetPasswordRequest()
         {
             Email = forgotPasswordRequest.Email,
             Token = token,
@@ -41,7 +42,7 @@ public class AuthFeatureTests
         resetPasswordResponse.Succeeded.Should().BeTrue();
         
         
-        var loginRequest = new ApiClient.LoginRequest()
+        var loginRequest = new LoginRequest()
         {
             Email = forgotPasswordRequest.Email,
             Password = resetPasswordRequest.NewPassword

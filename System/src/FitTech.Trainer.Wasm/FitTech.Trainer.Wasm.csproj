@@ -7,10 +7,10 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\app.css"/>
-    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\AddNewClient.razor" />
-    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\ConfirmDataForm.razor" />
-    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\DetailForm.razor" />
-    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\PersonalInformationForm.razor" />
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\AddNewClient.razor"/>
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\ConfirmDataForm.razor"/>
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\DetailForm.razor"/>
+    <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\PersonalInformationForm.razor"/>
   </ItemGroup>
 
   <ItemGroup>

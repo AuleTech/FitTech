@@ -1,5 +1,6 @@
 using FitTech.API.Client.Configuration;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

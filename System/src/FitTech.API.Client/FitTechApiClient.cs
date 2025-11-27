@@ -1,6 +1,7 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client.Configuration;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using Result = AuleTech.Core.Patterns.Result.Result;
 
 namespace FitTech.API.Client;
@@ -22,6 +23,20 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         _proxy = new Proxy(client);
     }
 
+    public async Task<Result<TResponse>> ExecuteRequestAsync<TResponse>(
+        Func<Proxy, Task<TResponse>> requestFunc)
+    {
+        try
+        {
+            var response = await requestFunc(_proxy);
+            return Result<TResponse>.Success(response);
+        }
+        catch (Exception e)
+        {
+            return Result<TResponse>.Failure(e.Message);
+        }
+    }
+
     public async Task<Result<LoginResponse>> LoginAsync(LoginRequest loginRequest, CancellationToken cancellationToken)
     {
         try
@@ -39,16 +54,8 @@ internal sealed class FitTechApiClient : IFitTechApiClient
     public async Task<Result<string>> RefreshTokenAsync(RefreshTokenRequest refreshTokenRequest,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await _proxy.RefreshTokenEndpointAsync(refreshTokenRequest, cancellationToken);
-
-            return Result<string>.Success(result);
-        }
-        catch (Exception ex)
-        {
-            return Result<string>.Failure(ex.Message);
-        }
+        var result = await _proxy.RefreshTokenEndpointAsync(refreshTokenRequest, cancellationToken);
+        return Result<string>.Success(result);
     }
 
     public async Task<Result<string>> ForgotPasswordAsync(ForgotPasswordRequest forgotPasswordRequest,
@@ -131,7 +138,7 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         }
         catch (Exception ex)
         {
-            return Result.Failure(ex.Message);
+            return Result.Failure(ex.ToString());
         }
     }
 

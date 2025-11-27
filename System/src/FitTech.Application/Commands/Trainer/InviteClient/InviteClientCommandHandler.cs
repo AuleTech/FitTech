@@ -40,7 +40,7 @@ internal class InviteClientCommandHandler : IInviteClientCommandHandler
         if (trainer is null)
         {
             _logger.LogError("Trainer('{TrainerId}') not found", command.TrainerId);
-            return Result.Failure("Trainer not found");
+            throw new UnauthorizedAccessException("Trainer not found");
         }
 
         var invitationResult = trainer.InviteClient(command.ClientEmail);

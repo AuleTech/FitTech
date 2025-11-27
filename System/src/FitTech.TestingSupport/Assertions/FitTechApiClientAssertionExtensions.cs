@@ -1,6 +1,7 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using AwesomeAssertions;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 
 namespace FitTech.TestingSupport.Assertions;
 
