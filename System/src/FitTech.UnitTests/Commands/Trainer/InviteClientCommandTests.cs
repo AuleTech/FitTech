@@ -45,12 +45,11 @@ internal class InviteClientCommandTests : BaseCqrsUnitTest<InviteClientCommand, 
     }
 
     [Test]
-    public async Task InviteClientCommand_WhenTrainerNotFound_ReturnsFailed()
+    public async Task InviteClientCommand_WhenTrainerNotFound_ThrowsUnauthorizedException()
     {
         var sut = CreateSut();
-        var result = await sut.HandleAsync(CreateRequest(), CancellationToken.None);
-        result.Succeeded.Should().BeFalse();
-        result.Errors.Length.Should().Be(1);
+        var act = async () => await sut.HandleAsync(CreateRequest(), CancellationToken.None);
+        await act.Should().ThrowAsync<UnauthorizedAccessException>();
     }
 
     [Test]
