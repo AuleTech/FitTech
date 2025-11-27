@@ -9,7 +9,7 @@ public class RegisterTrainerEmailTemplate : IEmailTemplate
     }
 
     public string Subject { get; } = "¡Bienvenido a FitTech!";
-    public MessageType MessageType { get; } = MessageType.TrainerRegister;
+    public EmailType EmailType { get; } = EmailType.TrainerRegister;
 
 
     public string GetBody()

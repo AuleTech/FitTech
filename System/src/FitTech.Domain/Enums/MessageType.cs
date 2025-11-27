@@ -1,6 +1,6 @@
 ﻿namespace FitTech.Domain.Enums;
 
-public enum MessageType
+public enum EmailType
 {
     ResetPassword,
     ClientRegister,

@@ -59,7 +59,7 @@ namespace FitTech.Persistence.Migrations
                     ClientId = table.Column<Guid>(type: "uuid", nullable: false),
                     TrainingDaysPerWeek = table.Column<int>(type: "integer", nullable: false),
                     FavouriteExercises = table.Column<Guid[]>(type: "uuid[]", nullable: false),
-                    Goal = table.Column<int>(type: "integer", nullable: false),
+                    Goal = table.Column<string>(type: "nvarchar", nullable: false),
                     CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -75,7 +75,7 @@ namespace FitTech.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ExternalId = table.Column<Guid>(type: "uuid", nullable: false),
                     Receiver = table.Column<string>(type: "text", nullable: false),
-                    MessageType = table.Column<int>(type: "integer", nullable: false),
+                    EmailType = table.Column<string>(type: "nvarchar", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
                     CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -249,7 +249,7 @@ namespace FitTech.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TrainerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar", nullable: false),
                     Code = table.Column<int>(type: "integer", nullable: false),
                     CreatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

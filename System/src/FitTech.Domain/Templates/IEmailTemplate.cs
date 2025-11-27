@@ -5,7 +5,7 @@ namespace FitTech.Domain.Templates;
 public interface IEmailTemplate
 {
     string Subject { get; }
-    MessageType MessageType { get; }
+    EmailType EmailType { get; }
 
     string GetBody();
 }

@@ -12,7 +12,7 @@ public class ResetPasswordTemplate : IEmailTemplate
     }
 
     public string Subject { get; } = "Reestablece tu contraseña";
-    public MessageType MessageType { get; } = MessageType.ResetPassword;
+    public EmailType EmailType { get; } = EmailType.ResetPassword;
 
 
     public string GetBody()
