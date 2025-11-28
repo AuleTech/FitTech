@@ -2,6 +2,7 @@
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject IUserService _userService;
 @using FitTech.ApiClient
+@using FitTech.ApiClient.Generated
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Services
 @inherits FitTech.WebComponents.Components.CancellableComponent
@@ -39,7 +40,7 @@
                                 Cancelar
                             </button>
                         }
-                        else if (item.Status == "NoRespondido")
+                        else if (item.Status == "Expired")
                         {
                             <span class="px-3 py-1 rounded-full border border-blue-700 text-blue-700 bg-blue-100 text-sm font-semibold">
                                 No Respondido
@@ -49,11 +50,15 @@
                                 Reenviar
                             </button>
                         }
-                        else
+                        else if(item.Status =="InProgress")
                         {
-                            <span class="px-3 py-1 rounded-full border border-gray-700 text-gray-700 bg-gray-100 text-sm font-semibold">
-                                @item.Status
+                            <span class="px-3 py-1 rounded-full border border-b-green-700-700 text-green-700 bg-green-100 text-sm font-semibold">
+                                En Proceso
                             </span>
+
+                            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-800 text-white rounded-full font-semibold shadow">
+                                Cancelar
+                            </button>
                         }
                     </div>
                 </div>
@@ -62,7 +67,7 @@
         else
         {
             <div class="p-4 text-gray-500 text-center">
-                No hay resultados
+                No hay invitaciones en proceso, pendientes o expiradas.
             </div>
         }
 

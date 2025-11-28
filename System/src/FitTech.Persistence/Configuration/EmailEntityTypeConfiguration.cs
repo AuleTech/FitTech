@@ -10,7 +10,7 @@ public sealed class EmailEntityTypeConfiguration : IEntityTypeConfiguration<Emai
     public void Configure(EntityTypeBuilder<Email> builder)
     {
         builder.Property<EmailType>(x => x.EmailType)
-            .HasColumnType("nvarchar")
+            .HasColumnType("varchar")
             .HasConversion(x => x.ToString(), x => Enum.Parse<EmailType>(x, true));
     }
 }
