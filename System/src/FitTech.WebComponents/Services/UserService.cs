@@ -1,6 +1,7 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Models;
 using FitTech.WebComponents.Persistence;

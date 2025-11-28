@@ -14,7 +14,7 @@ public class RegisterClientEmailTemplate : IEmailTemplate
     }
 
     public string Subject { get; } = "¡Bienvenido a FitTech!";
-    public MessageType MessageType { get; } = MessageType.ClientRegister;
+    public EmailType EmailType { get; } = EmailType.ClientRegister;
 
 
     public string GetBody()

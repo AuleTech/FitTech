@@ -2,8 +2,10 @@
 using System.Net.Http.Headers;
 using FitTech.API.Client;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using FitTech.WebComponents.Models;
 using FitTech.WebComponents.Persistence;
+using Microsoft.AspNetCore.Components;
 
 namespace FitTech.WebComponents.Authentication;
 
@@ -11,11 +13,14 @@ namespace FitTech.WebComponents.Authentication;
 public class FitTechDelegationHandler : DelegatingHandler
 {
     private readonly IFitTechApiClient _apiClient;
+    private readonly NavigationManager _navigationManager;
     private readonly IStorage _storage;
 
-    public FitTechDelegationHandler(IStorage storage, IFitTechApiClientFactory apiClientFactory)
+    public FitTechDelegationHandler(IStorage storage, IFitTechApiClientFactory apiClientFactory,
+        NavigationManager navigationManager)
     {
         _storage = storage;
+        _navigationManager = navigationManager;
         _apiClient = apiClientFactory.Create();
     }
 
@@ -49,19 +54,20 @@ public class FitTechDelegationHandler : DelegatingHandler
                     new RefreshTokenRequest { RefreshToken = user.RefreshToken, ExpiredAccessToken = user.AccessToken },
                     cancellationToken);
 
-                if (!refreshedToken.Succeeded)
-                {
-                    return response;
-                }
-
-                user.AccessToken = refreshedToken.Value;
+                user.AccessToken = refreshedToken.Value!;
 
                 await _storage.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", user.AccessToken);
                 return await base.SendAsync(request, cancellationToken);
             }
-            catch (Exception)
+            catch (ApiException ex)
             {
+                if (ex.StatusCode == (int)HttpStatusCode.Unauthorized)
+                {
+                    await _storage.ClearAsync(cancellationToken);
+                    _navigationManager.NavigateTo("/", true);
+                }
+
                 return response;
             }
         }

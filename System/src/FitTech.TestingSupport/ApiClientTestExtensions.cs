@@ -2,6 +2,7 @@
 using Bogus;
 using FitTech.API.Client;
 using FitTech.ApiClient;
+using FitTech.ApiClient.Generated;
 using FitTech.TestingSupport.Models;
 
 namespace FitTech.TestingSupport;

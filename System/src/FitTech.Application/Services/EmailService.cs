@@ -47,7 +47,7 @@ internal sealed class EmailService : IEmailService
 
         async Task CreateLogEmailResetAsync()
         {
-            var emailLog = new Email(response.Content, to, template.MessageType,
+            var emailLog = new Email(response.Content, to, template.EmailType,
                 response.Success ? nameof(EmailStatus.Delivered) : "Failed");
             await _emailRepository.AddAsync(emailLog, cancellationToken);
         }

@@ -59,7 +59,7 @@ internal sealed class RefreshTokenQueryHandler : IRefreshTokenQueryHandler
         if (!isValid)
         {
             _logger.LogWarning("Need to reintroduce credentials");
-            return new RefreshTokenResultDto(string.Empty, true);
+            throw new UnauthorizedAccessException("Need to reintroduce credentials");
         }
 
         return new RefreshTokenResultDto(_tokenProvider.GenerateAccessToken(user), false);

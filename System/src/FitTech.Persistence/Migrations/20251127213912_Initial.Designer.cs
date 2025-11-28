@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FitTech.Persistence.Migrations
 {
     [DbContext(typeof(FitTechDbContext))]
-    [Migration("20251017103058_Initial")]
+    [Migration("20251127213912_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -225,8 +225,9 @@ namespace FitTech.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("uuid[]");
 
-                    b.Property<int>("Goal")
-                        .HasColumnType("integer");
+                    b.Property<string>("Goal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar");
 
                     b.Property<int>("TrainingDaysPerWeek")
                         .HasColumnType("integer");
@@ -248,11 +249,12 @@ namespace FitTech.Persistence.Migrations
                     b.Property<DateTime>("CreatedUtc")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("EmailType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar");
+
                     b.Property<Guid>("ExternalId")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("MessageType")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Receiver")
                         .IsRequired()
@@ -286,8 +288,9 @@ namespace FitTech.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar");
 
                     b.Property<Guid>("TrainerId")
                         .HasColumnType("uuid");

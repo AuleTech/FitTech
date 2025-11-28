@@ -1,5 +1,4 @@
-﻿using AuleTech.Core.Patterns.CQRS;
-using AuleTech.Core.Patterns.CQRS.Validations;
+﻿using AuleTech.Core.Patterns.CQRS.Validations;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Domain.Enums;
 using FitTech.Domain.Seedwork;
@@ -13,19 +12,20 @@ public class ClientSettings : Entity
     public Guid[] FavouriteExercises { get; private set; } = [];
     public TrainingGoal Goal { get; private set; }
 
-    internal static Result<ClientSettings> Create(Guid clientId, int trainingDaysPerWeek, Guid[] favouriteExercises, TrainingGoal goal)
+    internal static Result<ClientSettings> Create(Guid clientId, int trainingDaysPerWeek, Guid[] favouriteExercises,
+        TrainingGoal goal)
     {
         var errors = new List<string>();
-        
+
         clientId.ValidateNotEmpty(errors, nameof(clientId));
-        trainingDaysPerWeek.ValidateBetween(0,7, errors, nameof(trainingDaysPerWeek));
+        trainingDaysPerWeek.ValidateBetween(0, 7, errors, nameof(trainingDaysPerWeek));
 
         if (errors.Any())
         {
             return Result<ClientSettings>.Failure(errors);
         }
 
-        return new ClientSettings()
+        return new ClientSettings
         {
             Id = Guid.CreateVersion7(),
             ClientId = clientId,

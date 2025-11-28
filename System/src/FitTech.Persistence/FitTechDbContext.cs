@@ -25,6 +25,9 @@ public class FitTechDbContext : IdentityDbContext<FitTechUser, FitTechRole, Guid
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new ClientEntityTypeConfiguration());
+        builder.ApplyConfiguration(new EmailEntityTypeConfiguration());
+        builder.ApplyConfiguration(new InvitationEntityTypeConfiguration());
+        builder.ApplyConfiguration(new ClientSettingsEntityConfiguration());
         
         base.OnModelCreating(builder);
     }

@@ -1,5 +1,4 @@
-﻿using AuleTech.Core.Patterns.CQRS;
-using AuleTech.Core.Patterns.CQRS.Validations;
+﻿using AuleTech.Core.Patterns.CQRS.Validations;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Domain.Enums;
 using FitTech.Domain.Seedwork;
@@ -9,14 +8,14 @@ namespace FitTech.Domain.Aggregates.TrainerAggregate;
 
 public class Invitation : Entity
 {
+    internal Invitation()
+    {
+    }
+
     public Guid TrainerId { get; private set; }
     public string Email { get; private set; } = null!;
     public InvitationStatus Status { get; private set; }
     public int Code { get; private set; }
-    
-    internal Invitation()
-    {
-    }
 
     internal static Result<Invitation> Create(Guid trainerId, string email)
     {
@@ -29,7 +28,7 @@ public class Invitation : Entity
             return Result<Invitation>.Failure(errors);
         }
 
-        return new Invitation()
+        return new Invitation
         {
             TrainerId = trainerId,
             Email = email,
@@ -46,7 +45,7 @@ public class Invitation : Entity
         }
 
         Status = InvitationStatus.InProgress;
-        
+
         return Result.Success;
     }
 
@@ -58,7 +57,7 @@ public class Invitation : Entity
         }
 
         Status = InvitationStatus.Completed;
-        
+
         return Result.Success;
     }
 }

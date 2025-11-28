@@ -1,0 +1,652 @@
+{
+  "x-generator": "NSwag v14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FitTech.API",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5165"
+    }
+  ],
+  "paths": {
+    "/user/get-current": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "GetCurrentUserEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/Trainer/TrainerSettings": {
+      "get": {
+        "tags": [
+          "Trainer"
+        ],
+        "operationId": "GetTrainerSettingsEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrainerDataDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/trainer/validate-invitation": {
+      "get": {
+        "tags": [
+          "Trainer"
+        ],
+        "operationId": "ValidateInvitationEndpoint",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "guid"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/trainer/register": {
+      "post": {
+        "tags": [
+          "Trainer"
+        ],
+        "operationId": "RegisterTrainerEndpoint",
+        "requestBody": {
+          "x-name": "RegisterTrainerRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterTrainerRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/trainer/invite-client": {
+      "post": {
+        "tags": [
+          "Trainer"
+        ],
+        "operationId": "InviteClientEndpoint",
+        "requestBody": {
+          "x-name": "InviteClientRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteClientRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/trainer/invitations": {
+      "get": {
+        "tags": [
+          "Trainer"
+        ],
+        "operationId": "GetInvitationsEndpoint",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetInvitationsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/client/register": {
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "operationId": "RegisterClientEndpoint",
+        "requestBody": {
+          "x-name": "RegisterClientRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterClientRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "ResetPasswordEndpoint",
+        "requestBody": {
+          "x-name": "ResetPasswordRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "RefreshTokenEndpoint",
+        "requestBody": {
+          "x-name": "RefreshTokenRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "LoginEndpoint",
+        "requestBody": {
+          "x-name": "LoginRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "ForgotPasswordEndpoint",
+        "requestBody": {
+          "x-name": "ForgotPasswordRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserInfoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "UserName": {
+            "type": "string"
+          }
+        }
+      },
+      "TrainerDataDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string"
+          }
+        }
+      },
+      "ValidateInvitationRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "RegisterTrainerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string"
+          }
+        }
+      },
+      "InviteClientRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ClientEmail": {
+            "type": "string"
+          }
+        }
+      },
+      "GetInvitationsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Invitations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvitationDto"
+            }
+          }
+        }
+      },
+      "InvitationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ClientEmail": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "CreatedUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RegisterClientRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "InvitationId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "Information": {
+            "$ref": "#/components/schemas/PersonInfoDto"
+          },
+          "Credentials": {
+            "$ref": "#/components/schemas/CredentialsDto"
+          },
+          "TrainingSettings": {
+            "$ref": "#/components/schemas/TrainingSettingsDto"
+          },
+          "BodyMeasurement": {
+            "$ref": "#/components/schemas/BodyMeasurementDto"
+          }
+        }
+      },
+      "PersonInfoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "PhoneNumber": {
+            "type": "string"
+          },
+          "BirthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "Address": {
+            "$ref": "#/components/schemas/AddressDto"
+          }
+        }
+      },
+      "AddressDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "City": {
+            "type": "string"
+          },
+          "Country": {
+            "type": "string"
+          }
+        }
+      },
+      "CredentialsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Email": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string"
+          }
+        }
+      },
+      "TrainingSettingsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "TotalDaysPerWeek": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Goal": {
+            "$ref": "#/components/schemas/TrainingGoalEnumDto"
+          },
+          "FavouriteExercises": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "guid"
+            }
+          }
+        }
+      },
+      "TrainingGoalEnumDto": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "LoseWeight",
+          "BodyBuilding",
+          "Recovery"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "BodyMeasurementDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Hip": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "MaxThigh": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "Biceps": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "XShoulders": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "Chest": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "Height": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "Weight": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "ResetPasswordRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Email": {
+            "type": "string"
+          },
+          "Token": {
+            "type": "string"
+          },
+          "NewPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "RefreshTokenRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "RefreshToken": {
+            "type": "string"
+          },
+          "ExpiredAccessToken": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "AccessToken": {
+            "type": "string"
+          },
+          "RefreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Email": {
+            "type": "string"
+          },
+          "Password": {
+            "type": "string"
+          }
+        }
+      },
+      "ForgotPasswordRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Email": {
+            "type": "string"
+          },
+          "CallbackUrl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWTBearerAuth": {
+        "type": "http",
+        "description": "Enter a JWT token to authorize the requests...",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

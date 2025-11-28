@@ -1,19 +1,20 @@
+@using Blazor.Heroicons
 @if (IsVisible)
 {
     <div class="fixed inset-0 flex items-center justify-center bg-fittech-dark/50 z-50">
         <div
-            class="relative bg-fittech-white border-2 border-fittech-green rounded-2xl shadow-md p-6 flex flex-col gap-4 w-[400px] h-[300px]">
-            
+            class="relative bg-fittech-white border-2 border-fittech-green rounded-2xl shadow-md p-6 flex flex-col gap-4">
+
             <button class="absolute top-3 right-3 text-gray-500 hover:text-fittech-green transition z-10"
                     @onclick="Close">
-                ✕
+                <Heroicon Name="@HeroiconName.XMark" class="w-6 h-6 text-semibold"></Heroicon>
             </button>
 
-            <div class="text-xl font-semibold text-fittech-dark pb-2">
+            <div class="text-xl font-semibold text-fittech-dark p-1 px-3 items-center content-center">
                 @FitTechModalHeader
             </div>
 
-            <div class="text-base text-fittech-dark flex-1 overflow-auto">
+            <div class="text-base text-fittech-dark flex flex-col items-center overflow-auto p-1">
                 @FitTechModalBody
             </div>
 

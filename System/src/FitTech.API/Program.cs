@@ -48,6 +48,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app
+    .UseGlobalExceptionHandler()
     .UseHttpsRedirection()
     .UseCors("FitTechCorsPolicy")
     .UseAuthentication()

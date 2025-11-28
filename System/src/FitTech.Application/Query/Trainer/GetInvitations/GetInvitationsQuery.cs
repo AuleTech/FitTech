@@ -10,7 +10,7 @@ public record GetInvitationsQuery(Guid TrainerId) : IQuery, IValidator
     public Result Validate()
     {
         var errors = new List<string>();
-        
+
         TrainerId.ValidateNotEmpty(errors, nameof(TrainerId));
 
         return errors.ToResult();

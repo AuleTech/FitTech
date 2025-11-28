@@ -1,13 +1,13 @@
 @using System.Diagnostics.CodeAnalysis
 @inherits InputBase<string?>
 
-<input @bind="CurrentValue" id="@Id" class="@CssClass @DefaultCssClass" @oninput="OnInput" />
+<input @bind="CurrentValue" id="@Id" placeholder="@Placeholder" class="@CssClass @DefaultCssClass" @oninput="OnInput"/>
 
 @code {
-    private const string DefaultCssClass = "w-32 sm:w-36 border border-fittech-green rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-fittech-dark";
-    public string? Id { get; set; }
-    [Parameter]
-    public EventCallback<ChangeEventArgs> OnInput { get; set; }
+    private const string DefaultCssClass = "border border-fittech-green rounded px-2 py-1 text-xs";
+    [Parameter] public string? Placeholder { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> OnInput { get; set; }
 
     protected override bool TryParseValueFromString(string? value, out string? result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
@@ -15,4 +15,5 @@
         validationErrorMessage = null;
         return true;
     }
+
 }

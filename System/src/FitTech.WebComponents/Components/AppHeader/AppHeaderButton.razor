@@ -1,10 +1,11 @@
 
 @using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Styles.Enums
 <div class="relative group">
     <!-- Button -->
     <div
         class="hover:border-white px-2 py-1 rounded flex items-center justify-center transition-transform active:scale-95 active:shadow-inner">
-        <FitTechButton Type="FitTechButton.ButtonType.GreenSquare" Icon="@IconName"/>
+        <FitTechButton OnClick="@Delegate" Shape="Shape.Square" Size="Size.Small" Icon="@IconName"/>
     </div>
 
     @if (!string.IsNullOrWhiteSpace(Tooltip))
@@ -23,7 +24,7 @@
 
 @code
 {
-    [Parameter] public Func<Task> Delegate { get; set; } = null!;
+    [Parameter] public EventCallback<MouseEventArgs> Delegate { get; set; }
     [Parameter] public string IconName { get; set; } = null!;
     [Parameter] public string? Tooltip { get; set; }
 }
