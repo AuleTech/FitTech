@@ -86,5 +86,10 @@
         // Asegúrate de que response.Data sea la lista de invitaciones
         items = response.Value?.Invitations?.ToList() ?? new List<InvitationDto>();
 
+        foreach (var item in items)
+        {
+            Console.WriteLine("Datos", item.ClientEmail, item.Status, item.CreatedUtc);
+        }
+
     }
 }
