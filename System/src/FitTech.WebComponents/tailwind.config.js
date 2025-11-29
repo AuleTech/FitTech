@@ -13,6 +13,7 @@ module.exports = {
                 'fittech-white': '#E5EBEA',
                 'fittech-gray-secondary': '#979797',
                 'fittech-red': '#EF5D60',
+                'fittech-yellow': '#EFEF5D',
             }
         }
     },

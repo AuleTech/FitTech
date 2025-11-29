@@ -1,11 +1,17 @@
 @page "/configurationpage"
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject IUserService _userService;
+@using System.Drawing
+@using Blazor.Heroicons
 @using FitTech.ApiClient
 @using FitTech.ApiClient.Generated
 @using FitTech.WebComponents.Components.AppHeader
+@using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Services
 @inherits FitTech.WebComponents.Components.CancellableComponent
+@using FitTech.WebComponents.Styles.Enums
+@using Color = FitTech.WebComponents.Styles.Enums.Color
+@using Size = FitTech.WebComponents.Styles.Enums.Size
 
 @layout ConfigurationLayout
 
@@ -22,45 +28,57 @@
         {
             @foreach (var item in items)
             {
-                <div class="flex items-center justify-between p-4 border-b border-lime-200">
-                    
-                    <!-- EMAIL -->
-                    <span class="text-lg text-gray-700 font-semibold">@item.ClientEmail</span>
+                <div class="relative flex items-center p-4 border-b border-lime-200">
 
-                    <div class="flex items-center gap-4">
+                    <!-- EMAIL (izquierda) -->
+                    <span class="text-lg text-gray-700 font-semibold">
+                        @item.ClientEmail
+                    </span>
 
-                        <!-- ESTADO -->
+                    <!-- ESTADO (CENTRADO REAL ABSOLUTO) -->
+                    <div class="absolute left-1/2 -translate-x-1/2 flex justify-center">
                         @if (item.Status == "Pending")
                         {
-                            <span class="px-3 py-1 rounded-full border border-yellow-700 text-yellow-700 bg-yellow-100 text-sm font-semibold">
+                            <span class="px-3 py-1 rounded-full border border-yellow-700 text-yellow-700 bg-white text-sm font-semibold">
                                 Pendiente
                             </span>
-
-                            <button class="px-4 py-2 bg-red-400 hover:bg-red-500 text-white rounded-full font-semibold shadow">
-                                Cancelar
-                            </button>
                         }
                         else if (item.Status == "Expired")
                         {
-                            <span class="px-3 py-1 rounded-full border border-blue-700 text-blue-700 bg-blue-100 text-sm font-semibold">
+                            <span class="px-3 py-1 rounded-full border border-b-red-500 text-amber-800 bg-white text-sm font-semibold">
                                 No Respondido
                             </span>
-
-                            <button class="px-4 py-2 bg-lime-400 hover:bg-lime-500 text-white rounded-full font-semibold shadow">
-                                Reenviar
-                            </button>
                         }
                         else if(item.Status =="InProgress")
                         {
-                            <span class="px-3 py-1 rounded-full border border-b-green-700-700 text-green-700 bg-green-100 text-sm font-semibold">
+                            <span class="px-3 py-1 rounded-full border border-b-purple-800 text-pink-950 bg-white text-sm font-semibold">
                                 En Proceso
                             </span>
-
-                            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-800 text-white rounded-full font-semibold shadow">
-                                Cancelar
-                            </button>
+                        }
+                        else if (item.Status == "Aceptado")
+                        {
+                            <span class="px-3 py-1 rounded-full border border-b-green-700 text-green-700 bg-white text-sm font-semibold">
+                                Aceptada
+                            </span>
                         }
                     </div>
+
+                    <!-- BOTÓN (derecha) -->
+                    <div class="ml-auto">
+                        @if (item.Status == "Pending")
+                        {
+                            <FitTechButton Color="Color.Secondary" Size="Size.Medium" Label="Cancelar" Icon="@HeroiconName.Check"/>
+                        }
+                        else if (item.Status == "Expired")
+                        {
+                            <FitTechButton Color="Color.Tertiary" Size="Size.Medium" Label="Reenviar" Icon="@HeroiconName.Check"/>
+                        }
+                        else if(item.Status =="InProgress")
+                        {
+                            <FitTechButton Color="Color.Error" Size="Size.Medium" Label="Cancelar" Icon="@HeroiconName.Check"/>
+                        }
+                    </div>
+
                 </div>
             }
         }
@@ -78,23 +96,56 @@
 @code {
     private List<InvitationDto>? items;
 
-    protected override async Task OnInitializedAsync()
-    {
-        AppHeaderStateHandler.Clear();
-        await GetInvitations(CancellationToken.None);
-    }
-
     public async Task GetInvitations(CancellationToken cancellationToken)
     {
         var response = await _userService.GetInvitationsTrainer(cancellationToken);
-
-        // Asegúrate de que response.Data sea la lista de invitaciones
         items = response.Value?.Invitations?.ToList() ?? new List<InvitationDto>();
+    }
 
-        foreach (var item in items)
+    protected override async Task OnInitializedAsync()
+    {
+        AppHeaderStateHandler.Clear();
+
+        bool usarMock = true;
+
+        if (usarMock)
         {
-            Console.WriteLine("Datos", item.ClientEmail, item.Status, item.CreatedUtc);
+            CargarMockInvitations();
         }
+        else
+        {
+            await GetInvitations(CancellationToken.None);
+        }
+    }
 
+    private void CargarMockInvitations()
+    {
+        items = new List<InvitationDto>
+        {
+            new InvitationDto
+            {
+                ClientEmail = "Email@Test.com",
+                Status = "Pending",
+                CreatedUtc = DateTime.UtcNow.AddDays(-1)
+            },
+            new InvitationDto
+            {
+                ClientEmail = "Email@Test.com",
+                Status = "Expired",
+                CreatedUtc = DateTime.UtcNow.AddDays(-10)
+            },
+            new InvitationDto
+            {
+                ClientEmail = "Email@Test.com",
+                Status = "InProgress",
+                CreatedUtc = DateTime.UtcNow.AddDays(-3)
+            },
+            new InvitationDto
+            {
+                ClientEmail = "Email@Test.com",
+                Status = "Aceptado",
+                CreatedUtc = DateTime.UtcNow.AddDays(-2)
+            }
+        };
     }
 }
