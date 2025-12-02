@@ -1,7 +1,27 @@
-﻿@using FitTech.WebComponents.Components.SideMenu
+﻿@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
+@using FitTech.WebComponents.Components.SideMenu
 @inherits LayoutComponentBase
 
-<body class="bg-white dark:bg-gray-900 flex items-center justify-center min-h-screen transition-colors duration-300">
-<FitTechSideMenu/>
-@Body
+<body class="bg-white dark:bg-gray-900 flex flex-col max-h-screen min-h-screen transition-colors duration-300">
+    <AppHeader/>
+    <div class="flex flex-row grow">
+        <SlideMenuComponent MenuItems="@_menuItems"/>
+        <div class="flex flex-col grow">
+            @Body
+        </div>
+    </div>
 </body>
+
+@code{
+
+    private readonly List<SlideMenuComponent.MenuItem> _menuItems = new()
+    {
+        new SlideMenuComponent.MenuItem("Inicio", "/home", HeroiconName.Home),
+        new SlideMenuComponent.MenuItem("Rutinas", "/workouts", HeroiconName.Scale),
+        new SlideMenuComponent.MenuItem("Gestion de Clientes", "/usermanager", HeroiconName.Clipboard),
+        new SlideMenuComponent.MenuItem("Configuración", "/configurationpage", HeroiconName.Cog8Tooth),
+        new SlideMenuComponent.MenuItem("Cerrar Sesión", "/lougout", HeroiconName.ArrowLeftOnRectangle),
+    };
+
+}

@@ -1,74 +1,101 @@
 @using Blazor.Heroicons
+@using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Styles.Enums
 @inherits CancellableComponent
 
-<aside class="fixed left-0 top-0 h-full bg-fittech-white 
-              shadow-lg transition-all duration-300 ease-in-out 
-              @(_isExpanded ? "w-64" : "w-20")">
-
-    <!-- Logo -->
-    <div class="flex items-center justify-center h-20 border-b border-r border-fittech-green">
-        <h3 class="text-2xl font-bold text-fittech-dark transition-opacity duration-300 ease-in-out 
-                   @(_isExpanded ? "opacity-100" : "opacity-0")">
-            FitTech
-        </h3>
-    </div>
-
-    <!-- Menú -->
-    <ul class="mt-6 space-y-1">
-        @if (MenuItems is not null)
-        {
-            @foreach (var menuItem in MenuItems)
+<aside class="bg-fittech-white 
+              shadow-lg transition-all duration-300 ease-in-out border-r-1 border-r-fittech-green
+              @(_isExpanded ? "w-64" : "w-20")
+              flex flex-col">
+    
+    <div class="flex-col grow">
+        <ul class="mt-2 space-y-1">
+            @if (MenuItems.Any())
             {
-                <li>
-                    <a href="@menuItem.Link"
-                       class="group flex items-center rounded-lg px-4 py-5 text-fittech-dark hover:text-fittech-dark
+                @foreach (var menuItem in Build())
+                {
+                    if (menuItem.IsSubMenu)
+                    {
+                        <li>
+                            <p class="font-semibold text-sm text-shadow-fittech-dark pl-1 @(_isExpanded ? "opacity-100" : "opacity-0 hidden")">@menuItem.Text</p>
+                        </li>
+                        continue;
+                    }
+                    
+                    <li>
+                        <a href="@menuItem.Link"
+                           class="group flex items-center px-3 py-1 text-fittech-dark hover:text-fittech-dark
                               hover:bg-fittech-green transition-all duration-300
                               @(!_isExpanded ? "justify-center" : "")">
-                        
-                        <span class="flex items-center justify-center h-6 w-6">
-                            <Heroicon Name="@menuItem.Icon" Type="HeroiconType.Outline"
-                                      class="h-6 w-6 text-fittech-dark group-hover:text-fittech-dark transition-colors duration-300"/>
-                        </span>
 
-                        <span class="ml-3 text-sm font-medium transition-all duration-300 ease-in-out
+                            @if (!string.IsNullOrWhiteSpace(menuItem.Icon))
+                            {
+                                <span class="flex items-center justify-center h-4 w-4">
+                                    <Heroicon Name="@menuItem.Icon" Type="HeroiconType.Outline"
+                                              class="h-4 w-4 text-fittech-dark group-hover:text-fittech-dark transition-colors duration-300"/>
+                                </span>   
+                            }
+                            
+                            <span class="ml-0.5 text-sm font-medium transition-all duration-300 ease-in-out
                                      @(_isExpanded ? "opacity-100" : "opacity-0 hidden")">
-                            @menuItem.Text
-                        </span>
-                    </a>
-                </li>
+                                @menuItem.Text
+                            </span>
+                        </a>
+                    </li>
+                }
             }
-        }
-    </ul>
-
-    <!-- Footer -->
-    <div class="@(_isExpanded ? "absolute bottom-0 left-0 w-full px-4 py-3" : "hidden")">
-        <p class="text-sm text-center text-fittech-secondary">@@FitTech Copyright</p>
+        </ul>
     </div>
 
-    <!-- Botón toggle -->
-    <button @onclick="ToggleSidebar"
-            class="absolute bottom-4 right-4 bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-full
-                   focus:outline-none transition-transform duration-300 ease-in-out
-                   @(!_isExpanded ? "rotate-180" : "")">
-        <i class="fas fa-chevron-left"></i>
-    </button>
+    <div class="flex grow-0 items-center">
+        <div class="@(_isExpanded ? "w-full px-4 py-3" : "hidden")">
+            <p class="text-sm text-center text-fittech-secondary">@@FitTech Copyright</p>
+        </div>
+        <FitTechButton Class="m-2" Shape="Shape.Circle" Size="Size.Small"
+                       Icon="@(_isExpanded ? @HeroiconName.ArrowLeft : @HeroiconName.ArrowRight)"
+                       OnClick="@ToggleSidebar"/>
+    </div>
 </aside>
 
 @code {
     private bool _isExpanded = true;
 
-    private void ToggleSidebar()
+    internal Task ToggleSidebar(MouseEventArgs eventArgs)
     {
         _isExpanded = !_isExpanded;
+
+        return Task.CompletedTask;
+    }
+
+    public MenuItem[] Build()
+    {
+        var itemsList = new List<MenuItem>();
+        foreach (var menuItem in MenuItems)
+        {
+            if (menuItem.SubMenu is null)
+            {
+                itemsList.Add(menuItem);
+                continue;
+            }
+
+            itemsList.Add(new MenuItem(menuItem.Text));
+            
+            foreach (var subMenuItem in menuItem.SubMenu)
+            {
+                itemsList.Add(new MenuItem(subMenuItem.Text, subMenuItem.Link, subMenuItem.Icon));
+            }
+        }
+
+        return itemsList.ToArray();
     }
 
     [Parameter] [EditorRequired] public List<MenuItem> MenuItems { get; set; } = [];
 
-    public class MenuItem
+    public record SubMenuItem(string Text, string Link, string? Icon = null);
+
+    public record MenuItem(string Text, string? Link = null, string? Icon = null, SubMenuItem[]? SubMenu = null)
     {
-        public string Text { get; init; } = null!;
-        public string Link { get; init; } = null!;
-        public string Icon { get; init; } = null!;
-    }
+        public bool IsSubMenu => string.IsNullOrWhiteSpace(Link);
+    };
 
 }

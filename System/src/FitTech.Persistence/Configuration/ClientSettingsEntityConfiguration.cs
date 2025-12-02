@@ -10,7 +10,7 @@ public sealed class ClientSettingsEntityConfiguration : IEntityTypeConfiguration
     public void Configure(EntityTypeBuilder<ClientSettings> builder)
     {
         builder.Property(x => x.Goal)
-            .HasColumnType("nvarchar")
+            .HasColumnType("varchar")
             .HasConversion(x => x.ToString(), x => Enum.Parse<TrainingGoal>(x, true));
     }
 }

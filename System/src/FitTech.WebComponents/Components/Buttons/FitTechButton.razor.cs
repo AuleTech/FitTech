@@ -19,7 +19,7 @@ public partial class FitTechButton : ComponentBase
 
     [Parameter] public Shape Shape { get; set; } = Shape.Default;
 
-    [Parameter] public EventCallback<MouseEventArgs>? OnClick { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     [Parameter] public string Class { get; set; } = string.Empty;
 
@@ -30,9 +30,6 @@ public partial class FitTechButton : ComponentBase
     
     private async Task HandleClickAsync(MouseEventArgs e)
     {
-        if (OnClick is not null)
-        {
-            await OnClick.Value.InvokeAsync(e);
-        }
+        await OnClick.InvokeAsync(e);
     }
 }

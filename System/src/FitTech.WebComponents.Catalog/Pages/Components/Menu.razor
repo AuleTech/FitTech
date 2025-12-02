@@ -1,0 +1,26 @@
+@page "/Components/Menu"
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.Container
+@using FitTech.WebComponents.Components.SideMenu
+
+<div class="flex flex-col m-6">
+    <h1 class="text-3xl font-bold text-fittech-dark">Menu</h1>
+    <p>Componente para menus tanto web como mobile</p>
+    <br/>
+    <h2 class="text-xl font-bold text-fittech-dark mb-1 pb-2">Mobile Menu</h2>
+    <FitTechContainer>
+        <div class="flex items-start content-start flex-row gap-4 m-2 max-w-sm">
+            <FitTechMobileMenu MenuItems="_menuItems" />
+        </div>
+    </FitTechContainer>
+</div>
+
+@code {
+
+    private readonly FitTechMobileMenu.MobileMenuItem[] _menuItems = new[]
+    {
+        new FitTechMobileMenu.MobileMenuItem(HeroiconName.Home, "/components/menu"),
+        new FitTechMobileMenu.MobileMenuItem(HeroiconName.ArchiveBox, "/components/menu"),
+        new FitTechMobileMenu.MobileMenuItem(HeroiconName.Cog8Tooth, "/components/menu"),
+    };
+}

@@ -1,0 +1,28 @@
+@page "/Inputs/Button"
+@using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.Container
+@using FitTech.WebComponents.Styles.Enums
+
+<div class="flex flex-col m-6">
+    <h1 class="text-3xl font-bold text-fittech-dark">Button</h1>
+    <p>Customización visual de &lt;button&gt;</p>
+    <br/>
+    <h2 class="text-xl font-bold text-fittech-dark mb-1 pb-2">Basic Button</h2>
+    <FitTechContainer>
+        <div class="flex items-start content-start flex-row gap-4 m-2">
+            <FitTechButton Label="Primary"></FitTechButton>
+            <FitTechButton Color="Color.Secondary" Label="Secondary"></FitTechButton>
+            <FitTechButton Color="Color.Error" Label="Error"></FitTechButton>
+        </div>
+    </FitTechContainer>
+    
+    <h2 class="text-xl font-bold text-fittech-dark mb-1 pb-2 mt-6">Size</h2>
+    <FitTechContainer>
+        <div class="flex items-center content-center flex-row gap-4 m-2">
+            <FitTechButton Size="Size.Small" Label="Small"></FitTechButton>
+            <FitTechButton Size="Size.Medium" Label="Medium"></FitTechButton>
+            <FitTechButton Size="Size.Large" Label="Large"></FitTechButton>
+        </div>
+    </FitTechContainer>
+</div>
+

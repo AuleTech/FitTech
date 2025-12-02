@@ -10,7 +10,7 @@ public sealed class InvitationEntityTypeConfiguration : IEntityTypeConfiguration
     public void Configure(EntityTypeBuilder<Invitation> builder)
     {
         builder.Property(x => x.Status)
-            .HasColumnType("nvarchar")
+            .HasColumnType("varchar")
             .HasConversion(x => x.ToString(), x => Enum.Parse<InvitationStatus>(x, true));
     }
 }
