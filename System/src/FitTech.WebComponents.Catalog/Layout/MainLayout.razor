@@ -1,11 +1,16 @@
 ﻿@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.SideMenu
 @inherits LayoutComponentBase
+@inject AppHeaderStateHandler Handler
 
-<body class="bg-white dark:bg-gray-900 flex flex-row min-h-screen transition-colors duration-300">
-<SlideMenuComponent MenuItems="@_menuItems"/>
-<div class="flex flex-col grow">
-    @Body
+<body class="bg-white dark:bg-gray-900 flex flex-col max-h-screen min-h-screen transition-colors duration-300">
+<AppHeader/>
+<div class="flex flex-row grow">
+    <SlideMenuComponent MenuItems="@_menuItems"/>
+    <div class="flex flex-col grow">
+        @Body
+    </div>
 </div>
 </body>
 
@@ -20,5 +25,13 @@
         new SlideMenuComponent.MenuItem("Components", SubMenu: [
             new SlideMenuComponent.SubMenuItem("Menu", "/components/menu")])
     };
+
+    protected override void OnInitialized()
+    {
+        Handler.Clear();
+        Handler.AddButton(HeroiconName.Plus, EventCallback.Factory.Create<MouseEventArgs>(this, () => {}));
+
+        base.OnInitialized();
+    }
 
 }

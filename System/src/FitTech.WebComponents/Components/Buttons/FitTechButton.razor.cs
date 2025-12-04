@@ -11,7 +11,7 @@ public partial class FitTechButton : ComponentBase
     private string _labelCss => $"{FitTechButtonStyles.SizeStyles[Size]}";
 
     private string _baseClass =
-        "flex items-center justify-center gap-2 border-1 transition-all duration-300";
+        "flex items-center justify-center gap-2 border-1 cursor-pointer duration-300 transition-transform active:scale-95 active:shadow-inner";
 
     [Parameter] public Color Color { get; set; } = Color.Primary;
 
