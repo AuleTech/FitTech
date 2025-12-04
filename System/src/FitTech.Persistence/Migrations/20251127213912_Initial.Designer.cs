@@ -227,7 +227,7 @@ namespace FitTech.Persistence.Migrations
 
                     b.Property<string>("Goal")
                         .IsRequired()
-                        .HasColumnType("nvarchar");
+                        .HasColumnType("varchar");
 
                     b.Property<int>("TrainingDaysPerWeek")
                         .HasColumnType("integer");
@@ -251,7 +251,7 @@ namespace FitTech.Persistence.Migrations
 
                     b.Property<string>("EmailType")
                         .IsRequired()
-                        .HasColumnType("nvarchar");
+                        .HasColumnType("varchar");
 
                     b.Property<Guid>("ExternalId")
                         .HasColumnType("uuid");
@@ -290,7 +290,7 @@ namespace FitTech.Persistence.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar");
+                        .HasColumnType("varchar");
 
                     b.Property<Guid>("TrainerId")
                         .HasColumnType("uuid");

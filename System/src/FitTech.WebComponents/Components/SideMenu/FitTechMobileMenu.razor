@@ -1,0 +1,37 @@
+@using Blazor.Heroicons
+@inject NavigationManager NavigationManager
+
+<div class="flex flex-row gap-4 w-sm bg-fittech-white">
+    @foreach (var menuItem in MenuItems)
+    {
+        <div class="flex grow w-full" @onclick="() => HandleOnClick(menuItem)">
+            @if (IsSelected(menuItem))
+            {
+                <Heroicon class="h-6 w-6 text-fittech-green" Name="@menuItem.Icon" Type="HeroiconType.Outline"/>    
+            }
+            else
+            {
+                <Heroicon class="h-6 w-6" Name="@menuItem.Icon" Type="HeroiconType.Outline"/>   
+            }
+        </div>
+    }
+</div>
+
+@code {
+    public bool IsSelected(MobileMenuItem item) => _selectedItem!.Icon == item.Icon;
+    private MobileMenuItem _selectedItem = null!;  
+    [Parameter] public MobileMenuItem[] MenuItems { get; set; } = [];
+    public record MobileMenuItem(string Icon, string Link);
+
+    protected override void OnParametersSet()
+    {
+        _selectedItem = MenuItems[0];
+        base.OnParametersSet();
+    }
+
+    public void HandleOnClick(MobileMenuItem e)
+    {
+        _selectedItem = e;
+        NavigationManager.NavigateTo(e.Link);
+    }
+}
