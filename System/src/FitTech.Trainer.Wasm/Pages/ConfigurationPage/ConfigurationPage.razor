@@ -29,13 +29,11 @@
             @foreach (var item in items)
             {
                 <div class="relative flex items-center p-4 border-b border-lime-200">
-
-                    <!-- EMAIL (izquierda) -->
+                    
                     <span class="text-lg text-gray-700 font-semibold">
                         @item.ClientEmail
                     </span>
-
-                    <!-- ESTADO (CENTRADO REAL ABSOLUTO) -->
+                    
                     <div class="absolute left-1/2 -translate-x-1/2 flex justify-center">
                         @if (item.Status == "Pending")
                         {
@@ -62,8 +60,7 @@
                             </span>
                         }
                     </div>
-
-                    <!-- BOTÓN (derecha) -->
+                    
                     <div class="ml-auto">
                         @if (item.Status == "Pending")
                         {
@@ -95,57 +92,19 @@
 
 @code {
     private List<InvitationDto>? items;
-
-    public async Task GetInvitations(CancellationToken cancellationToken)
-    {
-        var response = await _userService.GetInvitationsTrainer(cancellationToken);
-        items = response.Value?.Invitations?.ToList() ?? new List<InvitationDto>();
-    }
-
+    
     protected override async Task OnInitializedAsync()
     {
         AppHeaderStateHandler.Clear();
-
-        bool usarMock = true;
-
-        if (usarMock)
-        {
-            CargarMockInvitations();
-        }
-        else
-        {
-            await GetInvitations(CancellationToken.None);
-        }
+        base.OnInitialized();
+        await GetInvitationAsync(CancellationToken.None);
     }
 
-    private void CargarMockInvitations()
+    protected async Task GetInvitationAsync(CancellationToken cancellationToken)
     {
-        items = new List<InvitationDto>
-        {
-            new InvitationDto
-            {
-                ClientEmail = "Email@Test.com",
-                Status = "Pending",
-                CreatedUtc = DateTime.UtcNow.AddDays(-1)
-            },
-            new InvitationDto
-            {
-                ClientEmail = "Email@Test.com",
-                Status = "Expired",
-                CreatedUtc = DateTime.UtcNow.AddDays(-10)
-            },
-            new InvitationDto
-            {
-                ClientEmail = "Email@Test.com",
-                Status = "InProgress",
-                CreatedUtc = DateTime.UtcNow.AddDays(-3)
-            },
-            new InvitationDto
-            {
-                ClientEmail = "Email@Test.com",
-                Status = "Aceptado",
-                CreatedUtc = DateTime.UtcNow.AddDays(-2)
-            }
-        };
+        var response = await _userService.GetInvitationsTrainer(cancellationToken);
+        items = response.Value?.Invitations?.ToList() ?? new List<InvitationDto>();
+        
     }
+    
 }
