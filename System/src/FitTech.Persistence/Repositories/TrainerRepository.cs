@@ -1,4 +1,5 @@
 ﻿using FitTech.Domain.Aggregates.TrainerAggregate;
+using FitTech.Domain.Enums;
 using FitTech.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,24 @@ internal class TrainerRepository : ITrainerRepository
 
         return invitation;
     }
+    
+    public async Task<Invitation> CancelInvitationAsync(string clientEmail, CancellationToken cancellationToken)
+    {
+        var invitation = await _context.Invitations
+            .FirstOrDefaultAsync(i => i.Email == clientEmail, cancellationToken);
+
+        if (invitation == null)
+            throw new KeyNotFoundException("Invitation not found");
+
+        invitation.Status = Enum.Parse<InvitationStatus>("Expired");
+        invitation.UpdatedUtc = DateTime.UtcNow;
+
+        _context.Invitations.Update(invitation);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return invitation;
+    }
+
 
     public async Task<Trainer?> GetAsync(Guid trainerId, CancellationToken cancellationToken)
     {

@@ -3,6 +3,7 @@ using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Commands.Trainer.CancelInvitations;
 using FitTech.Application.Extensions;
 using FitTech.Application.Services;
+using FitTech.Domain.Aggregates.TrainerAggregate;
 using FitTech.Domain.Repositories;
 using FitTech.Domain.Seedwork;
 using FitTech.Domain.Templates.EmailTemplates.Register;
@@ -16,14 +17,12 @@ internal class CancelInvitationsCommandHandler : ICancelInvitationsCommandHandle
 {
     private readonly ITrainerRepository _trainerRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IEmailService _emailService;
     private readonly ILogger<CancelInvitationsCommandHandler> _logger;
     
-    public CancelInvitationsCommandHandler(ITrainerRepository trainerRepository, IUnitOfWork unitOfWork, IEmailService emailService, ILogger<CancelInvitationsCommandHandler> logger)
+    public CancelInvitationsCommandHandler(ITrainerRepository trainerRepository, IUnitOfWork unitOfWork, ILogger<CancelInvitationsCommandHandler> logger)
     {
         _trainerRepository = trainerRepository;
         _unitOfWork = unitOfWork;
-        _emailService = emailService;
         _logger = logger;
     }
 
@@ -35,30 +34,13 @@ internal class CancelInvitationsCommandHandler : ICancelInvitationsCommandHandle
         {
             return validationResult;
         }
-
-        var trainer = await _trainerRepository.GetAsync(command.TrainerId, cancellationToken);
-
-        if (trainer is null)
-        {
-            _logger.LogError("Trainer('{TrainerId}') not found", command.TrainerId);
-            throw new UnauthorizedAccessException("Trainer not found");
-        }
-
-        var invitationResult = trainer.InviteClient(command.ClientEmail);
-
-        if (!invitationResult.Succeeded)
-        {
-            return invitationResult;
-        }
-
-        await _trainerRepository.AddInvitationAsync(invitationResult.Value!, cancellationToken);
-
-        await _emailService.SendEmailAsync(command.ClientEmail,
-            RegisterClientEmailTemplate.Create(invitationResult.Value!.Code, trainer.Name), cancellationToken);
+        
+        
+        var invitationCanceled = await _trainerRepository.CancelInvitationAsync(command.ClientEmail, cancellationToken);
         
         await _unitOfWork.SaveAsync(cancellationToken);
         
-        _logger.LogDebug("Invitation('{InvitationId}') sent to {Email}", invitationResult.Value!.Id, invitationResult.Value!.Email);
+        _logger.LogDebug("Invitation('{InvitationId}') have been canceled to {Email}", invitationCanceled.Email, invitationCanceled.UpdatedUtc);
         
         return Result.Success;
     }

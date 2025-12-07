@@ -2,6 +2,7 @@
 using AuleTech.Core.Patterns.CQRS.Validations;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Extensions;
+using FitTech.Domain.Templates.EmailTemplates.Register;
 
 namespace FitTech.Application.Commands.Trainer.CancelInvitations;
 
@@ -13,6 +14,7 @@ public record CancelInvitationsCommand(Guid TrainerId, string ClientEmail) : ICo
         
         TrainerId.ValidateNotEmpty(errors, nameof(TrainerId));
         ClientEmail.ValidateEmail(errors, nameof(ClientEmail));
+        
 
         return errors.ToResult();
     }

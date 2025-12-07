@@ -4,6 +4,7 @@ using FitTech.Application.Commands.Auth.ForgotPassword;
 using FitTech.Application.Commands.Auth.Login;
 using FitTech.Application.Commands.Auth.ResetPassword;
 using FitTech.Application.Commands.Client.Register;
+using FitTech.Application.Commands.Trainer.CancelInvitations;
 using FitTech.Application.Commands.Trainer.InviteClient;
 using FitTech.Application.Commands.Trainer.Register;
 using FitTech.Application.Commands.Trainer.ValidateInvitation;
@@ -94,7 +95,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<IResetPasswordCommandHandler, ResetPasswordCommandHandler>()
             .AddTransient<IRegisterTrainerCommandHandler, RegisterTrainerCommandHandler>()
             .AddTransient<IInviteClientCommandHandler, InviteClientCommandHandler>()
-            .AddTransient<IRegisterClientCommandHandler, RegisterClientCommandHandler>();
+            .AddTransient<IRegisterClientCommandHandler, RegisterClientCommandHandler>()
+            .AddTransient<ICancelInvitationsCommandHandler, CancelInvitationsCommandHandler>();
     }
 
     internal static IServiceCollection AddQueries(this IServiceCollection services)
