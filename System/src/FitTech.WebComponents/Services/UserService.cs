@@ -125,4 +125,9 @@ internal sealed class UserService : IUserService
         return result;
 
     }
+
+    public Task<Result> CancelInvitationes(string ClientEmail, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

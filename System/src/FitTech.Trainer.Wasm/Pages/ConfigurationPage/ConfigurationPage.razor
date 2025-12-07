@@ -88,10 +88,14 @@
 
     </div>
 </div>
+<div>
+    <p>@_mesaje</p>
+</div>
 
 
 @code {
     private List<InvitationDto>? items;
+    private string? _mesaje;
     
     protected override async Task OnInitializedAsync()
     {
@@ -104,6 +108,17 @@
     {
         var response = await _userService.GetInvitationsTrainer(cancellationToken);
         items = response.Value?.Invitations?.ToList() ?? new List<InvitationDto>();
+        
+    }
+
+    protected async Task CancelInvitationes(string ClientEmail, CancellationToken cancellationToken)
+    {
+        var response = await _userService.CancelInvitationes(ClientEmail, cancellationToken);
+
+        if (response.Succeeded)
+        {
+            _mesaje = "Se ha cancelado la invitación";
+        }
         
     }
     
