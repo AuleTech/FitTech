@@ -1,18 +1,28 @@
-﻿@using FitTech.Client.Mobile.Components.Menu
+﻿@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.AppHeader
+@using FitTech.WebComponents.Components.SideMenu
 @inherits LayoutComponentBase
 @inject IJSRuntime JsRuntime
-<div class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300" style="min-height: calc(100vh - 62px);">
+<div class="bg-fittech-white flex flex-col transition-colors duration-300" style="min-height: calc(100vh - 62px);">
+    <AppHeader HideLogo="true"/>
     <!-- Scrollable content with bottom padding to avoid overlap -->
-    <div class="pb-20">
+    <div class="flex grow flex-1 bg-fittech-white b-2">
         @Body
     </div>
 
     <!-- Fixed bottom nav that overlays the content -->
-    <MobileMenu/>
+    <FitTechMobileMenu MenuItems="_menuItems"/>
 </div>
 
 @code
 {
+    public readonly FitTechMobileMenu.MobileMenuItem[] _menuItems =
+    [
+        new(HeroiconName.Home, "/"),
+        new(HeroiconName.ClipboardDocumentCheck, "/workouts"),
+        new(HeroiconName.Cog8Tooth, "/settings")
+    ];
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

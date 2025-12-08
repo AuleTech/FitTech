@@ -2,9 +2,12 @@
 @implements IDisposable
 <div
     class=" top-0 w-full h-10 flex items-center justify-between bg-fittech-white text-fittech-dark border-b border-b-fittech-green px-4 py-5">
-    <div class="flex flex-row cursor-pointer">
-        <a href="/" class="text-fittech-dark text-2xl font-bold">FitTech</a>
-    </div>
+    @if (!HideLogo)
+    {
+        <div class="flex flex-row cursor-pointer">
+            <a href="/" class="text-fittech-dark text-2xl font-bold">FitTech</a>
+        </div>    
+    }
     <div class="flex-1"></div> <!-- spacer to push buttons to the right -->
     <div class="flex items-center space-x-2">
         @foreach (var button in Handler.HeaderButtons)
@@ -14,9 +17,10 @@
     </div>
 </div>
 
-
 @code {
-
+    [Parameter] public bool HideLogo { get; set; }
+    
+    
     protected override void OnInitialized()
     {
         Handler.OnChange += StateHasChanged;

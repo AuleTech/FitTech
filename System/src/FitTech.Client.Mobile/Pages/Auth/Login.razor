@@ -1,0 +1,26 @@
+@page "/login"
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.Inputs
+@using FitTech.WebComponents.Layouts
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+<div class="flex flex-col grow bg-fittech-white items-center gap-2">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <img class="rotate-270 h-auto w-[250px]" src="_content/FitTech.WebComponents/images/logo.png"/>
+    <div class="bg-fittech-white px-8 flex flex-col w-full gap-6">
+        <FitTechInput @bind-Value="Email" Placeholder="Email" Label="Email"></FitTechInput>
+        <FitTechInput @bind-Value="Password" Placeholder="Password" Label="Password"></FitTechInput>
+    </div>
+    <FitTechButton Class="w-[300px] mt-10" Label="Login" Icon="@HeroiconName.ArrowRightEndOnRectangle"></FitTechButton>
+    <a class="font-semibold text-blue-400 text-sm">¿Has olvidado tu contraseña? Haz click aquí</a>
+    <div class="flex flex-col-reverse grow pb-3">
+        <a href="/ValidationCode" class="font-bold text-sm text-fittech-dark underline">¿Has recibido una invitación? Haz click aquí</a>
+    </div>
+</div>
+
+@code
+{
+    public string? Email { get; set; }
+    public string? Password { get; set; }
+}
