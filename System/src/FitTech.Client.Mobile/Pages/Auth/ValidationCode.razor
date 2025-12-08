@@ -1,0 +1,21 @@
+@page "/ValidationCode"
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.Inputs
+@using FitTech.WebComponents.Layouts
+
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+<div class="flex flex-col grow bg-fittech-white items-center gap-2">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <img class="rotate-270 h-auto w-[250px]" src="_content/FitTech.WebComponents/images/logo.png"/>
+    <div class="bg-fittech-white px-8 flex flex-col w-full gap-6">
+        <FitTechInput @bind-Value="Code" Placeholder="Código" Label="Código"></FitTechInput>
+    </div>
+    <FitTechButton Class="w-[300px] mt-10" Label="Código" Icon="@HeroiconName.ArrowRightEndOnRectangle"></FitTechButton>
+</div>
+
+@code
+{
+    public string? Code { get; set; }
+}

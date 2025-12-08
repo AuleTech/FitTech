@@ -22,7 +22,7 @@
     <Nullable>enable</Nullable>
 
     <!-- Display name -->
-    <ApplicationTitle>FitTech.Client.Mobile</ApplicationTitle>
+    <ApplicationTitle>FitTech</ApplicationTitle>
 
     <!-- App Identifier -->
     <ApplicationId>com.companyname.fittech.client.mobile</ApplicationId>
