@@ -21,4 +21,5 @@ public interface IFitTechApiClient
     Task<Result<GetInvitationsResponse>> GetInvitationsAsync(CancellationToken cancellationToken);
     Task<Result> RegisterClientAsync(RegisterClientRequest request, CancellationToken cancellationToken);
     Task<Result<Guid>> ValidateInvitationAsync(string email, int code, CancellationToken cancellationToken);
+    Task<Result> CancelInvitationsAsync(InviteClientRequest request, CancellationToken cancellationToken);
 }

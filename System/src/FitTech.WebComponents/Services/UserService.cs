@@ -126,8 +126,11 @@ internal sealed class UserService : IUserService
 
     }
 
-    public Task<Result> CancelInvitationes(string ClientEmail, CancellationToken cancellationToken)
+    public async Task<Result> CancelInvitationes(string clientEmail, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        
+        await _fitTechApiClient.CancelInvitationsAsync(new InviteClientRequest{ClientEmail = clientEmail}, cancellationToken);
+        
+        return Result.Success;
     }
 }

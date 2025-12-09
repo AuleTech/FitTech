@@ -44,7 +44,7 @@
                         else if (item.Status == "Expired")
                         {
                             <span class="px-3 py-1 rounded-full border border-b-red-500 text-amber-800 bg-white text-sm font-semibold">
-                                No Respondido
+                                Expirada
                             </span>
                         }
                         else if(item.Status =="InProgress")
@@ -53,7 +53,7 @@
                                 En Proceso
                             </span>
                         }
-                        else if (item.Status == "Aceptado")
+                        else if (item.Status == "Completed")
                         {
                             <span class="px-3 py-1 rounded-full border border-b-green-700 text-green-700 bg-white text-sm font-semibold">
                                 Aceptada
@@ -64,7 +64,8 @@
                     <div class="ml-auto">
                         @if (item.Status == "Pending")
                         {
-                            <FitTechButton Color="Color.Secondary" Size="Size.Medium" Label="Cancelar" Icon="@HeroiconName.Check"/>
+                            <FitTechButton Color="Color.Secondary" Size="Size.Medium" Label="Cancelar" OnClick="@(() => CancelInvitations(item.ClientEmail))"
+                                           Icon="@HeroiconName.Check"/>
                         }
                         else if (item.Status == "Expired")
                         {
@@ -88,14 +89,9 @@
 
     </div>
 </div>
-<div>
-    <p>@_mesaje</p>
-</div>
-
 
 @code {
     private List<InvitationDto>? items;
-    private string? _mesaje;
     
     protected override async Task OnInitializedAsync()
     {
@@ -111,13 +107,14 @@
         
     }
 
-    protected async Task CancelInvitationes(string ClientEmail, CancellationToken cancellationToken)
+    protected async Task CancelInvitations(string clientEmail)
     {
-        var response = await _userService.CancelInvitationes(ClientEmail, cancellationToken);
+        var response = await _userService.CancelInvitationes(clientEmail, CancellationToken.None);
 
         if (response.Succeeded)
         {
-            _mesaje = "Se ha cancelado la invitación";
+            await GetInvitationAsync(CancellationToken.None);
+            StateHasChanged();
         }
         
     }
