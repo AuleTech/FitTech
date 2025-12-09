@@ -5,7 +5,7 @@ using FitTech.Application.Extensions;
 
 namespace FitTech.Application.Commands.Trainer.ValidateInvitation;
 
-public record ValidateInvitationCommand(Guid TrainerId, string Email, int Code) : ICommand, IValidator
+public record ValidateInvitationCommand(string Email, int Code) : ICommand, IValidator
 {
     public Result Validate()
     {

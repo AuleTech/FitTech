@@ -103,16 +103,8 @@
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/trainer/register": {

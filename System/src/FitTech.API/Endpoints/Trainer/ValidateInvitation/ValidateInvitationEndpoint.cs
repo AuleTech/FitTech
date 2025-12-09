@@ -1,9 +1,11 @@
 ﻿using System.Security.Claims;
 using FastEndpoints;
 using FitTech.Application.Commands.Trainer.ValidateInvitation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FitTech.API.Endpoints.Trainer.ValidateInvitation;
 
+[AllowAnonymous]
 [HttpGet("/trainer/validate-invitation")]
 public class ValidateInvitationEndpoint : Endpoint<ValidateInvitationRequest, Guid>
 {
@@ -16,16 +18,8 @@ public class ValidateInvitationEndpoint : Endpoint<ValidateInvitationRequest, Gu
 
     public override async Task HandleAsync(ValidateInvitationRequest req, CancellationToken ct)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (string.IsNullOrWhiteSpace(userId))
-        {
-            await Send.UnauthorizedAsync(ct);
-            return;
-        }
-
         var result =
-            await _commandHandler.HandleAsync(new ValidateInvitationCommand(Guid.Parse(userId), req.Email, req.Code), ct);
+            await _commandHandler.HandleAsync(new ValidateInvitationCommand(req.Email, req.Code), ct);
 
         if (!result.Succeeded)
         {

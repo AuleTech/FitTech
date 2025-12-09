@@ -30,7 +30,7 @@ internal sealed class ValidateInvitationCommandHandler : TransactionCommandHandl
             return validationResult.ToTypedResult<Guid>();
         }
 
-        var trainer = await _trainerRepository.GetAsync(command.TrainerId, cancellationToken);
+        var trainer = await _trainerRepository.GetByInvitationEmailAsync(command.Email, cancellationToken);
 
         var result = trainer!.SetInvitationInProgress(command.Email, command.Code);
 

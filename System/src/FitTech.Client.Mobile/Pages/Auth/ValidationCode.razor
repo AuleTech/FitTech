@@ -1,21 +1,59 @@
 @page "/ValidationCode"
+@using System.ComponentModel.DataAnnotations
 @using Blazor.Heroicons
+@using FitTech.API.Client
 @using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Components.Inputs
 @using FitTech.WebComponents.Layouts
+@inject IFitTechApiClient ApiClient
+@inject NavigationManager NavigationManager
 
 @layout EmptyLayout
 @attribute [AllowAnonymous]
 <div class="flex flex-col grow bg-fittech-white items-center gap-2">
     <div class="pt-[env(safe-area-inset-top)]"></div>
     <img class="rotate-270 h-auto w-[250px]" src="_content/FitTech.WebComponents/images/logo.png"/>
-    <div class="bg-fittech-white px-8 flex flex-col w-full gap-6">
-        <FitTechInput @bind-Value="Code" Placeholder="Código" Label="Código"></FitTechInput>
-    </div>
-    <FitTechButton Class="w-[300px] mt-10" Label="Código" Icon="@HeroiconName.ArrowRightEndOnRectangle"></FitTechButton>
+    <EditForm Model="_validationForm" OnValidSubmit="SubmitAsync"
+              class="bg-fittech-white px-8 flex flex-col w-full gap-6 items-center">
+        <DataAnnotationsValidator/>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_validationForm.Email" Placeholder="Email" Label="Email"/>
+            <ValidationMessage For="@(() => _validationForm!.Email)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            @* Input needs to only allow number *@
+            <FitTechInput @bind-Value="_validationForm.Code" Placeholder="Código" Label="Código"/>
+            <ValidationMessage For="@(() => _validationForm!.Code)" class="text-red-600 text-sm"/>
+        </div>
+        
+        <FitTechButton Type="ButtonType.Submit" Class="w-[300px] mt-10" Label="Enviar"
+                       Icon="@HeroiconName.ArrowRightEndOnRectangle"></FitTechButton>
+    </EditForm>
 </div>
 
 @code
 {
-    public string? Code { get; set; }
+    private readonly ValidationForm _validationForm = new();
+
+    public async Task SubmitAsync()
+    {
+        var result = await ApiClient.ValidateInvitationAsync(_validationForm.Email.ToLowerInvariant(), int.Parse(_validationForm.Code), CancellationToken.None);
+
+        if (!result.Succeeded)
+        {
+            //Show error
+            return;
+        }
+
+        NavigationManager.NavigateTo("/RegistrationForm");
+    }
+
+    private class ValidationForm
+    {
+        [Required(ErrorMessage = "Introduce el código")]
+        public string Code { get; set; } = null!;
+
+        [Required(ErrorMessage = "Introduce tu email")]
+        public string Email { get; set; } = null!;
+    }
 }
