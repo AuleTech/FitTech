@@ -1,7 +1,9 @@
 @page "/settings"
 @using FitTech.API.Client
+@using FitTech.WebComponents.Services
 @inject IFitTechApiClient ApiClient
 @inject NavigationManager NavigationManager
+@inject IUserService UserService
 
 <div class="flex flex-col">
     <!-- Content container -->
@@ -55,9 +57,10 @@
         await base.OnInitializedAsync();
     }
 
-    private void Logout()
+    private async Task Logout()
     {
-        NavigationManager.NavigateTo("/logout");
+        await UserService.LogoutAsync(CancellationToken.None);
+        NavigationManager.NavigateTo("/login");
     }
 
 }
