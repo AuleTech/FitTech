@@ -7,7 +7,7 @@ using FitTech.Application.Commands.Trainer.CancelInvitations;
 
 namespace FitTech.API.Endpoints.Trainer.CancelInvitations;
 
-[HttpGet("/trainer/cancelinvitations")]
+[HttpPost("/trainer/cancelinvitations")]
 public class CancelInvitationsEndpoint : Endpoint<InviteClientRequest>
 {
     private readonly ICancelInvitationsCommandHandler _commandHandler;

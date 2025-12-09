@@ -203,6 +203,40 @@
         ]
       }
     },
+    "/trainer/cancelinvitations": {
+      "post": {
+        "tags": [
+          "Trainer"
+        ],
+        "operationId": "CancelInvitationsEndpoint",
+        "requestBody": {
+          "x-name": "InviteClientRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteClientRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/client/register": {
       "post": {
         "tags": [
