@@ -65,6 +65,18 @@ public class Trainer : Entity, IAggregateRoot
             return Invitations.Any(x => x.Email == clientEmail && x.Status is InvitationStatus.Pending or InvitationStatus.InProgress);
         }
     }
+
+    public Result<Invitation> CheckInvitation(string clientEmail)
+    { 
+        var invitation =  Invitations.FirstOrDefault(x => x.Email == clientEmail && x.Status is InvitationStatus.Expired);
+        
+        if (invitation is null)
+        {
+            return Result<Invitation>.Failure("Invitation not found");
+        }
+
+        return invitation!;
+    }
     
     public Result SetInvitationInProgress(string email, int code)
     {

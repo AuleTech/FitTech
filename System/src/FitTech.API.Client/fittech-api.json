@@ -115,6 +115,40 @@
         ]
       }
     },
+    "/trainer/resendinvitations": {
+      "post": {
+        "tags": [
+          "Trainer"
+        ],
+        "operationId": "ResendInvitationsEndpoint",
+        "requestBody": {
+          "x-name": "InviteClientRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteClientRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/trainer/register": {
       "post": {
         "tags": [
@@ -419,6 +453,15 @@
         "type": "object",
         "additionalProperties": false
       },
+      "InviteClientRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ClientEmail": {
+            "type": "string"
+          }
+        }
+      },
       "RegisterTrainerRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -433,15 +476,6 @@
             "type": "string"
           },
           "Password": {
-            "type": "string"
-          }
-        }
-      },
-      "InviteClientRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "ClientEmail": {
             "type": "string"
           }
         }

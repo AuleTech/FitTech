@@ -194,4 +194,18 @@ internal sealed class FitTechApiClient : IFitTechApiClient
         }
 
     }
+    
+    public async Task<Result> ResendInvitationsAsync(InviteClientRequest request,  CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _proxy.ResendInvitationsEndpointAsync(request, cancellationToken);
+            return Result.Success;
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure(ex.Message);
+        }
+
+    }
 }

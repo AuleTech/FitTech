@@ -69,7 +69,7 @@
                         }
                         else if (item.Status == "Expired")
                         {
-                            <FitTechButton Color="Color.Tertiary" Size="Size.Medium" Label="Reenviar" Icon="@HeroiconName.Check"/>
+                            <FitTechButton Color="Color.Tertiary" Size="Size.Medium" Label="Reenviar" Icon="@HeroiconName.Check" OnClick="@(() => ResendInvitations(item.ClientEmail))"/>
                         }
                         else if(item.Status =="InProgress")
                         {
@@ -109,7 +109,7 @@
 
     protected async Task CancelInvitations(string clientEmail)
     {
-        var response = await _userService.CancelInvitationes(clientEmail, CancellationToken.None);
+        var response = await _userService.CancelInvitations(clientEmail, CancellationToken.None);
 
         if (response.Succeeded)
         {
@@ -118,5 +118,17 @@
         }
         
     }
+
+    protected async Task ResendInvitations(string clientEmail)
+    {
+        var response = await _userService.ResendInvitations(clientEmail, CancellationToken.None);
+
+        if (response.Succeeded)
+        {
+            await GetInvitationAsync(CancellationToken.None);
+            StateHasChanged();
+        } 
+    }
+    
     
 }

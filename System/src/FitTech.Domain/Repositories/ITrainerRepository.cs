@@ -9,4 +9,5 @@ public interface ITrainerRepository
     Task<Trainer> AddAsync(Trainer trainer, CancellationToken cancellationToken);
     Task<Invitation> AddInvitationAsync(Invitation invitation, CancellationToken cancellationToken);
     Task<Invitation> CancelInvitationAsync(string  clientEmail, CancellationToken cancellationToken);
+    Task<Invitation> ResendInvitationAsync(string  clientEmail, CancellationToken cancellationToken);
 }
