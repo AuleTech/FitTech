@@ -1,0 +1,77 @@
+@page "/PersonalInformation"
+@using System.ComponentModel.DataAnnotations
+@using Blazor.Heroicons
+@using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.Inputs
+@using FitTech.WebComponents.Layouts
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+
+<div class="flex flex-col grow bg-fittech-white items-start justify-items-start gap-2 mx-10">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <h1 class="text-3xl text-fittech-dark font-bold mb-2">Información personal</h1>
+    <EditForm Model="_informationForm" OnValidSubmit="SubmitAsync"
+              class="bg-fittech-white flex flex-col w-full gap-6 items-center">
+        <DataAnnotationsValidator/>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.Name" Placeholder="Nombre" Label="Nombre"/>
+            <ValidationMessage For="@(() => _informationForm!.Name)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.Surname" Placeholder="Apellido/s"
+                          Label="Apellido/s"/>
+            <ValidationMessage For="@(() => _informationForm!.Surname)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.Country" Placeholder="Pais"
+                          Label="Pais"/>
+            <ValidationMessage For="@(() => _informationForm!.Country)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.City" Placeholder="Ciudad"
+                          Label="Ciudad"/>
+            <ValidationMessage For="@(() => _informationForm!.City)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.PhoneNumber" Placeholder="Teléfono"
+                          Label="Teléfono"/>
+            <ValidationMessage For="@(() => _informationForm!.PhoneNumber)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col items-end w-full">
+            <FitTechButton Type="ButtonType.Submit" Class="w-[150px] mt-5" Label="Continuar"
+                           Icon="@HeroiconName.ArrowRight"></FitTechButton>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+
+    private readonly PersonalInformationForm _informationForm = new();
+
+    public async Task SubmitAsync()
+    {
+        
+    }
+    
+    private class PersonalInformationForm
+    {
+        [Required(ErrorMessage = "Introduce tu nombre")]
+        public string Name { get; set; } = null!;
+        
+        [Required(ErrorMessage = "Introduce tus apellidos")]
+        public string Surname { get; set; } = null!;
+        
+        [Required(ErrorMessage = "Introduce tu ciudad")]
+        public string City { get; set; } = null!;
+        
+        [Required(ErrorMessage = "Introduce tu Pais")]
+        public string Country { get; set; } = null!;
+        
+        [Required(ErrorMessage = "Introduce tu teléfono")]
+        public string PhoneNumber { get; set; } = null!;
+        
+        //TODO: InputDate
+        // [Required(ErrorMessage = "Introduce tu fecha de nacimiento")]
+        // public DateOnly BirthDate { get; set; }
+    }
+}

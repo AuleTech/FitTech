@@ -1,6 +1,6 @@
 ﻿@using FitTech.Client.Mobile.Layout
 @using FitTech.WebComponents.Layouts
-@using FitTech.WebComponents.Pages.Login
+@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager NavigationManager
 
@@ -10,7 +10,7 @@
             <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(AppLayout)">
                 <NotAuthorized>
                     @{
-                        NavigationManager.NavigateTo("/Credentials");
+                        NavigationManager.NavigateTo("/PersonalInformation");
                     }
                 </NotAuthorized>
             </AuthorizeRouteView>
