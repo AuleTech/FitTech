@@ -19,17 +19,21 @@
 
     private readonly List<SlideMenuComponent.MenuItem> _menuItems = new()
     {
-        new SlideMenuComponent.MenuItem("Inputs", SubMenu: [
+        new SlideMenuComponent.MenuItem("Inputs", SubMenu:
+        [
             new SlideMenuComponent.SubMenuItem("Buttons", "/inputs/button"),
-            new SlideMenuComponent.SubMenuItem("Text", "/inputs/text")]),
-        new SlideMenuComponent.MenuItem("Components", SubMenu: [
-            new SlideMenuComponent.SubMenuItem("Menu", "/components/menu")])
+            new SlideMenuComponent.SubMenuItem("Text", "/inputs/text")
+        ]),
+        new SlideMenuComponent.MenuItem("Components", SubMenu:
+        [
+            new SlideMenuComponent.SubMenuItem("Menu", "/components/menu")
+        ])
     };
 
     protected override void OnInitialized()
     {
         Handler.Clear();
-        Handler.AddButton(HeroiconName.Plus, EventCallback.Factory.Create<MouseEventArgs>(this, () => {}));
+        Handler.AddButton(HeroiconName.Plus, EventCallback.Factory.Create<MouseEventArgs>(this, () => { }));
 
         base.OnInitialized();
     }

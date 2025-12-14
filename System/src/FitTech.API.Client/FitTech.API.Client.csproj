@@ -3,7 +3,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
     <PackageReference Include="Microsoft.Extensions.Http"/>
     <PackageReference Include="Newtonsoft.Json"/>
-    <PackageReference Include="NSwag.MSBuild" >
+    <PackageReference Include="NSwag.MSBuild">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -20,7 +20,7 @@
     <MakeDir Directories="Generated" Condition="!Exists('Generated/Proxy.cs')"/>
     <Exec Command="$(NSwagExe_Net90) openapi2csclient /input:fittech-api.json /classname:Proxy /namespace:FitTech.ApiClient.Generated /output:Generated/Proxy.cs /generateResponseClasses:true /generateJsonMethods:true /useHttpClientCreationMethod:true /useBaseUrl:false"/>
     <ItemGroup>
-      <Compile Include="Generated/Proxy.cs" />
+      <Compile Include="Generated/Proxy.cs"/>
     </ItemGroup>
   </Target>
 </Project>

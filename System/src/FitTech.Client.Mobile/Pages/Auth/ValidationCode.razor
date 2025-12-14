@@ -25,9 +25,9 @@
             <FitTechInput @bind-Value="_validationForm.Code" Placeholder="Código" Label="Código"/>
             <ValidationMessage For="@(() => _validationForm!.Code)" class="text-red-600 text-sm"/>
         </div>
-        
-        <FitTechButton Type="ButtonType.Submit" Class="w-[300px] mt-10" Label="Enviar"
-                       Icon="@HeroiconName.ArrowRightEndOnRectangle"></FitTechButton>
+
+        <FitTechButton Type="ButtonType.Submit" Class="w-[300px] mt-10" Label="Validar"
+                       Icon="@HeroiconName.Check"></FitTechButton>
     </EditForm>
 </div>
 
@@ -45,7 +45,7 @@
             return;
         }
 
-        NavigationManager.NavigateTo("/RegistrationForm");
+        NavigationManager.NavigateTo("/Credentials");
     }
 
     private class ValidationForm
