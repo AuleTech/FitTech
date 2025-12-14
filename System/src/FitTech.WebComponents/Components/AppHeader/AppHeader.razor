@@ -6,7 +6,7 @@
     {
         <div class="flex flex-row cursor-pointer">
             <a href="/" class="text-fittech-dark text-2xl font-bold">FitTech</a>
-        </div>    
+        </div>
     }
     <div class="flex-1"></div> <!-- spacer to push buttons to the right -->
     <div class="flex items-center space-x-2">
@@ -19,8 +19,8 @@
 
 @code {
     [Parameter] public bool HideLogo { get; set; }
-    
-    
+
+
     protected override void OnInitialized()
     {
         Handler.OnChange += StateHasChanged;

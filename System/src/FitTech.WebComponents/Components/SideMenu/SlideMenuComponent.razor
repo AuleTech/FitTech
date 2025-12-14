@@ -7,7 +7,7 @@
               shadow-lg transition-all duration-300 ease-in-out border-r-1 border-r-fittech-green
               @(_isExpanded ? "w-64" : "w-20")
               flex flex-col">
-    
+
     <div class="flex-col grow">
         <ul class="mt-2 space-y-1">
             @if (MenuItems.Any())
@@ -21,7 +21,7 @@
                         </li>
                         continue;
                     }
-                    
+
                     <li>
                         <a href="@menuItem.Link"
                            class="group flex items-center px-3 py-1 text-fittech-dark hover:text-fittech-dark
@@ -33,9 +33,9 @@
                                 <span class="flex items-center justify-center h-4 w-4">
                                     <Heroicon Name="@menuItem.Icon" Type="HeroiconType.Outline"
                                               class="h-4 w-4 text-fittech-dark group-hover:text-fittech-dark transition-colors duration-300"/>
-                                </span>   
+                                </span>
                             }
-                            
+
                             <span class="ml-0.5 text-sm font-medium transition-all duration-300 ease-in-out
                                      @(_isExpanded ? "opacity-100" : "opacity-0 hidden")">
                                 @menuItem.Text
@@ -79,7 +79,7 @@
             }
 
             itemsList.Add(new MenuItem(menuItem.Text));
-            
+
             foreach (var subMenuItem in menuItem.SubMenu)
             {
                 itemsList.Add(new MenuItem(subMenuItem.Text, subMenuItem.Link, subMenuItem.Icon));

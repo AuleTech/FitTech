@@ -5,6 +5,8 @@ namespace FitTech.Application.Mappers;
 
 public static class DtoMappers
 {
-    public static InvitationDto ToDto(this Invitation invitation) =>
-        new InvitationDto(invitation.Email, invitation.Status.ToString(), invitation.CreatedUtc);
+    public static InvitationDto ToDto(this Invitation invitation)
+    {
+        return new InvitationDto(invitation.Email, invitation.Status.ToString(), invitation.CreatedUtc);
+    }
 }

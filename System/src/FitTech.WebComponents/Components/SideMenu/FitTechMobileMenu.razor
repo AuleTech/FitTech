@@ -4,14 +4,15 @@
 <div class="flex flex-row items-center gap-4 bg-fittech-white mb-0.5 border-t border-t-fittech-green">
     @foreach (var menuItem in MenuItems)
     {
-        <div class="flex flex-col grow w-full items-center content-center mt-2" @onclick="() => HandleOnClick(menuItem)">
+        <div class="flex flex-col grow w-full items-center content-center mt-2"
+             @onclick="() => HandleOnClick(menuItem)">
             @if (IsSelected(menuItem))
             {
-                <Heroicon class="h-6 w-6 text-fittech-green" Name="@menuItem.Icon" Type="HeroiconType.Outline"/>    
+                <Heroicon class="h-6 w-6 text-fittech-green" Name="@menuItem.Icon" Type="HeroiconType.Outline"/>
             }
             else
             {
-                <Heroicon class="h-6 w-6" Name="@menuItem.Icon" Type="HeroiconType.Outline"/>   
+                <Heroicon class="h-6 w-6" Name="@menuItem.Icon" Type="HeroiconType.Outline"/>
             }
         </div>
     }
@@ -19,8 +20,9 @@
 
 @code {
     public bool IsSelected(MobileMenuItem item) => _selectedItem!.Icon == item.Icon;
-    private MobileMenuItem _selectedItem = null!;  
+    private MobileMenuItem _selectedItem = null!;
     [Parameter] public MobileMenuItem[] MenuItems { get; set; } = [];
+
     public record MobileMenuItem(string Icon, string Link);
 
     protected override void OnParametersSet()
@@ -34,4 +36,5 @@
         _selectedItem = e;
         NavigationManager.NavigateTo(e.Link);
     }
+
 }

@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\images\Logo.jpeg" />
+    <Content Remove="wwwroot\images\Logo.jpeg"/>
   </ItemGroup>
 
   <!--Just for now, this may cause a lot of merge conflicts. styles.css should be generated on deploy-->

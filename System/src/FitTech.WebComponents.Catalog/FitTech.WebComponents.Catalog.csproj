@@ -1,22 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly"/>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\css\app.css" />
-    </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\app.css"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\FitTech.WebComponents\FitTech.WebComponents.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FitTech.WebComponents\FitTech.WebComponents.csproj"/>
+  </ItemGroup>
 
 </Project>
