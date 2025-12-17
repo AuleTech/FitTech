@@ -45,28 +45,28 @@
 
     public async Task SubmitAsync()
     {
-        
     }
-    
+
     private class PersonalInformationForm
     {
         [Required(ErrorMessage = "Introduce tu nombre")]
         public string Name { get; set; } = null!;
-        
+
         [Required(ErrorMessage = "Introduce tus apellidos")]
         public string Surname { get; set; } = null!;
-        
+
         [Required(ErrorMessage = "Introduce tu ciudad")]
         public string City { get; set; } = null!;
-        
+
         [Required(ErrorMessage = "Introduce tu Pais")]
         public string Country { get; set; } = null!;
-        
+
         [Required(ErrorMessage = "Introduce tu teléfono")]
         public string PhoneNumber { get; set; } = null!;
-        
+
         //TODO: InputDate
         // [Required(ErrorMessage = "Introduce tu fecha de nacimiento")]
         // public DateOnly BirthDate { get; set; }
     }
+
 }

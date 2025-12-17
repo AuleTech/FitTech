@@ -1,6 +1,84 @@
 @page "/BodyMeasures"
-<h3>BodyMeasures</h3>
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+
+<div style="margin-inline: 20px" class="flex flex-col grow bg-fittech-white items-center gap-2">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <h1 class="text-2xl text-fittech-dark font-bold mb-2">Medidas Corporales</h1>
+    <img class="h-auto w-[400px] pl-5" src="_content/FitTech.WebComponents/images/body-measures.png"/>
+    <EditForm Model="_form" OnValidSubmit="SubmitAsync" class="bg-fittech-white flex flex-col w-full gap-6 items-center">
+        <DataAnnotationsValidator/>
+        <div class="flex w-full gap-3">
+            <div class="flex flex-col flex-1">
+                <FitTechNumberInput @bind-Value="_form.Hip" placeholder="Cadera" Label="Cadera (cm)"/>
+                <ValidationMessage For="@(() => _form.Hip)" class="text-red-600 text-xs"/>
+            </div>
+            <div class="flex flex-col flex-1">
+                <FitTechNumberInput @bind-Value="_form.Biceps" placeholder="Biceps" Label="Biceps (cm)"/>
+                <ValidationMessage For="@(() => _form.Biceps)" class="text-red-600 text-xs"/>
+            </div>
+        </div>
+        <div class="flex w-full gap-3">
+            <div class="flex flex-col w-full">
+                <FitTechNumberInput @bind-Value="_form.Weight" placeholder="Peso" Label="Peso (kg)"/>
+                <ValidationMessage For="@(() => _form.Weight)" class="text-red-600 text-xs"/>
+            </div>
+            <div class="flex flex-col w-full">
+                <FitTechNumberInput @bind-Value="_form.Height" placeholder="Altura" Label="Altura (cm)"/>
+                <ValidationMessage For="@(() => _form.Height)" class="text-red-600 text-xs"/>
+            </div>
+        </div>
+        <div class="flex w-full gap-3">
+            <div class="flex flex-col w-full">
+                <FitTechNumberInput @bind-Value="_form.MaxThigh" placeholder="Muslo" Label="Muslo (cm)"/>
+                <ValidationMessage For="@(() => _form.MaxThigh)" class="text-red-600 text-xs"/>
+            </div>
+            <div class="flex flex-col w-full">
+                <FitTechNumberInput @bind-Value="_form.XShoulders" placeholder="Hombros" Label="Hombros (cm)"/>
+                <ValidationMessage For="@(() => _form.XShoulders)" class="text-red-600 text-xs"/>
+            </div>
+        </div>
+        <div class="flex w-full gap-3">
+            <div class="flex flex-col w-full">
+                <FitTechNumberInput @bind-Value="_form.Chest" placeholder="Pecho" Label="Pecho (cm)"/>
+                <ValidationMessage For="@(() => _form.Chest)" class="text-red-600 text-xs"/>
+            </div>
+            
+            <div class="flex flex-col w-full opacity-0">
+                <FitTechNumberInput @bind-Value="_form.Chest" placeholder="Pecho" Label="Pecho"/>
+                <ValidationMessage For="@(() => _form.Chest)" class="text-red-600 text-xs"/>
+            </div>
+        </div>
+        <div class="flex flex-col items-end w-full">
+            <FitTechButton Type="ButtonType.Submit" Class="w-[150px] mt-5" Label="Continuar"
+                           Icon="@HeroiconName.ArrowRight"></FitTechButton>
+        </div>
+    </EditForm>
+</div>
 
 @code {
-    
+    private readonly BodyMeasuresForm _form = new();
+
+    public async Task SubmitAsync()
+    {
+    }
+
+    private class BodyMeasuresForm
+    {
+        [Required(ErrorMessage = "Introduzca medida cadera")]
+        public decimal? Hip { get; set; }
+        [Required(ErrorMessage = "Introduzca perímetro de muslo")]
+        public decimal? MaxThigh { get; set; } //Muslo
+        [Required(ErrorMessage = "Introduce perímetro biceps")]
+        public decimal? Biceps { get; set; }
+        [Required(ErrorMessage = "Introduce contorno de hombros")]
+        public decimal? XShoulders { get; set; } //Contorno de hombros
+        [Required(ErrorMessage = "Introduce medida pecho")]
+        public decimal? Chest { get; set; }
+        [Required(ErrorMessage = "Introduce altura")]
+        public decimal? Height { get; set; }
+        [Required(ErrorMessage = "Introduce peso")]
+        public decimal? Weight { get; set; }
+    }
+
 }
