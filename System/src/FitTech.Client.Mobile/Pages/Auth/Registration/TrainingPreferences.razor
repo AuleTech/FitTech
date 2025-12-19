@@ -1,0 +1,52 @@
+@page "/TrainingPreferences"
+@using FitTech.WebComponents.Components.Inputs.Models
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+
+<div class="flex flex-col grow bg-fittech-white items-start justify-items-start gap-2 mx-10">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <h1 class="text-3xl text-fittech-dark font-bold mb-2">Entrenamiento</h1>
+    <p class="text-sm text-fittech-dark font-semibold">Ya por ultimo queremos saber tus preferencias a la hora de entrenar. Esto ayudará a tu entrador a adaptar las sesiones lo máximo posible a ti.</p>
+    <p class="text-sm text-fittech-dark font-semibold">Estas preferencias las podrás cambiar siempre desde el menú de configuración.</p>
+    <br/>
+    <EditForm Model="_form" OnSubmit="SubmitAsync"
+              class="bg-fittech-white flex flex-col w-full gap-6 items-center">
+        <DataAnnotationsValidator/>
+
+        <div class="flex flex-col w-full">
+            <FitTechNumberInput @bind-Value="_form.AvailableDays" Placeholder="Numero de días"
+                          Label="¿De cuantos días dispones para entrenar a la semana?"/>
+            <ValidationMessage For="@(() => _form!.AvailableDays)" class="text-red-600 text-sm"/>
+        </div>
+        
+        <div class="flex flex-col w-full">
+            <FitTechSelect @bind-Value="_form.FavouriteExercises" Placeholder="Ejercicios"
+                                Label="¿Cuales son tus ejercicios favoritos?" Options="ExercisesOptions"/>
+            <ValidationMessage For="@(() => _form!.FavouriteExercises)" class="text-red-600 text-sm"/>
+        </div>
+        
+        <div class="flex flex-col items-end w-full">
+            <FitTechButton Type="ButtonType.Submit" Class="w-[150px] mt-5" Label="Enviar"
+                           Icon="@HeroiconName.PaperAirplane"></FitTechButton>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private readonly TrainingPreferencesForm _form = new();
+    private readonly FitTechSelectOption[] ExercisesOptions = [new ("Pull de Biceps"), new("Press banca")];
+    public async Task SubmitAsync()
+    {
+    }
+
+    private class TrainingPreferencesForm
+    {
+        [Required(ErrorMessage = "Introduce tu disponibilidad")]
+        public int? AvailableDays { get; set; }
+
+        public string[] FavouriteExercises { get; set; } = [];
+
+        [Required(ErrorMessage = "Introduce tu objetivo")]
+        public string Goal { get; set; } = null!;
+    }
+}
