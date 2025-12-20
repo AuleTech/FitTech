@@ -10,7 +10,7 @@
                  ValueExpression="ValueExpression" class="@DefaultCssClass" @attributes="AdditionalAttributes">
         @foreach (var option in Options)
         {
-            <option value="@option.Value">
+            <option value="@option.Value" selected=@(true)>
                 @(option.DisplayValue ?? @option.Value)
             </option>
         }
