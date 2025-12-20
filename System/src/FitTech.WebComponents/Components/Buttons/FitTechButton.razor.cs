@@ -13,7 +13,7 @@ public partial class FitTechButton : ComponentBase
     {
         get
         {
-            if (IsActionOnExecution && !string.IsNullOrWhiteSpace(LabelOnClick))
+            if (ShowLoadingLabel && !string.IsNullOrWhiteSpace(LabelOnClick))
             {
                 return LabelOnClick;
             }
@@ -40,7 +40,7 @@ public partial class FitTechButton : ComponentBase
     [Parameter] public string? Label { get; set; }
     [Parameter] public string? LabelOnClick { get; set; }
     [Parameter] public string? Icon { get; set; }
-    [Parameter] public bool IsActionOnExecution { get; set; }
+    [Parameter] public bool ShowLoadingLabel { get; set; }
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
 

@@ -40,7 +40,7 @@
                                Icon="@HeroiconName.ArrowLeft"  OnClick="@NavigateBack"/>
             </div>
             <div class="flex flex-col items-end w-full">
-                <FitTechButton IsActionOnExecution="@_isSubmitting" Type="ButtonType.Submit" Class="w-[100px] mt-5" Label="Enviar" LabelOnClick="Enviando..."
+                <FitTechButton ShowLoadingLabel="@_isSubmitting" Type="ButtonType.Submit" Class="w-[100px] mt-5" Label="Enviar" LabelOnClick="Enviando..."
                                Icon="@HeroiconName.PaperAirplane" />
             </div>
         </div>
@@ -52,7 +52,7 @@
     private TrainingPreferencesForm? _form;
     //TODO: Get options from back
     private readonly FitTechSelectOption[] _exercises = [new ("Sin preferencia"),new ("Pull de Biceps"), new("Press banca")];
-    private readonly FitTechSelectOption[] _goals = [new("Musculación"), new("Pérdida de peso"), new("Rehabilitación"), new ("")];
+    private readonly FitTechSelectOption[] _goals = [new("Musculación"), new("Pérdida de peso"), new("Rehabilitación")];
     
     private const string StorageKey = nameof(TrainingPreferencesForm);
 
@@ -70,9 +70,9 @@
     {
         _isSubmitting = true;
         await Storage.SetItemAsync(StorageKey,_form, CancellationToken.None);
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        await Task.Delay(TimeSpan.FromSeconds(2));
         _isSubmitting = false;
-        NavigationManager.NavigateTo("/Credentials");
+        NavigationManager.NavigateTo("/TrainingPreferences");
     }
     
     private Task NavigateBack(MouseEventArgs eventArgs)
