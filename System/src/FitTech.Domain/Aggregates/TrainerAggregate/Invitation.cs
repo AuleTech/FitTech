@@ -14,7 +14,7 @@ public class Invitation : Entity
 
     public Guid TrainerId { get; private set; }
     public string Email { get; private set; } = null!;
-    public InvitationStatus Status { get; private set; }
+    public InvitationStatus Status { get; set; }
     public int Code { get; private set; }
 
     internal static Result<Invitation> Create(Guid trainerId, string email)
