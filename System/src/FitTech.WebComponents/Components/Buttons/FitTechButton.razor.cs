@@ -27,6 +27,7 @@ public partial class FitTechButton : ComponentBase
 
     [Parameter] public string? Label { get; set; }
     [Parameter] public string? Icon { get; set; }
+    [Parameter] public bool Disabled { get; set; }
     
     private async Task HandleClickAsync(MouseEventArgs e)
     {

@@ -1,4 +1,7 @@
-﻿using AuleTech.Core.Patterns.CQRS;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using AuleTech.Core.Patterns.CQRS;
 using AuleTech.Core.Patterns.Result;
 using FitTech.Application.Commands.Trainer.CancelInvitations;
 using FitTech.Application.Extensions;
