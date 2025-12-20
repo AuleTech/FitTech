@@ -1,7 +1,10 @@
 @page "/PersonalInformation"
+@using System.Threading
+@using FitTech.WebComponents.Persistence
 @layout EmptyLayout
 @attribute [AllowAnonymous]
 @inject NavigationManager NavigationManager
+@inject IStorage Storage
 
 <div class="flex flex-col grow bg-fittech-white items-start justify-items-start gap-2 mx-10">
     <div class="pt-[env(safe-area-inset-top)]"></div>
@@ -10,7 +13,7 @@
               class="bg-fittech-white flex flex-col w-full gap-6 items-center">
         <DataAnnotationsValidator/>
         <div class="flex flex-col w-full">
-            <FitTechInput @bind-Value="_informationForm.Name" Placeholder="Nombre" Label="Nombre"/>
+            <FitTechInput @bind-Value="_informationForm!.Name" Placeholder="Nombre" Label="Nombre"/>
             <ValidationMessage For="@(() => _informationForm!.Name)" class="text-red-600 text-sm"/>
         </div>
         <div class="flex flex-col w-full">
@@ -39,8 +42,8 @@
                                Icon="@HeroiconName.ArrowLeft"  OnClick="@NavigateBack"/>
             </div>
             <div class="flex flex-col items-end w-full">
-                <FitTechButton Type="ButtonType.Submit" Class="w-[100px] mt-5" Label="Enviar"
-                               Icon="@HeroiconName.PaperAirplane" />
+                <FitTechButton Type="ButtonType.Submit" Class="w-[100px] mt-5" Label="Continuar"
+                               Icon="@HeroiconName.ArrowRight" />
             </div>
         </div>
     </EditForm>
@@ -48,10 +51,24 @@
 
 @code {
 
-    private readonly PersonalInformationForm _informationForm = new();
+    private PersonalInformationForm? _informationForm;
+
+    private const string StorageKey = nameof(PersonalInformationForm);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await Storage.ContainsKeyAsync(StorageKey, CancellationToken.None))
+        {
+            _informationForm = (await Storage.GetItemAsync<PersonalInformationForm>(StorageKey, CancellationToken.None))!;
+        }
+
+        _informationForm ??= new();
+    }
 
     public async Task SubmitAsync()
     {
+        await Storage.SetItemAsync(StorageKey, _informationForm, CancellationToken.None);
+        NavigationManager.NavigateTo("/PersonalInformation");
     }
     
     private void NavigateBack(MouseEventArgs eventArgs)
