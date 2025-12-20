@@ -60,11 +60,9 @@
 @code {
     private bool _isExpanded = true;
 
-    internal Task ToggleSidebar(MouseEventArgs eventArgs)
+    internal void ToggleSidebar(MouseEventArgs eventArgs)
     {
         _isExpanded = !_isExpanded;
-
-        return Task.CompletedTask;
     }
 
     public MenuItem[] Build()

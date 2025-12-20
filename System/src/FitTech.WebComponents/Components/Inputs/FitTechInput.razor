@@ -5,7 +5,8 @@
     {
         <h1 class="text-xs mb-1 font-semibold">@Label</h1>
     }
-    <input @bind="CurrentValue" id="@Id" placeholder="@Placeholder" class="@CssClass @DefaultCssClass"
+    
+    <input type="@Type.ToString().ToLowerInvariant()" @bind="CurrentValue" id="@Id" placeholder="@Placeholder" class="@CssClass @DefaultCssClass"
            @oninput="OnInput"/>
 </div>
 
@@ -15,12 +16,19 @@
     [Parameter] public string? Id { get; set; }
     [Parameter] public EventCallback<ChangeEventArgs> OnInput { get; set; }
     [Parameter] public string? Label { get; set; }
+    [Parameter] public TextInputType Type { get; set; } = TextInputType.Text;
 
     protected override bool TryParseValueFromString(string? value, out string? result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
         result = value;
         validationErrorMessage = null;
         return true;
+    }
+
+    public enum TextInputType
+    {
+        Text,
+        Password
     }
 
 }
