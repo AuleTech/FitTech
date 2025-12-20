@@ -2,6 +2,7 @@
 @using FitTech.WebComponents.Components.Inputs.Models
 @layout EmptyLayout
 @attribute [AllowAnonymous]
+@inject NavigationManager NavigationManager
 
 <div class="flex flex-col grow bg-fittech-white items-center justify-items-start gap-2 mx-10">
     <div class="pt-[env(safe-area-inset-top)]"></div>
@@ -14,26 +15,31 @@
         <DataAnnotationsValidator/>
 
         <div class="flex flex-col w-full">
-            <FitTechNumberInput @bind-Value="_form.AvailableDays" Placeholder="Numero de días"
+            <FitTechNumberInput @bind-Value="_form.AvailableDays" placeholder="Numero de días"
                           Label="¿De cuantos días dispones para entrenar a la semana?"/>
             <ValidationMessage For="@(() => _form!.AvailableDays)" class="text-red-600 text-sm"/>
         </div>
         
         <div class="flex flex-col w-full">
-            <FitTechSelect @bind-Value="_form.FavouriteExercises" Placeholder="Ejercicios"
+            <FitTechSelect @bind-Value="_form.FavouriteExercises" placeholder="Ejercicios"
                            Label="¿Cuales son tus ejercicios favoritos?" Options="_exercises"/>
             <ValidationMessage For="@(() => _form!.FavouriteExercises)" class="text-red-600 text-sm"/>
         </div>
         
         <div class="flex flex-col w-full">
-            <FitTechSelect @bind-Value="_form.Goal" Placeholder="Objetivos"
+            <FitTechSelect @bind-Value="_form.Goal" placeholder="Objetivos"
                            Label="¿Cual es tu objetivo?" Options="_goals"/>
             <ValidationMessage For="@(() => _form!.Goal)" class="text-red-600 text-sm"/>
         </div>
-        
-        <div class="flex flex-col items-end w-full">
-            <FitTechButton Type="ButtonType.Submit" Class="w-[150px] mt-5" Label="Enviar"
-                           Icon="@HeroiconName.PaperAirplane"></FitTechButton>
+        <div class="flex w-full gap-2">
+            <div class="flex flex-col items-start w-full">
+                <FitTechButton Type="ButtonType.Text" Class="w-[100px] mt-5" Label="Atras"
+                               Icon="@HeroiconName.ArrowLeft"  OnClick="@NavigateBack"/>
+            </div>
+            <div class="flex flex-col items-end w-full">
+                <FitTechButton Type="ButtonType.Submit" Class="w-[100px] mt-5" Label="Enviar"
+                               Icon="@HeroiconName.PaperAirplane" />
+            </div>
         </div>
     </EditForm>
 </div>
@@ -43,6 +49,13 @@
     //TODO: Get options from back
     private readonly FitTechSelectOption[] _exercises = [new ("Sin preferencia"),new ("Pull de Biceps"), new("Press banca")];
     private readonly FitTechSelectOption[] _goals = [new("Musculación"), new("Pérdida de peso"), new("Rehabilitación"), new ("")];
+    
+    private Task NavigateBack(MouseEventArgs eventArgs)
+    {
+        NavigationManager.NavigateTo("/BodyMeasures");
+
+        return Task.CompletedTask;
+    }
     
     public async Task SubmitAsync()
     {
