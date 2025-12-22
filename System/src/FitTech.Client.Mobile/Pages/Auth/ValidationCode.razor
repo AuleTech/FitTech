@@ -1,5 +1,6 @@
 @page "/ValidationCode"
 @using FitTech.Client.Mobile.Pages.Auth.Registration.Models
+@using FitTech.WebComponents.Components.Alerts
 @using FitTech.WebComponents.Persistence
 @inherits CancellableComponent
 @layout EmptyLayout
@@ -23,7 +24,7 @@
             <FitTechInput @bind-Value="_validationForm.Code" Placeholder="Código" Label="Código"/>
             <ValidationMessage For="@(() => _validationForm!.Code)" class="text-red-600 text-sm"/>
         </div>
-
+        <FitTechAlert @bind-Show="_showAlert" Message="@_alertMessage" />
         <FitTechButton ShowLoadingLabel="_isSubmitting" Type="ButtonType.Submit" Class="w-[300px] mt-10" Label="Validar" LabelOnClick="Validando..."
                        Icon="@HeroiconName.Check"></FitTechButton>
     </EditForm>
@@ -33,6 +34,8 @@
 {
     private readonly ValidationForm _validationForm = new();
     private bool _isSubmitting;
+    private bool _showAlert;
+    private const string _alertMessage = "Código no válido";
     public async Task SubmitAsync()
     {
         _isSubmitting = true;
@@ -40,7 +43,7 @@
 
         if (!result.Succeeded)
         {
-            //Show error
+            _showAlert = true;
             _isSubmitting = false;
             return;
         }
