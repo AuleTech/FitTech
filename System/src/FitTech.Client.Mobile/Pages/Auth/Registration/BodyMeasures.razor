@@ -1,10 +1,12 @@
 @page "/BodyMeasures"
 @using System.Threading
+@using FitTech.Client.Mobile.Pages.Auth.Registration.Models
 @using FitTech.WebComponents.Persistence
 @layout EmptyLayout
 @attribute [AllowAnonymous]
 @inject NavigationManager NavigationManager
 @inject IStorage Storage
+@inherits CancellableComponent
 
 <div style="margin-inline: 20px" class="flex flex-col grow bg-fittech-white items-center gap-2">
     <div class="pt-[env(safe-area-inset-top)]"></div>
@@ -73,9 +75,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (await Storage.ContainsKeyAsync(StorageKey, CancellationToken.None))
+        if (await Storage.ContainsKeyAsync(StorageKey, Cts.Token))
         {
-            _form = (await Storage.GetItemAsync<BodyMeasuresForm>(StorageKey, CancellationToken.None))!;
+            _form = (await Storage.GetItemAsync<BodyMeasuresForm>(StorageKey, Cts.Token))!;
         }
 
         _form ??= new();
@@ -83,33 +85,13 @@
 
     public async Task SubmitAsync()
     {
-        await Storage.SetItemAsync(StorageKey,_form, CancellationToken.None);
+        await Storage.SetItemAsync(StorageKey,_form, Cts.Token);
         NavigationManager.NavigateTo("/BodyMeasures");
     }
     
-    private Task NavigateBack(MouseEventArgs eventArgs)
+    private  async Task NavigateBack(MouseEventArgs eventArgs)
     {
+        await Storage.SetItemAsync(StorageKey,_form, Cts.Token);
         NavigationManager.NavigateTo("/PersonalInformation");
-
-        return Task.CompletedTask;
     }
-
-    private class BodyMeasuresForm
-    {
-        [Required(ErrorMessage = "Introduzca medida cadera")]
-        public decimal? Hip { get; set; }
-        [Required(ErrorMessage = "Introduzca perímetro de muslo")]
-        public decimal? MaxThigh { get; set; } //Muslo
-        [Required(ErrorMessage = "Introduce perímetro biceps")]
-        public decimal? Biceps { get; set; }
-        [Required(ErrorMessage = "Introduce contorno de hombros")]
-        public decimal? XShoulders { get; set; } //Contorno de hombros
-        [Required(ErrorMessage = "Introduce medida pecho")]
-        public decimal? Chest { get; set; }
-        [Required(ErrorMessage = "Introduce altura")]
-        public decimal? Height { get; set; }
-        [Required(ErrorMessage = "Introduce peso")]
-        public decimal? Weight { get; set; }
-    }
-
 }

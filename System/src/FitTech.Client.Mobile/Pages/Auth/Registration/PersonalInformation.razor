@@ -1,10 +1,12 @@
 @page "/PersonalInformation"
 @using System.Threading
+@using FitTech.Client.Mobile.Pages.Auth.Registration.Models
 @using FitTech.WebComponents.Persistence
 @layout EmptyLayout
 @attribute [AllowAnonymous]
 @inject NavigationManager NavigationManager
 @inject IStorage Storage
+@inherits CancellableComponent
 
 <div class="flex flex-col grow bg-fittech-white items-start justify-items-start gap-2 mx-10">
     <div class="pt-[env(safe-area-inset-top)]"></div>
@@ -17,9 +19,9 @@
             <ValidationMessage For="@(() => _informationForm!.Name)" class="text-red-600 text-sm"/>
         </div>
         <div class="flex flex-col w-full">
-            <FitTechInput @bind-Value="_informationForm.Surname" Placeholder="Apellido/s"
+            <FitTechInput @bind-Value="_informationForm.LastName" Placeholder="Apellido/s"
                           Label="Apellido/s"/>
-            <ValidationMessage For="@(() => _informationForm!.Surname)" class="text-red-600 text-sm"/>
+            <ValidationMessage For="@(() => _informationForm!.LastName)" class="text-red-600 text-sm"/>
         </div>
         <div class="flex flex-col w-full">
             <FitTechInput @bind-Value="_informationForm.Country" Placeholder="Pais"
@@ -57,9 +59,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (await Storage.ContainsKeyAsync(StorageKey, CancellationToken.None))
+        if (await Storage.ContainsKeyAsync(StorageKey, Cts.Token))
         {
-            _informationForm = (await Storage.GetItemAsync<PersonalInformationForm>(StorageKey, CancellationToken.None))!;
+            _informationForm = (await Storage.GetItemAsync<PersonalInformationForm>(StorageKey, Cts.Token))!;
         }
 
         _informationForm ??= new();
@@ -67,35 +69,13 @@
 
     public async Task SubmitAsync()
     {
-        await Storage.SetItemAsync(StorageKey, _informationForm, CancellationToken.None);
+        await Storage.SetItemAsync(StorageKey, _informationForm, Cts.Token);
         NavigationManager.NavigateTo("/PersonalInformation");
     }
     
-    private void NavigateBack(MouseEventArgs eventArgs)
+    private async Task NavigateBack(MouseEventArgs eventArgs)
     {
+        await Storage.SetItemAsync(StorageKey, _informationForm, Cts.Token);
         NavigationManager.NavigateTo("/Credentials");
     }
-
-    private class PersonalInformationForm
-    {
-        [Required(ErrorMessage = "Introduce tu nombre")]
-        public string Name { get; set; } = null!;
-
-        [Required(ErrorMessage = "Introduce tus apellidos")]
-        public string Surname { get; set; } = null!;
-
-        [Required(ErrorMessage = "Introduce tu ciudad")]
-        public string City { get; set; } = null!;
-
-        [Required(ErrorMessage = "Introduce tu Pais")]
-        public string Country { get; set; } = null!;
-
-        [Required(ErrorMessage = "Introduce tu teléfono")]
-        public string PhoneNumber { get; set; } = null!;
-
-        //TODO: InputDate
-        // [Required(ErrorMessage = "Introduce tu fecha de nacimiento")]
-        // public DateOnly BirthDate { get; set; }
-    }
-
 }

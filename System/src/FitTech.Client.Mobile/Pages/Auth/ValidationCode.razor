@@ -1,10 +1,12 @@
 @page "/ValidationCode"
-@using System.Threading
-@inject IFitTechApiClient ApiClient
-@inject NavigationManager NavigationManager
-
+@using FitTech.Client.Mobile.Pages.Auth.Registration.Models
+@using FitTech.WebComponents.Persistence
+@inherits CancellableComponent
 @layout EmptyLayout
 @attribute [AllowAnonymous]
+@inject IFitTechApiClient ApiClient
+@inject NavigationManager NavigationManager
+@inject IStorage Storage
 <div class="flex flex-col grow bg-fittech-white items-center gap-2">
     <div class="pt-[env(safe-area-inset-top)]"></div>
     <FitTechButton style="border:transparent" Class="fixed left-0 mt-15 ml-3 bg-transparent" Icon="@HeroiconName.ArrowLeft" Onclick="@BackToLogin" ></FitTechButton>
@@ -33,7 +35,7 @@
 
     public async Task SubmitAsync()
     {
-        var result = await ApiClient.ValidateInvitationAsync(_validationForm.Email.ToLowerInvariant(), int.Parse(_validationForm.Code), CancellationToken.None);
+        var result = await ApiClient.ValidateInvitationAsync(_validationForm.Email.ToLowerInvariant(), int.Parse(_validationForm.Code), Cts.Token);
 
         if (!result.Succeeded)
         {
@@ -41,20 +43,13 @@
             return;
         }
 
+        _validationForm.InvitationId = result.Value;
+        await Storage.SetItemAsync(nameof(ValidationForm), _validationForm, Cts.Token);
         NavigationManager.NavigateTo("/Credentials");
     }
 
     public void BackToLogin(MouseEventArgs args)
     {
         NavigationManager.NavigateTo("/login");
-    }
-
-    private class ValidationForm
-    {
-        [Required(ErrorMessage = "Introduce el código")]
-        public string Code { get; set; } = null!;
-
-        [Required(ErrorMessage = "Introduce tu email")]
-        public string Email { get; set; } = null!;
     }
 }
