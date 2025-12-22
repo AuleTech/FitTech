@@ -24,7 +24,7 @@
             <ValidationMessage For="@(() => _validationForm!.Code)" class="text-red-600 text-sm"/>
         </div>
 
-        <FitTechButton Type="ButtonType.Submit" Class="w-[300px] mt-10" Label="Validar"
+        <FitTechButton ShowLoadingLabel="_isSubmitting" Type="ButtonType.Submit" Class="w-[300px] mt-10" Label="Validar" LabelOnClick="Validando..."
                        Icon="@HeroiconName.Check"></FitTechButton>
     </EditForm>
 </div>
@@ -32,20 +32,23 @@
 @code
 {
     private readonly ValidationForm _validationForm = new();
-
+    private bool _isSubmitting;
     public async Task SubmitAsync()
     {
+        _isSubmitting = true;
         var result = await ApiClient.ValidateInvitationAsync(_validationForm.Email.ToLowerInvariant(), int.Parse(_validationForm.Code), Cts.Token);
 
         if (!result.Succeeded)
         {
             //Show error
+            _isSubmitting = false;
             return;
         }
 
         _validationForm.InvitationId = result.Value;
         await Storage.SetItemAsync(nameof(ValidationForm), _validationForm, Cts.Token);
         NavigationManager.NavigateTo("/Credentials");
+        _isSubmitting = false;
     }
 
     public void BackToLogin(MouseEventArgs args)

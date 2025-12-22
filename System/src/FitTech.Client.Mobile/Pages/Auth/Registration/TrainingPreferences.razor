@@ -1,5 +1,4 @@
 @page "/TrainingPreferences"
-@using System.Threading
 @using FitTech.Client.Mobile.Pages.Auth.Registration.Models
 @using FitTech.Client.Mobile.Services
 @using FitTech.WebComponents.Components.Inputs.Models
@@ -40,7 +39,7 @@
         </div>
         <div class="flex w-full gap-2">
             <div class="flex flex-col items-start w-full">
-                <FitTechButton Type="ButtonType.Text" Class="w-[100px] mt-5" Label="Atras"
+                <FitTechButton Type="ButtonType.Button" Class="w-[100px] mt-5" Label="Atras"
                                Icon="@HeroiconName.ArrowLeft"  OnClick="@NavigateBack"/>
             </div>
             <div class="flex flex-col items-end w-full">
@@ -73,9 +72,18 @@
     public async Task SubmitAsync()
     {
         _isSubmitting = true;
-        await RegistrationService.RegisterAsync(await BuildRegistrationForm(), Cts.Token);
+        await Storage.SetItemAsync(StorageKey, _form, Cts.Token);
+        var result = await RegistrationService.RegisterAsync(await BuildRegistrationForm(), Cts.Token);
         _isSubmitting = false;
-        NavigationManager.NavigateTo("/TrainingPreferences");
+        
+        if (!result.Succeeded)
+        {
+            //Show error
+            return;
+        }
+        
+        _isSubmitting = false;
+        NavigationManager.NavigateTo("/login");
 
         async Task<RegistrationForm> BuildRegistrationForm()
         {
