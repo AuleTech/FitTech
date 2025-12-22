@@ -32,7 +32,7 @@ internal static class RegistrationFormExtensions
             Credentials =
                 new CredentialsDto
                 {
-                    Email = registrationForm.Credentials.Password, Password = registrationForm.Credentials.Password
+                    Email = registrationForm.ValidationForm.Email, Password = registrationForm.Credentials.Password
                 },
             TrainingSettings =
                 new TrainingSettingsDto

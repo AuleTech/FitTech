@@ -7,7 +7,7 @@ var password = builder.AddParameter("password", "fittech2025");
 var postgres = builder
     .AddPostgres("postgres", password: password, port: 5432);
 
-var postgresdb = postgres.AddDatabase("fittechdb");
+var postgresdb = postgres.WithDataVolume().AddDatabase("fittechdb");
 var rabbitMq = builder.AddRabbitMQ("messaging").WithManagementPlugin();
 
 var fitTechApi = builder

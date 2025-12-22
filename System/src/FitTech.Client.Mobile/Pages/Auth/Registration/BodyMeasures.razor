@@ -57,7 +57,7 @@
         </div>
         <div class="flex w-full gap-2">
             <div class="flex flex-col items-start w-full">
-                <FitTechButton Type="ButtonType.Text" Class="w-[100px] mt-5" Label="Atras"
+                <FitTechButton Type="ButtonType.Button" Class="w-[100px] mt-5" Label="Atras"
                                Icon="@HeroiconName.ArrowLeft"  OnClick="@NavigateBack"/>
             </div>
             <div class="flex flex-col items-end w-full">
@@ -86,7 +86,7 @@
     public async Task SubmitAsync()
     {
         await Storage.SetItemAsync(StorageKey,_form, Cts.Token);
-        NavigationManager.NavigateTo("/BodyMeasures");
+        NavigationManager.NavigateTo("/TrainingPreferences");
     }
     
     private  async Task NavigateBack(MouseEventArgs eventArgs)
