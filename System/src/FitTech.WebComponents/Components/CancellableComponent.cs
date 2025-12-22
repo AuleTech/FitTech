@@ -4,11 +4,11 @@ namespace FitTech.WebComponents.Components;
 
 public class CancellableComponent : ComponentBase, IDisposable
 {
-    public CancellationTokenSource _cts = new();
+    public readonly CancellationTokenSource Cts = new();
 
     public void Dispose()
     {
-        _cts.Cancel();
-        _cts.Dispose();
+        Cts.Cancel();
+        Cts.Dispose();
     }
 }
