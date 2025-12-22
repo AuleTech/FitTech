@@ -244,6 +244,9 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-1\/2 {
+    top: calc(1/2 * 100%);
+  }
   .top-3 {
     top: calc(var(--spacing) * 3);
   }
@@ -255,6 +258,9 @@
   }
   .right-0 {
     right: calc(var(--spacing) * 0);
+  }
+  .right-2 {
+    right: calc(var(--spacing) * 2);
   }
   .right-3 {
     right: calc(var(--spacing) * 3);
@@ -527,6 +533,10 @@
     --tw-translate-x: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+  .-translate-y-1\/2 {
+    --tw-translate-y: calc(calc(1/2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
   .translate-y-1 {
     --tw-translate-y: calc(var(--spacing) * 1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -734,6 +744,9 @@
   .border-fittech-green {
     border-color: #ADC539;
   }
+  .border-fittech-red {
+    border-color: #EF5D60;
+  }
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
@@ -781,6 +794,9 @@
   }
   .bg-fittech-red {
     background-color: #EF5D60;
+  }
+  .bg-fittech-red\/20 {
+    background-color: color-mix(in oklab, #EF5D60 20%, transparent);
   }
   .bg-fittech-white {
     background-color: #E5EBEA;
