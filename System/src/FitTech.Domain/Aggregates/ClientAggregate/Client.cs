@@ -1,6 +1,6 @@
 ﻿using AuleTech.Core.Patterns.CQRS.Validations;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Abstranctions.Dtos;
+using FitTech.Abstractions.Dtos;
 using FitTech.Domain.Enums;
 using FitTech.Domain.Seedwork;
 using FitTech.Domain.ValueObjects;
