@@ -1,0 +1,29 @@
+@page "/components/snackbar"
+@using FitTech.WebComponents.Components.Buttons
+@using FitTech.WebComponents.Components.Container
+@using FitTech.WebComponents.Components.Snackbar
+@inject IFitTechSnackbarService SnackbarService;
+
+<div class="flex flex-col m-6">
+    <h1 class="text-3xl font-bold text-fittech-dark">Snackbar</h1>
+    <p>Notificaciones asincronas que indica el resultado acción realizada a priori.</p>
+    <br/>
+    <h2 class="text-xl font-bold text-fittech-dark mb-1 pb-2">Mobile Menu</h2>
+    <FitTechContainer>
+        <div class="flex items-start content-start flex-row gap-4 m-2 max-w-sm">
+            <FitTechButton OnClick="@CreateSnackbar" Label="Crear snackbar" ></FitTechButton>
+        </div>
+    </FitTechContainer>
+</div>
+
+@code {
+
+    private void CreateSnackbar(MouseEventArgs args)
+    {
+        SnackbarService.Add(new FitTechSnackbar()
+        {
+            Message = "Esto es una prueba",
+            Type = SnackbarType.Success
+        });
+    }
+}

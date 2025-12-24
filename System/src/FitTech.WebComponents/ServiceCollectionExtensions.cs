@@ -1,6 +1,7 @@
 using FitTech.API.Client;
 using FitTech.WebComponents.Authentication;
 using FitTech.WebComponents.Components.AppHeader;
+using FitTech.WebComponents.Components.Snackbar;
 using FitTech.WebComponents.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection
             .AddFitTechApiClient(configuration, provider => provider.GetRequiredService<FitTechDelegationHandler>())
             .AddTransient<IUserService, UserService>()
+            .AddSingleton<IFitTechSnackbarService, FitTechSnackbarService>()
             .AddScoped<AuthenticationStateProvider, FitTechAuthStateProvider>()
             .AddScoped<FitTechAuthStateProvider>()
             .AddAuthorizationCore();

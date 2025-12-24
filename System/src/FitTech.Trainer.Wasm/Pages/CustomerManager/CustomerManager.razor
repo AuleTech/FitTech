@@ -2,6 +2,7 @@
 @inject AppHeaderStateHandler AppHeaderStateHandler
 @inject IFitTechApiClient ApiClient
 @inject ILogger<CustomerManager> Logger
+@inject IFitTechSnackbarService SnackbarService
 
 @using System.ComponentModel.DataAnnotations
 @using Blazor.Heroicons
@@ -12,6 +13,7 @@
 @using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Components.Inputs
 @using FitTech.WebComponents.Components.Modals
+@using FitTech.WebComponents.Components.Snackbar
 @using FitTech.WebComponents.Styles.Enums
 
 <EditForm Model="Model" OnValidSubmit="SubmitAsync">
@@ -23,7 +25,7 @@
                 un cliente para poder iniciar el seguimiento</p>
         </FitTechModalHeader>
         <FitTechModalBody>
-            <FitTechInput class="w-2/3" Placeholder="Email" @bind-Value="@Model!.Email"/>
+            <FitTechInput class="w-full" Placeholder="Email" @bind-Value="@Model!.Email"/>
             <ValidationMessage For="@(() => Model!.Email)" class="pt-[4px] text-fittech-red text-xs"/>
         </FitTechModalBody>
         <FitTechModalFooter>
@@ -61,11 +63,20 @@
 
         if (!result.Succeeded)
         {
+            SnackbarService.Add(new FitTechSnackbar()
+            {
+                Message = $"Se ha producido un error, intentalo otra vez",
+                Type = SnackbarType.Error
+            });
             Logger.LogError($"Error sending invitation: {result}");
         }
-
+        
+        SnackbarService.Add(new FitTechSnackbar()
+        {
+            Message = $"Se ha enviado la invitación a {Model!.Email} correctamente",
+            Type = SnackbarType.Success
+        });
         Model = new();
-        //Show Toast or Snack bar: Invitación enviada
     }
 
     public class ClientInvitationModel

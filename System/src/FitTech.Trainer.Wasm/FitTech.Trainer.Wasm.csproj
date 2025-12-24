@@ -11,6 +11,7 @@
     <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\ConfirmDataForm.razor"/>
     <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\DetailForm.razor"/>
     <_ContentIncludedByDefault Remove="Pages\CustomerManager\AddNewClientPage\PersonalInformationForm.razor"/>
+    <_ContentIncludedByDefault Remove="Pages\ComponentCatalog\ComponentCatalog.razor" />
   </ItemGroup>
 
   <ItemGroup>

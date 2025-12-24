@@ -1,6 +1,7 @@
 ﻿@using Blazor.Heroicons
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.SideMenu
+@using FitTech.WebComponents.Components.Snackbar
 @inherits LayoutComponentBase
 @inject AppHeaderStateHandler Handler
 
@@ -12,6 +13,7 @@
         @Body
     </div>
 </div>
+<FitTechSnackbarDisplay />
 </body>
 
 
@@ -26,7 +28,8 @@
         ]),
         new SlideMenuComponent.MenuItem("Components", SubMenu:
         [
-            new SlideMenuComponent.SubMenuItem("Menu", "/components/menu")
+            new SlideMenuComponent.SubMenuItem("Menu", "/components/menu"),
+            new SlideMenuComponent.SubMenuItem("Snackbar", "/components/snackbar")
         ])
     };
 
