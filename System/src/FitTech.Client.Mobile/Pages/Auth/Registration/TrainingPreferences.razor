@@ -1,4 +1,5 @@
 @page "/TrainingPreferences"
+@using FitTech.ApiClient.Generated
 @using FitTech.Client.Mobile.Pages.Auth.Registration.Models
 @using FitTech.Client.Mobile.Services
 @using FitTech.WebComponents.Components.Inputs.Models
@@ -21,19 +22,13 @@
         <DataAnnotationsValidator/>
 
         <div class="flex flex-col w-full">
-            <FitTechNumberInput @bind-Value="_form.AvailableDays" placeholder="Numero de días"
+            <FitTechNumberInput @bind-Value="_form!.AvailableDays" placeholder="Numero de días"
                           Label="¿De cuantos días dispones para entrenar a la semana?"/>
             <ValidationMessage For="@(() => _form!.AvailableDays)" class="text-red-600 text-sm"/>
         </div>
         
         <div class="flex flex-col w-full">
-            <FitTechSelect @bind-Value="_form.FavouriteExercises" placeholder="Ejercicios"
-                           Label="¿Cuales son tus ejercicios favoritos?" Options="_exercises"/>
-            <ValidationMessage For="@(() => _form!.FavouriteExercises)" class="text-red-600 text-sm"/>
-        </div>
-        
-        <div class="flex flex-col w-full">
-            <FitTechSelect @bind-Value="_form.Goal" placeholder="Objetivos"
+            <FitTechSelect TValue="TrainingGoalEnumDto?" @bind-Value="_form.Goal" placeholder="Objetivos"
                            Label="¿Cual es tu objetivo?" Options="_goals"/>
             <ValidationMessage For="@(() => _form!.Goal)" class="text-red-600 text-sm"/>
         </div>
@@ -53,9 +48,7 @@
 @code {
     private bool _isSubmitting;
     private TrainingPreferencesForm? _form;
-    //TODO: Get options from back
-    private readonly FitTechSelectOption[] _exercises = [new ("Sin preferencia"),new ("Pull de Biceps"), new("Press banca")];
-    private readonly FitTechSelectOption[] _goals = [new("Musculación"), new("Pérdida de peso"), new("Rehabilitación")];
+    private readonly FitTechSelectOption<TrainingGoalEnumDto?>[] _goals = [new(TrainingGoalEnumDto.BodyBuilding,"Musculación"), new(TrainingGoalEnumDto.LoseWeight,"Pérdida de peso"), new(TrainingGoalEnumDto.Recovery,"Rehabilitación")];
     
     private const string StorageKey = nameof(TrainingPreferencesForm);
 

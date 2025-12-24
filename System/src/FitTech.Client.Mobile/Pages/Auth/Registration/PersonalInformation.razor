@@ -38,6 +38,11 @@
                           Label="Teléfono"/>
             <ValidationMessage For="@(() => _informationForm!.PhoneNumber)" class="text-red-600 text-sm"/>
         </div>
+        <div class="flex flex-col w-full">
+            <FitTechDateInput @bind-Value="_informationForm.BirthDate" PlaceholderPlaceholder="Fecha de nacimiento"
+                          Label="Fecha de nacimiento"/>
+            <ValidationMessage For="@(() => _informationForm!.BirthDate)" class="text-red-600 text-sm"/>
+        </div>
         <div class="flex w-full gap-2">
             <div class="flex flex-col items-start w-full">
                 <FitTechButton Type="ButtonType.Button" Class="w-[100px] mt-5" Label="Atras"

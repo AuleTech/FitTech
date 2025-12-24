@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FitTech.ApiClient.Generated;
 
 namespace FitTech.Client.Mobile.Pages.Auth.Registration.Models;
 
@@ -12,5 +13,5 @@ public class TrainingPreferencesForm
     public string[] FavouriteExercises { get; set; } = [];
 
     [Required(ErrorMessage = "Selecciona tu objetivo")]
-    public string? Goal { get; set; }
+    public TrainingGoalEnumDto? Goal { get; set; }
 }

@@ -11,7 +11,7 @@
     <img class="rotate-270 h-auto w-[250px]" src="_content/FitTech.WebComponents/images/logo.png"/>
     <EditForm class="px-8 flex flex-col w-full gap-6 items-center" Model="_loginForm" OnValidSubmit="SubmitAsync">
         <div class="flex flex-col w-full gap-6">
-            <FitTechAlert @bind-Show="_showAlert" Message="@_errorMessage"/>
+            <FitTechAlert @bind-Show="_showAlert" Message="@ErrorMessage"/>
             <DataAnnotationsValidator/>
             <div class="flex flex-col w-full">
                 <FitTechInput @bind-Value="_loginForm.Email" Placeholder="Email" Label="Email"></FitTechInput>
@@ -37,7 +37,7 @@
 {
     private readonly LoginForm _loginForm = new();
     private bool _showAlert;
-    private const string _errorMessage = "Usuario o contraseña incorrectos";
+    private const string ErrorMessage = "Usuario o contraseña incorrectos";
 
     public async Task SubmitAsync()
     {
