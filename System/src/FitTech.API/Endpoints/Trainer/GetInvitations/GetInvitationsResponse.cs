@@ -1,4 +1,4 @@
-﻿using FitTech.Abstranctions.Dtos;
+﻿using FitTech.Abstractions.Dtos;
 
 namespace FitTech.API.Endpoints.Trainer.GetInvitations;
 

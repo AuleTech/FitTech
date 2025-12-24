@@ -1,4 +1,4 @@
-﻿using FitTech.Abstranctions.Dtos;
+﻿using FitTech.Abstractions.Dtos;
 using FitTech.Domain.Aggregates.TrainerAggregate;
 
 namespace FitTech.Application.Mappers;
