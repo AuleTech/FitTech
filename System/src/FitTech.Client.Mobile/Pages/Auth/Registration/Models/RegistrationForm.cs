@@ -21,7 +21,7 @@ internal static class RegistrationFormExtensions
                     Name = registrationForm.PersonalInformation.Name,
                     LastName = registrationForm.PersonalInformation.LastName,
                     PhoneNumber = registrationForm.PersonalInformation.PhoneNumber,
-                    BirthDate = DateTime.Now.AddYears(-20),
+                    BirthDate = new DateTimeOffset(registrationForm.PersonalInformation.BirthDate!.Value.ToDateTime(TimeOnly.MinValue)),
                     Address =
                         new AddressDto
                         {

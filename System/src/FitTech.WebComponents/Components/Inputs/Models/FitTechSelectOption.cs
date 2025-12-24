@@ -1,12 +1,12 @@
 ﻿namespace FitTech.WebComponents.Components.Inputs.Models;
 
-public class FitTechSelectOption
+public class FitTechSelectOption<T>
 {
-    public FitTechSelectOption(string value, string? displayValue =null)
+    public FitTechSelectOption(T value, string displayValue)
     {
         Value = value;
         DisplayValue = displayValue;
     }
-    public string Value { get; set; }
-    public string? DisplayValue { get; set; }
+    public T Value { get; set; }
+    public string DisplayValue { get; set; }
 }

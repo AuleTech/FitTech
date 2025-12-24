@@ -18,8 +18,7 @@ public class PersonalInformationForm
 
     [Required(ErrorMessage = "Introduce tu teléfono")]
     public string PhoneNumber { get; set; } = null!;
-
-    //TODO: InputDate
-    // [Required(ErrorMessage = "Introduce tu fecha de nacimiento")]
-    // public DateOnly BirthDate { get; set; }
+    
+     [Required(ErrorMessage = "Introduce tu fecha de nacimiento")]
+     public DateOnly? BirthDate { get; set; }
 }
