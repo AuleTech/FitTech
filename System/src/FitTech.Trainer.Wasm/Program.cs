@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using FitTech.Trainer.Wasm;
 using FitTech.Trainer.Wasm.Persistence;
+using FitTech.Trainer.Wasm.Services;
 using FitTech.WebComponents;
 using FitTech.WebComponents.Persistence;
 using Microsoft.AspNetCore.Components.Web;
@@ -16,5 +17,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services
     .AddBlazoredLocalStorage()
     .AddScoped<IStorage, BlazorLocalStorage>()
+    .AddTransient<IInvitationService, InvitationService>()
     .AddFitTechComponents(builder.Configuration);
 await builder.Build().RunAsync();

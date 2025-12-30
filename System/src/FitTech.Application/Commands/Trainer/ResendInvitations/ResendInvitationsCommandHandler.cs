@@ -55,14 +55,14 @@ internal class ResendInvitationsCommandHandler : IResendInvitationsCommandHandle
             return invitationResult;
         }
         
-        var invitationCanceled = await _trainerRepository.ResendInvitationAsync(command.ClientEmail, cancellationToken);
+        trainer.ResendInvitation(command.ClientEmail);
         
         await _emailService.SendEmailAsync(command.ClientEmail,
             RegisterClientEmailTemplate.Create(invitationResult.Value!.Code, trainer.Name), cancellationToken);
         
         await _unitOfWork.SaveAsync(cancellationToken);
         
-        _logger.LogDebug("Invitation('{InvitationId}') have been resended to {Email}", invitationCanceled.Email, invitationCanceled.UpdatedUtc);
+        _logger.LogDebug("Invitation has been resended to {Email}", command.ClientEmail);
         
         return Result.Success;
     }

@@ -1,12 +1,15 @@
 @page "/configurationpage"
 
 @inject AppHeaderStateHandler AppHeaderStateHandler
-@inject IUserService _userService
+@inject IInvitationService _invitationService
 @inject IJSRuntime JS
-
+@inject ILocalStorageService localStorageService
+@inject ILogger<ConfigurationPage> Logger
 @using System.Text.Json
 @using Blazor.Heroicons
+@using Blazored.LocalStorage
 @using FitTech.ApiClient.Generated
+@using FitTech.Trainer.Wasm.Services
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Services
@@ -18,14 +21,14 @@
 
 <div class="flex flex-col gap-4">
 
-    <div class="w-full max-w-3xl mx-auto mt-6">
+    <div class="w-full mx-auto mt-6">
         <h1 class="text-4xl font-bold text-fittech-dark">Invitaciones enviadas</h1>
         <p class="text-fittech-gray-secondary mb-2">
             Las invitaciones Rechazadas o Aceptadas dejarán de mostrarse pasados 15 días
         </p>
     </div>
 
-    <div class="w-full max-w-3xl bg-fittech-gray-secondary rounded-xl border-2 border-fittech-green mx-auto shadow-sm">
+    <div class="w-full bg-fittech-gray-secondary rounded-xl border-2 border-fittech-green mx-auto shadow-sm">
 
         @if (items is not null && items.Any())
         {
@@ -83,16 +86,6 @@
                                 Icon="@HeroiconName.Check"
                                 OnClick="@(() => TryResend(item.ClientEmail))" />
                         }
-                        else if (item.Status == "Expired")
-                        {
-                            <FitTechButton 
-                                Color="Color.Tertiary" 
-                                Size="Size.Medium"
-                                Label="@GetResendButtonText(item.ClientEmail)"
-                                Disabled="@IsResendBlocked(item.ClientEmail)"
-                                Icon="@HeroiconName.Check"
-                                OnClick="@(() => TryResend(item.ClientEmail))" />
-                        }
                         else if (item.Status == "InProgress")
                         {
                             <FitTechButton 
@@ -127,7 +120,7 @@
     protected override async Task OnInitializedAsync()
     {
         AppHeaderStateHandler.Clear();
-        base.OnInitialized();
+        OnInitialized();
         
         await LoadBlockedTimesAsync();
 
@@ -155,9 +148,10 @@
     {
         try
         {
-            var json = await JS.InvokeAsync<string>("localStorage.getItem", StorageKey);
+         var json = await localStorageService.GetItemAsync<string>(StorageKey);
+
             if (!string.IsNullOrEmpty(json))
-            {
+             {
                 var dict = JsonSerializer.Deserialize<Dictionary<string, DateTime>>(json);
                 if (dict != null)
                 {
@@ -165,7 +159,7 @@
                     foreach (var kv in dict)
                         resendBlockedUntil[kv.Key] = kv.Value;
                 }
-            }
+             }
         }
         catch
         {
@@ -179,15 +173,19 @@
         await JS.InvokeVoidAsync("localStorage.setItem", StorageKey, json);
     }
 
-    protected async Task GetInvitationAsync(CancellationToken cancellationToken)
+    private async Task GetInvitationAsync(CancellationToken cancellationToken)
     {
-        var response = await _userService.GetInvitationsTrainer(cancellationToken);
+        var response = await _invitationService.GetTrainerInvitationsAsync(cancellationToken);
+        if (!response.Succeeded)
+        {
+            Logger.LogError($"Error getting invitations: {response}");
+        }
         items = response.Value?.Invitations?.ToList() ?? new();
     }
 
-    protected async Task CancelInvitations(string clientEmail)
+    private async Task CancelInvitations(string clientEmail)
     {
-        var response = await _userService.CancelInvitations(clientEmail, CancellationToken.None);
+        var response = await _invitationService.CancelInvitation(clientEmail, CancellationToken.None);
 
         if (response.Succeeded)
         {
@@ -203,14 +201,13 @@
         if (IsResendBlocked(email))
             return;
 
-        var response = await _userService.ResendInvitations(email, CancellationToken.None);
+        var response = await _invitationService.ResendInvitation(email, CancellationToken.None);
 
         if (response.Succeeded)
         {
             resendBlockedUntil[email] = now.AddMinutes(1);
             await SaveBlockedTimesAsync();
             await GetInvitationAsync(CancellationToken.None);
-            StateHasChanged();
         }
     }
 

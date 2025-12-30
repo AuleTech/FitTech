@@ -20,6 +20,19 @@ internal class TrainerRepository : ITrainerRepository
 
         return await GetAsync(invitation.TrainerId, cancellationToken);
     }
+    
+    public async Task<Trainer?> GetByInvitationEmail(Guid trainerId, string clientEmail, CancellationToken cancellationToken)
+    {
+        var invitation = await _context.Invitations
+            .SingleOrDefaultAsync(
+                x => x.TrainerId == trainerId && x.Email == clientEmail,
+                cancellationToken);
+
+        if (invitation == null)
+            return null;
+
+        return await GetAsync(invitation.TrainerId, cancellationToken);
+    }
 
     public async Task<Trainer> AddAsync(Trainer trainer, CancellationToken cancellationToken)
     {
@@ -35,41 +48,6 @@ internal class TrainerRepository : ITrainerRepository
         return invitation;
     }
     
-    public async Task<Invitation> CancelInvitationAsync(string clientEmail, CancellationToken cancellationToken)
-    {
-        var invitation = await _context.Invitations
-            .FirstOrDefaultAsync(i => i.Email == clientEmail, cancellationToken);
-
-        if (invitation == null)
-            throw new KeyNotFoundException("Invitation not found");
-
-        invitation.Status = Enum.Parse<InvitationStatus>("Expired");
-        invitation.UpdatedUtc = DateTime.UtcNow;
-
-        _context.Invitations.Update(invitation);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        return invitation;
-    }
-    
-    public async Task<Invitation> ResendInvitationAsync(string clientEmail, CancellationToken cancellationToken)
-    {
-        var invitation = await _context.Invitations
-            .FirstOrDefaultAsync(i => i.Email == clientEmail, cancellationToken);
-
-        if (invitation == null)
-            throw new KeyNotFoundException("Invitation not found");
-
-        invitation.Status = Enum.Parse<InvitationStatus>("Pending");
-        invitation.UpdatedUtc = DateTime.UtcNow;
-
-        _context.Invitations.Update(invitation);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        return invitation;
-    }
-
-
     public async Task<Trainer?> GetAsync(Guid trainerId, CancellationToken cancellationToken)
     {
         return await _context.Trainers

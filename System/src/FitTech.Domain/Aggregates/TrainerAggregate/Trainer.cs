@@ -68,7 +68,7 @@ public class Trainer : Entity, IAggregateRoot
 
     public Result<Invitation> CheckInvitation(string clientEmail)
     { 
-        var invitation =  Invitations.FirstOrDefault(x => x.Email == clientEmail && x.Status is InvitationStatus.Expired or  InvitationStatus.Pending);
+        var invitation =  Invitations.FirstOrDefault(x => x.Email == clientEmail && x.Status is InvitationStatus.Pending);
         
         if (invitation is null)
         {
@@ -143,5 +143,26 @@ public class Trainer : Entity, IAggregateRoot
         }
         
         return invitation.SetCompleted(); 
+    }
+    
+    public Result CancelInvitationByEmail(string email)
+    {
+        var invitation =  Invitations.FirstOrDefault(i => i.Email == email);
+
+        if (invitation == null)
+            throw new KeyNotFoundException("Invitation not found");
+        
+        return invitation.SetExpired();
+    }
+
+    public Result ResendInvitation(string email)
+    {
+        var invitation = Invitations.FirstOrDefault(i => i.Email == email);
+
+        if (invitation == null)
+            throw new KeyNotFoundException("Invitation not found");
+        
+        return invitation.SetPending();
+
     }
 }

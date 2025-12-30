@@ -15,7 +15,6 @@ public record CancelInvitationsCommand(Guid TrainerId, string ClientEmail) : ICo
         TrainerId.ValidateNotEmpty(errors, nameof(TrainerId));
         ClientEmail.ValidateEmail(errors, nameof(ClientEmail));
         
-
         return errors.ToResult();
     }
 }

@@ -35,12 +35,18 @@ internal class CancelInvitationsCommandHandler : ICancelInvitationsCommandHandle
             return validationResult;
         }
         
+        var trainer = await _trainerRepository.GetByInvitationEmail(command.TrainerId,  command.ClientEmail, cancellationToken);
+
+        if (trainer is null)
+        {
+            return Result.Failure("Trainer not found");
+        }
         
-        var invitationCanceled = await _trainerRepository.CancelInvitationAsync(command.ClientEmail, cancellationToken);
+        trainer.CancelInvitationByEmail(command.ClientEmail);
         
         await _unitOfWork.SaveAsync(cancellationToken);
         
-        _logger.LogDebug("Invitation('{InvitationId}') have been canceled to {Email}", invitationCanceled.Email, invitationCanceled.UpdatedUtc);
+        _logger.LogDebug("Invitation('{InvitationId}') has been canceled to {Email}", command.TrainerId, command.ClientEmail);
         
         return Result.Success;
     }

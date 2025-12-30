@@ -113,31 +113,4 @@ internal sealed class UserService : IUserService
         return result;
     }
     
-    public async Task<Result<GetInvitationsResponse>> GetInvitationsTrainer(CancellationToken cancellationToken)
-    {
-        var result = await _fitTechApiClient.GetInvitationsAsync(cancellationToken);
-
-        if (!result.Succeeded)
-        {
-            return result.MapFailure<GetInvitationsResponse>();
-        }
-        
-        return result;
-
-    }
-
-    public async Task<Result> CancelInvitations(string clientEmail, CancellationToken cancellationToken)
-    {
-        
-        await _fitTechApiClient.CancelInvitationsAsync(new InviteClientRequest{ClientEmail = clientEmail}, cancellationToken);
-        
-        return Result.Success;
-    }
-
-    public async Task<Result> ResendInvitations(string clientEmail, CancellationToken cancellationToken)
-    {
-        await _fitTechApiClient.ResendInvitationsAsync(new InviteClientRequest{ClientEmail = clientEmail}, cancellationToken);
-        
-        return Result.Success;
-    }
 }

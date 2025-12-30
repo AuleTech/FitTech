@@ -40,7 +40,6 @@
     --spacing: 0.25rem;
     --container-sm: 24rem;
     --container-md: 28rem;
-    --container-3xl: 48rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
@@ -445,9 +444,6 @@
   .w-sm {
     width: var(--container-sm);
   }
-  .max-w-3xl {
-    max-width: var(--container-3xl);
-  }
   .max-w-md {
     max-width: var(--container-md);
   }
@@ -694,6 +690,9 @@
   }
   .bg-fittech-dark\/50 {
     background-color: color-mix(in oklab, #494947 50%, transparent);
+  }
+  .bg-fittech-gray-secondary {
+    background-color: #979797;
   }
   .bg-fittech-green {
     background-color: #ADC539;
