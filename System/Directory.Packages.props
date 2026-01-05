@@ -4,7 +4,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
     <!-- Core version variables -->
-    <AspnetVersion>10.0.0</AspnetVersion>
+    <AspnetVersion>10.0.1</AspnetVersion>
     <MicrosoftExtensionsVersion>10.0.1</MicrosoftExtensionsVersion>
     <AspireVersion>13.1.0</AspireVersion>
     <ApiVersioningVersion>8.1.0</ApiVersioningVersion>
