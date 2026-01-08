@@ -1,11 +1,11 @@
 @using Blazor.Heroicons
 
 <button type="@Type.ToString().ToLowerInvariant()" class="@Css" @onclick="HandleClickAsync"
-        @onclick:preventDefault="false" @attributes="AdditionalAttributes">
+        @onclick:preventDefault="false"  disabled="@Disabled" @attributes="AdditionalAttributes">
     @if (!string.IsNullOrWhiteSpace(Label))
     {
-        <span class="font-light @_labelCss">@_label</span>
+        <span class="font-light @_labelCss">@Label</span>
     }
-    
+
     <Heroicon Name="@Icon" Solid="false" class="w-4 h-4"/>
 </button>

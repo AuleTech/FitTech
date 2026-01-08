@@ -44,6 +44,8 @@ public partial class FitTechButton : ComponentBase
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
 
+    [Parameter] public bool Disabled { get; set; }
+    
     private async Task HandleClickAsync(MouseEventArgs e)
     {
         await OnClick.InvokeAsync(e);

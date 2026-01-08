@@ -19,6 +19,19 @@ internal class TrainerRepository : ITrainerRepository
 
         return await GetAsync(invitation.TrainerId, cancellationToken);
     }
+    
+    public async Task<Trainer?> GetByInvitationEmail(Guid trainerId, string clientEmail, CancellationToken cancellationToken)
+    {
+        var invitation = await _context.Invitations
+            .SingleOrDefaultAsync(
+                x => x.TrainerId == trainerId && x.Email == clientEmail,
+                cancellationToken);
+
+        if (invitation == null)
+            return null;
+
+        return await GetAsync(invitation.TrainerId, cancellationToken);
+    }
 
     public async Task<Trainer> AddAsync(Trainer trainer, CancellationToken cancellationToken)
     {
@@ -33,6 +46,7 @@ internal class TrainerRepository : ITrainerRepository
 
         return invitation;
     }
+    
 
     public async Task<Trainer?> GetByInvitationEmailAsync(string email, CancellationToken cancellationToken)
     {

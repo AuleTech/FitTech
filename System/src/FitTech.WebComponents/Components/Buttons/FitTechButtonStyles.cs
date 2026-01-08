@@ -11,7 +11,9 @@ public static class FitTechButtonStyles
         [Color.Secondary] =
             "bg-fittech-dark text-fittech-green border-fittech-green hover:bg-fittech-green hover:text-fittech-dark hover:border-fittech-dark",
         [Color.Error] =
-            "bg-fittech-red text-fittech-dark border-fittech-dark hover:bg-fittech-dark hover:text-fittech-red hover:border-fittech-red"
+            "bg-fittech-red text-fittech-dark border-fittech-dark hover:bg-fittech-dark hover:text-fittech-red hover:border-fittech-red",
+        [Color.Tertiary] =
+            "bg-fittech-yellow text-fittech-dark border-fittech-dark hover:bg-fittech-dark hover:text-fittech-red hover:border-fittech-red"
     };
 
     internal static Dictionary<Shape, string> ShapeStyles = new()

@@ -60,4 +60,30 @@ public class Invitation : Entity
 
         return Result.Success;
     }
+    
+    internal Result SetExpired()
+    {
+        if (Status is InvitationStatus.Completed or InvitationStatus.Expired)
+        {
+            return Result.Failure("The invitation should be InProgress or Pending to set Expired");
+        }
+
+        Status = InvitationStatus.Expired;
+        UpdatedUtc = DateTime.UtcNow;
+
+        return Result.Success;
+    }
+    
+    internal Result SetPending()
+    {
+        if (Status is InvitationStatus.Pending  or InvitationStatus.InProgress)
+        {
+            return Result.Failure("The invitation should be InProgress or Pending to resend");
+        }
+
+        Status = InvitationStatus.Pending;
+        UpdatedUtc = DateTime.UtcNow;
+
+        return Result.Success;
+    }
 }
