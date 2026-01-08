@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using FitTech.Abstranctions.Dtos;
+using FitTech.Abstractions.Dtos;
 
 namespace FitTech.TestingSupport.Faker.FakeGenerators;
 

@@ -1,6 +1,6 @@
 ﻿using AuleTech.Core.Patterns.CQRS.Validations;
 using AuleTech.Core.Patterns.Result;
-using FitTech.Abstranctions.Dtos;
+using FitTech.Abstractions.Dtos;
 using FitTech.Domain.Seedwork;
 
 namespace FitTech.Domain.Aggregates.ClientAggregate;
@@ -11,7 +11,7 @@ public class BodyMeasurement : Entity
     public decimal Hip { get; private set; }
     public decimal MaxThigh { get; private set; } //Muslo
     public decimal Biceps { get; private set; }
-    public decimal XShoulders { get; private set; } //Contorno de hombros
+    public decimal XShoulders { get; private set; } //Contorno de hombros 
     public decimal Chest { get; private set; }
     public decimal Height { get; private set; }
     public decimal Weight { get; private set; }

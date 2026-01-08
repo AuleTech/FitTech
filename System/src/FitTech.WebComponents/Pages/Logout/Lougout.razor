@@ -7,7 +7,9 @@
     protected override async Task OnInitializedAsync()
     {
         await UserService.LogoutAsync(CancellationToken.None);
-        NavigationManager.NavigateTo("/");
-        NavigationManager.Refresh(true);
+        NavigationManager.NavigateTo("/", new NavigationOptions()
+        {
+            ForceLoad = true
+        });
     }
 }

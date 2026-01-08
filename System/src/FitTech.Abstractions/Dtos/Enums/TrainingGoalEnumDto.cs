@@ -1,4 +1,4 @@
-﻿namespace FitTech.Abstranctions.Dtos.Enums;
+﻿namespace FitTech.Abstractions.Dtos.Enums;
 
 public enum TrainingGoalEnumDto
 {

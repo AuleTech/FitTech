@@ -1,5 +1,5 @@
 ﻿using AwesomeAssertions;
-using FitTech.Abstranctions.Dtos;
+using FitTech.Abstractions.Dtos;
 using FitTech.Application.Commands.Client.Register;
 using FitTech.Domain.Aggregates.AuthAggregate;
 using FitTech.Domain.Enums;

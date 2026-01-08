@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\AuleTech.Core\src\AuleTech.Core\AuleTech.Core.csproj"/>
-    <ProjectReference Include="..\FitTech.Abstranctions\FitTech.Abstranctions.csproj"/>
+    <ProjectReference Include="..\FitTech.Abstractions\FitTech.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

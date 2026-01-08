@@ -87,9 +87,9 @@ public class Trainer : Entity, IAggregateRoot
             return invitationResult;
         }
         
-        invitationResult.Value!.SetInProgress();
+        var result = invitationResult.Value!.SetInProgress();
         
-        return Result.Success;
+        return result;
     }
 
     public Result<Invitation> GetInvitationByEmailAndCode(string email, int code)

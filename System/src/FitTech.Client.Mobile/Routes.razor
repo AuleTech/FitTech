@@ -1,16 +1,16 @@
 ﻿@using FitTech.Client.Mobile.Layout
 @using FitTech.WebComponents.Layouts
-@using FitTech.WebComponents.Pages.Login
+@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager NavigationManager
 
 <CascadingAuthenticationState>
-    <Router AppAssembly="typeof(MauiProgram).Assembly" AdditionalAssemblies="new []{typeof(Login).Assembly}">
+    <Router AppAssembly="typeof(MauiProgram).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(AppLayout)">
                 <NotAuthorized>
                     @{
-                        NavigationManager.NavigateTo("/login");
+                        NavigationManager.NavigateTo("/PersonalInformation");
                     }
                 </NotAuthorized>
             </AuthorizeRouteView>

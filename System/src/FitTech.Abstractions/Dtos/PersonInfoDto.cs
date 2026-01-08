@@ -1,3 +1,3 @@
-﻿namespace FitTech.Abstranctions.Dtos;
+﻿namespace FitTech.Abstractions.Dtos;
 
 public record PersonInfoDto(string Name, string LastName, string PhoneNumber, DateOnly BirthDate, AddressDto Address);

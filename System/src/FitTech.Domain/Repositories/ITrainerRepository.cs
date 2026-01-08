@@ -8,6 +8,7 @@ public interface ITrainerRepository
     Task<Trainer?> GetByInvitationId(Guid invitationId, CancellationToken cancellationToken);
     Task<Trainer> AddAsync(Trainer trainer, CancellationToken cancellationToken);
     Task<Invitation> AddInvitationAsync(Invitation invitation, CancellationToken cancellationToken);
+    Task<Trainer?> GetByInvitationEmailAsync(string email, CancellationToken cancellationToken);
     Task<Trainer?> GetByInvitationEmail(Guid trainerid, string clientEmail, CancellationToken cancellationToken);
 
 }

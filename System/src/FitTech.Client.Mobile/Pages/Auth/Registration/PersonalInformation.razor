@@ -1,0 +1,86 @@
+@page "/PersonalInformation"
+@using System.Threading
+@using FitTech.Client.Mobile.Pages.Auth.Registration.Models
+@using FitTech.WebComponents.Persistence
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+@inject NavigationManager NavigationManager
+@inject IStorage Storage
+@inherits CancellableComponent
+
+<div class="flex flex-col grow bg-fittech-white items-start justify-items-start gap-2 mx-10">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <h1 class="text-3xl text-fittech-dark font-bold mb-2">Información personal</h1>
+    <EditForm Model="_informationForm" OnValidSubmit="SubmitAsync"
+              class="bg-fittech-white flex flex-col w-full gap-6 items-center">
+        <DataAnnotationsValidator/>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm!.Name" Placeholder="Nombre" Label="Nombre"/>
+            <ValidationMessage For="@(() => _informationForm!.Name)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.LastName" Placeholder="Apellido/s"
+                          Label="Apellido/s"/>
+            <ValidationMessage For="@(() => _informationForm!.LastName)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.Country" Placeholder="Pais"
+                          Label="Pais"/>
+            <ValidationMessage For="@(() => _informationForm!.Country)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.City" Placeholder="Ciudad"
+                          Label="Ciudad"/>
+            <ValidationMessage For="@(() => _informationForm!.City)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_informationForm.PhoneNumber" Placeholder="Teléfono"
+                          Label="Teléfono"/>
+            <ValidationMessage For="@(() => _informationForm!.PhoneNumber)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            <FitTechDateInput @bind-Value="_informationForm.BirthDate" PlaceholderPlaceholder="Fecha de nacimiento"
+                          Label="Fecha de nacimiento"/>
+            <ValidationMessage For="@(() => _informationForm!.BirthDate)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex w-full gap-2">
+            <div class="flex flex-col items-start w-full">
+                <FitTechButton Type="ButtonType.Button" Class="w-[100px] mt-5" Label="Atras"
+                               Icon="@HeroiconName.ArrowLeft"  OnClick="@NavigateBack"/>
+            </div>
+            <div class="flex flex-col items-end w-full">
+                <FitTechButton Type="ButtonType.Submit" Class="w-[100px] mt-5" Label="Continuar"
+                               Icon="@HeroiconName.ArrowRight" />
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+
+    private PersonalInformationForm? _informationForm;
+
+    private const string StorageKey = nameof(PersonalInformationForm);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await Storage.ContainsKeyAsync(StorageKey, Cts.Token))
+        {
+            _informationForm = (await Storage.GetItemAsync<PersonalInformationForm>(StorageKey, Cts.Token))!;
+        }
+
+        _informationForm ??= new();
+    }
+
+    public async Task SubmitAsync()
+    {
+        await Storage.SetItemAsync(StorageKey, _informationForm, Cts.Token);
+        NavigationManager.NavigateTo("/BodyMeasures");
+    }
+    
+    private async Task NavigateBack(MouseEventArgs eventArgs)
+    {
+        await Storage.SetItemAsync(StorageKey, _informationForm, Cts.Token);
+        NavigationManager.NavigateTo("/Credentials");
+    }
+}

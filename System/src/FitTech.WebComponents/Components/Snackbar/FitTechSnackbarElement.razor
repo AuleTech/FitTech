@@ -1,0 +1,12 @@
+@using Blazor.Heroicons
+<div class="@DivCss">
+    <p class="text-fittech-dark font-medium text-sm text-start mr-8">
+        @Snackbar.Message
+    </p>
+
+    <Heroicon
+        class="@IconCss"
+        @onclick="Snackbar.Close"
+        Name="@HeroiconName.XMark"
+    />
+</div>

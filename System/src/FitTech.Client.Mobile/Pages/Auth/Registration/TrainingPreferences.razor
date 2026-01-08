@@ -1,0 +1,98 @@
+@page "/TrainingPreferences"
+@using FitTech.ApiClient.Generated
+@using FitTech.Client.Mobile.Pages.Auth.Registration.Models
+@using FitTech.Client.Mobile.Services
+@using FitTech.WebComponents.Components.Inputs.Models
+@using FitTech.WebComponents.Persistence
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+@inject NavigationManager NavigationManager
+@inject IStorage Storage
+@inject IRegistrationService RegistrationService
+@inherits CancellableComponent
+
+<div class="flex flex-col grow bg-fittech-white items-center justify-items-start gap-2 mx-10">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <h1 class="text-3xl text-fittech-dark font-bold mb-2">Entrenamiento</h1>
+    <p class="text-sm text-fittech-dark font-semibold">Ya por ultimo queremos saber tus preferencias a la hora de entrenar. Esto ayudará a tu entrador a adaptar las sesiones lo máximo posible a ti.</p>
+    <p class="text-sm text-fittech-dark font-semibold">Estas preferencias las podrás cambiar siempre desde el menú de configuración.</p>
+    <br/>
+    <EditForm Model="_form" OnValidSubmit="SubmitAsync"
+              class="bg-fittech-white flex flex-col w-full gap-6 items-center">
+        <DataAnnotationsValidator/>
+
+        <div class="flex flex-col w-full">
+            <FitTechNumberInput @bind-Value="_form!.AvailableDays" placeholder="Numero de días"
+                          Label="¿De cuantos días dispones para entrenar a la semana?"/>
+            <ValidationMessage For="@(() => _form!.AvailableDays)" class="text-red-600 text-sm"/>
+        </div>
+        
+        <div class="flex flex-col w-full">
+            <FitTechSelect TValue="TrainingGoalEnumDto?" @bind-Value="_form.Goal" placeholder="Objetivos"
+                           Label="¿Cual es tu objetivo?" Options="_goals"/>
+            <ValidationMessage For="@(() => _form!.Goal)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex w-full gap-2">
+            <div class="flex flex-col items-start w-full">
+                <FitTechButton Type="ButtonType.Button" Class="w-[100px] mt-5" Label="Atras"
+                               Icon="@HeroiconName.ArrowLeft"  OnClick="@NavigateBack"/>
+            </div>
+            <div class="flex flex-col items-end w-full">
+                <FitTechButton ShowLoadingLabel="@_isSubmitting" Type="ButtonType.Submit" Class="w-[100px] mt-5" Label="Enviar" LabelOnClick="Enviando..."
+                               Icon="@HeroiconName.PaperAirplane" />
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private bool _isSubmitting;
+    private TrainingPreferencesForm? _form;
+    private readonly FitTechSelectOption<TrainingGoalEnumDto?>[] _goals = [new(TrainingGoalEnumDto.BodyBuilding,"Musculación"), new(TrainingGoalEnumDto.LoseWeight,"Pérdida de peso"), new(TrainingGoalEnumDto.Recovery,"Rehabilitación")];
+    
+    private const string StorageKey = nameof(TrainingPreferencesForm);
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await Storage.ContainsKeyAsync(StorageKey, Cts.Token))
+        {
+            _form = (await Storage.GetItemAsync<TrainingPreferencesForm>(StorageKey, Cts.Token))!;
+        }
+
+        _form ??= new();
+    }
+
+    public async Task SubmitAsync()
+    {
+        _isSubmitting = true;
+        await Storage.SetItemAsync(StorageKey, _form, Cts.Token);
+        var result = await RegistrationService.RegisterAsync(await BuildRegistrationForm(), Cts.Token);
+        _isSubmitting = false;
+        
+        if (!result.Succeeded)
+        {
+            //Show error
+            return;
+        }
+        
+        _isSubmitting = false;
+        NavigationManager.NavigateTo("/login");
+
+        async Task<RegistrationForm> BuildRegistrationForm()
+        {
+            var credentials = (await Storage.GetItemAsync<CredentialsForm>(nameof(CredentialsForm), Cts.Token))!;
+            var bodyMeasures = (await Storage.GetItemAsync<BodyMeasuresForm>(nameof(BodyMeasuresForm), Cts.Token))!;
+            var personalInfo = (await Storage.GetItemAsync<PersonalInformationForm>(nameof(PersonalInformationForm), Cts.Token))!;
+            var validation =  (await Storage.GetItemAsync<ValidationForm>(nameof(ValidationForm), Cts.Token))!;
+            
+            return new RegistrationForm(validation,credentials, personalInfo, bodyMeasures, _form!);
+        }
+    }
+    
+    private Task NavigateBack(MouseEventArgs eventArgs)
+    {
+        NavigationManager.NavigateTo("/BodyMeasures");
+
+        return Task.CompletedTask;
+    }
+}

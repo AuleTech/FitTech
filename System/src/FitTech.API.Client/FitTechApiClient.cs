@@ -22,21 +22,7 @@ internal sealed class FitTechApiClient : IFitTechApiClient
     {
         _proxy = new Proxy(client);
     }
-
-    public async Task<Result<TResponse>> ExecuteRequestAsync<TResponse>(
-        Func<Proxy, Task<TResponse>> requestFunc)
-    {
-        try
-        {
-            var response = await requestFunc(_proxy);
-            return Result<TResponse>.Success(response);
-        }
-        catch (Exception e)
-        {
-            return Result<TResponse>.Failure(e.Message);
-        }
-    }
-
+    
     public async Task<Result<LoginResponse>> LoginAsync(LoginRequest loginRequest, CancellationToken cancellationToken)
     {
         try

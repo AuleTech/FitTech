@@ -1,0 +1,61 @@
+@page "/ValidationCode"
+@using FitTech.Client.Mobile.Pages.Auth.Registration.Models
+@using FitTech.WebComponents.Components.Alerts
+@using FitTech.WebComponents.Persistence
+@inherits CancellableComponent
+@layout EmptyLayout
+@attribute [AllowAnonymous]
+@inject IFitTechApiClient ApiClient
+@inject NavigationManager NavigationManager
+@inject IStorage Storage
+<div class="flex flex-col grow bg-fittech-white items-center gap-2">
+    <div class="pt-[env(safe-area-inset-top)]"></div>
+    <FitTechButton style="border:transparent" Class="fixed left-0 mt-15 ml-3 bg-transparent" Icon="@HeroiconName.ArrowLeft" Onclick="@BackToLogin" ></FitTechButton>
+    <img class="rotate-270 h-auto w-[250px]" src="_content/FitTech.WebComponents/images/logo.png"/>
+    <EditForm Model="_validationForm" OnValidSubmit="SubmitAsync"
+              class="bg-fittech-white px-8 flex flex-col w-full gap-6 items-center">
+        <FitTechAlert @bind-Show="_showAlert" Message="@AlertMessage" />
+        <DataAnnotationsValidator/>
+        <div class="flex flex-col w-full">
+            <FitTechInput @bind-Value="_validationForm.Email" Placeholder="Email" Label="Email"/>
+            <ValidationMessage For="@(() => _validationForm!.Email)" class="text-red-600 text-sm"/>
+        </div>
+        <div class="flex flex-col w-full">
+            @* Input needs to only allow number *@
+            <FitTechInput @bind-Value="_validationForm.Code" Placeholder="Código" Label="Código"/>
+            <ValidationMessage For="@(() => _validationForm!.Code)" class="text-red-600 text-sm"/>
+        </div>
+        <FitTechButton ShowLoadingLabel="_isSubmitting" Type="ButtonType.Submit" Class="w-[300px] mt-10" Label="Validar" LabelOnClick="Validando..."
+                       Icon="@HeroiconName.Check"></FitTechButton>
+    </EditForm>
+</div>
+
+@code
+{
+    private readonly ValidationForm _validationForm = new();
+    private bool _isSubmitting;
+    private bool _showAlert;
+    private const string AlertMessage = "Código no válido";
+    public async Task SubmitAsync()
+    {
+        _isSubmitting = true;
+        var result = await ApiClient.ValidateInvitationAsync(_validationForm.Email.ToLowerInvariant(), int.Parse(_validationForm.Code), Cts.Token);
+
+        if (!result.Succeeded)
+        {
+            _showAlert = true;
+            _isSubmitting = false;
+            return;
+        }
+
+        _validationForm.InvitationId = result.Value;
+        await Storage.SetItemAsync(nameof(ValidationForm), _validationForm, Cts.Token);
+        NavigationManager.NavigateTo("/Credentials");
+        _isSubmitting = false;
+    }
+
+    public void BackToLogin(MouseEventArgs args)
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+}

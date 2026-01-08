@@ -1,241 +1,148 @@
 @page "/configurationpage"
-
 @inject AppHeaderStateHandler AppHeaderStateHandler
-@inject IInvitationService _invitationService
-@inject IJSRuntime JS
-@inject ILocalStorageService localStorageService
-@inject ILogger<ConfigurationPage> Logger
-@using System.Text.Json
-@using Blazor.Heroicons
-@using Blazored.LocalStorage
-@using FitTech.ApiClient.Generated
-@using FitTech.Trainer.Wasm.Services
+@inject NavigationManager NavigationManager
+@using FitTech.Trainer.Wasm.Pages.ConfigurationPage.ConfigurationModels
 @using FitTech.WebComponents.Components.AppHeader
-@using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Services
 @inherits FitTech.WebComponents.Components.CancellableComponent
-@using Color = FitTech.WebComponents.Styles.Enums.Color
-@using Size = FitTech.WebComponents.Styles.Enums.Size
+@inject IUserService UserService
 
-@layout ConfigurationLayout
+<div class="bg-white p-8 font-sans text-zinc-900">
+    <div class="max-w-7xl mx-auto space-y-10">
 
-<div class="flex flex-col gap-4">
+        <!-- Título -->
+        <h1 class="text-4xl font-bold mt-[40px]">Área personal</h1>
 
-    <div class="w-full mx-auto mt-6">
-        <h1 class="text-4xl font-bold text-fittech-dark">Invitaciones enviadas</h1>
-        <p class="text-fittech-gray-secondary mb-2">
-            Las invitaciones Rechazadas o Aceptadas dejarán de mostrarse pasados 15 días
-        </p>
-    </div>
+        <!-- Contenido principal -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-    <div class="w-full bg-fittech-gray-secondary rounded-xl border-2 border-fittech-green mx-auto shadow-sm">
-
-        @if (items is not null && items.Any())
-        {
-            @foreach (var item in items)
-            {
-                <div class="relative flex items-center p-4 border-b border-b-fittech-green">
-
-                    <span class="text-lg text-fittech-dark font-semibold">
-                        @item.ClientEmail
-                    </span>
-
-                    <div class="absolute left-1/2 -translate-x-1/2 flex justify-center">
-                        @if (item.Status == "Pending")
-                        {
-                            <span class="px-3 py-1 rounded-full border border-yellow-700 text-yellow-700 bg-white text-sm font-semibold">
-                                Pendiente
-                            </span>
-                        }
-                        else if (item.Status == "Expired")
-                        {
-                            <span class="px-3 py-1 rounded-full border border-b-red-500 text-amber-800 bg-white text-sm font-semibold">
-                                Expirada
-                            </span>
-                        }
-                        else if (item.Status == "InProgress")
-                        {
-                            <span class="px-3 py-1 rounded-full border border-b-purple-800 text-pink-950 bg-white text-sm font-semibold">
-                                En Proceso
-                            </span>
-                        }
-                        else if (item.Status == "Completed")
-                        {
-                            <span class="px-3 py-1 rounded-full border border-b-green-700 text-green-700 bg-white text-sm font-semibold">
-                                Aceptada
-                            </span>
-                        }
+            <!-- Tarjeta principal -->
+            <div class="col-span-2 bg-white p-8 rounded-2xl shadow-xl">
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="w-28 h-28 rounded-full border-4 border-zinc-800 flex items-center justify-center">
+                        <svg class="w-14 h-14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
                     </div>
-
-                    <div class="ml-auto flex items-end gap-3">
-
-                        @if (item.Status == "Pending")
-                        {
-                            <FitTechButton 
-                                Color="Color.Secondary" 
-                                Size="Size.Medium" 
-                                Label="Cancelar"
-                                Icon="@HeroiconName.Check"
-                                OnClick="@(() => CancelInvitations(item.ClientEmail))" />
-
-                            <FitTechButton 
-                                Color="Color.Tertiary" 
-                                Size="Size.Medium"
-                                Label="@GetResendButtonText(item.ClientEmail)"
-                                Disabled="@IsResendBlocked(item.ClientEmail)"
-                                Icon="@HeroiconName.Check"
-                                OnClick="@(() => TryResend(item.ClientEmail))" />
-                        }
-                        else if (item.Status == "InProgress")
-                        {
-                            <FitTechButton 
-                                Color="Color.Error" 
-                                Size="Size.Medium" 
-                                Label="Cancelar"
-                                Icon="@HeroiconName.Check" />
-                        }
+                    <div class="text-2xl font-semibold">@configurationUserModel.Name</div>
+                    <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                        <a href="/ConfigurationUserPage" class="mt-2 font-medium">Editar alias</a>
                     </div>
                 </div>
-            }
-        }
-        else
-        {
-            <div class="p-4 text-gray-500 text-center">
-                No hay invitaciones en proceso, pendientes o expiradas.
-            </div>
-        }
 
+                <!-- Acciones -->
+                <div class="flex justify-around mt-10 text-center">
+                    <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <div class="mt-2 font-medium">Datos personales</div>
+                    </div>
+                    <div class="p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="2"
+                             viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M9 12h6m2 6H7a2 2 0 01-2-2V8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2z"/>
+                        </svg>
+                        <div class="mt-2 font-medium">Documentos y extractos</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjetas laterales -->
+            <div class="space-y-6">
+
+                <!-- Configuración de cuenta -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-xl font-semibold mb-4">Configuración de cuenta</h2>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">🛡️</span> Cambiar contraseña
+                            </div>
+                            <span class="text-xl">&gt;</span>
+                        </li>
+                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">🌿</span> Mi Subscripción
+                            </div>
+                            <span class="text-xl">&gt;</span>
+                        </li>
+                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">😊</span> Métodos de Pago
+                            </div>
+                            <span class="text-xl">&gt;</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Info legal -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-xl font-semibold mb-4">Info legal y privacidad</h2>
+                    <div
+                        class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                        <span>Documentos y recibos</span>
+                        <span class="text-xl">&gt;</span>
+                    </div>
+                </div>
+
+                <!-- Seguridad -->
+                <div class="bg-white p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-xl font-semibold mb-4">Configuración de seguridad</h2>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">🔒</span> Clave de seguridad
+                            </div>
+                            <span class="text-xl">&gt;</span>
+                        </li>
+                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">👤</span> Verificación en dos pasos
+                            </div>
+                            <span class="text-xl">&gt;</span>
+                        </li>
+                        <li class="flex justify-between items-center p-3 rounded-lg cursor-pointer hover:bg-green-700 hover:text-white transition">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📲</span> Establecer PIN
+                            </div>
+                            <span class="text-xl">&gt;</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 
 @code {
 
-    private List<InvitationDto>? items;
-    private readonly Dictionary<string, DateTime> resendBlockedUntil = new();
-    private PeriodicTimer? _timer;
-    private CancellationTokenSource _timerCts = new();
+    private ConfigurationUserModel configurationUserModel { get; } = new();
+    private string _message = string.Empty;
 
-    private const string StorageKey = "resendBlockedUntil";
 
     protected override async Task OnInitializedAsync()
     {
+        var response = await UserService.GetTrainerDataAsync(Cts.Token);
+
+        if (response.Succeeded)
+        {
+            configurationUserModel.Name = response.Value!.Name!;
+            configurationUserModel.Email = response.Value!.Email!;
+            configurationUserModel.Password = response.Value!.Password!;
+        }
+        else
+        {
+            _message = "Hubo un error en la recuperación de los datos del usuario";
+        }
+
         AppHeaderStateHandler.Clear();
-        OnInitialized();
-        
-        await LoadBlockedTimesAsync();
-
-        await GetInvitationAsync(CancellationToken.None);
-        
-        _timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-
-        _ = Task.Run(async () =>
-        {
-            try
-            {
-                while (await _timer.WaitForNextTickAsync(_timerCts.Token))
-                {
-                    await InvokeAsync(StateHasChanged);
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                //no action
-            }
-        });
+        base.OnInitialized();
     }
 
-    private async Task LoadBlockedTimesAsync()
-    {
-        try
-        {
-         var json = await localStorageService.GetItemAsync<string>(StorageKey);
-
-            if (!string.IsNullOrEmpty(json))
-             {
-                var dict = JsonSerializer.Deserialize<Dictionary<string, DateTime>>(json);
-                if (dict != null)
-                {
-                    resendBlockedUntil.Clear();
-                    foreach (var kv in dict)
-                        resendBlockedUntil[kv.Key] = kv.Value;
-                }
-             }
-        }
-        catch
-        {
-            //no action
-        }
-    }
-
-    private async Task SaveBlockedTimesAsync()
-    {
-        var json = JsonSerializer.Serialize(resendBlockedUntil);
-        await JS.InvokeVoidAsync("localStorage.setItem", StorageKey, json);
-    }
-
-    private async Task GetInvitationAsync(CancellationToken cancellationToken)
-    {
-        var response = await _invitationService.GetTrainerInvitationsAsync(cancellationToken);
-        if (!response.Succeeded)
-        {
-            Logger.LogError($"Error getting invitations: {response}");
-        }
-        items = response.Value?.Invitations?.ToList() ?? new();
-    }
-
-    private async Task CancelInvitations(string clientEmail)
-    {
-        var response = await _invitationService.CancelInvitation(clientEmail, CancellationToken.None);
-
-        if (response.Succeeded)
-        {
-            await GetInvitationAsync(CancellationToken.None);
-            StateHasChanged();
-        }
-    }
-
-    private async Task TryResend(string email)
-    {
-        var now = DateTime.Now;
-
-        if (IsResendBlocked(email))
-            return;
-
-        var response = await _invitationService.ResendInvitation(email, CancellationToken.None);
-
-        if (response.Succeeded)
-        {
-            resendBlockedUntil[email] = now.AddMinutes(1);
-            await SaveBlockedTimesAsync();
-            await GetInvitationAsync(CancellationToken.None);
-        }
-    }
-
-    private string GetResendButtonText(string email)
-    {
-        if (!IsResendBlocked(email))
-            return "Reenviar";
-
-        var remaining = resendBlockedUntil[email] - DateTime.Now;
-
-        if (remaining <= TimeSpan.Zero)
-            return "Reenviar";
-
-        return $"Podrás reenviar en {remaining.Minutes:D2}:{remaining.Seconds:D2}";
-    }
-
-    private bool IsResendBlocked(string email)
-    {
-        return resendBlockedUntil.TryGetValue(email, out var blockedUntil)
-               && DateTime.Now < blockedUntil;
-    }
-
-    public new void Dispose()
-    {
-        _timerCts.Cancel();
-        _timer?.Dispose();
-        _timerCts.Dispose();
-
-        base.Dispose();
-    }
 }

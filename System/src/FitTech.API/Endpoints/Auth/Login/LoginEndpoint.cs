@@ -13,8 +13,7 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 {
     private readonly ILoginCommandHandler _commandHandler;
 
-    public LoginEndpoint(ILoginCommandHandler commandHandler,
-        IAuleTechQueuePublisher publisher)
+    public LoginEndpoint(ILoginCommandHandler commandHandler)
     {
         _commandHandler = commandHandler;
     }

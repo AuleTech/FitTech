@@ -1,0 +1,28 @@
+@using Blazor.Heroicons
+
+@if (Show)
+{
+    <div class="relative w-full bg-fittech-red/20 border border-fittech-red p-2 rounded-lg">
+        <p class="text-fittech-dark font-semibold text-sm text-center">
+            @Message
+        </p>
+
+        <Heroicon
+            class="absolute right-2 top-1/2 -translate-y-1/2 h-6 text-fittech-red"
+            @onclick="Hide"
+            Name="@HeroiconName.XMark"
+        />
+    </div>   
+}
+
+
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public string Message { get; set; } = null!;
+    [Parameter] public EventCallback<bool> ShowChanged { get; set; }
+    
+    public async Task Hide()
+    {
+        await ShowChanged.InvokeAsync(false);
+    }
+}

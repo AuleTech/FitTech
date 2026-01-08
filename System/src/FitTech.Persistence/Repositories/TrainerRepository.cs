@@ -1,5 +1,4 @@
 ﻿using FitTech.Domain.Aggregates.TrainerAggregate;
-using FitTech.Domain.Enums;
 using FitTech.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +47,22 @@ internal class TrainerRepository : ITrainerRepository
         return invitation;
     }
     
+
+    public async Task<Trainer?> GetByInvitationEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        var invitation = await _context.Invitations
+            .Where(x => EF.Functions.ILike(x.Email, email))
+            .SingleOrDefaultAsync(cancellationToken);
+
+        if (invitation is null)
+        {
+            return null;
+        }
+
+        return await GetAsync(invitation.TrainerId, cancellationToken);
+
+    } 
+
     public async Task<Trainer?> GetAsync(Guid trainerId, CancellationToken cancellationToken)
     {
         return await _context.Trainers
