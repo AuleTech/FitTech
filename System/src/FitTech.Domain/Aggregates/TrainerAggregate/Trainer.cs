@@ -68,7 +68,7 @@ public class Trainer : Entity, IAggregateRoot
 
     public Result<Invitation> CheckInvitation(string clientEmail)
     { 
-        var invitation =  Invitations.FirstOrDefault(x => x.Email == clientEmail && x.Status is InvitationStatus.Pending);
+        var invitation = Invitations.FirstOrDefault(x => x.Email == clientEmail && x.Status is InvitationStatus.Pending);
         
         if (invitation is null)
         {
