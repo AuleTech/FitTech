@@ -1,6 +1,5 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client.Configuration;
-using FitTech.ApiClient;
 using FitTech.ApiClient.Generated;
 using Result = AuleTech.Core.Patterns.Result.Result;
 
