@@ -3,6 +3,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting"/>
     <PackageReference Include="Microsoft.Extensions.Logging"/>
     <PackageReference Include="Microsoft.Maui.Core"/>
+    <PackageReference Include="Refit" />
     <PackageReference Include="System.Drawing.Common"/>
     <PackageReference Include="System.Management"/>
     <PackageReference Include="SharpZipLib"/>

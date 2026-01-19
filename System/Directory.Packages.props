@@ -64,6 +64,8 @@
     <!-- 🔐 Security & Auth -->
     <PackageVersion Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.15.0" />
     <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
+    <PackageVersion Include="Refit" Version="9.0.2" />
+    <PackageVersion Include="Refit.HttpClientFactory" Version="9.0.2" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
     <!-- 🧱 Maui -->
     <PackageVersion Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />

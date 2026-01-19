@@ -2,7 +2,7 @@
 using FastEndpoints;
 using FitTech.Application.Query.Trainer.GetInvitations;
 
-namespace FitTech.API.Endpoints.Trainer.GetInvitations;
+namespace FitTech.API.Endpoints.Trainer.Invitations.Get;
 
 [HttpGet("/trainer/invitations")]
 public class GetInvitationsEndpoint : EndpointWithoutRequest<GetInvitationsResponse>

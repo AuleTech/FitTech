@@ -1,5 +1,7 @@
-﻿using AuleTech.Core.Patterns.Result;
+﻿using AuleTech.Core.Extensions.Refit;
+using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client;
+using FitTech.API.Client.ClientV2;
 using FitTech.ApiClient;
 using FitTech.ApiClient.Generated;
 using FitTech.WebComponents.Authentication;
@@ -14,12 +16,12 @@ namespace FitTech.WebComponents.Services;
 internal sealed class UserService : IUserService
 {
     private readonly FitTechAuthStateProvider _authStateProvider;
-    private readonly IFitTechApiClient _fitTechApiClient;
+    private readonly IFitTechApiClientV2 _fitTechApiClient;
     private readonly ILogger<UserService> _logger;
     private readonly IStorage _storage;
 
 
-    public UserService(IFitTechApiClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
+    public UserService(IFitTechApiClientV2 fitTechApiClient, FitTechAuthStateProvider authStateProvider,
         ILogger<UserService> logger, IStorage storage)
     {
         _fitTechApiClient = fitTechApiClient;
@@ -42,17 +44,17 @@ internal sealed class UserService : IUserService
 
         try
         {
-            var result = await _fitTechApiClient.LoginAsync(new LoginRequest { Email = email, Password = password },
+            var response = await _fitTechApiClient.Auth.LoginAsync(new LoginRequest { Email = email, Password = password },
                 cancellationToken);
 
-            if (!result.Succeeded)
+            if (!response.IsSuccessful)
             {
-                return result.MapFailure<FitTechUser>();
+                return response.ToFailedResult<LoginResponse,FitTechUser>();
             }
 
             var user = new FitTechUser
             {
-                Email = email, AccessToken = result.Value?.AccessToken, RefreshToken = result.Value?.RefreshToken
+                Email = email, AccessToken = response.Content?.AccessToken, RefreshToken = response.Content?.RefreshToken
             };
 
             await _storage.SetItemAsync(FitTechUser.StorageKey, user, cancellationToken);
@@ -71,15 +73,13 @@ internal sealed class UserService : IUserService
     public async Task<Result<string>> ForgotPasswordAsync(string to, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(to);
-        var result = await _fitTechApiClient.ForgotPasswordAsync(
+        var response = await _fitTechApiClient.Auth.ForgotPasswordAsync(
             new ForgotPasswordRequest
             {
                 Email = to, CallbackUrl = "NotNeededRightNow" //TODO: Add redirect url
             }, cancellationToken);
-        return new Result<string>
-        {
-            Errors = result.Errors.ToArray(), Succeeded = result.Succeeded, Value = result.Value
-        };
+        
+        return response.ToResult();
     }
 
     public async Task<Result> ResetPasswordAsync(string email, string token, string newPassword,
@@ -89,10 +89,10 @@ internal sealed class UserService : IUserService
         ArgumentException.ThrowIfNullOrWhiteSpace(token);
         ArgumentException.ThrowIfNullOrWhiteSpace(newPassword);
 
-        var result = await _fitTechApiClient.ResetPasswordAsync(
+        var response = await _fitTechApiClient.Auth.ResetPasswordAsync(
             new ResetPasswordRequest { Email = email, Token = token, NewPassword = newPassword }, cancellationToken);
 
-        return result;
+        return response.ToResult();
     }
 
     public async Task<Result> LogoutAsync(CancellationToken cancellationToken)
@@ -100,17 +100,4 @@ internal sealed class UserService : IUserService
         await _storage.ClearAsync(cancellationToken);
         return Result.Success;
     }
-
-    public async Task<Result<TrainerDataDto>> GetTrainerDataAsync(CancellationToken cancellationToken)
-    {
-        var result = await _fitTechApiClient.GetTrainerDataAsync(cancellationToken);
-
-        if (!result.Succeeded)
-        {
-            return result.MapFailure<TrainerDataDto>();
-        }
-
-        return result;
-    }
-    
 }

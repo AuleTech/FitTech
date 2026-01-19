@@ -1,12 +1,11 @@
-﻿using System.Security.Claims;
-using FastEndpoints;
+﻿using FastEndpoints;
 using FitTech.Application.Commands.Trainer.ValidateInvitation;
 using Microsoft.AspNetCore.Authorization;
 
-namespace FitTech.API.Endpoints.Trainer.ValidateInvitation;
+namespace FitTech.API.Endpoints.Trainer.Invitations.Validate;
 
 [AllowAnonymous]
-[HttpGet("/trainer/validate-invitation")]
+[HttpGet("/trainer/invitations/validate")]
 public class ValidateInvitationEndpoint : Endpoint<ValidateInvitationRequest, Guid>
 {
     private readonly IValidateInvitationCommandHandler _commandHandler;

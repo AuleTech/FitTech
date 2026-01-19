@@ -1,18 +1,16 @@
 ﻿using System.Security.Claims;
 using FastEndpoints;
-using FitTech.API.Endpoints.Trainer.InviteClient;
+using FitTech.API.Endpoints.Trainer.Invitations.InviteClient;
 using FitTech.Application.Commands.Trainer.CancelInvitations;
-using FitTech.Application.Commands.Trainer.ResendInvitations;
 
+namespace FitTech.API.Endpoints.Trainer.Invitations.Cancel;
 
-namespace FitTech.API.Endpoints.Trainer.ResendInvitations;
-
-[HttpPost("/trainer/resendinvitations")]
-public class ResendInvitationsEndpoint : Endpoint<InviteClientRequest>
+[HttpPost("/trainer/invitations/cancel")]
+public class CancelInvitationsEndpoint : Endpoint<InviteClientRequest>
 {
-    private readonly IResendInvitationsCommandHandler _commandHandler;
+    private readonly ICancelInvitationsCommandHandler _commandHandler;
 
-    public ResendInvitationsEndpoint(IResendInvitationsCommandHandler commandHandler)
+    public CancelInvitationsEndpoint(ICancelInvitationsCommandHandler commandHandler)
     {
         _commandHandler = commandHandler;
     }
@@ -27,7 +25,7 @@ public class ResendInvitationsEndpoint : Endpoint<InviteClientRequest>
             return;
         }
 
-        var result = await _commandHandler.HandleAsync(new ResendInvitationsCommand(Guid.Parse(userId), req.ClientEmail), ct);
+        var result = await _commandHandler.HandleAsync(new CancelInvitationsCommand(Guid.Parse(userId), req.ClientEmail), ct);
 
         if (!result.Succeeded)
         {
@@ -42,3 +40,4 @@ public class ResendInvitationsEndpoint : Endpoint<InviteClientRequest>
         await Send.NoContentAsync(ct);
     }
 }
+

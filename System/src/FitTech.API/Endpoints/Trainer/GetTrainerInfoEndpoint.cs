@@ -6,7 +6,7 @@ using FitTech.Application.Query.Trainer.GetTrainerData;
 
 namespace FitTech.API.Endpoints.Trainer;
 
-[HttpGet("/Trainer/TrainerSettings")]
+[HttpGet("/trainer/info")]
 public class GetTrainerSettingsEndpoint : EndpointWithoutRequest<TrainerDataDto>
 {
     private readonly IGetTrainerDataQueryHandler _queryHandler;
