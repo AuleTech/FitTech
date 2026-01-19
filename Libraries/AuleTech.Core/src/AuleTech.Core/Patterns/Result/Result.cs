@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.Extensions.Logging;
+using Refit;
 
 namespace AuleTech.Core.Patterns.Result;
 
@@ -93,5 +94,4 @@ public class Result<T> : Result
     {
         return Success(result);
     }
-    
 }

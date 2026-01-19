@@ -1,13 +1,12 @@
 @page "/usermanager"
 @inject AppHeaderStateHandler AppHeaderStateHandler
-@inject IFitTechApiClient ApiClient
+@inject IFitTechApiClientV2 ApiClient
 @inject ILogger<CustomerManager> Logger
 @inject IFitTechSnackbarService SnackbarService
 
 @using System.ComponentModel.DataAnnotations
 @using Blazor.Heroicons
-@using FitTech.API.Client
-@using FitTech.ApiClient
+@using FitTech.API.Client.ClientV2
 @using FitTech.ApiClient.Generated
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.Buttons
@@ -56,16 +55,16 @@
 
     public async Task SubmitAsync()
     {
-        var result = await ApiClient.SendInvitationAsync(new InviteClientRequest()
+        var result = await ApiClient.Trainer.SendInvitationAsync(new InviteClientRequest()
         {
             ClientEmail = Model!.Email
         }, CancellationToken.None);
 
-        if (!result.Succeeded)
+        if (!result.IsSuccessful)
         {
             SnackbarService.Add(new FitTechSnackbar()
             {
-                Message = $"Se ha producido un error, intentalo otra vez",
+                Message = "Se ha producido un error, intentalo otra vez",
                 Type = SnackbarType.Error
             });
             Logger.LogError($"Error sending invitation: {result}");

@@ -1,11 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using FastEndpoints;
 using FitTech.Application.Commands.Trainer.InviteClient;
 
-namespace FitTech.API.Endpoints.Trainer.InviteClient;
+namespace FitTech.API.Endpoints.Trainer.Invitations.InviteClient;
 
-[HttpPost("/trainer/invite-client")]
+[HttpPost("/trainer/invitations")]
 public class InviteClientEndpoint : Endpoint<InviteClientRequest>
 {
     private readonly IInviteClientCommandHandler _commandHandler;

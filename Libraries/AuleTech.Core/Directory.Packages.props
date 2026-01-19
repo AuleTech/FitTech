@@ -17,6 +17,7 @@
     <!-- 🧱 Microsoft.Maui -->
     <PackageVersion Include="Microsoft.Maui.Core" Version="$(MauiVersion)" />
     <!-- ⚙️ System -->
+    <PackageVersion Include="Refit" Version="9.0.2" />
     <PackageVersion Include="System.Drawing.Common" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="System.Management" Version="$(MicrosoftExtensionsVersion)" />
     <!-- 🧰 Third Party -->

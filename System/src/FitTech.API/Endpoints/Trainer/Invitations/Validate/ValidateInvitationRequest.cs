@@ -1,6 +1,6 @@
 ﻿using FastEndpoints;
 
-namespace FitTech.API.Endpoints.Trainer.ValidateInvitation;
+namespace FitTech.API.Endpoints.Trainer.Invitations.Validate;
 
 public class ValidateInvitationRequest
 {

@@ -33,7 +33,7 @@ public static class GlobalExceptionHandlerExtensions
                             Status = "Internal Server Error!",
                             Code = ctx.Response.StatusCode,
                             Reason = useGenericReason ? "An unexpected error has occurred." : reason,
-                            Note = "See application log for stack trace."
+                            Note = "See application log for stack trace.",
                         },
                         new JsonSerializerOptions(),
                         "application/problem+json",
