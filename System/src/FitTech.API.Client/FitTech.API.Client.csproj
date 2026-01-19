@@ -13,16 +13,13 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\AuleTech.Core\src\AuleTech.Core\AuleTech.Core.csproj"/>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generated\"/>
-  </ItemGroup>
 
   <Target Name="GenerateOpenApiClient" BeforeTargets="CoreCompile">
     <Message Text="Generating OpenApiClient from fittech-api.json" Importance="high"/>
-    <MakeDir Directories="Generated" Condition="!Exists('Generated/Proxy.cs')"/>
-    <Exec Command="$(NSwagExe_Net90) openapi2csclient /input:fittech-api.json /classname:Proxy /namespace:FitTech.ApiClient.Generated /output:Generated/Proxy.cs /generateResponseClasses:true /generateJsonMethods:true /useHttpClientCreationMethod:true /useBaseUrl:false"/>
+    <MakeDir Directories="Generated" Condition="!Exists('Generated/FitTechApiModels.cs')"/>
+    <Exec Command="$(NSwagExe_Net90) openapi2csclient /input:fittech-api.json /classname:Proxy /namespace:FitTech.ApiClient.Generated /output:Generated/FitTechApiModels.cs /generateClientClasses:false /generateResponseClasses:true /generateJsonMethods:true /useHttpClientCreationMethod:true /useBaseUrl:false"/>
     <ItemGroup>
-      <Compile Include="Generated/Proxy.cs"/>
+      <Compile Include="Generated/FitTechApiModels.cs"/>
     </ItemGroup>
   </Target>
 </Project>

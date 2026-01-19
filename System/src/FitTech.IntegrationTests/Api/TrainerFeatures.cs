@@ -15,8 +15,6 @@ public class TrainerFeatures
     [Test]
     public async Task RegisterTrainer_HappyPath_RegisterTrainer()
     {
-        var client = Host.GetClientApiClient();
-
         var email = FitTechEmailTestExtensions.GetTestEmail(Guid.NewGuid().ToString()[..4]);
         var password = "TestPassword1234!";
         
@@ -28,8 +26,8 @@ public class TrainerFeatures
           Password = password
         };
         
-        var result = await client.RegisterTrainerAsync(request, CancellationToken.None);
-        result.Succeeded.Should().BeTrue();
+        var result = await Host.ApiClient.Trainer.RegisterAsync(request, CancellationToken.None);
+        result.IsSuccessful.Should().BeTrue();
         
         var loginRequest = new LoginRequest()
         {
@@ -37,30 +35,30 @@ public class TrainerFeatures
             Password = password
         };
 
-        var loginResult = await client.LoginAsync(loginRequest, CancellationToken.None);
+        var loginResult = await Host.ApiClient.Auth.LoginAsync(loginRequest, CancellationToken.None);
         loginResult.Assert();
     }
 
     [Test]
     public async Task ClientRegistrationFlow_CanInviteAndRetrieveInvitation()
     {
-        var client = Host.GetClientApiClient();
-        var testCredentials = await client.GetTestTrainerCredentialsAsync(CancellationToken.None);
+        var testCredentials = await Host.ApiClient.GetTestTrainerCredentialsAsync(CancellationToken.None);
         
-        var authenticatedClient = Host.GetClientApiClient(testCredentials.Token);
+        //TODO: Set credentials
+        
         var invitationRequest = new InviteClientRequest()
         {
             ClientEmail = FitTechEmailTestExtensions.GetTestEmail(TestContext.Current!.Id.ToString()[..4])
         };
         
-        var invitationResult = await authenticatedClient.SendInvitationAsync(invitationRequest, CancellationToken.None);
+        var invitationResult = await Host.ApiClient.Trainer.SendInvitationAsync(invitationRequest, CancellationToken.None);
 
-        invitationResult.Succeeded.Should().BeTrue(invitationResult.ToString());
+        invitationResult.IsSuccessful.Should().BeTrue();
 
-        var invitationsResult = await authenticatedClient.GetInvitationsAsync(CancellationToken.None);
-        invitationsResult.Succeeded.Should().BeTrue();
+        var invitationsResult = await Host.ApiClient.Trainer.GetAllInvitationsAsync(CancellationToken.None);
+        invitationsResult.IsSuccessful.Should().BeTrue();
 
-        var invitation = invitationsResult.Value!.Invitations!.Single();
+        var invitation = invitationsResult.Content!.Invitations!.Single();
         invitation.ClientEmail.Should().Be(invitationRequest.ClientEmail);
         invitation.Status.Should().Be(nameof(InvitationStatus.Pending));
     }

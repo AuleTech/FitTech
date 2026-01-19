@@ -1,6 +1,6 @@
 ﻿using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client;
-using FitTech.API.Client.ClientV2;
+using FitTech.API.Client.Client;
 using FitTech.ApiClient.Generated;
 using FitTech.Trainer.Wasm.Constants;
 using Result = AuleTech.Core.Patterns.Result.Result;
@@ -9,9 +9,9 @@ namespace FitTech.Trainer.Wasm.Services;
 
 internal sealed class InvitationService : IInvitationService
 {
-    private readonly IFitTechApiClientV2 _apiClient;
+    private readonly IFitTechApiClient _apiClient;
     
-    public InvitationService(IFitTechApiClientV2 apiClient)
+    public InvitationService(IFitTechApiClient apiClient)
     {
         _apiClient = apiClient;
     }

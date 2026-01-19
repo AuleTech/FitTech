@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
 using AuleTech.Core.Extensions.Language;
-using FitTech.API.Client.ClientV2.Paths;
+using FitTech.API.Client.Client.Paths;
 using FitTech.ApiClient.Generated;
 using Microsoft.Extensions.DependencyInjection;
 

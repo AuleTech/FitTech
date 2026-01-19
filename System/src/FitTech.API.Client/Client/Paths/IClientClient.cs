@@ -1,7 +1,7 @@
 ﻿using FitTech.ApiClient.Generated;
 using Refit;
 
-namespace FitTech.API.Client.ClientV2.Paths;
+namespace FitTech.API.Client.Client.Paths;
 
 public interface IClientApiClient
 {

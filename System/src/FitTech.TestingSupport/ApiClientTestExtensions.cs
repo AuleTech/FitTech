@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using Bogus;
 using FitTech.API.Client;
+using FitTech.API.Client.Client;
 using FitTech.ApiClient;
 using FitTech.ApiClient.Generated;
 using FitTech.TestingSupport.Models;
@@ -21,9 +22,9 @@ public static class ApiClientTestExtensions
             Password = $"{Faker.Internet.Password()}A1!"
         };
         
-        var result = await apiClient.RegisterTrainerAsync(request, CancellationToken.None);
+        var result = await apiClient.Trainer.RegisterAsync(request, cancellationToken);
 
-        if (!result.Succeeded)
+        if (!result.IsSuccessful)
         {
             throw new InvalidOperationException(result.ToString());
         }
@@ -34,9 +35,9 @@ public static class ApiClientTestExtensions
             Password = request.Password
         };
 
-        var loginResult = await apiClient.LoginAsync(loginRequest, CancellationToken.None);
+        var loginResult = await apiClient.Auth.LoginAsync(loginRequest, cancellationToken);
 
-        return new TestCredentials(request.Email, request.Password, loginResult.Value!.AccessToken!);
+        return new TestCredentials(request.Email, request.Password, loginResult.Content!.AccessToken!);
     }
 
     public static RegisterClientRequest GenerateRegisterClientTestRequest(string email, Guid invitationId) => new ()

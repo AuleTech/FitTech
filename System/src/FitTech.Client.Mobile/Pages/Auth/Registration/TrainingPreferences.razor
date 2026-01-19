@@ -1,14 +1,14 @@
 @page "/TrainingPreferences"
+@using FitTech.API.Client.Client
 @using FitTech.ApiClient.Generated
 @using FitTech.Client.Mobile.Pages.Auth.Registration.Models
-@using FitTech.Client.Mobile.Services
 @using FitTech.WebComponents.Components.Inputs.Models
 @using FitTech.WebComponents.Persistence
 @layout EmptyLayout
 @attribute [AllowAnonymous]
 @inject NavigationManager NavigationManager
 @inject IStorage Storage
-@inject IRegistrationService RegistrationService
+@inject IFitTechApiClient ApiClient
 @inherits CancellableComponent
 
 <div class="flex flex-col grow bg-fittech-white items-center justify-items-start gap-2 mx-10">
@@ -66,10 +66,10 @@
     {
         _isSubmitting = true;
         await Storage.SetItemAsync(StorageKey, _form, Cts.Token);
-        var result = await RegistrationService.RegisterAsync(await BuildRegistrationForm(), Cts.Token);
+        var result = await ApiClient.Client.RegisterAsync((await BuildRegistrationFormAsync()).ToRegisterClientRequest(), Cts.Token);
         _isSubmitting = false;
         
-        if (!result.Succeeded)
+        if (!result.IsSuccessful)
         {
             //Show error
             return;
@@ -78,7 +78,7 @@
         _isSubmitting = false;
         NavigationManager.NavigateTo("/login");
 
-        async Task<RegistrationForm> BuildRegistrationForm()
+        async Task<RegistrationForm> BuildRegistrationFormAsync()
         {
             var credentials = (await Storage.GetItemAsync<CredentialsForm>(nameof(CredentialsForm), Cts.Token))!;
             var bodyMeasures = (await Storage.GetItemAsync<BodyMeasuresForm>(nameof(BodyMeasuresForm), Cts.Token))!;

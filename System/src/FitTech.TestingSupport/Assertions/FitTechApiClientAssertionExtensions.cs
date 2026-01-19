@@ -2,16 +2,17 @@
 using AwesomeAssertions;
 using FitTech.ApiClient;
 using FitTech.ApiClient.Generated;
+using Refit;
 
 namespace FitTech.TestingSupport.Assertions;
 
 public static class FitTechApiClientAssertionExtensions
 {
-    public static void Assert(this Result<LoginResponse> response)
+    public static void Assert(this IApiResponse<LoginResponse> response)
     {
-        response.Succeeded.Should().BeTrue(response.ToString());
-        response.Value.Should().NotBeNull();
-        response.Value.AccessToken.Should().NotBeNullOrWhiteSpace();
-        response.Value.RefreshToken.Should().NotBeNullOrWhiteSpace();
+        response.IsSuccessful.Should().BeTrue();
+        response.Content.Should().NotBeNull();
+        response.Content.AccessToken.Should().NotBeNullOrWhiteSpace();
+        response.Content.RefreshToken.Should().NotBeNullOrWhiteSpace();
     }
 }

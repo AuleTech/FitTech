@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddTransient<ITokenStorage, TokenStorage>();
 
         return serviceCollection
-            .AddFitTechApiClientV2(configuration)
+            .AddFitTechApiClient(configuration)
             .AddTransient<IUserService, UserService>()
             .AddSingleton<IFitTechSnackbarService, FitTechSnackbarService>()
             .AddScoped<AuthenticationStateProvider, FitTechAuthStateProvider>()
