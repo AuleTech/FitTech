@@ -1,13 +1,14 @@
+@using AuleTech.Core.Extensions.Language
+@using Blazor.Heroicons
 @using FitTech.WebComponents.Components.Inputs
 @typeparam TItem
 
 <div class="space-y-4">
-    <div class="flex justify-between items-center">
-        <h1 class="text-xl sm:text-2xl font-semibold">@Title</h1>
+    <div class="flex justify-between items-center max-w-2/3">
 
         @if (ShowSearch)
         {
-            <FitTechInput placeholder="Buscar" @bind-Value="SearchText" OnInput="@OnInput"/>
+            <FitTechInput placeholder="Buscar..." @bind-Value="SearchText" OnInput="@OnInput"/>
         }
     </div>
 
@@ -19,16 +20,31 @@
                 {
                     <th class="px-6 py-3 text-left font-medium text-xs">@header</th>
                 }
+
+                @if (!ClickableRowCss.IsEmpty)
+                {
+                    <th class="px-6 py-3 text-left font-medium text-xs"></th>
+                }
+
             </tr>
             </thead>
             <tbody class="bg-fittech-white text-black divide-y divide-fittech-green">
             @foreach (var item in FilteredItems)
             {
-                var cells = RowSelector!(item);
-                <tr>
+                var cells = RowSelector(item);
+                <tr class="@ClickableRowCss">
                     @foreach (var cell in cells)
                     {
                         <td class="px-6 py-4 font-medium text-xs">@cell</td>
+                    }
+                    
+                    @if (!ClickableRowCss.IsEmpty)
+                    {
+                        <a class="cursor-pointer" href="@LinkSelector!(item)">
+                            <td class="px-6 py-4 font-medium text-xs">
+                                <Heroicon class="w-4 h-4" Name="@HeroiconName.ChevronRight" Type="HeroiconType.Outline"/>
+                            </td>
+                        </a>
                     }
                 </tr>
             }
@@ -38,13 +54,14 @@
 </div>
 
 @code {
-    [Parameter] public string Title { get; set; } = "Tabla";
-    [Parameter] public List<TItem> Items { get; set; } = new();
-    [Parameter] public List<string> Headers { get; set; } = new();
-    [Parameter] public Func<TItem, List<string>>? RowSelector { get; set; }
+    [Parameter] public TItem[] Items { get; set; } = null!;
+    [Parameter] public string[] Headers { get; set; } = null!;
+    [Parameter] public Func<TItem, string[]> RowSelector { get; set; } = null!;
+    [Parameter] public Func<TItem, string>? LinkSelector { get; set; }
     [Parameter] public bool ShowSearch { get; set; } = true;
-
+    
     private string SearchText { get; set; } = string.Empty;
+    private string ClickableRowCss => LinkSelector is not null ? "hover:bg-fittech-green/60" : "";
 
     private IEnumerable<TItem> FilteredItems =>
         string.IsNullOrWhiteSpace(SearchText)

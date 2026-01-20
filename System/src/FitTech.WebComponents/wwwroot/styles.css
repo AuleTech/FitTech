@@ -484,6 +484,9 @@
   .w-full {
     width: 100%;
   }
+  .max-w-2\/3 {
+    max-width: calc(2/3 * 100%);
+  }
   .max-w-md {
     max-width: var(--container-md);
   }
@@ -1227,6 +1230,13 @@
       }
     }
   }
+  .hover\:bg-fittech-green\/60 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in oklab, #ADC539 60%, transparent);
+      }
+    }
+  }
   .hover\:bg-gray-600 {
     &:hover {
       @media (hover: hover) {
@@ -1322,12 +1332,6 @@
     &:active {
       --tw-shadow: inset 0 2px 4px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
-  .sm\:text-2xl {
-    @media (width >= 40rem) {
-      font-size: var(--text-2xl);
-      line-height: var(--tw-leading, var(--text-2xl--line-height));
     }
   }
   .md\:fixed {
