@@ -17,24 +17,21 @@ public class ClientFeatures
     [Test]
     public async Task ClientFeatures_RegistrationFlow()
     {
-        var client = Host.GetClientApiClient();
-        var trainerCredentials = await client.GetTestTrainerCredentialsAsync(CancellationToken.None);
-
-        var authClient = Host.GetClientApiClient(trainerCredentials.Token);
+        var trainerCredentials = await Host.ApiClient.GetTestTrainerCredentialsAsync(CancellationToken.None);
 
         var invitation = await SendAndGetInvitationAsync();
 
         var validateInvitation =
-            await authClient.ValidateInvitationAsync(invitation.Email, invitation.Code, CancellationToken.None);
-        validateInvitation.Succeeded.Should().BeTrue();
+            await Host.ApiClient.Trainer.ValidateInvitationAsync(invitation.Email, invitation.Code.ToString(), CancellationToken.None);
+        validateInvitation.IsSuccessful.Should().BeTrue();
 
         var createClientRequest =
             ApiClientTestExtensions.GenerateRegisterClientTestRequest(invitation.Email, invitation.Id);
 
-        var fitTechClientResult = await authClient.RegisterClientAsync(createClientRequest, CancellationToken.None);
-        fitTechClientResult.Succeeded.Should().BeTrue(fitTechClientResult.ToString());
+        var fitTechClientResult = await Host.ApiClient.Client.RegisterAsync(createClientRequest, CancellationToken.None);
+        fitTechClientResult.IsSuccessful.Should().BeTrue();
 
-        var loginResult = await client.LoginAsync(new LoginRequest()
+        var loginResult = await Host.ApiClient.Auth.LoginAsync(new LoginRequest()
         {
             Email = createClientRequest.Credentials!.Email, Password = createClientRequest.Credentials.Password
         }, CancellationToken.None);
@@ -43,9 +40,9 @@ public class ClientFeatures
         async Task<Invitation> SendAndGetInvitationAsync()
         {
             var invitationRequest = new InviteClientRequest() { ClientEmail = FitTechEmailTestExtensions.GetTestEmail() };
-            var result = await authClient.SendInvitationAsync(invitationRequest, CancellationToken.None);
+            var result = await Host.ApiClient.Trainer.SendInvitationAsync(invitationRequest, CancellationToken.None);
 
-            result.Succeeded.Should().BeTrue();
+            result.IsSuccessful.Should().BeTrue();
 
             var dbContext = await Host.GetFitTechApiDbContextAsync(CancellationToken.None);
             var invitation =  await dbContext.Invitations.SingleOrDefaultAsync(x => x.Email == invitationRequest.ClientEmail, CancellationToken.None);

@@ -1,7 +1,7 @@
 ﻿using AuleTech.Core.Extensions.Refit;
 using AuleTech.Core.Patterns.Result;
 using FitTech.API.Client;
-using FitTech.API.Client.ClientV2;
+using FitTech.API.Client.Client;
 using FitTech.ApiClient;
 using FitTech.ApiClient.Generated;
 using FitTech.WebComponents.Authentication;
@@ -16,12 +16,12 @@ namespace FitTech.WebComponents.Services;
 internal sealed class UserService : IUserService
 {
     private readonly FitTechAuthStateProvider _authStateProvider;
-    private readonly IFitTechApiClientV2 _fitTechApiClient;
+    private readonly IFitTechApiClient _fitTechApiClient;
     private readonly ILogger<UserService> _logger;
     private readonly IStorage _storage;
 
 
-    public UserService(IFitTechApiClientV2 fitTechApiClient, FitTechAuthStateProvider authStateProvider,
+    public UserService(IFitTechApiClient fitTechApiClient, FitTechAuthStateProvider authStateProvider,
         ILogger<UserService> logger, IStorage storage)
     {
         _fitTechApiClient = fitTechApiClient;

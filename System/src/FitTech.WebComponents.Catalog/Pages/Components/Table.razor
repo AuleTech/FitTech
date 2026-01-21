@@ -1,0 +1,31 @@
+@page "/components/table"
+@using FitTech.WebComponents.Components.Container
+@using FitTech.WebComponents.Components.Tables
+
+<div class="flex flex-col m-6">
+    <h1 class="text-3xl font-bold text-fittech-dark">Tabla</h1>
+    <p>Representación de lista de datos</p>
+    <br/>
+    <h2 class="text-xl font-bold text-fittech-dark mb-1 pb-2">Default</h2>
+    <FitTechContainer>
+        <div class="flex items-start content-start flex-row gap-4 m-2 max-w-sm">
+            <FitTechTable Headers="_headers" Items="_items"
+                          RowSelector="row => [row.Name, row.Surname, row.Age.ToString()]" 
+                          LinkSelector="LinkSelector"/>
+        </div>
+    </FitTechContainer>
+</div>
+
+@code
+{
+    private readonly string[] _headers = typeof(TableRow).GetProperties().Select(x => x.Name).ToArray(); 
+    private Func<TableRow, string> LinkSelector => row => "/";  
+    private readonly TableRow[] _items = new[]
+    {
+        new TableRow("Jairo", "Blanco", 31),
+        new TableRow("Meritxell", "Guevara", 34),
+        new TableRow("Leo", "Blanco", 0)
+    };
+
+    internal record TableRow(string Name, string Surname, int Age);
+}

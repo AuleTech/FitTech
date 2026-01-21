@@ -1,4 +1,5 @@
 @page "/ValidationCode"
+@using FitTech.API.Client.Client
 @using FitTech.Client.Mobile.Pages.Auth.Registration.Models
 @using FitTech.WebComponents.Components.Alerts
 @using FitTech.WebComponents.Persistence
@@ -39,16 +40,16 @@
     public async Task SubmitAsync()
     {
         _isSubmitting = true;
-        var result = await ApiClient.ValidateInvitationAsync(_validationForm.Email.ToLowerInvariant(), int.Parse(_validationForm.Code), Cts.Token);
+        var result = await ApiClient.Trainer.ValidateInvitationAsync(_validationForm.Email.ToLowerInvariant(), _validationForm.Code, Cts.Token);
 
-        if (!result.Succeeded)
+        if (!result.IsSuccessful)
         {
             _showAlert = true;
             _isSubmitting = false;
             return;
         }
 
-        _validationForm.InvitationId = result.Value;
+        _validationForm.InvitationId = result.Content;
         await Storage.SetItemAsync(nameof(ValidationForm), _validationForm, Cts.Token);
         NavigationManager.NavigateTo("/Credentials");
         _isSubmitting = false;

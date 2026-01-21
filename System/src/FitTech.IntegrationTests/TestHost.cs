@@ -2,8 +2,12 @@ using System.Net.Http.Headers;
 using Aspire.Hosting;
 using Aspire.Hosting.Testing;
 using FitTech.API.Client;
+using FitTech.API.Client.Client;
+using FitTech.API.Client.Configuration;
 using FitTech.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using TUnit.Core.Interfaces;
 
 namespace FitTech.IntegrationTests;
@@ -11,18 +15,7 @@ namespace FitTech.IntegrationTests;
 public class TestHost : IAsyncInitializer, IAsyncDisposable
 {
     private DistributedApplication? _app;
-
-    internal IFitTechApiClient GetClientApiClient(string? authenticationToken = null, string name = "fittech-api")
-    {
-        var client = _app!.CreateHttpClient(name);
-
-        if (!string.IsNullOrWhiteSpace(authenticationToken))
-        {
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authenticationToken);
-        }
-        
-        return new FitTechApiClient(client);
-    }
+    public IFitTechApiClient ApiClient = null!;
     
     public async Task<FitTechDbContext> GetFitTechApiDbContextAsync(CancellationToken cancellationToken)
     {
@@ -42,7 +35,20 @@ public class TestHost : IAsyncInitializer, IAsyncDisposable
         _app = await builder.BuildAsync();
         await _app.StartAsync();
         await _app.ResourceNotifications.WaitForResourceHealthyAsync("fittech-api");
+
+        var client = _app.CreateHttpClient("fittech-api");
+
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(new[]
+        {
+            new KeyValuePair<string, string?>($"{FitTechApiConfiguration.ConfigSectionName}:Url",
+                client.BaseAddress!.AbsoluteUri)
+        }).Build();
         
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddTransient<ITokenStorage, InMemoryTokenStorage>();
+        
+        serviceCollection.AddFitTechApiClient(configuration);
+        ApiClient = serviceCollection.BuildServiceProvider().GetRequiredService<IFitTechApiClient>();
     }
     
     public async ValueTask DisposeAsync()

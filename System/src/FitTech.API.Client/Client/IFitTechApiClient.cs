@@ -1,8 +1,8 @@
-﻿using FitTech.API.Client.ClientV2.Paths;
+﻿using FitTech.API.Client.Client.Paths;
 
-namespace FitTech.API.Client.ClientV2;
+namespace FitTech.API.Client.Client;
 
-public interface IFitTechApiClientV2
+public interface IFitTechApiClient
 {
     ITrainerApiClient Trainer { get; }
     IClientApiClient Client { get; }

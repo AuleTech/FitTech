@@ -17,9 +17,10 @@ public static class ServiceCollectionExtensions
        // serviceCollection.AddScoped<FitTechDelegationHandler>();
         serviceCollection.AddSingleton<AppHeaderStateHandler>();
         serviceCollection.AddTransient<ITokenStorage, TokenStorage>();
-
+        serviceCollection.AddTransient<IUnauthorizeHandler, UnAuthorizeHandler>();
+        
         return serviceCollection
-            .AddFitTechApiClientV2(configuration)
+            .AddFitTechApiClient(configuration)
             .AddTransient<IUserService, UserService>()
             .AddSingleton<IFitTechSnackbarService, FitTechSnackbarService>()
             .AddScoped<AuthenticationStateProvider, FitTechAuthStateProvider>()

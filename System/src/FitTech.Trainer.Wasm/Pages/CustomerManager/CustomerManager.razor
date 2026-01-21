@@ -1,12 +1,12 @@
 @page "/usermanager"
 @inject AppHeaderStateHandler AppHeaderStateHandler
-@inject IFitTechApiClientV2 ApiClient
+@inject IFitTechApiClient ApiClient
 @inject ILogger<CustomerManager> Logger
 @inject IFitTechSnackbarService SnackbarService
 
 @using System.ComponentModel.DataAnnotations
 @using Blazor.Heroicons
-@using FitTech.API.Client.ClientV2
+@using FitTech.API.Client.Client
 @using FitTech.ApiClient.Generated
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.Buttons
@@ -69,12 +69,15 @@
             });
             Logger.LogError($"Error sending invitation: {result}");
         }
-        
-        SnackbarService.Add(new FitTechSnackbar()
+        else
         {
-            Message = $"Se ha enviado la invitación a {Model!.Email} correctamente",
-            Type = SnackbarType.Success
-        });
+            SnackbarService.Add(new FitTechSnackbar()
+            {
+                Message = $"Se ha enviado la invitación a {Model!.Email} correctamente",
+                Type = SnackbarType.Success
+            });    
+        }
+        
         Model = new();
     }
 
