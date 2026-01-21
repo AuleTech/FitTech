@@ -39,7 +39,7 @@ public static class ServiceCollectionExtensions
 
             serviceCollection.AddRefitClient<ITrainerApiClient>(null, httpClientName: httpClientBuilder.Name);
             serviceCollection.AddRefitClient<IClientApiClient>(null, httpClientName: httpClientBuilder.Name);
-            serviceCollection.AddRefitClient<IAuthenticationApiClient>();
+            serviceCollection.AddRefitClient<IAuthenticationApiClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(fitTechConfig.Url));
 
             serviceCollection.AddTransient<IFitTechApiClient, FitTechApiClient>();
             

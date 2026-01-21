@@ -11,9 +11,11 @@ public class AuthDelegationHandler : DelegatingHandler
 {
     private readonly ITokenStorage _tokenStorage;
     private readonly IAuthenticationApiClient _authenticationApiClient;
+    private readonly IUnauthorizeHandler? _unauthorizeHandler;
 
-    public AuthDelegationHandler(IServiceProvider serviceProvider)
+    public AuthDelegationHandler(IServiceProvider serviceProvider, IUnauthorizeHandler? unauthorizeHandler)
     {
+        _unauthorizeHandler = unauthorizeHandler;
         _authenticationApiClient = serviceProvider.GetRequiredService<IAuthenticationApiClient>();
         _tokenStorage = serviceProvider.GetRequiredService<ITokenStorage>();
     }
@@ -57,6 +59,8 @@ public class AuthDelegationHandler : DelegatingHandler
 
             if (!refreshTokenResponse.IsSuccessful)
             {
+                await (_unauthorizeHandler?.OnAuthorizationFailedAsync() ?? Task.CompletedTask);
+                
                 return response;
             }
             

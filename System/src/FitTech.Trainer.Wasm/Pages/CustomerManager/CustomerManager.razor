@@ -69,12 +69,15 @@
             });
             Logger.LogError($"Error sending invitation: {result}");
         }
-        
-        SnackbarService.Add(new FitTechSnackbar()
+        else
         {
-            Message = $"Se ha enviado la invitación a {Model!.Email} correctamente",
-            Type = SnackbarType.Success
-        });
+            SnackbarService.Add(new FitTechSnackbar()
+            {
+                Message = $"Se ha enviado la invitación a {Model!.Email} correctamente",
+                Type = SnackbarType.Success
+            });    
+        }
+        
         Model = new();
     }
 
