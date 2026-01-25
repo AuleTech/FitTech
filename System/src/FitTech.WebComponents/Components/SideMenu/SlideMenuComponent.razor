@@ -1,15 +1,16 @@
 @using Blazor.Heroicons
 @using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Styles.Enums
+@using Microsoft.AspNetCore.Components.Routing
 @inherits CancellableComponent
 
 <aside class="bg-fittech-white 
-              shadow-lg transition-all duration-300 ease-in-out border-r-1 border-r-fittech-green
+              shadow-lg transition-all duration-300 ease-in-out border-r border-r-fittech-green
               @(_isExpanded ? "w-64" : "w-20")
               flex flex-col">
 
     <div class="flex-col grow">
-        <ul class="mt-2 space-y-1">
+        <ul class="mt-2">
             @if (MenuItems.Any())
             {
                 @foreach (var menuItem in Build())
@@ -23,11 +24,8 @@
                     }
 
                     <li>
-                        <a href="@menuItem.Link"
-                           class="group flex items-center px-3 py-1 text-fittech-dark hover:text-fittech-dark
-                              hover:bg-fittech-green transition-all duration-300
-                              @(!_isExpanded ? "justify-center" : "")">
-
+                        <NavLink href="@menuItem.Link" ActiveClass="bg-fittech-green/50 border-l-fittech-green border-l-4" class="group flex flex-2 items-center px-3 py-1 text-fittech-dark hover:text-fittech-dark
+                              hover:bg-fittech-green/50 transition-all duration-300 h-10 hover:border-l-fittech-green hover:border-l-4 text-lg">
                             @if (!string.IsNullOrWhiteSpace(menuItem.Icon))
                             {
                                 <span class="flex items-center justify-center h-4 w-4">
@@ -40,7 +38,7 @@
                                      @(_isExpanded ? "opacity-100" : "opacity-0 hidden")">
                                 @menuItem.Text
                             </span>
-                        </a>
+                        </NavLink>
                     </li>
                 }
             }
@@ -87,8 +85,14 @@
         return itemsList.ToArray();
     }
 
-    [Parameter] [EditorRequired] public List<MenuItem> MenuItems { get; set; } = [];
+    protected override void OnAfterRender(bool firstRender)
+    {
+        
+        base.OnAfterRender(firstRender);
+    }
 
+    [Parameter] [EditorRequired] public List<MenuItem> MenuItems { get; set; } = [];
+    [Inject] private NavigationManager? NavigationManager { get; set; }
     public record SubMenuItem(string Text, string Link, string? Icon = null);
 
     public record MenuItem(string Text, string? Link = null, string? Icon = null, SubMenuItem[]? SubMenu = null)

@@ -9,22 +9,25 @@
     <h2 class="text-xl font-bold text-fittech-dark mb-1 pb-2">Default</h2>
     <FitTechContainer>
         <div class="flex items-start content-start flex-row gap-4 m-2 max-w-sm">
-            <FitTechTable Headers="_headers" Items="_items"
-                          RowSelector="row => [row.Name, row.Surname, row.Age.ToString()]" 
-                          LinkSelector="LinkSelector"/>
+            <FitTechTable Configuration="_tableConfig"/>
         </div>
     </FitTechContainer>
 </div>
 
 @code
 {
-    private readonly string[] _headers = typeof(TableRow).GetProperties().Select(x => x.Name).ToArray(); 
-    private Func<TableRow, string> LinkSelector => row => "/";  
-    private readonly TableRow[] _items = new[]
+    private readonly FitTechTableConfiguration<TableRow> _tableConfig = new FitTechTableConfiguration<TableRow>
     {
-        new TableRow("Jairo", "Blanco", 31),
-        new TableRow("Meritxell", "Guevara", 34),
-        new TableRow("Leo", "Blanco", 0)
+        Headers = typeof(TableRow).GetProperties().Select(x => x.Name).ToArray(),
+        Items =
+        [
+            new TableRow("Jairo", "Blanco", 31),
+            new TableRow("Meritxell", "Guevara", 34),
+            new TableRow("Leo", "Blanco", 0)
+        ],
+        RowSelector = item => [item.Name, item.Surname, item.Age.ToString()],
+        LinkSelector = row => "/",
+        HideSearchBar = false
     };
 
     internal record TableRow(string Name, string Surname, int Age);
