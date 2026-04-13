@@ -1,19 +1,24 @@
 @page "/usermanager"
 @inject AppHeaderStateHandler AppHeaderStateHandler
-@inject IFitTechApiClientV2 ApiClient
+@inject IFitTechApiClient ApiClient
 @inject ILogger<CustomerManager> Logger
 @inject IFitTechSnackbarService SnackbarService
 
 @using System.ComponentModel.DataAnnotations
 @using Blazor.Heroicons
-@using FitTech.API.Client.ClientV2
+@using FitTech.API.Client.Client
 @using FitTech.ApiClient.Generated
 @using FitTech.WebComponents.Components.AppHeader
 @using FitTech.WebComponents.Components.Buttons
 @using FitTech.WebComponents.Components.Inputs
 @using FitTech.WebComponents.Components.Modals
 @using FitTech.WebComponents.Components.Snackbar
+@using FitTech.WebComponents.Components.Tables
 @using FitTech.WebComponents.Styles.Enums
+
+<div class="flex grow m-10 w-min-[300px]">
+    <FitTechTable Configuration="_tableConfiguration" />
+</div>
 
 <EditForm Model="Model" OnValidSubmit="SubmitAsync">
     <DataAnnotationsValidator/>
@@ -38,9 +43,18 @@
     private FitTechModal _modal = null!;
     [SupplyParameterFromForm] public ClientInvitationModel? Model { get; set; }
 
+    private readonly FitTechTableConfiguration<(string, string, string, string)> _tableConfiguration = new()
+    {
+        Headers = ["Nombre", "Edad", "Objetivo", "Teléfono"],
+        Items = [("Jairo Blanco", "31", "Pérdida de peso", "+34626023861"), ("Leo Blanco", "1", "Musculación", "+34626023862")],
+        RowSelector = item => [item.Item1, item.Item2, item.Item3, item.Item4],
+        LinkSelector = item => "/",
+        HideSearchBar = false
+    };
+
     protected override void OnInitialized()
     {
-        Model ??= new();
+        Model ??= new ClientInvitationModel();
 
         AppHeaderStateHandler.Clear();
         AppHeaderStateHandler.AddButton(HeroiconName.Plus, EventCallback.Factory.Create<MouseEventArgs>(this, HandleClick), "Añadir usuario");
@@ -55,27 +69,30 @@
 
     public async Task SubmitAsync()
     {
-        var result = await ApiClient.Trainer.SendInvitationAsync(new InviteClientRequest()
+        var result = await ApiClient.Trainer.SendInvitationAsync(new InviteClientRequest
         {
             ClientEmail = Model!.Email
         }, CancellationToken.None);
 
         if (!result.IsSuccessful)
         {
-            SnackbarService.Add(new FitTechSnackbar()
+            SnackbarService.Add(new FitTechSnackbar
             {
                 Message = "Se ha producido un error, intentalo otra vez",
                 Type = SnackbarType.Error
             });
             Logger.LogError($"Error sending invitation: {result}");
         }
-        
-        SnackbarService.Add(new FitTechSnackbar()
+        else
         {
-            Message = $"Se ha enviado la invitación a {Model!.Email} correctamente",
-            Type = SnackbarType.Success
-        });
-        Model = new();
+            SnackbarService.Add(new FitTechSnackbar
+            {
+                Message = $"Se ha enviado la invitación a {Model!.Email} correctamente",
+                Type = SnackbarType.Success
+            });
+        }
+
+        Model = new ClientInvitationModel();
     }
 
     public class ClientInvitationModel

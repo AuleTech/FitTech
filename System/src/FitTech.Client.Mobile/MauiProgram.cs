@@ -1,15 +1,9 @@
 ﻿using System.Reflection;
-using System.Threading.Tasks;
 using AuleTech.Core.Maui;
 using FitTech.Client.Mobile.Persistence;
-using FitTech.Client.Mobile.Services;
 using FitTech.WebComponents;
 using FitTech.WebComponents.Persistence;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Hosting;
-using Microsoft.Maui.Hosting;
-using Microsoft.Maui.Storage;
 
 namespace FitTech.Client.Mobile;
 
@@ -31,7 +25,6 @@ public static class MauiProgram
         builder.Services
             .AddScoped<IStorage, MauiStorage>()
             .AddSingleton<IPreferences>(_ => Preferences.Default)
-            .AddSingleton<IRegistrationService, RegistrationService>()
             .AddFitTechComponents(builder.Configuration);
 
 #if DEBUG

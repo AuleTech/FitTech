@@ -268,17 +268,11 @@
   .right-3 {
     right: calc(var(--spacing) * 3);
   }
-  .right-4 {
-    right: calc(var(--spacing) * 4);
-  }
   .right-6 {
     right: calc(var(--spacing) * 6);
   }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
-  }
-  .bottom-4 {
-    bottom: calc(var(--spacing) * 4);
   }
   .left-0 {
     left: calc(var(--spacing) * 0);
@@ -321,6 +315,9 @@
   }
   .m-6 {
     margin: calc(var(--spacing) * 6);
+  }
+  .m-10 {
+    margin: calc(var(--spacing) * 10);
   }
   .mx-6 {
     margin-inline: calc(var(--spacing) * 6);
@@ -424,17 +421,11 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
-  .h-20 {
-    height: calc(var(--spacing) * 20);
-  }
   .h-\[300px\] {
     height: 300px;
   }
   .h-auto {
     height: auto;
-  }
-  .h-full {
-    height: 100%;
   }
   .max-h-screen {
     max-height: 100vh;
@@ -484,6 +475,9 @@
   .w-full {
     width: 100%;
   }
+  .max-w-2\/3 {
+    max-width: calc(2/3 * 100%);
+  }
   .max-w-md {
     max-width: var(--container-md);
   }
@@ -498,6 +492,9 @@
   }
   .flex-1 {
     flex: 1;
+  }
+  .flex-2 {
+    flex: 2;
   }
   .flex-grow {
     flex-grow: 1;
@@ -531,9 +528,6 @@
   }
   .rotate-45 {
     rotate: 45deg;
-  }
-  .rotate-180 {
-    rotate: 180deg;
   }
   .rotate-270 {
     rotate: 270deg;
@@ -591,13 +585,6 @@
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
-  }
-  .space-y-1 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 1) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
-    }
   }
   .space-y-2 {
     :where(& > :not(:last-child)) {
@@ -674,7 +661,7 @@
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
   }
-  .border-r-1 {
+  .border-r {
     border-right-style: var(--tw-border-style);
     border-right-width: 1px;
   }
@@ -737,6 +724,9 @@
   .border-b-red-500 {
     border-bottom-color: var(--color-red-500);
   }
+  .border-l-fittech-green {
+    border-left-color: #ADC539;
+  }
   .bg-blue-100 {
     background-color: var(--color-blue-100);
   }
@@ -755,6 +745,9 @@
   .bg-fittech-green {
     background-color: #ADC539;
   }
+  .bg-fittech-green\/50 {
+    background-color: color-mix(in oklab, #ADC539 50%, transparent);
+  }
   .bg-fittech-red {
     background-color: #EF5D60;
   }
@@ -772,9 +765,6 @@
   }
   .bg-gray-400 {
     background-color: var(--color-gray-400);
-  }
-  .bg-gray-700 {
-    background-color: var(--color-gray-700);
   }
   .bg-gray-800 {
     background-color: var(--color-gray-800);
@@ -1009,9 +999,6 @@
   .text-fittech-red {
     color: #EF5D60;
   }
-  .text-gray-300 {
-    color: var(--color-gray-300);
-  }
   .text-gray-400 {
     color: var(--color-gray-400);
   }
@@ -1107,11 +1094,6 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
-  .transition-opacity {
-    transition-property: opacity;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
   .transition-transform {
     transition-property: transform, translate, scale, rotate;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -1178,6 +1160,14 @@
       }
     }
   }
+  .hover\:border-l-4 {
+    &:hover {
+      @media (hover: hover) {
+        border-left-style: var(--tw-border-style);
+        border-left-width: 4px;
+      }
+    }
+  }
   .hover\:border-fittech-dark {
     &:hover {
       @media (hover: hover) {
@@ -1213,6 +1203,13 @@
       }
     }
   }
+  .hover\:border-l-fittech-green {
+    &:hover {
+      @media (hover: hover) {
+        border-left-color: #ADC539;
+      }
+    }
+  }
   .hover\:bg-fittech-dark {
     &:hover {
       @media (hover: hover) {
@@ -1227,10 +1224,17 @@
       }
     }
   }
-  .hover\:bg-gray-600 {
+  .hover\:bg-fittech-green\/50 {
     &:hover {
       @media (hover: hover) {
-        background-color: var(--color-gray-600);
+        background-color: color-mix(in oklab, #ADC539 50%, transparent);
+      }
+    }
+  }
+  .hover\:bg-fittech-green\/60 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in oklab, #ADC539 60%, transparent);
       }
     }
   }
@@ -1322,12 +1326,6 @@
     &:active {
       --tw-shadow: inset 0 2px 4px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
-  .sm\:text-2xl {
-    @media (width >= 40rem) {
-      font-size: var(--text-2xl);
-      line-height: var(--tw-leading, var(--text-2xl--line-height));
     }
   }
   .md\:fixed {

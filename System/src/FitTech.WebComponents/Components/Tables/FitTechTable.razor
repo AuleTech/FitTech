@@ -1,13 +1,14 @@
+@using AuleTech.Core.Extensions.Language
+@using Blazor.Heroicons
 @using FitTech.WebComponents.Components.Inputs
 @typeparam TItem
 
 <div class="space-y-4">
-    <div class="flex justify-between items-center">
-        <h1 class="text-xl sm:text-2xl font-semibold">@Title</h1>
+    <div class="flex justify-between items-center max-w-2/3">
 
-        @if (ShowSearch)
+        @if (!Configuration.HideSearchBar)
         {
-            <FitTechInput placeholder="Buscar" @bind-Value="SearchText" OnInput="@OnInput"/>
+            <FitTechInput placeholder="Buscar..." @bind-Value="SearchText" OnInput="@OnInput"/>
         }
     </div>
 
@@ -15,20 +16,35 @@
         <table class="min-w-full border-collapse">
             <thead class="bg-fittech-dark text-fittech-green">
             <tr>
-                @foreach (var header in Headers)
+                @foreach (var header in Configuration.Headers)
                 {
                     <th class="px-6 py-3 text-left font-medium text-xs">@header</th>
                 }
+
+                @if (!ClickableRowCss.IsEmpty)
+                {
+                    <th class="px-6 py-3 text-left font-medium text-xs"></th>
+                }
+
             </tr>
             </thead>
             <tbody class="bg-fittech-white text-black divide-y divide-fittech-green">
             @foreach (var item in FilteredItems)
             {
-                var cells = RowSelector!(item);
-                <tr>
+                var cells = Configuration.RowSelector(item);
+                <tr class="@ClickableRowCss">
                     @foreach (var cell in cells)
                     {
                         <td class="px-6 py-4 font-medium text-xs">@cell</td>
+                    }
+                    
+                    @if (Configuration.HasLink)
+                    {
+                        <a class="cursor-pointer" href="@Configuration.LinkSelector!(item)">
+                            <td class="px-6 py-4 font-medium text-xs">
+                                <Heroicon class="w-4 h-4" Name="@HeroiconName.ChevronRight" Type="HeroiconType.Outline"/>
+                            </td>
+                        </a>
                     }
                 </tr>
             }
@@ -38,19 +54,16 @@
 </div>
 
 @code {
-    [Parameter] public string Title { get; set; } = "Tabla";
-    [Parameter] public List<TItem> Items { get; set; } = new();
-    [Parameter] public List<string> Headers { get; set; } = new();
-    [Parameter] public Func<TItem, List<string>>? RowSelector { get; set; }
-    [Parameter] public bool ShowSearch { get; set; } = true;
-
+    [Parameter] public required FitTechTableConfiguration<TItem> Configuration { get; set; }
+    
     private string SearchText { get; set; } = string.Empty;
+    private string ClickableRowCss => Configuration.HasLink ? "hover:bg-fittech-green/60" : "";
 
     private IEnumerable<TItem> FilteredItems =>
         string.IsNullOrWhiteSpace(SearchText)
-            ? Items
-            : Items.Where(item =>
-                RowSelector!(item)
+            ? Configuration.Items
+            : Configuration.Items.Where(item =>
+                Configuration.RowSelector(item)
                     .Any(cell => cell.Contains(SearchText, StringComparison.OrdinalIgnoreCase)));
 
     private void OnInput(ChangeEventArgs e)

@@ -16,9 +16,7 @@ public class AuthFeatureTests
     [Test]
     public async Task Auth_ResetPasswordFlow_CanLoginWithNewPassword()
     {
-        var client = Host.GetClientApiClient();
-
-        var testCredentials = await client.GetTestTrainerCredentialsAsync(CancellationToken.None);
+        var testCredentials = await Host.ApiClient.GetTestTrainerCredentialsAsync(CancellationToken.None);
         
         var forgotPasswordRequest = new ForgotPasswordRequest()
         {
@@ -26,8 +24,8 @@ public class AuthFeatureTests
           CallbackUrl = "www.url.com"
         };
 
-        var response = await client.ForgotPasswordAsync(forgotPasswordRequest, CancellationToken.None); 
-        response.Succeeded.Should().BeTrue();
+        var response = await Host.ApiClient.Auth.ForgotPasswordAsync(forgotPasswordRequest, CancellationToken.None); 
+        response.IsSuccessful.Should().BeTrue();
         
         var token = await GetTokenFromEmailAsync();
 
@@ -38,8 +36,8 @@ public class AuthFeatureTests
             NewPassword = "NewPassword1234!"
         };
 
-        var resetPasswordResponse = await client.ResetPasswordAsync(resetPasswordRequest, CancellationToken.None);
-        resetPasswordResponse.Succeeded.Should().BeTrue();
+        var resetPasswordResponse = await Host.ApiClient.Auth.ResetPasswordAsync(resetPasswordRequest, CancellationToken.None);
+        resetPasswordResponse.IsSuccessful.Should().BeTrue();
         
         
         var loginRequest = new LoginRequest()
@@ -48,7 +46,7 @@ public class AuthFeatureTests
             Password = resetPasswordRequest.NewPassword
         };
 
-        var loginResult = await client.LoginAsync(loginRequest, CancellationToken.None);
+        var loginResult = await Host.ApiClient.Auth.LoginAsync(loginRequest, CancellationToken.None);
         loginResult.Assert();
 
         async Task<string> GetTokenFromEmailAsync()
